@@ -2,7 +2,7 @@
  "id": "konbini",
  "title": "コンビニ",
  "titleEn": "Convenience store",
- "svg": "konbini.svg",
+ "svg": "konbini_anime.svg",
  "source": "Illustration and labels by Claude",
  "items": {
   "fridge": {
@@ -111,5 +111,5 @@
    "phraseEn": "burnable trash / plastic bottles"
   }
  },
- "three": true
+ "three": false
 }
