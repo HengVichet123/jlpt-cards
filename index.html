@@ -14,406 +14,2495 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+
 <style>
 :root{
-  --paper:#FBFAF6; --card:#FFFFFF; --ink:#1F2226; --soft:#6F6B64; --faint:#A9A49A; --line:#E7E3DA; --chip:#F2EFE8;
-  --shu:#C63A2F; --ai:#2E4C80; --murasaki:#6A4C98; --yamabuki:#B8791A; --hole:#EAE6DD;
+  --paper:#FBFAF6;
+  --card:#FFFFFF;
+  --ink:#1F2226;
+  --soft:#6F6B64;
+  --faint:#A9A49A;
+  --line:#E7E3DA;
+  --chip:#F2EFE8;
+  --shu:#C63A2F;
+  --ai:#2E4C80;
+  --murasaki:#6A4C98;
+  --yamabuki:#B8791A;
+  --hole:#EAE6DD;
   --display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --paper:#15171A; --card:#1E2125; --ink:#ECE8E0; --soft:#A29D94; --faint:#6E6A63; --line:#2C3036; --chip:#262A30;
-  --shu:#FF6E5E; --ai:#8FB0EE; --murasaki:#C2A6F0; --yamabuki:#E6B25A; --hole:#15171A; color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --paper:#15171A; --card:#1E2125; --ink:#ECE8E0; --soft:#A29D94; --faint:#6E6A63; --line:#2C3036; --chip:#262A30;
-  --shu:#FF6E5E; --ai:#8FB0EE; --murasaki:#C2A6F0; --yamabuki:#E6B25A; --hole:#15171A; color-scheme:dark;
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15171A;
+    --card:#1E2125;
+    --ink:#ECE8E0;
+    --soft:#A29D94;
+    --faint:#6E6A63;
+    --line:#2C3036;
+    --chip:#262A30;
+    --shu:#FF6E5E;
+    --ai:#8FB0EE;
+    --murasaki:#C2A6F0;
+    --yamabuki:#E6B25A;
+    --hole:#15171A;
+    color-scheme:dark;
+  }
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:var(--paper)}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--body)}
-header{position:sticky;top:0;z-index:5;background:var(--paper);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 10px;border-bottom:1px solid var(--line)}
-.row{display:flex;gap:8px;align-items:center}
-.brand{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em}
-.brand span{color:var(--shu)}
-select{flex:1;min-width:0;font:500 15px var(--body);padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:10px;padding:3px;background:var(--chip);border-radius:10px}
-.tab{text-align:center;padding:7px 0;border-radius:8px;color:var(--soft);font-weight:700;font-size:14px;cursor:pointer}
-.tab.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.tab .jp{font-family:var(--display);margin-right:4px}
-.tab.on[data-t=words] .jp{color:var(--ai)} .tab.on[data-t=kanji] .jp{color:var(--murasaki)} .tab.on[data-t=grammar] .jp{color:var(--yamabuki)}
-.meta{font:500 12px var(--mono);color:var(--faint);margin-top:8px;display:flex;justify-content:space-between;letter-spacing:.02em}
-button.small{font:700 12px var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer}
-button.small.on{color:var(--shu);border-color:var(--shu)}
-main{padding-block:14px calc(env(safe-area-inset-bottom,0px) + 48px);padding-inline:16px;max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:6px}
-.card::before{content:"";position:absolute;left:12px;top:26px;width:10px;height:10px;border-radius:50%;background:var(--hole);box-shadow:inset 0 1px 2px rgba(0,0,0,.18)}
-.front{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 14px 12px 34px;cursor:pointer}
-.head{min-width:0}
-.num{font:500 11px var(--mono);letter-spacing:.04em}
-.card.w .num{color:var(--ai)} .card.k .num{color:var(--murasaki)} .card.g .num{color:var(--yamabuki)}
-.rd{font-size:13px;color:var(--soft);line-height:1.2;margin-top:2px}
-.big{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.2;word-break:break-word}
-.card.g .big{font-size:21px;font-weight:600;text-wrap:balance}
-.dots{display:flex;gap:6px}
-.dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--faint);cursor:pointer}
-.dot.on{background:var(--shu);border-color:var(--shu)}
-.back{display:none;padding:2px 16px 16px 34px;border-top:1px dashed var(--line)}
-.card.open .back{display:block}
-.back h4{margin:14px 0 4px;font:700 11px var(--body);letter-spacing:.12em;color:var(--faint)}
-.en{font-weight:700;font-size:16px}
-.jp{font-size:15px}
-.src{font-size:12px;color:var(--faint)} .src a{color:var(--faint)}
-b.hl{color:var(--shu);font-weight:700}
-.big b.hl{color:inherit}
-.ex{background:var(--chip);border-radius:6px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:15px}
-.ex .tip{float:right;font:500 10px var(--mono);color:var(--faint);margin-left:8px;margin-top:4px}
-.ex .tr{display:none;color:var(--soft);font-size:14px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
-.ex.open .tr{display:block}
-.img{display:block;width:100%;max-width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-top:14px}
-ul.w{margin:4px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-ul.w li{font-size:15px}
-.exl{font-size:13px;color:var(--soft)}
-code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-radius:5px;display:inline-block}
-.empty{color:var(--soft);text-align:center;padding:40px}
-.pg{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.pg label{font:700 12px var(--body);color:var(--soft);display:flex;align-items:center;gap:6px}
-.pg input,.pg select{width:56px;font:500 15px var(--mono);padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
-.pg select{width:auto}
-.pg .go{margin-left:auto;background:var(--shu);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:700 14px var(--body);cursor:pointer}
-.stat{font:500 12px var(--mono);color:var(--faint)}
-.btns{display:flex;gap:5px}
-.btns button{font:700 12px var(--mono);padding:6px 8px;border-radius:6px;border:1.5px solid var(--faint);background:transparent;color:var(--soft);cursor:pointer}
-.btns button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
-.playing{background:#fff;color:#1F2226}
-.playing header{display:none}
-.playing #list{max-width:none;min-height:100vh;padding:0;display:block}
-.play-setup{max-width:560px;margin:0 auto;padding:32px 16px}
-.play-setup h2{font-family:var(--display);font-size:28px;margin:10px 0 4px}
-.play-setup p{color:var(--soft);margin:0 0 24px}
-.play-setup .pg{margin-bottom:14px}
-.play-setup .go{width:100%;margin:8px 0 0;padding:12px}
-.play-screen{min-height:100vh;display:flex;flex-direction:column;position:relative;background:#fff}
-.play-settings,.play-exit{position:absolute;top:18px;border:1px solid #ddd;border-radius:7px;background:#fff;color:#555;font:600 13px var(--body);cursor:pointer;z-index:2;padding:7px 10px}
-.play-settings{left:18px}
-.play-exit{right:18px;color:var(--shu);border-color:#e8b8b3}
-.play-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:72px 16px 124px}
-.play-stage .play-card{width:min(620px,100%);box-shadow:0 8px 30px rgba(0,0,0,.08);cursor:pointer}
-.play-stage .play-card .front{min-height:170px;padding:26px 28px 26px 48px}
-.play-stage .play-card .big{font-size:42px}
-.play-stage .play-card .back{padding:8px 28px 28px 48px}
-.play-familiarity{position:absolute;top:56px;left:50%;transform:translateX(-50%);color:#888;font:500 11px var(--mono);letter-spacing:.04em}
-.play-ratings{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;padding:12px max(16px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;justify-content:center;gap:8px;z-index:4}
-.play-ratings button{min-width:92px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;padding:9px 12px;font:600 13px var(--body);cursor:pointer}
-.play-ratings button span{display:block;color:#888;font:500 11px var(--mono);margin-top:2px}
-.play-ratings button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
-.play-queue{display:flex;justify-content:center;gap:14px;color:#777;font:500 11px var(--mono);padding:58px 16px 0}
-.play-queue b{color:#333;font-size:13px;margin-right:2px}
-.play-familiarity-bar{height:3px;width:84px;background:#eee;border-radius:3px;overflow:hidden;margin:0 auto 10px}
-.play-familiarity-bar i{display:block;height:100%;background:var(--shu);border-radius:3px}
-.home{max-width:680px;margin:0 auto;padding:34px 16px}
-.home h1,.complete h1{font-family:var(--display);font-size:32px;margin:0 0 6px}
-.home p{color:var(--soft);margin:0 0 24px}
-.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.home-card{display:block;text-align:left;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--ink);cursor:pointer}
-.home-card b{display:block;font-family:var(--display);font-size:20px;margin-bottom:4px}
-.home-card span{font-size:13px;color:var(--soft)}
-.complete{max-width:760px;margin:0 auto;padding:28px 16px 60px}
-.complete-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:18px}
-.complete-head button{border:1px solid var(--line);background:var(--card);border-radius:7px;padding:7px 10px;color:var(--soft);cursor:pointer}
-.complete-section h2{font-family:var(--display);font-size:22px;margin:24px 0 8px}
-.familiarity-bar{height:3px;width:54px;background:var(--hole);border-radius:3px;overflow:hidden;margin-top:7px}
-.familiarity-bar i{display:block;height:100%;background:var(--shu);border-radius:3px}
-.play-empty{text-align:center;color:#777}
-.done{text-align:center;padding:36px 10px;color:var(--soft)}
-.done b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);margin-bottom:6px}
-[hidden]{display:none!important}
-:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+
+:root[data-theme="dark"]{
+  --paper:#15171A;
+  --card:#1E2125;
+  --ink:#ECE8E0;
+  --soft:#A29D94;
+  --faint:#6E6A63;
+  --line:#2C3036;
+  --chip:#262A30;
+  --shu:#FF6E5E;
+  --ai:#8FB0EE;
+  --murasaki:#C2A6F0;
+  --yamabuki:#E6B25A;
+  --hole:#15171A;
+  color-scheme:dark;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent
+}
+
+html{
+  background:var(--paper)
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font:16px/1.65 var(--body)
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:var(--paper);
+  padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 10px;
+  border-bottom:1px solid var(--line)
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  align-items:center
+}
+
+.brand{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:20px;
+  letter-spacing:.02em
+}
+
+.brand span{
+  color:var(--shu)
+}
+
+select{
+  flex:1;
+  min-width:0;
+  font:500 15px var(--body);
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--ink)
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+  margin-top:10px;
+  padding:3px;
+  background:var(--chip);
+  border-radius:10px
+}
+
+.tab{
+  text-align:center;
+  padding:7px 0;
+  border-radius:8px;
+  color:var(--soft);
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer
+}
+
+.tab.on{
+  background:var(--card);
+  color:var(--ink);
+  box-shadow:0 1px 2px rgba(0,0,0,.08)
+}
+
+.tab .jp{
+  font-family:var(--display);
+  margin-right:4px
+}
+
+.tab.on[data-t=words] .jp{
+  color:var(--ai)
+}
+
+.tab.on[data-t=kanji] .jp{
+  color:var(--murasaki)
+}
+
+.tab.on[data-t=grammar] .jp{
+  color:var(--yamabuki)
+}
+
+.meta{
+  font:500 12px var(--mono);
+  color:var(--faint);
+  margin-top:8px;
+  display:flex;
+  justify-content:space-between;
+  letter-spacing:.02em
+}
+
+button.small{
+  font:700 12px var(--body);
+  padding:7px 10px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--soft);
+  cursor:pointer
+}
+
+button.small.on{
+  color:var(--shu);
+  border-color:var(--shu)
+}
+
+main{
+  padding-block:14px calc(env(safe-area-inset-bottom,0px) + 48px);
+  padding-inline:16px;
+  max-width:680px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px
+}
+
+.card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  left:12px;
+  top:26px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--hole);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.18)
+}
+
+.front{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px 12px 34px;
+  cursor:pointer
+}
+
+.head{
+  min-width:0
+}
+
+.num{
+  font:500 11px var(--mono);
+  letter-spacing:.04em
+}
+
+.card.w .num{
+  color:var(--ai)
+}
+
+.card.k .num{
+  color:var(--murasaki)
+}
+
+.card.g .num{
+  color:var(--yamabuki)
+}
+
+.rd{
+  font-size:13px;
+  color:var(--soft);
+  line-height:1.2;
+  margin-top:2px
+}
+
+.big{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:30px;
+  line-height:1.2;
+  word-break:break-word
+}
+
+.card.g .big{
+  font-size:21px;
+  font-weight:600;
+  text-wrap:balance
+}
+
+.dots{
+  display:flex;
+  gap:6px
+}
+
+.dot{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  border:1.5px solid var(--faint);
+  cursor:pointer
+}
+
+.dot.on{
+  background:var(--shu);
+  border-color:var(--shu)
+}
+
+.back{
+  display:none;
+  padding:2px 16px 16px 34px;
+  border-top:1px dashed var(--line)
+}
+
+.card.open .back{
+  display:block
+}
+
+.back h4{
+  margin:14px 0 4px;
+  font:700 11px var(--body);
+  letter-spacing:.12em;
+  color:var(--faint)
+}
+
+.en{
+  font-weight:700;
+  font-size:16px
+}
+
+.jp{
+  font-size:15px
+}
+
+.src{
+  font-size:12px;
+  color:var(--faint)
+}
+
+.src a{
+  color:var(--faint)
+}
+
+b.hl{
+  color:var(--shu);
+  font-weight:700
+}
+
+.big b.hl{
+  color:inherit
+}
+
+.ex{
+  background:var(--chip);
+  border-radius:6px;
+  padding:9px 12px;
+  margin:6px 0;
+  cursor:pointer;
+  font-size:15px
+}
+
+.ex .tip{
+  float:right;
+  font:500 10px var(--mono);
+  color:var(--faint);
+  margin-left:8px;
+  margin-top:4px
+}
+
+.ex .tr{
+  display:none;
+  color:var(--soft);
+  font-size:14px;
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px solid var(--line)
+}
+
+.ex.open .tr{
+  display:block
+}
+
+.img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  max-height:200px;
+  object-fit:cover;
+  border-radius:6px;
+  margin-top:14px
+}
+
+ul.w{
+  margin:4px 0;
+  padding-left:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:8px
+}
+
+ul.w li{
+  font-size:15px
+}
+
+.exl{
+  font-size:13px;
+  color:var(--soft)
+}
+
+code{
+  font:500 13px var(--mono);
+  background:var(--chip);
+  padding:3px 7px;
+  border-radius:5px;
+  display:inline-block
+}
+
+.empty{
+  color:var(--soft);
+  text-align:center;
+  padding:40px
+}
+
+.pg{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:12px 14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center
+}
+
+.pg label{
+  font:700 12px var(--body);
+  color:var(--soft);
+  display:flex;
+  align-items:center;
+  gap:6px
+}
+
+.pg input,
+.pg select{
+  width:56px;
+  font:500 15px var(--mono);
+  padding:6px;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  color:var(--ink)
+}
+
+.pg select{
+  width:auto
+}
+
+.pg .go{
+  margin-left:auto;
+  background:var(--shu);
+  color:#fff;
+  border:0;
+  border-radius:8px;
+  padding:8px 14px;
+  font:700 14px var(--body);
+  cursor:pointer
+}
+
+.stat{
+  font:500 12px var(--mono);
+  color:var(--faint)
+}
+
+.btns{
+  display:flex;
+  gap:5px
+}
+
+.btns button{
+  font:700 12px var(--mono);
+  padding:6px 8px;
+  border-radius:6px;
+  border:1.5px solid var(--faint);
+  background:transparent;
+  color:var(--soft);
+  cursor:pointer
+}
+
+.btns button[data-m="1440"]{
+  border-color:var(--shu);
+  color:var(--shu)
+}
+
+.playing{
+  background:#fff;
+  color:#1F2226
+}
+
+.playing header{
+  display:none
+}
+
+.playing #list{
+  max-width:none;
+  min-height:100vh;
+  padding:0;
+  display:block
+}
+
+.play-setup{
+  max-width:560px;
+  margin:0 auto;
+  padding:32px 16px
+}
+
+.play-setup h2{
+  font-family:var(--display);
+  font-size:28px;
+  margin:10px 0 4px
+}
+
+.play-setup p{
+  color:var(--soft);
+  margin:0 0 24px
+}
+
+.play-setup .pg{
+  margin-bottom:14px
+}
+
+.play-setup .go{
+  width:100%;
+  margin:8px 0 0;
+  padding:12px
+}
+
+.play-screen{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  background:#fff
+}
+
+.play-settings,
+.play-exit{
+  position:absolute;
+  top:18px;
+  border:1px solid #ddd;
+  border-radius:7px;
+  background:#fff;
+  color:#555;
+  font:600 13px var(--body);
+  cursor:pointer;
+  z-index:2;
+  padding:7px 10px
+}
+
+.play-settings{
+  left:18px
+}
+
+.play-exit{
+  right:18px;
+  color:var(--shu);
+  border-color:#e8b8b3
+}
+
+.play-stage{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:56px 16px 112px;
+  z-index:1
+}
+
+.play-stage .play-card{
+  width:min(620px,100%);
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  cursor:pointer
+}
+
+.play-stage .play-card .front{
+  min-height:170px;
+  padding:26px 28px 26px 48px
+}
+
+.play-stage .play-card .big{
+  font-size:42px
+}
+
+.play-stage .play-card .back{
+  padding:8px 28px 28px 48px
+}
+
+.play-familiarity{
+  position:absolute;
+  top:56px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#888;
+  font:500 11px var(--mono);
+  letter-spacing:.04em
+}
+
+.play-ratings{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  border-top:1px solid #eee;
+  padding:12px max(16px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  z-index:4
+}
+
+.play-ratings button{
+  min-width:92px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  background:#fff;
+  color:#333;
+  padding:9px 12px;
+  font:600 13px var(--body);
+  cursor:pointer
+}
+
+.play-ratings button span{
+  display:block;
+  color:#888;
+  font:500 11px var(--mono);
+  margin-top:2px
+}
+
+.play-ratings button[data-m="1440"]{
+  border-color:var(--shu);
+  color:var(--shu)
+}
+
+.play-queue{
+  display:none
+}
+
+.play-queue b{
+  color:#333;
+  font-size:13px;
+  margin-right:2px
+}
+
+.play-familiarity-bar{
+  height:3px;
+  width:84px;
+  background:#eee;
+  border-radius:3px;
+  overflow:hidden;
+  margin:0 auto 10px
+}
+
+.play-familiarity-bar i{
+  display:block;
+  height:100%;
+  background:var(--shu);
+  border-radius:3px
+}
+
+.home{
+  max-width:680px;
+  margin:0 auto;
+  padding:34px 16px
+}
+
+.home h1,
+.complete h1{
+  font-family:var(--display);
+  font-size:32px;
+  margin:0 0 6px
+}
+
+.home p{
+  color:var(--soft);
+  margin:0 0 24px
+}
+
+.home-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px
+}
+
+.home-card{
+  display:block;
+  text-align:left;
+  padding:18px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  color:var(--ink);
+  cursor:pointer
+}
+
+.home-card b{
+  display:block;
+  font-family:var(--display);
+  font-size:20px;
+  margin-bottom:4px
+}
+
+.home-card span{
+  font-size:13px;
+  color:var(--soft)
+}
+
+.complete{
+  max-width:760px;
+  margin:0 auto;
+  padding:28px 16px 60px
+}
+
+.complete-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  margin-bottom:18px
+}
+
+.complete-head button{
+  border:1px solid var(--line);
+  background:var(--card);
+  border-radius:7px;
+  padding:7px 10px;
+  color:var(--soft);
+  cursor:pointer
+}
+
+.complete-section h2{
+  font-family:var(--display);
+  font-size:22px;
+  margin:24px 0 8px
+}
+
+.familiarity-bar{
+  height:4px;
+  width:100%;
+  background:var(--hole);
+  border-radius:4px;
+  overflow:hidden;
+  margin-top:7px
+}
+
+.familiarity-bar i{
+  display:block;
+  height:100%;
+  background:var(--shu);
+  border-radius:4px;
+  transition:width .15s ease
+}
+
+.play-empty{
+  text-align:center;
+  color:#777
+}
+
+.done{
+  text-align:center;
+  padding:36px 10px;
+  color:var(--soft)
+}
+
+.done b{
+  display:block;
+  font-family:var(--display);
+  font-size:26px;
+  color:var(--ink);
+  margin-bottom:6px
+}
+
+[hidden]{
+  display:none!important
+}
+
+:focus-visible{
+  outline:2px solid var(--shu);
+  outline-offset:2px
+}
 </style>
 </head>
+
 <body>
+
 <header>
   <div class="row">
     <div class="brand">単語<span>帳</span></div>
     <select id="lesson"></select>
     <button class="small" id="filter" title="Show only cards with fewer than 3 dots">All</button>
   </div>
+
   <div class="tabs">
-    <div class="tab on" data-t="words"><span class="jp">語</span>Words</div>
-    <div class="tab" data-t="kanji"><span class="jp">字</span>Kanji</div>
-    <div class="tab" data-t="grammar"><span class="jp">文</span>Grammar</div>
+    <div class="tab on" data-t="words">
+      <span class="jp">語</span>Words
+    </div>
+    <div class="tab" data-t="kanji">
+      <span class="jp">字</span>Kanji
+    </div>
+    <div class="tab" data-t="grammar">
+      <span class="jp">文</span>Grammar
+    </div>
   </div>
-  <div class="meta"><span id="count"></span><span id="ver"></span></div>
+
+  <div class="meta">
+    <span id="count"></span>
+    <span id="ver"></span>
+  </div>
 </header>
-<main id="list"><div class="empty">Loading…</div></main>
+
+<main id="list">
+  <div class="empty">Loading…</div>
+</main>
 
 <script>
+
 const APP_VERSION = "v8";
+
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const esc = s =>
+  String(s ?? "").replace(
+    /[&<>"]/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;"
+    }[c])
+  );
+
 function hl(text, targets){
   let out = esc(text);
-  for (const t of [].concat(targets).filter(Boolean).sort((a,b)=>b.length-a.length)){
+
+  for (
+    const t of [].concat(targets)
+      .filter(Boolean)
+      .sort((a,b) => b.length-a.length)
+  ){
     const e = esc(t);
-    if (out.includes(e)) { out = out.split(e).join(`<b class="hl">${e}</b>`); break; }
+
+    if (out.includes(e)){
+      out = out.split(e).join(
+        `<b class="hl">${e}</b>`
+      );
+      break;
+    }
   }
+
   return out;
 }
+
 const store = {
-  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
-  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  get(k, d){
+    try{
+      const v = localStorage.getItem(k);
+      return v ? JSON.parse(v) : d;
+    }catch(e){
+      return d;
+    }
+  },
+
+  set(k, v){
+    try{
+      localStorage.setItem(k, JSON.stringify(v));
+    }catch(e){}
+  }
 };
 
-let INDEX = [], DATA = null, TAB = new URLSearchParams(location.search).get("tab") || store.get("jc:tab", "words"), ONLY_WEAK = store.get("jc:weak", false);
+let INDEX = [];
+let DATA = null;
 
-function dotsKey(type, no){ return `jc:dots:${DATA.level}:${type}:${no}`; }
+let TAB =
+  new URLSearchParams(location.search).get("tab")
+  || store.get("jc:tab", "words");
+
+let ONLY_WEAK =
+  store.get("jc:weak", false);
+
+function dotsKey(type, no){
+  return `jc:dots:${DATA.level}:${type}:${no}`;
+}
+
 function dotsHTML(type, no){
-  const v = store.get(dotsKey(type, no), [0,0,0]);
-  return `<div class="dots" data-type="${type}" data-no="${no}">` +
-    v.map((on,i)=>`<div class="dot${on?" on":""}" data-i="${i}"></div>`).join("") + `</div>`;
+  const v =
+    store.get(
+      dotsKey(type, no),
+      [0,0,0]
+    );
+
+  return `
+    <div
+      class="dots"
+      data-type="${type}"
+      data-no="${no}"
+    >
+      ${
+        v.map(
+          (on,i) =>
+            `<div class="dot${on ? " on" : ""}" data-i="${i}"></div>`
+        ).join("")
+      }
+    </div>
+  `;
 }
+
 function exHTML(e, targets){
-  const tr = e.en ? esc(e.en) : "—";
-  const src = e.url ? ` · <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>` : "";
-  return `<div class="ex"><span class="tip">EN</span>${e.src && e.src.startsWith("Wikipedia") ? "🌐 " : ""}${hl(e.jp, targets)}<div class="tr">${tr}${src}</div></div>`;
+  const tr =
+    e.en ? esc(e.en) : "—";
+
+  const src =
+    e.url
+      ? ` · <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`
+      : "";
+
+  return `
+    <div class="ex">
+      <span class="tip">EN</span>
+      ${e.src && e.src.startsWith("Wikipedia") ? "🌐 " : ""}
+      ${hl(e.jp, targets)}
+      <div class="tr">
+        ${tr}${src}
+      </div>
+    </div>
+  `;
 }
-function srcLine(label, url){ return `<div class="src">— ${esc(label)}${url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">link</a>` : ""}</div>`; }
+
+function srcLine(label, url){
+  return `
+    <div class="src">
+      — ${esc(label)}
+      ${
+        url
+          ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">link</a>`
+          : ""
+      }
+    </div>
+  `;
+}
 
 function wordCard(c){
+
   const back = [
-    c.img ? `<img class="img" loading="lazy" src="${esc(c.img)}" alt="">` : "",
-    `<h4>English</h4><div class="en">${esc(c.en)}</div>`,
-    c.jp ? `<h4>大辞泉</h4><div class="jp">${hl(c.jp, c.word)}</div>${srcLine("デジタル大辞泉 (Kotobank)", c.jpUrl)}` : "",
-    c.use ? `<h4>例文</h4>${exHTML(c.use, c.word)}` : ""
+
+    c.img
+      ? `<img class="img" loading="lazy" src="${esc(c.img)}" alt="">`
+      : "",
+
+    `<h4>English</h4>
+     <div class="en">${esc(c.en)}</div>`,
+
+    c.jp
+      ? `<h4>大辞泉</h4>
+         <div class="jp">${hl(c.jp, c.word)}</div>
+         ${srcLine("デジタル大辞泉 (Kotobank)", c.jpUrl)}`
+      : "",
+
+    c.use
+      ? `<h4>例文</h4>${exHTML(c.use, c.word)}`
+      : ""
+
   ].join("");
-  return card("w", c.no, `<div class="rd">${esc(c.reading)}</div><div class="big">${esc(c.word)}</div>`, back, c.level);
-}
-function kanjiCard(c){
-  const words = c.words.length ? `<h4>言葉</h4><ul class="w">` + c.words.map(w =>
-      `<li>${hl(w.w, c.kanji)}（${esc(w.r)}）— ${esc(w.m)}${w.ex ? `<div class="exl">例：${hl(w.ex, c.kanji)}</div>` : ""}</li>`).join("") + `</ul>` : "";
-  const back = [
-    `<h4>読み</h4><div>音 <b>${esc(c.on.join("・")||"—")}</b>　訓 <b>${esc(c.kun.join("・")||"—")}</b>　<span class="src">${c.strokes}画</span></div>`,
-    `<h4>意味</h4><div class="en">${esc(c.en)}</div>`,
-    c.jp ? `<div class="jp">${hl(c.jp, c.kanji)}</div>${srcLine("デジタル大辞泉［漢字項目］", c.jpUrl)}` : "",
-    words,
-    c.use ? `<h4>例文</h4>${exHTML(c.use, c.kanji)}` : ""
-  ].join("");
-  const rd = [c.on.join("・"), c.kun.join("・")].filter(Boolean).join(" · ");
-  return card("k", c.no, `<div class="rd">${esc(rd)}</div><div class="big">${esc(c.kanji)}</div>`, back, c.level);
-}
-function grammarCard(c){
-  const back = [
-    c.en ? `<h4>English</h4><div class="en">${esc(c.en)}</div>` : "",
-    c.imi.length ? `<h4>意味</h4>${c.imi.map(x=>`<div>${esc(x)}</div>`).join("")}` : "",
-    c.setsuzoku.length ? `<h4>接続</h4><code>${esc(c.setsuzoku.join(" / "))}</code>` : "",
-    c.rei.length ? `<h4>例文 <span class="src">(tap for English)</span></h4>${c.rei.map(e=>exHTML(e, c.variants)).join("")}` : "",
-    srcLine("日本語教師NET", c.url)
-  ].join("");
-  return card("g", c.no, `<div class="rd"></div><div class="big">${esc(c.pattern)}</div>`, back, c.level);
-}
-function card(t, no, head, back, level){
-  const type = {w:"words",k:"kanji",g:"grammar"}[t];
-  const familiarity = level ? pgProfile(level,type,no).familiarity : null;
-  const bar = familiarity === null ? "" : `<div class="familiarity-bar" title="Familiarity ${familiarity}"><i style="width:${Math.min(100, familiarity*20)}%"></i></div>`;
-  return `<div class="card ${t}" data-type="${type}" data-no="${no}">
-    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}${bar}</div>${dotsOrButtons(type,no)}</div>
-    <div class="back">${back}</div></div>`;
+
+  return card(
+    "w",
+    c.no,
+    `<div class="rd">${esc(c.reading)}</div>
+     <div class="big">${esc(c.word)}</div>`,
+    back,
+    c.level
+  );
 }
 
-// ---------- Playground: persistent familiarity profile and spaced review ----------
-const PG = { pool: {}, now: () => Date.now() };
-const pgKey = (lvl, t, no) => `jc:due:${lvl}:${t}:${no}`;
-const profileKey = (lvl, t, no) => `jc:profile:${lvl}:${t}:${no}`;
-function pgProfile(lvl, t, no){
-  const oldDue = store.get(pgKey(lvl,t,no), null);
-  return store.get(profileKey(lvl,t,no), {familiarity:0,reviews:0,correct:0,incorrect:0,dueAt:oldDue || 0});
+function kanjiCard(c){
+
+  const words =
+    c.words.length
+      ? `<h4>言葉</h4>
+         <ul class="w">
+           ${
+             c.words.map(w =>
+               `<li>
+                  ${hl(w.w, c.kanji)}
+                  （${esc(w.r)}）— ${esc(w.m)}
+                  ${
+                    w.ex
+                      ? `<div class="exl">例：${hl(w.ex, c.kanji)}</div>`
+                      : ""
+                  }
+                </li>`
+             ).join("")
+           }
+         </ul>`
+      : "";
+
+  const back = [
+
+    `<h4>読み</h4>
+     <div>
+       音 <b>${esc(c.on.join("・") || "—")}</b>
+      　
+       訓 <b>${esc(c.kun.join("・") || "—")}</b>
+      　
+       <span class="src">${c.strokes}画</span>
+     </div>`,
+
+    `<h4>意味</h4>
+     <div class="en">${esc(c.en)}</div>`,
+
+    c.jp
+      ? `<div class="jp">${hl(c.jp, c.kanji)}</div>
+         ${srcLine("デジタル大辞泉［漢字項目］", c.jpUrl)}`
+      : "",
+
+    words,
+
+    c.use
+      ? `<h4>例文</h4>${exHTML(c.use, c.kanji)}`
+      : ""
+
+  ].join("");
+
+  const rd =
+    [
+      c.on.join("・"),
+      c.kun.join("・")
+    ]
+    .filter(Boolean)
+    .join(" · ");
+
+  return card(
+    "k",
+    c.no,
+    `<div class="rd">${esc(rd)}</div>
+     <div class="big">${esc(c.kanji)}</div>`,
+    back,
+    c.level
+  );
 }
+
+function grammarCard(c){
+
+  const back = [
+
+    c.en
+      ? `<h4>English</h4>
+         <div class="en">${esc(c.en)}</div>`
+      : "",
+
+    c.imi.length
+      ? `<h4>意味</h4>
+         ${c.imi.map(x => `<div>${esc(x)}</div>`).join("")}`
+      : "",
+
+    c.setsuzoku.length
+      ? `<h4>接続</h4>
+         <code>${esc(c.setsuzoku.join(" / "))}</code>`
+      : "",
+
+    c.rei.length
+      ? `<h4>例文 <span class="src">(tap for English)</span></h4>
+         ${c.rei.map(e => exHTML(e, c.variants)).join("")}`
+      : "",
+
+    srcLine("日本語教師NET", c.url)
+
+  ].join("");
+
+  return card(
+    "g",
+    c.no,
+    `<div class="rd"></div>
+     <div class="big">${esc(c.pattern)}</div>`,
+    back,
+    c.level
+  );
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+function card(t, no, head, back, level){
+
+  const type = {
+    w:"words",
+    k:"kanji",
+    g:"grammar"
+  }[t];
+
+  /*
+    Use the card's own level when available.
+    For normal lesson cards, fall back to DATA.level.
+  */
+  const lvl =
+    level || DATA?.level;
+
+  /*
+    Every card has a familiarity value.
+    New cards start at 0.
+  */
+  const familiarity =
+    lvl
+      ? pgProfile(lvl, type, no).familiarity
+      : 0;
+
+  /*
+    Familiarity is 0–5.
+    Therefore each point represents 20%.
+  */
+  const bar = `
+    <div
+      class="familiarity-bar"
+      title="Familiarity ${familiarity}"
+    >
+      <i
+        style="width:${Math.min(
+          100,
+          familiarity * 20
+        )}%"
+      ></i>
+    </div>
+  `;
+
+  return `
+    <div
+      class="card ${t}"
+      data-type="${type}"
+      data-no="${no}"
+    >
+
+      <div class="front">
+
+        <div class="head">
+
+          ${
+            head.replace(
+              '<div class="rd">',
+              `<div class="rd">
+                 <span class="num">
+                   #${t.toUpperCase()}${no}
+                 </span>　
+               `
+            )
+          }
+
+          ${bar}
+
+        </div>
+
+        ${dotsOrButtons(type,no)}
+
+      </div>
+
+      <div class="back">
+        ${back}
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   PLAYGROUND
+   ========================================================= */
+
+const PG = {
+  pool:{},
+  now:() => Date.now()
+};
+
+const pgKey =
+  (lvl,t,no) =>
+    `jc:due:${lvl}:${t}:${no}`;
+
+const profileKey =
+  (lvl,t,no) =>
+    `jc:profile:${lvl}:${t}:${no}`;
+
+function pgProfile(lvl,t,no){
+
+  const oldDue =
+    store.get(
+      pgKey(lvl,t,no),
+      null
+    );
+
+  return store.get(
+    profileKey(lvl,t,no),
+    {
+      familiarity:0,
+      reviews:0,
+      correct:0,
+      incorrect:0,
+      dueAt:oldDue || 0
+    }
+  );
+}
+
 async function pgPool(level){
-  if (PG.pool[level]) return PG.pool[level];
-  const pool = {words:[], kanji:[], grammar:[]};
-  for (const x of INDEX.filter(i => level === "ALL" || i.level === level)){
-    try { const d = await (await fetch(`data/${x.id}.json`)).json();
-      for (const t of ["words","kanji","grammar"]) pool[t].push(...d[t].map(c => ({...c, level:x.level}))); } catch(e){}
+
+  if(PG.pool[level])
+    return PG.pool[level];
+
+  const pool = {
+    words:[],
+    kanji:[],
+    grammar:[]
+  };
+
+  for(
+    const x of INDEX.filter(
+      i => level === "ALL" || i.level === level
+    )
+  ){
+
+    try{
+
+      const d =
+        await (
+          await fetch(`data/${x.id}.json`)
+        ).json();
+
+      for(
+        const t of [
+          "words",
+          "kanji",
+          "grammar"
+        ]
+      ){
+
+        pool[t].push(
+          ...d[t].map(
+            c => ({
+              ...c,
+              level:x.level
+            })
+          )
+        );
+
+      }
+
+    }catch(e){}
+
   }
+
   return PG.pool[level] = pool;
 }
-function pgState(){ return store.get("jc:pg", {level:"ALL", n:{words:10,kanji:5,grammar:2}, ids:[]}); }
-async function pgNew(){
-  const st = pgState();
-  st.level = $("#pgLevel").value;
-  for (const t of ["words","kanji","grammar"]) st.n[t] = Math.max(0, +$(`#pg_${t}`).value || 0);
-  const pool = await pgPool(st.level);
-  st.ids = [];
-  for (const t of ["words","kanji","grammar"]){
-    const candidates = pool[t].filter(c => {
-      const p = pgProfile(c.level,t,c.no); return !p.dueAt || p.dueAt <= PG.now();
-    }).sort((a,b) => pgProfile(a.level,t,a.no).familiarity - pgProfile(b.level,t,b.no).familiarity);
-    candidates.slice(0, st.n[t]).forEach(c => st.ids.push([c.level, t, c.no]));
-  }
-  store.set("jc:pg", st); PG_RUNNING = true; renderPG();
+
+function pgState(){
+
+  return store.get(
+    "jc:pg",
+    {
+      level:"ALL",
+      n:{
+        words:10,
+        kanji:5,
+        grammar:2
+      },
+      ids:[]
+    }
+  );
+
 }
+
+async function pgNew(){
+
+  const st = pgState();
+
+  st.level =
+    $("#pgLevel").value;
+
+  for(
+    const t of [
+      "words",
+      "kanji",
+      "grammar"
+    ]
+  ){
+
+    st.n[t] =
+      Math.max(
+        0,
+        +$(`#pg_${t}`).value || 0
+      );
+
+  }
+
+  const pool =
+    await pgPool(st.level);
+
+  st.ids = [];
+
+  for(
+    const t of [
+      "words",
+      "kanji",
+      "grammar"
+    ]
+  ){
+
+    const candidates =
+      pool[t]
+        .filter(c => {
+
+          const p =
+            pgProfile(
+              c.level,
+              t,
+              c.no
+            );
+
+          return !p.dueAt ||
+                 p.dueAt <= PG.now();
+
+        })
+        .sort(
+          (a,b) =>
+            pgProfile(
+              a.level,
+              t,
+              a.no
+            ).familiarity
+            -
+            pgProfile(
+              b.level,
+              t,
+              b.no
+            ).familiarity
+        );
+
+    candidates
+      .slice(0, st.n[t])
+      .forEach(
+        c =>
+          st.ids.push([
+            c.level,
+            t,
+            c.no
+          ])
+      );
+
+  }
+
+  store.set("jc:pg",st);
+
+  PG_RUNNING = true;
+
+  renderPG();
+}
+
 async function renderPG(){
-  document.body.classList.toggle("playing", PLAY && PG_RUNNING);
-  const st = pgState(), pool = await pgPool(st.level), now = PG.now();
-  if (!PG_RUNNING){
-    DATA = {level: st.level};
-    const setup = `<section class="play-setup"><button class="play-exit" id="pgExit">Exit playground</button>
-      <h2>Playground</h2><p>Set up a short review session, then start when you’re ready.</p>
-      <div class="pg">
-        <label>Level <select id="pgLevel">${["ALL","N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
-        <label>語 <input id="pg_words" type="number" min="0" value="${st.n.words}"></label>
-        <label>字 <input id="pg_kanji" type="number" min="0" value="${st.n.kanji}"></label>
-        <label>文 <input id="pg_grammar" type="number" min="0" value="${st.n.grammar}"></label>
-        <button class="go" id="pgGo">Start</button>
-      </div>
-      <div class="stat">New session cards: ${st.n.words} words · ${st.n.kanji} kanji · ${st.n.grammar} grammar</div>
-    </section>`;
-    $("#list").innerHTML = setup;
-    $("#count").textContent = `Playground · ${st.level}`;
-    $("#pgGo").onclick = pgNew;
-    $("#pgExit").onclick = pgExit;
+
+  document.body.classList.toggle(
+    "playing",
+    PLAY && PG_RUNNING
+  );
+
+  const st = pgState();
+
+  const pool =
+    await pgPool(st.level);
+
+  const now =
+    PG.now();
+
+  if(!PG_RUNNING){
+
+    DATA = {
+      level:st.level
+    };
+
+    const setup = `
+      <section class="play-setup">
+
+        <button
+          class="play-exit"
+          id="pgExit"
+        >
+          Exit playground
+        </button>
+
+        <h2>Playground</h2>
+
+        <p>
+          Set up a short review session,
+          then start when you’re ready.
+        </p>
+
+        <div class="pg">
+
+          <label>
+            Level
+            <select id="pgLevel">
+              ${
+                ["ALL","N1","N2"]
+                .map(
+                  l =>
+                    `<option${
+                      l===st.level
+                        ? " selected"
+                        : ""
+                    }>${l}</option>`
+                )
+                .join("")
+              }
+            </select>
+          </label>
+
+          <label>
+            語
+            <input
+              id="pg_words"
+              type="number"
+              min="0"
+              value="${st.n.words}"
+            >
+          </label>
+
+          <label>
+            字
+            <input
+              id="pg_kanji"
+              type="number"
+              min="0"
+              value="${st.n.kanji}"
+            >
+          </label>
+
+          <label>
+            文
+            <input
+              id="pg_grammar"
+              type="number"
+              min="0"
+              value="${st.n.grammar}"
+            >
+          </label>
+
+          <button
+            class="go"
+            id="pgGo"
+          >
+            Start
+          </button>
+
+        </div>
+
+        <div class="stat">
+          New session cards:
+          ${st.n.words} words ·
+          ${st.n.kanji} kanji ·
+          ${st.n.grammar} grammar
+        </div>
+
+      </section>
+    `;
+
+    $("#list").innerHTML =
+      setup;
+
+    $("#count").textContent =
+      `Playground · ${st.level}`;
+
+    $("#pgGo").onclick =
+      pgNew;
+
+    $("#pgExit").onclick =
+      pgExit;
+
     return;
   }
-  const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard};
-  const live = [], later = [];
-  for (const [lvl,t,no] of st.ids){
-    const c = pool[t].find(x => x.level === lvl && x.no === no); if (!c) continue;
-    const due = pgProfile(lvl,t,no).dueAt || 0;
-    (due <= now ? live : later).push([lvl,t,c,due]);
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  };
+
+  const live = [];
+  const later = [];
+
+  for(
+    const [lvl,t,no] of st.ids
+  ){
+
+    const c =
+      pool[t].find(
+        x =>
+          x.level === lvl &&
+          x.no === no
+      );
+
+    if(!c)
+      continue;
+
+    const due =
+      pgProfile(
+        lvl,
+        t,
+        no
+      ).dueAt || 0;
+
+    (
+      due <= now
+        ? live
+        : later
+    ).push([
+      lvl,
+      t,
+      c,
+      due
+    ]);
+
   }
-  DATA = {level: st.level};
-  const current = live[0];
+
+  DATA = {
+    level:st.level
+  };
+
+  const current =
+    live[0];
+
   const buckets = [
-    ["Now", live.length],
-    ["3m", later.filter(x => x[3] - now <= 3*60000).length],
-    ["10m", later.filter(x => x[3] - now <= 10*60000).length],
-    ["1d", later.filter(x => x[3] - now <= 1440*60000).length]
+    ["Now",live.length],
+
+    [
+      "3m",
+      later.filter(
+        x =>
+          x[3] - now <=
+          3 * 60000
+      ).length
+    ],
+
+    [
+      "10m",
+      later.filter(
+        x =>
+          x[3] - now <=
+          10 * 60000
+      ).length
+    ],
+
+    [
+      "1d",
+      later.filter(
+        x =>
+          x[3] - now <=
+          1440 * 60000
+      ).length
+    ]
   ];
-  const cp = current ? pgProfile(current[0], current[1], current[2].no) : null;
-  const card = current ? `<div class="play-familiarity-bar" title="Familiarity ${cp.familiarity}"><i style="width:${Math.min(100, cp.familiarity*20)}%"></i></div>` + make[current[1]](current[2]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
-  const ratings = current ? `<div class="play-ratings" data-level="${current[0]}" data-type="${current[1]}" data-no="${current[2].no}">
-    <button data-m="3">Again<span>3 min</span></button>
-    <button data-m="10">Hard<span>10 min</span></button>
-    <button data-m="1440">Easy<span>1 day</span></button>
-  </div>` : "";
-  const queue = `<div class="play-queue">${buckets.map(x=>`<span><b>${x[1]}</b>${x[0]}</span>`).join("")}</div>`;
-  const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[3])) - now)/60000)) : null;
-  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button><button class="play-exit" id="pgExit">Exit playground</button><div class="play-top">${queue}</div><div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
-  $("#count").textContent = `Playground · ${st.level}`;
-  $("#pgBack").onclick = () => { PG_RUNNING = false; renderPG(); };
-  $("#pgExit").onclick = pgExit;
+
+  /*
+    IMPORTANT:
+    The familiarity bar is now INSIDE the card,
+    so the play-stage only centers one element:
+    the card itself.
+  */
+  const card =
+    current
+
+      ? make[current[1]](
+          current[2]
+        ).replace(
+          '<div class="card ',
+          '<div class="card play-card '
+        )
+
+      : `
+        <div class="play-empty">
+          <h2>Session complete</h2>
+          <p>All cards are resting.</p>
+        </div>
+      `;
+
+  const ratings =
+    current
+      ? `
+        <div
+          class="play-ratings"
+          data-level="${current[0]}"
+          data-type="${current[1]}"
+          data-no="${current[2].no}"
+        >
+
+          <button data-m="3">
+            Again
+            <span>3 min</span>
+          </button>
+
+          <button data-m="10">
+            Hard
+            <span>10 min</span>
+          </button>
+
+          <button data-m="1440">
+            Easy
+            <span>1 day</span>
+          </button>
+
+        </div>
+      `
+      : "";
+
+  const queue = `
+    <div class="play-queue">
+      ${
+        buckets
+          .map(
+            x =>
+              `<span>
+                <b>${x[1]}</b>${x[0]}
+              </span>`
+          )
+          .join("")
+      }
+    </div>
+  `;
+
+  const next =
+    later.length
+      ? Math.max(
+          0,
+          Math.round(
+            (
+              Math.min(
+                ...later.map(
+                  x => x[3]
+                )
+              )
+              -
+              now
+            ) / 60000
+          )
+        )
+      : null;
+
+  $("#list").innerHTML = `
+    <div class="play-screen">
+
+      <button
+        class="play-settings"
+        id="pgBack"
+      >
+        Settings
+      </button>
+
+      <button
+        class="play-exit"
+        id="pgExit"
+      >
+        Exit playground
+      </button>
+
+      <div class="play-top">
+        ${queue}
+      </div>
+
+      <div class="play-stage">
+        ${card}
+      </div>
+
+      ${ratings}
+
+      ${
+        !current && next !== null
+          ? `
+            <div
+              class="stat"
+              style="text-align:center"
+            >
+              Next card in about
+              ${next} min.
+            </div>
+          `
+          : ""
+      }
+
+    </div>
+  `;
+
+  $("#count").textContent =
+    `Playground · ${st.level}`;
+
+  $("#pgBack").onclick =
+    () => {
+      PG_RUNNING = false;
+      renderPG();
+    };
+
+  $("#pgExit").onclick =
+    pgExit;
 }
+
 function pgExit(){
-  $("#lesson").value = "home";
-  store.set("jc:lesson", "home");
+
+  $("#lesson").value =
+    "home";
+
+  store.set(
+    "jc:lesson",
+    "home"
+  );
+
   pick("home");
 }
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
 function renderHome(){
-  document.body.classList.remove("playing");
-  $("#list").innerHTML = `<section class="home">
-    <h1>JLPT Cards</h1><p>Build your Japanese memory one review at a time.</p>
-    <div class="home-grid">
-      <button class="home-card" data-home="playground"><b>▶ Playground</b><span>Personalized review session</span></button>
-      <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card and its familiarity</span></button>
-    </div>
-    <h2 class="complete-section h2">Lessons</h2>
-    <div class="home-grid">${INDEX.map(x=>`<button class="home-card" data-lesson="${x.id}"><b>${x.level} · Day ${x.day}</b><span>${x.counts[0]} words · ${x.counts[1]} kanji · ${x.counts[2]} grammar</span></button>`).join("")}</div>
-  </section>`;
-  $("#count").textContent = "Home";
+
+  document.body.classList.remove(
+    "playing"
+  );
+
+  $("#list").innerHTML = `
+    <section class="home">
+
+      <h1>JLPT Cards</h1>
+
+      <p>
+        Build your Japanese memory
+        one review at a time.
+      </p>
+
+      <div class="home-grid">
+
+        <button
+          class="home-card"
+          data-home="playground"
+        >
+          <b>▶ Playground</b>
+          <span>
+            Personalized review session
+          </span>
+        </button>
+
+        <button
+          class="home-card"
+          data-home="complete"
+        >
+          <b>▦ Complete list</b>
+          <span>
+            Browse every card and its familiarity
+          </span>
+        </button>
+
+      </div>
+
+      <h2 class="complete-section h2">
+        Lessons
+      </h2>
+
+      <div class="home-grid">
+
+        ${
+          INDEX
+            .map(
+              x =>
+                `<button
+                  class="home-card"
+                  data-lesson="${x.id}"
+                >
+                  <b>
+                    ${x.level} · Day ${x.day}
+                  </b>
+                  <span>
+                    ${x.counts[0]} words ·
+                    ${x.counts[1]} kanji ·
+                    ${x.counts[2]} grammar
+                  </span>
+                </button>`
+            )
+            .join("")
+        }
+
+      </div>
+
+    </section>
+  `;
+
+  $("#count").textContent =
+    "Home";
 }
+
+
+/* =========================================================
+   COMPLETE LIST
+   ========================================================= */
+
 async function renderComplete(){
-  document.body.classList.remove("playing");
-  const pool = await pgPool("ALL"), make = {words:wordCard,kanji:kanjiCard,grammar:grammarCard};
-  const section = (t,label) => `<section class="complete-section"><h2>${label}</h2>${pool[t].map(make[t]).join("")}</section>`;
-  $("#list").innerHTML = `<section class="complete"><div class="complete-head"><div><h1>Complete list</h1><div class="stat">Every card · familiarity is saved locally</div></div><button id="completeHome">Home</button></div>${section("words","Words")}${section("kanji","Kanji")}${section("grammar","Grammar")}</section>`;
-  $("#count").textContent = "Complete list";
-  $("#completeHome").onclick = () => { $("#lesson").value="home"; store.set("jc:lesson","home"); pick("home"); };
+
+  document.body.classList.remove(
+    "playing"
+  );
+
+  const pool =
+    await pgPool("ALL");
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  };
+
+  const section =
+    (t,label) =>
+      `
+        <section class="complete-section">
+
+          <h2>${label}</h2>
+
+          ${
+            pool[t]
+              .map(make[t])
+              .join("")
+          }
+
+        </section>
+      `;
+
+  $("#list").innerHTML = `
+    <section class="complete">
+
+      <div class="complete-head">
+
+        <div>
+
+          <h1>
+            Complete list
+          </h1>
+
+          <div class="stat">
+            Every card ·
+            familiarity is saved locally
+          </div>
+
+        </div>
+
+        <button id="completeHome">
+          Home
+        </button>
+
+      </div>
+
+      ${section("words","Words")}
+      ${section("kanji","Kanji")}
+      ${section("grammar","Grammar")}
+
+    </section>
+  `;
+
+  $("#count").textContent =
+    "Complete list";
+
+  $("#completeHome").onclick =
+    () => {
+      $("#lesson").value =
+        "home";
+
+      store.set(
+        "jc:lesson",
+        "home"
+      );
+
+      pick("home");
+    };
 }
-function dotsOrButtons(type, no){
-  if (!PLAY) return dotsHTML(type, no);
+
+
+/* =========================================================
+   DOTS
+   ========================================================= */
+
+function dotsOrButtons(type,no){
+
+  if(!PLAY)
+    return dotsHTML(
+      type,
+      no
+    );
+
   return "";
 }
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
 let PLAY = false;
 let PG_RUNNING = false;
-setInterval(() => { if (PLAY) renderPG(); }, 30000);
+
+setInterval(
+  () => {
+    if(PLAY)
+      renderPG();
+  },
+  30000
+);
+
+
+/* =========================================================
+   NORMAL RENDER
+   ========================================================= */
 
 function render(){
-  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
-  $("#filter").textContent = ONLY_WEAK ? "Weak only" : "All";
-  $("#filter").classList.toggle("on", ONLY_WEAK);
-  if (!DATA) return;
-  let items = DATA[TAB];
-  if (ONLY_WEAK) items = items.filter(c => store.get(dotsKey(TAB, c.no), [0,0,0]).filter(Boolean).length < 3);
-  const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard}[TAB];
-  $("#list").innerHTML = items.length ? items.map(make).join("") : `<div class="empty">Nothing here.</div>`;
-  $("#count").textContent = `${DATA.level} Day ${DATA.day} · ${items.length} cards`;
-  const q = new URLSearchParams(location.search);
-  if (q.has("open")) document.querySelectorAll(".card").forEach((c,i)=>{ if(i<+q.get("open")) c.classList.add("open"); });
-  if (q.has("ex")) document.querySelectorAll(".ex").forEach(x=>x.classList.add("open"));
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      el =>
+        el.classList.toggle(
+          "on",
+          el.dataset.t === TAB
+        )
+    );
+
+  $("#filter").textContent =
+    ONLY_WEAK
+      ? "Weak only"
+      : "All";
+
+  $("#filter").classList.toggle(
+    "on",
+    ONLY_WEAK
+  );
+
+  if(!DATA)
+    return;
+
+  let items =
+    DATA[TAB];
+
+  if(ONLY_WEAK){
+
+    items =
+      items.filter(
+        c =>
+          store
+            .get(
+              dotsKey(
+                TAB,
+                c.no
+              ),
+              [0,0,0]
+            )
+            .filter(Boolean)
+            .length < 3
+      );
+
+  }
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  }[TAB];
+
+  $("#list").innerHTML =
+    items.length
+      ? items.map(make).join("")
+      : `<div class="empty">
+           Nothing here.
+         </div>`;
+
+  $("#count").textContent =
+    `${DATA.level} Day ${DATA.day} · ${items.length} cards`;
+
+  const q =
+    new URLSearchParams(
+      location.search
+    );
+
+  if(q.has("open")){
+
+    document
+      .querySelectorAll(".card")
+      .forEach(
+        (c,i) => {
+          if(
+            i < +q.get("open")
+          )
+            c.classList.add(
+              "open"
+            );
+        }
+      );
+
+  }
+
+  if(q.has("ex")){
+
+    document
+      .querySelectorAll(".ex")
+      .forEach(
+        x =>
+          x.classList.add(
+            "open"
+          )
+      );
+
+  }
 }
 
-document.addEventListener("click", e => {
-  const pb = e.target.closest(".play-ratings button");
-  if (pb){
-    const box = pb.parentElement, st = pgState();
-    const lvl = box.dataset.level, type = box.dataset.type, no = +box.dataset.no;
-    const p = pgProfile(lvl, type, no), m = +pb.dataset.m;
-    p.reviews += 1;
-    if (m === 3){ p.incorrect += 1; p.familiarity = Math.max(0, p.familiarity - 1); }
-    else { p.correct += 1; p.familiarity += m === 1440 ? 2 : 1; }
-    p.dueAt = PG.now() + m * 60000;
-    store.set(profileKey(lvl,type,no), p);
-    store.set(pgKey(lvl,type,no), p.dueAt);
-    renderPG(); return;
+
+/* =========================================================
+   CLICK HANDLING
+   ========================================================= */
+
+document.addEventListener(
+  "click",
+  e => {
+
+    const pb =
+      e.target.closest(
+        ".play-ratings button"
+      );
+
+    if(pb){
+
+      const box =
+        pb.parentElement;
+
+      const st =
+        pgState();
+
+      const lvl =
+        box.dataset.level;
+
+      const type =
+        box.dataset.type;
+
+      const no =
+        +box.dataset.no;
+
+      const p =
+        pgProfile(
+          lvl,
+          type,
+          no
+        );
+
+      const m =
+        +pb.dataset.m;
+
+      p.reviews += 1;
+
+      if(m === 3){
+
+        p.incorrect += 1;
+
+        p.familiarity =
+          Math.max(
+            0,
+            p.familiarity - 1
+          );
+
+      }else{
+
+        p.correct += 1;
+
+        p.familiarity +=
+          m === 1440
+            ? 2
+            : 1;
+
+      }
+
+      p.dueAt =
+        PG.now() +
+        m * 60000;
+
+      store.set(
+        profileKey(
+          lvl,
+          type,
+          no
+        ),
+        p
+      );
+
+      store.set(
+        pgKey(
+          lvl,
+          type,
+          no
+        ),
+        p.dueAt
+      );
+
+      renderPG();
+
+      return;
+    }
+
+
+    const dot =
+      e.target.closest(".dot");
+
+    if(dot){
+
+      const box =
+        dot.parentElement;
+
+      const k =
+        dotsKey(
+          box.dataset.type,
+          box.dataset.no
+        );
+
+      const v =
+        store.get(
+          k,
+          [0,0,0]
+        );
+
+      v[
+        +dot.dataset.i
+      ] =
+        v[
+          +dot.dataset.i
+        ]
+          ? 0
+          : 1;
+
+      store.set(k,v);
+
+      dot.classList.toggle(
+        "on",
+        !!v[
+          +dot.dataset.i
+        ]
+      );
+
+      return;
+    }
+
+
+    if(
+      e.target.closest("a")
+    )
+      return;
+
+
+    const ex =
+      e.target.closest(".ex");
+
+    if(ex){
+
+      ex.classList.toggle(
+        "open"
+      );
+
+      return;
+    }
+
+
+    const playCard =
+      e.target.closest(
+        ".play-card"
+      );
+
+    if(playCard){
+
+      playCard.classList.toggle(
+        "open"
+      );
+
+      return;
+    }
+
+
+    const front =
+      e.target.closest(
+        ".front"
+      );
+
+    if(front){
+
+      front.parentElement
+        .classList.toggle(
+          "open"
+        );
+
+      return;
+    }
+
+
+    const home =
+      e.target.closest(
+        "[data-home]"
+      );
+
+    if(home){
+
+      $("#lesson").value =
+        home.dataset.home;
+
+      store.set(
+        "jc:lesson",
+        home.dataset.home
+      );
+
+      pick(
+        home.dataset.home
+      );
+
+      return;
+    }
+
+
+    const lesson =
+      e.target.closest(
+        "[data-lesson]"
+      );
+
+    if(lesson){
+
+      $("#lesson").value =
+        lesson.dataset.lesson;
+
+      store.set(
+        "jc:lesson",
+        lesson.dataset.lesson
+      );
+
+      pick(
+        lesson.dataset.lesson
+      );
+
+      return;
+    }
+
+
+    const tab =
+      e.target.closest(".tab");
+
+    if(tab){
+
+      TAB =
+        tab.dataset.t;
+
+      store.set(
+        "jc:tab",
+        TAB
+      );
+
+      render();
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
   }
-  const dot = e.target.closest(".dot");
-  if (dot){
-    const box = dot.parentElement, k = dotsKey(box.dataset.type, box.dataset.no);
-    const v = store.get(k, [0,0,0]); v[+dot.dataset.i] = v[+dot.dataset.i] ? 0 : 1; store.set(k, v);
-    dot.classList.toggle("on", !!v[+dot.dataset.i]); return;
-  }
-  if (e.target.closest("a")) return;
-  const ex = e.target.closest(".ex"); if (ex){ ex.classList.toggle("open"); return; }
-  const playCard = e.target.closest(".play-card"); if (playCard){ playCard.classList.toggle("open"); return; }
-  const front = e.target.closest(".front"); if (front){ front.parentElement.classList.toggle("open"); return; }
-  const home = e.target.closest("[data-home]"); if (home){ $("#lesson").value = home.dataset.home; store.set("jc:lesson", home.dataset.home); pick(home.dataset.home); return; }
-  const lesson = e.target.closest("[data-lesson]"); if (lesson){ $("#lesson").value = lesson.dataset.lesson; store.set("jc:lesson", lesson.dataset.lesson); pick(lesson.dataset.lesson); return; }
-  const tab = e.target.closest(".tab"); if (tab){ TAB = tab.dataset.t; store.set("jc:tab", TAB); render(); window.scrollTo(0,0); }
-});
-$("#filter").onclick = () => { ONLY_WEAK = !ONLY_WEAK; store.set("jc:weak", ONLY_WEAK); render(); };
-$("#lesson").onchange = e => {
-  if (e.target.value === "playground") store.set("jc:returnLesson", store.get("jc:lesson", INDEX[0]?.id || ""));
-  store.set("jc:lesson", e.target.value); pick(e.target.value);
-};
+);
+
+
+/* =========================================================
+   FILTER / LESSON
+   ========================================================= */
+
+$("#filter").onclick =
+  () => {
+
+    ONLY_WEAK =
+      !ONLY_WEAK;
+
+    store.set(
+      "jc:weak",
+      ONLY_WEAK
+    );
+
+    render();
+
+  };
+
+
+$("#lesson").onchange =
+  e => {
+
+    if(
+      e.target.value ===
+      "playground"
+    ){
+
+      store.set(
+        "jc:returnLesson",
+        store.get(
+          "jc:lesson",
+          INDEX[0]?.id || ""
+        )
+      );
+
+    }
+
+    store.set(
+      "jc:lesson",
+      e.target.value
+    );
+
+    pick(
+      e.target.value
+    );
+
+  };
+
+
+/* =========================================================
+   PICK VIEW
+   ========================================================= */
+
 function pick(id){
-  PLAY = id === "playground";
+
+  PLAY =
+    id === "playground";
+
   PG_RUNNING = false;
-  const special = PLAY || id === "home" || id === "complete";
-  document.querySelector(".tabs").hidden = special; $("#filter").hidden = special;
-  if (PLAY) renderPG(); else if (id === "home") renderHome(); else if (id === "complete") renderComplete(); else load(id);
+
+  const special =
+    PLAY ||
+    id === "home" ||
+    id === "complete";
+
+  document
+    .querySelector(".tabs")
+    .hidden = special;
+
+  $("#filter").hidden =
+    special;
+
+  if(PLAY)
+    renderPG();
+
+  else if(id === "home")
+    renderHome();
+
+  else if(id === "complete")
+    renderComplete();
+
+  else
+    load(id);
 }
+
+
+/* =========================================================
+   LOAD LESSON
+   ========================================================= */
 
 async function load(id){
-  try {
-    const r = await fetch(`data/${id}.json`, {cache: "no-cache"});
-    DATA = await r.json(); render(); window.scrollTo(0,0);
-  } catch(err){ $("#list").innerHTML = `<div class="empty">Could not load ${esc(id)}.</div>`; }
+
+  try{
+
+    const r =
+      await fetch(
+        `data/${id}.json`,
+        {
+          cache:"no-cache"
+        }
+      );
+
+    DATA =
+      await r.json();
+
+    render();
+
+    window.scrollTo(
+      0,
+      0
+    );
+
+  }catch(err){
+
+    $("#list").innerHTML =
+      `<div class="empty">
+        Could not load
+        ${esc(id)}.
+      </div>`;
+
+  }
+
 }
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
 (async function init(){
-  $("#ver").textContent = APP_VERSION;
-  try { INDEX = await (await fetch("data/index.json", {cache:"no-cache"})).json(); }
-  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load lesson list.</div>`; return; }
-  const sel = $("#lesson");
-  sel.innerHTML = `<option value="home">⌂ Home</option><option value="playground">▶ Playground</option>` + INDEX.map(x => `<option value="${x.id}">${x.level} · Day ${x.day}  (${x.counts[0]}語 ${x.counts[1]}字 ${x.counts[2]}文法)</option>`).join("");
-  const saved = store.get("jc:lesson", null);
-  sel.value = (saved === "home" || saved === "playground" || INDEX.some(x => x.id === saved)) ? saved : "home";
-  if (new URLSearchParams(location.search).has("play")) sel.value = "playground";
-  pick(sel.value);
-  if (new URLSearchParams(location.search).get("play") === "new") setTimeout(pgNew, 300);
+
+  $("#ver").textContent =
+    APP_VERSION;
+
+  try{
+
+    INDEX =
+      await (
+        await fetch(
+          "data/index.json",
+          {
+            cache:"no-cache"
+          }
+        )
+      ).json();
+
+  }catch(e){
+
+    $("#list").innerHTML =
+      `<div class="empty">
+        Could not load lesson list.
+      </div>`;
+
+    return;
+  }
+
+  const sel =
+    $("#lesson");
+
+  sel.innerHTML =
+    `
+      <option value="home">
+        ⌂ Home
+      </option>
+
+      <option value="playground">
+        ▶ Playground
+      </option>
+
+      ${
+        INDEX
+          .map(
+            x =>
+              `<option value="${x.id}">
+                ${x.level} · Day ${x.day}
+                (${x.counts[0]}語
+                 ${x.counts[1]}字
+                 ${x.counts[2]}文法)
+              </option>`
+          )
+          .join("")
+      }
+    `;
+
+  const saved =
+    store.get(
+      "jc:lesson",
+      null
+    );
+
+  sel.value =
+    (
+      saved === "home" ||
+      saved === "playground" ||
+      INDEX.some(
+        x => x.id === saved
+      )
+    )
+      ? saved
+      : "home";
+
+  if(
+    new URLSearchParams(
+      location.search
+    ).has("play")
+  )
+    sel.value =
+      "playground";
+
+  pick(
+    sel.value
+  );
+
+  if(
+    new URLSearchParams(
+      location.search
+    ).get("play") === "new"
+  ){
+
+    setTimeout(
+      pgNew,
+      300
+    );
+
+  }
+
 })();
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+
+/* =========================================================
+   SERVICE WORKER
+   ========================================================= */
+
+if(
+  "serviceWorker" in navigator
+){
+
+  navigator.serviceWorker
+    .register("sw.js")
+    .catch(() => {});
+
+}
+
 </script>
+
 </body>
 </html>
