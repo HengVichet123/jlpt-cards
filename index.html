@@ -1103,7 +1103,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v25";
+const APP_VERSION = "v26";
 
 
 /* =========================================================
@@ -1433,7 +1433,7 @@ function kanjiCard(c){
                       c.kanji
                     )}
 
-                    （${esc(w.r)}）
+                    （${esc(w.r)}）${sayBtn(w.w)}
                     — ${esc(w.m)}
 
                     ${
@@ -1443,7 +1443,7 @@ function kanjiCard(c){
                              ${hl(
                                w.ex,
                                c.kanji
-                             )}
+                             )} ${sayBtn(w.ex)}
                            </div>`
                         : ""
                     }
@@ -1540,7 +1540,7 @@ function kanjiCard(c){
      </div>
 
      <div class="big">
-       ${esc(c.kanji)}
+       ${esc(c.kanji)} ${sayBtn(c.kanji)}
      </div>`,
 
     back,
@@ -1630,7 +1630,7 @@ function grammarCard(c){
     `<div class="rd"></div>
 
      <div class="big">
-       ${esc(c.pattern)}
+       ${esc(c.pattern)} ${sayBtn(c.variants && c.variants[0] ? c.variants[0] : c.pattern)}
      </div>`,
 
     back,
