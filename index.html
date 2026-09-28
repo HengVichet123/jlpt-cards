@@ -989,6 +989,8 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 .complete-section{display:flex;flex-direction:column;gap:10px}
 .complete-section h2{font:800 22px var(--display);margin:6px 0 2px;display:flex;align-items:baseline;gap:8px}
 [hidden]{display:none!important}
+.home{position:relative}
+.home-ver{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:0;font:500 11px var(--mono);color:var(--faint)}
 </style>
 </head>
 
@@ -1033,7 +1035,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v18";
+const APP_VERSION = "v19";
 
 
 /* =========================================================
@@ -2325,6 +2327,7 @@ function renderHome(){
         Build your Japanese memory
         one review at a time.
       </p>
+      <div class="home-ver">${APP_VERSION}</div>
 
 
       <div class="home-grid">
@@ -3162,19 +3165,7 @@ async function load(id){
     );
 
 
-  sel.value =
-    (
-      saved === "home" ||
-      saved === "playground" ||
-      INDEX.some(
-        x =>
-          x.id === saved
-      )
-    )
-
-      ? saved
-
-      : "home";
+  sel.value = "home"; // always open on Home
 
 
   if(
