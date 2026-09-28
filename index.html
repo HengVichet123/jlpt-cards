@@ -1331,6 +1331,19 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .shelf-grid .book{width:auto}
 @media (min-width: 900px){ .library{max-width:900px;margin-inline:auto;width:100%} .book{width:150px} }
 @media (prefers-reduced-motion: reduce){ .bk-cover img{transition:none} }
+/* v72: reading = sections first */
+.sec-rows{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.sec-row{position:relative;display:grid;grid-template-columns:1fr auto 18px;align-items:center;gap:14px;min-height:118px;padding:14px 14px 14px 18px;
+  border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer;overflow:hidden}
+.sec-row:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+.sec-row-t{display:flex;flex-direction:column;gap:2px}
+.sec-row-t b{font:800 24px var(--display)}
+.sec-row-t span{font:500 13px var(--body);color:var(--soft)}
+.sec-row-t em{font:500 11px var(--mono);font-style:normal;color:var(--faint);margin-top:6px}
+.fan{position:relative;width:118px;height:92px}
+.fan img{position:absolute;top:4px;width:62px;height:84px;object-fit:cover;border-radius:4px;border:2px solid var(--card);
+  box-shadow:0 4px 10px -4px rgba(0,0,0,.4);left:calc(var(--i) * 28px);transform:rotate(calc((var(--i) - 1) * 6deg));z-index:calc(3 - var(--i))}
+.sec-row-go{font-size:22px;color:var(--faint)}
 </style>
 </head>
 
@@ -1378,7 +1391,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v71";
+const APP_VERSION = "v72";
 
 
 /* =========================================================
@@ -3244,17 +3257,21 @@ function bookHTML(x){
 async function renderReading(){
   document.body.classList.remove("playing");
   READ_INDEX = null; const RD = await readIndex();
+  // level 1: the sections only; each shows a small fan of its OWN covers (styles never mix)
   $("#list").innerHTML = `<section class="library">
-    ${SHELVES.filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => { const items = RD.filter(x => (x.shelf || "article") === k);
-      return `<div class="shelf-head"><h2>${jp}<small>${en} · ${items.length}</small></h2><button class="shelf-all" data-shelf="${k}">All ›</button></div>
-      <div class="shelf">${items.map(x => bookHTML(x)).join("")}</div>`; }).join("")}
+    <div class="sec-rows">${SHELVES.filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => {
+      const items = RD.filter(x => (x.shelf || "article") === k), fan = items.filter(x => x.img).slice(0, 3);
+      return `<button class="sec-row" data-shelf="${k}">
+        <span class="sec-row-t"><b>${jp}</b><span>${en}</span><em>${items.length} books</em></span>
+        <span class="fan">${fan.map((x, i) => `<img src="data/readings/${x.img}" alt="" style="--i:${i}" loading="lazy">`).join("")}</span>
+        <span class="sec-row-go" aria-hidden="true">›</span></button>`; }).join("")}</div>
   </section>`;
   document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { renderShelf(b.dataset.shelf); scrollTo(0, 0); });
 }
 async function renderShelf(k){
   const RD = await readIndex(), [, jp, en] = SHELVES.find(s => s[0] === k), items = RD.filter(x => (x.shelf || "article") === k);
   $("#list").innerHTML = `<section class="library">
-    <div class="story-top"><button class="nav-btn" id="shelfBack">Library</button></div>
+    <div class="story-top"><button class="nav-btn" id="shelfBack">Back</button></div>
     <h2 class="sec-title">${jp}<em>${en}</em><small>${items.length} books</small></h2>
     <div class="shelf-grid">${items.map(x => bookHTML(x)).join("")}</div></section>`;
   $("#shelfBack").onclick = () => { renderReading(); scrollTo(0, 0); };
