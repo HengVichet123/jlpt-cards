@@ -1030,6 +1030,15 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 
 /* ---------- v23: session bar has no background or divider; buttons only ---------- */
 .play-bar{background:transparent;border-bottom:0}
+
+/* ---------- v24 ---------- */
+.play-bar .play-queue{font-size:10px!important;opacity:.45}
+.play-bar .play-queue b{font-weight:500}
+.fam{opacity:0;transform:translateX(6px);transition:opacity .35s ease, transform .35s ease;pointer-events:none}
+body.showfam .fam{opacity:.85;transform:none}
+.fam-toggle{min-width:0;padding:6px 10px;color:var(--soft);display:flex;align-items:center}
+.fam-toggle[aria-pressed="true"]{color:var(--shu);border-color:var(--shu)}
+@media (prefers-reduced-motion: reduce){.fam{transition:none}}
 </style>
 </head>
 
@@ -1042,6 +1051,9 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
     <button class="nav-btn" id="goHome">Home</button>
     <div class="page-title" id="pageTitle"></div>
     <span id="ver"></span>
+    <button class="nav-btn fam-toggle" id="famToggle" hidden aria-pressed="false" aria-label="Show familiarity">
+      <svg viewBox="0 0 40 14" width="38" height="14" aria-hidden="true"><rect x="2" y="3" width="36" height="3" rx="1.5" fill="currentColor" opacity=".35"/><path d="M26 13 L30 7 L34 13 Z" fill="currentColor"/></svg>
+    </button>
   </div>
 
   <div class="tabs" hidden>
@@ -1074,7 +1086,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v23";
+const APP_VERSION = "v24";
 
 
 /* =========================================================
@@ -2948,6 +2960,11 @@ document.addEventListener(
   }
 );
 
+$("#famToggle").onclick = () => {
+  const on = !document.body.classList.contains("showfam");
+  document.body.classList.toggle("showfam", on); store.set("jc:showfam", on);
+  $("#famToggle").setAttribute("aria-pressed", on);
+};
 $("#goHome").onclick = () => { store.set("jc:lesson","home"); pick("home"); };
 
 
@@ -3028,6 +3045,11 @@ function pick(id){
   $("#top").hidden = id === "home";
   document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
   $("#filter").hidden = true;
+  $("#ver").hidden = id !== "playground" && id !== "home" ? true : false;
+  $("#famToggle").hidden = id !== "complete";
+  const showFam = store.get("jc:showfam", false);
+  document.body.classList.toggle("showfam", showFam);
+  $("#famToggle").setAttribute("aria-pressed", showFam);
 
   if(PLAY)
     renderPG();
