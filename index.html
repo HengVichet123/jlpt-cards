@@ -1028,16 +1028,8 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
   font:700 16px var(--body);cursor:pointer}
 .play-setup .go.start span{font-family:var(--mono)}
 
-/* ---------- v22: clean mode (hide the session bar) ---------- */
-.play-bar{transition:transform .25s ease, opacity .25s ease}
-.play-stage{transition:top .25s ease}
-.bar-handle{position:fixed;z-index:8;left:50%;transform:translateX(-50%);top:env(safe-area-inset-top,0px);
-  width:88px;height:22px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:flex-start;justify-content:center}
-.bar-handle span{display:block;width:40px;height:5px;margin-top:4px;border-radius:3px;background:var(--line)}
-body.clean .play-bar{transform:translateY(-100%);opacity:0;pointer-events:none}
-body.clean .bar-handle span{background:var(--faint)}
-body.clean .play-stage{top:calc(env(safe-area-inset-top,0px) + 30px)}
-body:not(.playing) .bar-handle{display:none}
+/* ---------- v23: session bar has no background or divider; buttons only ---------- */
+.play-bar{background:transparent;border-bottom:0}
 </style>
 </head>
 
@@ -1082,7 +1074,7 @@ body:not(.playing) .bar-handle{display:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v22";
+const APP_VERSION = "v23";
 
 
 /* =========================================================
@@ -2229,7 +2221,6 @@ async function renderPG(){
 
     <div class="play-screen">
 
-      <button class="bar-handle" id="barHandle" aria-label="Show or hide the top bar"><span></span></button>
       <div class="play-bar">
         <button class="nav-btn" id="pgBack">Back</button>
         <div class="play-top">${queue}</div>
@@ -2267,12 +2258,7 @@ async function renderPG(){
 
   $("#pgExit").onclick =
     pgExit;
-
-  document.body.classList.toggle("clean", store.get("jc:clean", false));
-  $("#barHandle").onclick = () => {
-    const on = !document.body.classList.contains("clean");
-    document.body.classList.toggle("clean", on); store.set("jc:clean", on);
-  };
+  document.body.classList.remove("clean");
 
 }
 
