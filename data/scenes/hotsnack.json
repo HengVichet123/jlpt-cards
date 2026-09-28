@@ -1,0 +1,118 @@
+{
+ "id": "hotsnack",
+ "title": "ホットスナック",
+ "titleEn": "Hot snack case (photo)",
+ "photo": "photos/hotsnack.jpg",
+ "size": [
+  960,
+  720
+ ],
+ "source": "Photo: Corpse Reviver, CC BY-SA 3.0, via Wikimedia Commons",
+ "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fast_foods_of_Lawson_convenience_store.jpg",
+ "items": {
+  "chicken": {
+   "jp": "フライドチキン",
+   "reading": "フライドチキン",
+   "en": "fried chicken",
+   "box": [
+    92,
+    368,
+    178,
+    140
+   ],
+   "phrase": "フライドチキンを一つください。",
+   "phraseEn": "One fried chicken, please."
+  },
+  "karaage": {
+   "jp": "唐揚げ",
+   "reading": "からあげ",
+   "en": "karaage (Japanese fried chicken bites)",
+   "box": [
+    335,
+    240,
+    590,
+    215
+   ],
+   "phrase": "唐揚げの五個入りをお願いします。",
+   "phraseEn": "The five-piece karaage, please."
+  },
+  "takoyaki": {
+   "jp": "たこ焼き",
+   "reading": "たこやき",
+   "en": "takoyaki (octopus balls)",
+   "box": [
+    672,
+    495,
+    175,
+    130
+   ],
+   "phrase": "揚げたこ焼きを一つください。",
+   "phraseEn": "One fried takoyaki, please."
+  },
+  "tsukune": {
+   "jp": "つくね",
+   "reading": "つくね",
+   "en": "chicken meatball skewer",
+   "box": [
+    170,
+    45,
+    270,
+    60
+   ],
+   "phrase": "つくね棒を一本お願いします。",
+   "phraseEn": "One tsukune skewer, please."
+  },
+  "pricetag": {
+   "jp": "値札",
+   "reading": "ねふだ",
+   "en": "price tag",
+   "box": [
+    528,
+    428,
+    125,
+    52
+   ],
+   "phrase": "値札の「税込」は、税金を含んだ値段という意味です。",
+   "phraseEn": "「税込」 on a price tag means the price includes tax."
+  },
+  "newrelease": {
+   "jp": "新発売",
+   "reading": "しんはつばい",
+   "en": "new release, just launched",
+   "box": [
+    300,
+    125,
+    218,
+    62
+   ],
+   "phrase": "新発売の味を試してみた。",
+   "phraseEn": "I tried the newly released flavor."
+  },
+  "arrow": {
+   "jp": "矢印",
+   "reading": "やじるし",
+   "en": "arrow",
+   "box": [
+    103,
+    222,
+    165,
+    150
+   ],
+   "phrase": "矢印の方向にお進みください。",
+   "phraseEn": "Please go in the direction of the arrow."
+  },
+  "pop": {
+   "jp": "POP広告",
+   "reading": "ポップこうこく",
+   "en": "in-store promo sign",
+   "box": [
+    0,
+    142,
+    258,
+    140
+   ],
+   "phrase": "POP広告を見て、つい買ってしまった。",
+   "phraseEn": "I saw the promo sign and ended up buying it."
+  }
+ }
+}

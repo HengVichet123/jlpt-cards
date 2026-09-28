@@ -1119,6 +1119,11 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-canvas .tag text{font-family:var(--body)}
 .scene-zoom{overflow:hidden}
 .scene-info .zoom-in{margin-top:10px;width:100%;color:var(--shu);border-color:var(--shu)}
+/* ---------- v39: photo scenes ---------- */
+.photo-scene .hit{fill:rgba(0,0,0,0);stroke:none;pointer-events:all}
+.photo-scene .spot.on{filter:none}
+.photo-scene .spot.on .hit{fill:rgba(198,58,47,.12);stroke:#C63A2F;stroke-width:4}
+.scene .story-meta a{color:inherit}
 </style>
 </head>
 
@@ -1166,7 +1171,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v38";
+const APP_VERSION = "v39";
 
 
 /* =========================================================
@@ -2639,7 +2644,13 @@ async function renderScene(id, arrive){
   let sc, svg;
   try{
     sc = await (await fetch(`data/${SCENE_DIR}/${id}.json`, {cache:"no-cache"})).json();
-    svg = await (await fetch(`data/${SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
+    if(sc.photo){   // real photo + invisible tap boxes, drawn as an SVG so labels/Show all work the same
+      const [W, H] = sc.size;
+      svg = `<svg viewBox="0 0 ${W} ${H}" class="photo-scene" role="img" aria-label="${esc(sc.titleEn)}">
+        <image href="data/${SCENE_DIR}/${sc.photo}" width="${W}" height="${H}"/>
+        ${Object.entries(sc.items).filter(([k,v]) => v.box).map(([k,v]) => `<g class="spot" data-id="${k}"><rect class="hit" x="${v.box[0]}" y="${v.box[1]}" width="${v.box[2]}" height="${v.box[3]}" rx="${W/100}"/></g>`).join("")}</svg>`;
+    }
+    else svg = await (await fetch(`data/${SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
   }catch(e){ return; }
   $("#pageTitle").textContent = sc.title;
   if(sc.parent){ try{ const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
@@ -2652,7 +2663,7 @@ async function renderScene(id, arrive){
       <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
         <b>${esc(v.jp)}</b><span class="rd">${esc(v.reading)}</span><span class="en">${esc(v.en)}</span></button>`).join("")}</div>
     </details>
-    <div class="story-meta">${esc(sc.source)}</div>
+    <div class="story-meta">${sc.sourceUrl ? `<a href="${sc.sourceUrl}" target="_blank" rel="noopener">${esc(sc.source)}</a>` : esc(sc.source)}</div>
   </section>`;
   const svgEl = document.querySelector("#sceneCanvas svg");
   let view3d = null;
@@ -2670,21 +2681,22 @@ async function renderScene(id, arrive){
     svgEl.querySelectorAll(".tag").forEach(t => t.remove());
     const keys = allOn ? Object.keys(sc.items) : (cur ? [cur] : []);
     const ns = "http://www.w3.org/2000/svg", VW = svgEl.viewBox.baseVal.width, VH = svgEl.viewBox.baseVal.height;
+    const u = VW/400;
     const P = keys.map(k => {
       const g = svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
       const bb = g.getBBox(), t = document.createElementNS(ns, "g"), label = document.createElementNS(ns, "text");
       t.setAttribute("class", "tag"); label.textContent = sc.items[k].jp + (sc.items[k].zoom ? " 🔍" : "");
-      label.setAttribute("font-size", allOn ? "10.5" : "12"); label.setAttribute("font-weight", "700");
+      label.setAttribute("font-size", (allOn ? 10.5 : 12)*u); label.setAttribute("font-weight", "700");
       label.setAttribute("text-anchor", "middle"); label.setAttribute("fill", "#fff");
       t.appendChild(label); svgEl.appendChild(t);
-      const w = label.getComputedTextLength() + 10, h = allOn ? 15 : 18;
-      const x = bb.x + bb.width/2, y = allOn ? bb.y + Math.min(bb.height/2, 18) : bb.y - 4;
+      const w = label.getComputedTextLength() + 10*u, h = (allOn ? 15 : 18)*u;
+      const x = bb.x + bb.width/2, y = allOn ? bb.y + Math.min(bb.height/2, 18*u) : bb.y - 4*u;
       return {k, t, label, w, h, ax:x, ay:y, x, y};
     }).filter(Boolean);
     for(let it = 0; it < 120 && P.length > 1; it++){
       for(let i = 0; i < P.length; i++) for(let j = i + 1; j < P.length; j++){
         const p = P[i], q = P[j];
-        const ox = (p.w + q.w)/2 + 2 - Math.abs(p.x - q.x), oy = (p.h + q.h)/2 + 1 - Math.abs(p.y - q.y);
+        const ox = (p.w + q.w)/2 + 2*u - Math.abs(p.x - q.x), oy = (p.h + q.h)/2 + u - Math.abs(p.y - q.y);
         if(ox <= 0 || oy <= 0) continue;
         if(oy < ox){ const s = p.y <= q.y ? -1 : 1; p.y += s*oy/2; q.y -= s*oy/2; }
         else { const s = p.x <= q.x ? -1 : 1; p.x += s*ox/2; q.x -= s*ox/2; }
@@ -2692,11 +2704,11 @@ async function renderScene(id, arrive){
       for(const p of P){ p.x += (p.ax - p.x)*.02; p.y += (p.ay - p.y)*.02; }
     }
     for(const p of P){
-      p.x = Math.max(p.w/2 + 2, Math.min(VW - p.w/2 - 2, p.x)); p.y = Math.max(p.h + 1, Math.min(VH - 2, p.y));
+      p.x = Math.max(p.w/2 + 2*u, Math.min(VW - p.w/2 - 2*u, p.x)); p.y = Math.max(p.h + u, Math.min(VH - 2*u, p.y));
       const r = document.createElementNS(ns, "rect");
       r.setAttribute("x", p.x - p.w/2); r.setAttribute("y", p.y - p.h + 3); r.setAttribute("width", p.w); r.setAttribute("height", p.h);
-      r.setAttribute("rx", 4); r.setAttribute("fill", p.k === cur || !allOn ? "#C63A2F" : "rgba(43,36,52,.8)");
-      p.t.insertBefore(r, p.label); p.label.setAttribute("x", p.x); p.label.setAttribute("y", p.y - (allOn ? 1 : 0));
+      r.setAttribute("rx", 4*u); r.setAttribute("fill", p.k === cur || !allOn ? "#C63A2F" : "rgba(43,36,52,.8)");
+      p.t.insertBefore(r, p.label); p.label.setAttribute("x", p.x); p.label.setAttribute("y", p.y - (allOn ? 1 : 0)*u);
       p.t.style.pointerEvents = "none";
     }
   };
