@@ -1188,6 +1188,9 @@ body.showfam .fam{opacity:.85;transform:none}
 .more-def[open] summary{font-size:0}
 .more-def[open] summary::after{content:"閉じる ▴";font:600 11.5px var(--body)}
 .more-def[open] > .jp{margin-top:2px}
+/* v52: extra 例文 */
+.back h4 .ex-count{font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint);margin-left:6px}
+.back .ex + .ex{margin-top:6px}
 </style>
 </head>
 
@@ -1235,7 +1238,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v51";
+const APP_VERSION = "v52";
 
 
 /* =========================================================
@@ -1481,16 +1484,7 @@ function srcLine(label,url){
 /* 大辞泉 entries can be very long (手 = 1,468 chars). Show meaning 1 only (cut before 「２」), capped ~120 chars
    at a sentence end; the full verbatim entry stays one tap away. Nothing is rewritten. */
 function defHTML(text, target){
-  let s = text;
-  const one = s.indexOf("１"), two = one >= 0 ? s.indexOf("２", one + 1) : -1;
-  if(two > 0) s = s.slice(0, two);
-  if(s.length > 130){
-    const cut = Math.max(s.lastIndexOf("。", 120), s.lastIndexOf("」", 120));
-    s = cut > 40 ? s.slice(0, cut + 1) : s.slice(0, 120) + "…";
-  }
-  if(s.length >= text.length - 2) return `<div class="jp">${hl(text, target)}</div>`;
-  return `<div class="jp">${hl(s, target)}</div>
-    <details class="more-def" onclick="event.stopPropagation()"><summary>全文 ▾</summary><div class="jp">${hl(text, target)}</div></details>`;
+  return `<div class="jp">${hl(text, target)}</div>`;
 }
 
 function wordCard(c){
@@ -1526,9 +1520,9 @@ function wordCard(c){
       : "",
 
 
-    c.use
-      ? `<h4>例文</h4>
-         ${exHTML(c.use,c.word)}`
+    (c.ex && c.ex.length) || c.use
+      ? `<h4>例文 <small class="ex-count">tap for English</small></h4>
+         ${[...(c.ex || []), ...(c.use ? [c.use] : [])].map(e => exHTML(e, c.word)).join("")}`
       : ""
 
   ].join("");
