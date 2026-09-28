@@ -87,8 +87,28 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 .btns{display:flex;gap:5px}
 .btns button{font:700 12px var(--mono);padding:6px 8px;border-radius:6px;border:1.5px solid var(--faint);background:transparent;color:var(--soft);cursor:pointer}
 .btns button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
-.play-card:not(.open) .btns{display:none}
-.play-hint{text-align:center;color:var(--soft);font-size:13px;margin:2px 0 4px}
+.playing{background:#fff;color:#1F2226}
+.playing header{display:none}
+.playing #list{max-width:none;min-height:100vh;padding:0;display:block}
+.play-setup{max-width:560px;margin:0 auto;padding:32px 16px}
+.play-setup h2{font-family:var(--display);font-size:28px;margin:10px 0 4px}
+.play-setup p{color:var(--soft);margin:0 0 24px}
+.play-setup .pg{margin-bottom:14px}
+.play-setup .go{width:100%;margin:8px 0 0;padding:12px}
+.play-screen{min-height:100vh;display:flex;flex-direction:column;position:relative;background:#fff}
+.play-settings{position:absolute;top:18px;left:18px;border:0;background:transparent;color:#777;font:500 13px var(--body);cursor:pointer;z-index:2}
+.play-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:72px 16px 124px}
+.play-stage .play-card{width:min(620px,100%);box-shadow:0 8px 30px rgba(0,0,0,.08);cursor:pointer}
+.play-stage .play-card .front{min-height:170px;padding:26px 28px 26px 48px}
+.play-stage .play-card .big{font-size:42px}
+.play-stage .play-card .back{padding:8px 28px 28px 48px}
+.play-ratings{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;padding:12px max(16px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;justify-content:center;gap:8px;z-index:4}
+.play-ratings button{min-width:92px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;padding:9px 12px;font:600 13px var(--body);cursor:pointer}
+.play-ratings button span{display:block;color:#888;font:500 11px var(--mono);margin-top:2px}
+.play-ratings button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
+.play-queue{position:fixed;right:18px;top:18px;display:flex;gap:10px;color:#777;font:500 11px var(--mono);z-index:2}
+.play-queue b{color:#333;font-size:13px;margin-right:2px}
+.play-empty{text-align:center;color:#777}
 .done{text-align:center;padding:36px 10px;color:var(--soft)}
 .done b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);margin-bottom:6px}
 [hidden]{display:none!important}
@@ -112,7 +132,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v4";
+const APP_VERSION = "v5";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -205,10 +225,29 @@ async function pgNew(){
     const fresh = pool[t].filter(c => store.get(pgKey(st.level,t,c.no), null) === null);
     fresh.slice(0, st.n[t]).forEach(c => st.ids.push([t, c.no]));
   }
-  store.set("jc:pg", st); renderPG();
+  store.set("jc:pg", st); PG_RUNNING = true; renderPG();
 }
 async function renderPG(){
+  document.body.classList.toggle("playing", PLAY && PG_RUNNING);
   const st = pgState(), pool = await pgPool(st.level), now = PG.now();
+  if (!PG_RUNNING){
+    DATA = {level: st.level};
+    const setup = `<section class="play-setup">
+      <h2>Playground</h2><p>Set up a short review session, then start when you’re ready.</p>
+      <div class="pg">
+        <label>Level <select id="pgLevel">${["N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
+        <label>語 <input id="pg_words" type="number" min="0" value="${st.n.words}"></label>
+        <label>字 <input id="pg_kanji" type="number" min="0" value="${st.n.kanji}"></label>
+        <label>文 <input id="pg_grammar" type="number" min="0" value="${st.n.grammar}"></label>
+        <button class="go" id="pgGo">Start</button>
+      </div>
+      <div class="stat">New session cards: ${st.n.words} words · ${st.n.kanji} kanji · ${st.n.grammar} grammar</div>
+    </section>`;
+    $("#list").innerHTML = setup;
+    $("#count").textContent = `Playground · ${st.level}`;
+    $("#pgGo").onclick = pgNew;
+    return;
+  }
   const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard};
   const live = [], later = [];
   for (const [t,no] of st.ids){
@@ -216,29 +255,32 @@ async function renderPG(){
     const due = store.get(pgKey(st.level,t,no), 0);
     (due <= now ? live : later).push([t,c,due]);
   }
-  const ctl = `<div class="pg">
-    <label>Level <select id="pgLevel">${["N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
-    <label>語 <input id="pg_words" type="number" min="0" value="${st.n.words}"></label>
-    <label>字 <input id="pg_kanji" type="number" min="0" value="${st.n.kanji}"></label>
-    <label>文 <input id="pg_grammar" type="number" min="0" value="${st.n.grammar}"></label>
-    <button class="go" id="pgGo">New set</button>
-    <div class="stat" style="width:100%">${live.length} to study · ${later.length} resting</div></div>`;
   DATA = {level: st.level};
   const current = live[0];
-  const cards = current ? `<div class="play-hint">Tap the card to reveal the answer</div>` +
-    make[current[0]](current[1]).replace('<div class="card ', '<div class="card play-card ') : "";
+  const buckets = [
+    ["Now", live.length],
+    ["3m", later.filter(x => x[2] - now <= 3*60000).length],
+    ["10m", later.filter(x => x[2] - now <= 10*60000).length],
+    ["1d", later.filter(x => x[2] - now <= 1440*60000).length]
+  ];
+  const card = current ? make[current[0]](current[1]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
+  const ratings = current ? `<div class="play-ratings" data-type="${current[0]}" data-no="${current[1].no}">
+    <button data-m="3">Again<span>3 min</span></button>
+    <button data-m="10">Good<span>10 min</span></button>
+    <button data-m="1440">Easy<span>1 day</span></button>
+  </div>` : "";
+  const queue = `<div class="play-queue">${buckets.map(x=>`<span><b>${x[1]}</b>${x[0]}</span>`).join("")}</div>`;
   const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[2])) - now)/60000)) : null;
-  $("#list").innerHTML = ctl + (cards || (st.ids.length
-      ? `<div class="done"><b>全部できた</b>${next !== null ? `Next card is back in about ${next} min.` : ""}</div>`
-      : `<div class="done"><b>Set up a session</b>Pick how many cards, then tap New set.</div>`));
+  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button>${queue}<div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
   $("#count").textContent = `Playground · ${st.level}`;
-  $("#pgGo").onclick = pgNew;
+  $("#pgBack").onclick = () => { PG_RUNNING = false; renderPG(); };
 }
 function dotsOrButtons(type, no){
   if (!PLAY) return dotsHTML(type, no);
-  return `<div class="btns" data-type="${type}" data-no="${no}"><button data-m="3">3m</button><button data-m="10">10m</button><button data-m="1440">1d</button></div>`;
+  return "";
 }
 let PLAY = false;
+let PG_RUNNING = false;
 setInterval(() => { if (PLAY) renderPG(); }, 30000);
 
 function render(){
@@ -257,7 +299,7 @@ function render(){
 }
 
 document.addEventListener("click", e => {
-  const pb = e.target.closest(".btns button");
+  const pb = e.target.closest(".play-ratings button");
   if (pb){
     const box = pb.parentElement, st = pgState();
     store.set(pgKey(st.level, box.dataset.type, +box.dataset.no), PG.now() + (+pb.dataset.m)*60000);
@@ -271,6 +313,7 @@ document.addEventListener("click", e => {
   }
   if (e.target.closest("a")) return;
   const ex = e.target.closest(".ex"); if (ex){ ex.classList.toggle("open"); return; }
+  const playCard = e.target.closest(".play-card"); if (playCard){ playCard.classList.toggle("open"); return; }
   const front = e.target.closest(".front"); if (front){ front.parentElement.classList.toggle("open"); return; }
   const tab = e.target.closest(".tab"); if (tab){ TAB = tab.dataset.t; store.set("jc:tab", TAB); render(); window.scrollTo(0,0); }
 });
@@ -278,6 +321,7 @@ $("#filter").onclick = () => { ONLY_WEAK = !ONLY_WEAK; store.set("jc:weak", ONLY
 $("#lesson").onchange = e => { store.set("jc:lesson", e.target.value); pick(e.target.value); };
 function pick(id){
   PLAY = id === "playground";
+  PG_RUNNING = false;
   document.querySelector(".tabs").hidden = PLAY; $("#filter").hidden = PLAY;
   if (PLAY) renderPG(); else load(id);
 }
