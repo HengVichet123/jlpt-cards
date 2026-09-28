@@ -1338,6 +1338,18 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:16px 12px}
 .shelf-grid .book{width:100%}
 @media (min-width: 900px){ .library{max-width:860px;margin-inline:auto;width:100%} .book{width:128px} .bk-t{font-size:19px} }
+/* v70: calm paper covers */
+:root{--pp1:#F4EFE4;--pp2:#EDE6D6;--pp3:#F2ECE0;--pp4:#E8E2D4;--pp-ink:#2B2824;--pp-soft:#6F685E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pp1:#2C2A26;--pp2:#322F2A;--pp3:#2A2824;--pp4:#34312C;--pp-ink:#EDE7DC;--pp-soft:#A89F92}}
+:root[data-theme="dark"]{--pp1:#2C2A26;--pp2:#322F2A;--pp3:#2A2824;--pp4:#34312C;--pp-ink:#EDE7DC;--pp-soft:#A89F92}
+.book{background:var(--bk);color:var(--pp-ink);border:1px solid rgba(0,0,0,.08);
+  background-image:linear-gradient(90deg, var(--sp) 0 8px, rgba(0,0,0,.10) 8px 9px, transparent 9px);
+  box-shadow:0 1px 2px rgba(0,0,0,.12), 0 8px 14px -9px rgba(0,0,0,.35)}
+.bk-mark{border-color:var(--sp);color:var(--sp);left:17px}
+.bk-t{color:var(--pp-ink)}
+.bk-band{left:9px;background:none;border-top:1px solid color-mix(in srgb, var(--sp) 35%, transparent)}
+.bk-en{color:var(--pp-ink);opacity:.85}
+.bk-meta{color:var(--sp);opacity:1}
 </style>
 </head>
 
@@ -1385,7 +1397,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v69";
+const APP_VERSION = "v70";
 
 
 /* =========================================================
@@ -3230,16 +3242,17 @@ async function renderReader(id){
 let STORIES = null;
 /* Reading = a library: shelves of books, every book works the same (learn cards -> read -> tap a word) */
 const SHELVES = [["article","記事","Articles","記"],["news","ニュース","News","報"],["novel","小説","Novels","小"],["story","物語","Short stories","物"]];
-const BOOK_SHADES = {article:["#2E4C80","#264272","#3A5B8F","#1F3A66"], news:["#2F6B5E","#285E52","#3A7A6B","#224F45"],
-                     novel:["#6A4C98","#5B3F86","#7A5AA8","#4E3576"], story:["#B8791A","#A56A12","#C68A2C","#8F5C0E"]};
+/* 文庫本 look: paper covers in slightly different tones; colour only on the spine + mark (muted traditional colours) */
+const SPINE = {article:"#3A4F6B", news:"#66683A", novel:"#7A3E3E", story:"#3E3B38"};   // 藍 / 鶯 / 小豆 / 墨
+const PAPER = ["var(--pp1)","var(--pp2)","var(--pp3)","var(--pp4)"];
 let READ_INDEX = null;
 async function readIndex(){
   if(!READ_INDEX){ try{ READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ READ_INDEX = []; } }
   return READ_INDEX;
 }
 function bookHTML(x, i){
-  const k = x.shelf || "article", shade = BOOK_SHADES[k][i % 4], mins = Math.max(1, Math.round(x.chars / 400));
-  return `<button class="book" style="--bk:${shade}" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
+  const k = x.shelf || "article", mins = Math.max(1, Math.round(x.chars / 400));
+  return `<button class="book" style="--bk:${PAPER[i % 4]};--sp:${SPINE[k]}" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
     <span class="bk-mark">${SHELVES.find(s => s[0] === k)[3]}</span>
     <b class="bk-t">${esc(x.title)}</b>
     <span class="bk-band"><span class="bk-en">${esc(x.titleEn)}</span><span class="bk-meta">${x.counts[0]}語 · ${mins}分</span></span>
