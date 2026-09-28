@@ -592,268 +592,46 @@ code{
 }
 
 .play-stage .play-card{
-
   width:min(620px,100%);
-
-  /* Fixed height */
   height:420px;
-
-  /* Never allow content to resize the card */
   min-height:420px;
   max-height:420px;
-
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
-  cursor:pointer;
-
   display:flex;
   flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  cursor:pointer;
+}
 
+.play-stage .play-card .front{
+  flex:0 0 170px;
+  min-height:170px;
+  padding:26px 28px 26px 48px;
   overflow:hidden;
 }
 
-
-/* Front occupies its natural height */
-.play-stage .play-card .front{
-
-  flex:0 0 auto;
-
-  min-height:170px;
-
-  padding:26px 28px 26px 48px;
-}
-
-.play-stage .play-card .big{
-  font-size:42px;
-}
-
-
-/*
-  The back fills the remaining space.
-
-  min-height:0 is important:
-  without it, flexbox can force the card to grow
-  instead of allowing the content to scroll.
-*/
 .play-stage .play-card .back{
-
   flex:1 1 auto;
-
   min-height:0;
-
-  max-height:none;
-
-  overflow-y:auto;
-  overflow-x:hidden;
-
-  opacity:0;
-
   padding:0 28px 0 48px;
-
+  opacity:0;
+  overflow-y:hidden;
+  overflow-x:hidden;
   border-top:1px dashed transparent;
-
   transition:
     opacity .2s ease,
     padding .2s ease,
     border-color .2s ease;
-
-  scrollbar-width:thin;
 }
 
-
-/* Open / flipped state */
 .play-stage .play-card.open .back{
-
-  flex:1 1 auto;
-
   min-height:0;
-
-  max-height:none;
-
-  opacity:1;
-
   padding:8px 28px 28px 48px;
-
-  border-top-color:var(--line);
-
+  opacity:1;
   overflow-y:auto;
-}
-
-
-/* Keep the front visible and fixed */
-.play-stage .play-card.open .front{
-  flex:0 0 auto;
-}
-
-
-/* =========================================================
-   PLAYGROUND RATINGS
-   ========================================================= */
-
-.play-ratings{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:#fff;
-  border-top:1px solid #eee;
-
-  padding:
-    12px
-    max(16px,env(safe-area-inset-right))
-    calc(14px + env(safe-area-inset-bottom))
-    max(16px,env(safe-area-inset-left));
-
-  display:flex;
-  justify-content:center;
-  gap:8px;
-
-  z-index:4;
-}
-
-.play-ratings button{
-  min-width:92px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  background:#fff;
-  color:#333;
-  padding:9px 12px;
-  font:600 13px var(--body);
-  cursor:pointer;
-}
-
-.play-ratings button span{
-  display:block;
-  color:#888;
-  font:500 11px var(--mono);
-  margin-top:2px;
-}
-
-.play-ratings button[data-m="1440"]{
-  border-color:var(--shu);
-  color:var(--shu);
-}
-
-.play-queue{
-  display:none;
-}
-
-.play-queue b{
-  color:#333;
-  font-size:13px;
-  margin-right:2px;
-}
-
-.play-empty{
-  text-align:center;
-  color:#777;
-}
-
-
-/* =========================================================
-   HOME
-   ========================================================= */
-
-.home{
-  max-width:680px;
-  margin:0 auto;
-  padding:34px 16px;
-}
-
-.home h1,
-.complete h1{
-  font-family:var(--display);
-  font-size:32px;
-  margin:0 0 6px;
-}
-
-.home p{
-  color:var(--soft);
-  margin:0 0 24px;
-}
-
-.home-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:10px;
-}
-
-.home-card{
-  display:block;
-  text-align:left;
-  padding:18px;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:8px;
-  color:var(--ink);
-  cursor:pointer;
-}
-
-.home-card b{
-  display:block;
-  font-family:var(--display);
-  font-size:20px;
-  margin-bottom:4px;
-}
-
-.home-card span{
-  font-size:13px;
-  color:var(--soft);
-}
-
-
-/* =========================================================
-   COMPLETE LIST
-   ========================================================= */
-
-.complete{
-  max-width:760px;
-  margin:0 auto;
-  padding:28px 16px 60px;
-}
-
-.complete-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:start;
-  margin-bottom:18px;
-}
-
-.complete-head button{
-  border:1px solid var(--line);
-  background:var(--card);
-  border-radius:7px;
-  padding:7px 10px;
-  color:var(--soft);
-  cursor:pointer;
-}
-
-.complete-section h2{
-  font-family:var(--display);
-  font-size:22px;
-  margin:24px 0 8px;
-}
-
-.done{
-  text-align:center;
-  padding:36px 10px;
-  color:var(--soft);
-}
-
-.done b{
-  display:block;
-  font-family:var(--display);
-  font-size:26px;
-  color:var(--ink);
-  margin-bottom:6px;
-}
-
-[hidden]{
-  display:none!important;
-}
-
-:focus-visible{
-  outline:2px solid var(--shu);
-  outline-offset:2px;
+  overflow-x:hidden;
+  border-top-color:var(--line);
+  scrollbar-width:thin;
 }
 
 </style>
@@ -927,7 +705,7 @@ code{
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v11";
+const APP_VERSION = "v12";
 
 
 /* =========================================================

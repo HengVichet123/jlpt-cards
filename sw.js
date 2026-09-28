@@ -1,5 +1,5 @@
 // network-first: always try fresh lessons, fall back to cache offline
-const CACHE = "jc-v11";
+const CACHE = "jc-v12";
 self.addEventListener("install", e => self.skipWaiting());
 self.addEventListener("activate", e => e.waitUntil(self.clients.claim()));
 self.addEventListener("fetch", e => {
