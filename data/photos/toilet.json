@@ -1,0 +1,157 @@
+{
+ "id": "toilet",
+ "title": "トイレの操作パネル",
+ "titleEn": "Toilet control panel",
+ "photo": "img/toilet.jpg",
+ "size": [
+  960,
+  846
+ ],
+ "source": "Photo: Volgar from Stockholm, Sweden, CC BY-SA 2.0, via Wikimedia Commons",
+ "sourceUrl": "https://commons.wikimedia.org/wiki/File:Controls_of_a_typical_toilet_in_Japan._(35400585742).jpg",
+ "items": {
+  "stop": {
+   "jp": "止",
+   "reading": "とめ",
+   "en": "stop",
+   "box": [
+    126,
+    165,
+    140,
+    102
+   ],
+   "phrase": "水が止まらないときは「止」を押す。",
+   "phraseEn": "If the water won't stop, press 止."
+  },
+  "oshiri": {
+   "jp": "おしり",
+   "reading": "おしり",
+   "en": "rear wash",
+   "box": [
+    318,
+    165,
+    136,
+    102
+   ],
+   "phrase": "「おしり」を押すと温水が出る。",
+   "phraseEn": "Press おしり and warm water comes out."
+  },
+  "bidet": {
+   "jp": "ビデ",
+   "reading": "ビデ",
+   "en": "bidet (front wash)",
+   "box": [
+    508,
+    165,
+    134,
+    102
+   ],
+   "phrase": "ビデは前を洗う機能だ。",
+   "phraseEn": "The bidet washes the front."
+  },
+  "dry": {
+   "jp": "乾燥",
+   "reading": "かんそう",
+   "en": "dryer (warm air)",
+   "box": [
+    696,
+    165,
+    136,
+    102
+   ],
+   "phrase": "洗ったあとで乾燥を使う。",
+   "phraseEn": "Use the dryer after washing."
+  },
+  "soft": {
+   "jp": "おしりソフト",
+   "reading": "おしりソフト",
+   "en": "soft rear wash",
+   "box": [
+    318,
+    285,
+    136,
+    100
+   ],
+   "phrase": "弱い水がいいならおしりソフトを選ぶ。",
+   "phraseEn": "Choose おしりソフト if you want a gentle spray."
+  },
+  "nozzle": {
+   "jp": "ノズルきれい",
+   "reading": "ノズルきれい",
+   "en": "nozzle cleaning",
+   "box": [
+    205,
+    375,
+    80,
+    108
+   ],
+   "phrase": "ノズルきれいでノズルを洗える。",
+   "phraseEn": "ノズルきれい cleans the nozzle."
+  },
+  "pressure": {
+   "jp": "水勢（弱・強）",
+   "reading": "すいせい（じゃく・きょう）",
+   "en": "water pressure (weak / strong)",
+   "box": [
+    318,
+    398,
+    140,
+    84
+   ],
+   "phrase": "水勢が強すぎたら「弱」を押す。",
+   "phraseEn": "If the pressure is too strong, press 弱."
+  },
+  "position": {
+   "jp": "位置（前・後）",
+   "reading": "いち（まえ・うしろ）",
+   "en": "nozzle position (front / back)",
+   "box": [
+    506,
+    398,
+    140,
+    84
+   ],
+   "phrase": "位置を前後に調節できる。",
+   "phraseEn": "You can move the position forward or back."
+  },
+  "deodor": {
+   "jp": "脱臭",
+   "reading": "だっしゅう",
+   "en": "deodorizer",
+   "box": [
+    838,
+    372,
+    70,
+    110
+   ],
+   "phrase": "パワー脱臭でにおいを消す。",
+   "phraseEn": "The power deodorizer removes smells."
+  },
+  "enter": {
+   "jp": "決定",
+   "reading": "けってい",
+   "en": "OK / confirm",
+   "box": [
+    688,
+    532,
+    144,
+    138
+   ],
+   "phrase": "設定を選んだら「決定」を押す。",
+   "phraseEn": "Press 決定 after choosing a setting."
+  },
+  "temp": {
+   "jp": "温度",
+   "reading": "おんど",
+   "en": "temperature",
+   "box": [
+    845,
+    600,
+    55,
+    80
+   ],
+   "phrase": "便座の温度を下げた。",
+   "phraseEn": "I turned down the seat temperature."
+  }
+ }
+}

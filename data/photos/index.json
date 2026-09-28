@@ -1,0 +1,32 @@
+[
+ {
+  "id": "hotsnack",
+  "title": "ホットスナック",
+  "titleEn": "Hot snack case",
+  "count": 8
+ },
+ {
+  "id": "vending",
+  "title": "自動販売機",
+  "titleEn": "Vending machine",
+  "count": 11
+ },
+ {
+  "id": "toilet",
+  "title": "トイレの操作パネル",
+  "titleEn": "Toilet control panel",
+  "count": 11
+ },
+ {
+  "id": "ticket",
+  "title": "駅の券売機",
+  "titleEn": "Station ticket machines",
+  "count": 8
+ },
+ {
+  "id": "osake",
+  "title": "お酒の冷蔵ケース",
+  "titleEn": "Alcohol fridge",
+  "count": 9
+ }
+]

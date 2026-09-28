@@ -1,0 +1,157 @@
+{
+ "id": "vending",
+ "title": "自動販売機",
+ "titleEn": "Vending machine",
+ "photo": "img/vending.jpg",
+ "size": [
+  960,
+  1440
+ ],
+ "source": "Photo: Maksym Kozlenko, CC0, via Wikimedia Commons",
+ "sourceUrl": "https://commons.wikimedia.org/wiki/File:Soft_drinks_vending_machine_in_Tokyo,_Japan.jpg",
+ "items": {
+  "sample": {
+   "jp": "見本",
+   "reading": "みほん",
+   "en": "display samples",
+   "box": [
+    128,
+    205,
+    715,
+    142
+   ],
+   "phrase": "見本を見て、飲みたいものを選ぶ。",
+   "phraseEn": "Look at the samples and choose what to drink."
+  },
+  "cold": {
+   "jp": "つめた〜い",
+   "reading": "つめたい",
+   "en": "cold (drink label)",
+   "box": [
+    118,
+    346,
+    745,
+    30
+   ],
+   "phrase": "「つめた〜い」の表示は冷たい飲み物だ。",
+   "phraseEn": "The つめた〜い label means a cold drink."
+  },
+  "button": {
+   "jp": "ボタン",
+   "reading": "ボタン",
+   "en": "button (green = can buy)",
+   "box": [
+    118,
+    378,
+    745,
+    30
+   ],
+   "phrase": "緑に光っているボタンを押してください。",
+   "phraseEn": "Press a button that's lit green."
+  },
+  "tea": {
+   "jp": "お茶",
+   "reading": "おちゃ",
+   "en": "green tea",
+   "box": [
+    133,
+    425,
+    150,
+    215
+   ],
+   "phrase": "お茶のペットボトルを一本買った。",
+   "phraseEn": "I bought a bottle of green tea."
+  },
+  "sports": {
+   "jp": "スポーツドリンク",
+   "reading": "スポーツドリンク",
+   "en": "sports drink",
+   "box": [
+    283,
+    428,
+    272,
+    212
+   ],
+   "phrase": "汗をかいたらスポーツドリンクを飲もう。",
+   "phraseEn": "Drink a sports drink when you sweat."
+  },
+  "water": {
+   "jp": "天然水",
+   "reading": "てんねんすい",
+   "en": "natural mineral water",
+   "box": [
+    555,
+    435,
+    135,
+    210
+   ],
+   "phrase": "天然水は百三十円だった。",
+   "phraseEn": "The mineral water was 130 yen."
+  },
+  "coffee": {
+   "jp": "缶コーヒー",
+   "reading": "かんコーヒー",
+   "en": "canned coffee",
+   "box": [
+    418,
+    705,
+    372,
+    115
+   ],
+   "phrase": "眠いときは缶コーヒーを飲む。",
+   "phraseEn": "When I'm sleepy I drink canned coffee."
+  },
+  "onsale": {
+   "jp": "販売中",
+   "reading": "はんばいちゅう",
+   "en": "on sale (machine is working)",
+   "box": [
+    600,
+    900,
+    110,
+    36
+   ],
+   "phrase": "「販売中」なら今買える。",
+   "phraseEn": "If it says 販売中, you can buy now."
+  },
+  "bill": {
+   "jp": "紙幣投入口",
+   "reading": "しへいとうにゅうぐち",
+   "en": "bill slot",
+   "box": [
+    560,
+    985,
+    85,
+    60
+   ],
+   "phrase": "千円札を紙幣投入口に入れた。",
+   "phraseEn": "I put a 1000-yen bill in the bill slot."
+  },
+  "coin": {
+   "jp": "硬貨投入口",
+   "reading": "こうかとうにゅうぐち",
+   "en": "coin slot",
+   "box": [
+    805,
+    905,
+    60,
+    92
+   ],
+   "phrase": "百円玉を二枚入れた。",
+   "phraseEn": "I put in two 100-yen coins."
+  },
+  "outlet": {
+   "jp": "取り出し口",
+   "reading": "とりだしぐち",
+   "en": "pickup slot",
+   "box": [
+    130,
+    1220,
+    512,
+    152
+   ],
+   "phrase": "取り出し口から商品を取る。",
+   "phraseEn": "Take your drink from the pickup slot."
+  }
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "id": "ticket",
+ "title": "駅の券売機",
+ "titleEn": "Station ticket machines",
+ "photo": "img/ticket.jpg",
+ "size": [
+  960,
+  720
+ ],
+ "source": "Photo: Project Kei, CC BY-SA 4.0, via Wikimedia Commons",
+ "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ticket_vending_machines_at_Mojiko_Station_20200315.jpg",
+ "items": {
+  "faremap": {
+   "jp": "運賃表",
+   "reading": "うんちんひょう",
+   "en": "fare chart (route map with prices)",
+   "box": [
+    188,
+    4,
+    555,
+    295
+   ],
+   "phrase": "運賃表で行き先の値段を探す。",
+   "phraseEn": "Find the price to your destination on the fare chart."
+  },
+  "machine": {
+   "jp": "券売機",
+   "reading": "けんばいき",
+   "en": "ticket machine",
+   "box": [
+    235,
+    388,
+    157,
+    220
+   ],
+   "phrase": "券売機で切符を買った。",
+   "phraseEn": "I bought a ticket at the ticket machine."
+  },
+  "screen": {
+   "jp": "タッチパネル",
+   "reading": "タッチパネル",
+   "en": "touch screen",
+   "box": [
+    280,
+    436,
+    96,
+    66
+   ],
+   "phrase": "タッチパネルで金額を選ぶ。",
+   "phraseEn": "Choose the amount on the touch screen."
+  },
+  "timetable": {
+   "jp": "時刻表",
+   "reading": "じこくひょう",
+   "en": "timetable",
+   "box": [
+    812,
+    285,
+    146,
+    292
+   ],
+   "phrase": "時刻表を見ると、次の電車は十分後だ。",
+   "phraseEn": "The timetable says the next train is in ten minutes."
+  },
+  "farelist": {
+   "jp": "普通運賃",
+   "reading": "ふつううんちん",
+   "en": "regular fares list",
+   "box": [
+    795,
+    4,
+    165,
+    262
+   ],
+   "phrase": "普通運賃は駅ごとに書いてある。",
+   "phraseEn": "Regular fares are listed station by station."
+  },
+  "lamp": {
+   "jp": "電灯",
+   "reading": "でんとう",
+   "en": "lamp, electric light",
+   "box": [
+    84,
+    128,
+    64,
+    84
+   ],
+   "phrase": "駅の電灯がレトロでおしゃれだ。",
+   "phraseEn": "The station lamps are retro and stylish."
+  },
+  "pillar": {
+   "jp": "柱",
+   "reading": "はしら",
+   "en": "pillar",
+   "box": [
+    440,
+    305,
+    58,
+    300
+   ],
+   "phrase": "柱の前で待ち合わせしよう。",
+   "phraseEn": "Let's meet in front of the pillar."
+  },
+  "window": {
+   "jp": "窓",
+   "reading": "まど",
+   "en": "window",
+   "box": [
+    0,
+    15,
+    138,
+    570
+   ],
+   "phrase": "窓から光が入る。",
+   "phraseEn": "Light comes in through the window."
+  }
+ }
+}

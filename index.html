@@ -1124,6 +1124,7 @@ body.showfam .fam{opacity:.85;transform:none}
 .photo-scene .spot.on{filter:none}
 .photo-scene .spot.on .hit{fill:rgba(198,58,47,.12);stroke:#C63A2F;stroke-width:4}
 .scene .story-meta a{color:inherit}
+.scene-canvas svg.photo-scene{max-height:66dvh;background:#1E1C22}
 </style>
 </head>
 
@@ -1171,7 +1172,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v40";
+const APP_VERSION = "v41";
 
 
 /* =========================================================
@@ -2411,6 +2412,7 @@ function renderHome(){
         <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
         <button class="home-card" data-home="novels"><b>本 Novels</b><span>Famous books in short Japanese</span></button>
         <button class="home-card" data-home="scenes"><b>絵 Scenes</b><span>Learn through pictures</span></button>
+        <button class="home-card" data-home="photos"><b>写 Photos</b><span>Real photos, tap to learn</span></button>
         <button class="home-card" data-home="explore"><b>探 Explorer</b><span>Zoom into life in Japan</span></button>
         <button class="home-card soon" disabled><b>商 Business</b><span>Coming soon</span></button>
       </div>
@@ -2632,9 +2634,9 @@ const loadScript = src => new Promise((ok, bad) => {
 let SCENE_DIR = "scenes";   // Scenes = flat pictures; Explorer = zoomable places (data/explore)
 async function renderScenes(){
   document.body.classList.remove("playing");
-  let list; try{ list = await (await fetch("data/scenes/index.json", {cache:"no-cache"})).json(); }
+  let list; try{ list = await (await fetch(`data/${SCENE_DIR}/index.json`, {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
-  $("#pageTitle").textContent = "Scenes";
+  $("#pageTitle").textContent = SCENE_DIR === "photos" ? "Photos" : "Scenes";
   $("#list").innerHTML = `<section class="reading">
     <p class="set-lead">Tap things in a picture to learn what they are called.</p>
     <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
@@ -3316,7 +3318,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", explore:"Explorer"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3346,6 +3348,9 @@ function pick(id){
 
   else if(id === "scenes"){
     SCENE_DIR = "scenes"; renderScenes(); }
+
+  else if(id === "photos"){
+    SCENE_DIR = "photos"; renderScenes(); }
 
   else if(id === "explore"){
     SCENE_DIR = "explore";

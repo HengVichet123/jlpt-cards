@@ -1,0 +1,131 @@
+{
+ "id": "osake",
+ "title": "お酒の冷蔵ケース",
+ "titleEn": "Alcohol fridge",
+ "photo": "img/osake.jpg",
+ "size": [
+  960,
+  1440
+ ],
+ "source": "Photo: Kojach, CC BY 2.0, via Wikimedia Commons",
+ "sourceUrl": "https://commons.wikimedia.org/wiki/File:Convenience_Store_Fridge_(4114423821).jpg",
+ "items": {
+  "cheese": {
+   "jp": "チーズ",
+   "reading": "チーズ",
+   "en": "cheese",
+   "box": [
+    45,
+    120,
+    890,
+    140
+   ],
+   "phrase": "お酒と一緒にチーズを買った。",
+   "phraseEn": "I bought cheese to go with the drinks."
+  },
+  "sake": {
+   "jp": "日本酒",
+   "reading": "にほんしゅ",
+   "en": "sake (Japanese rice wine)",
+   "box": [
+    75,
+    315,
+    330,
+    132
+   ],
+   "phrase": "冷たい日本酒が好きだ。",
+   "phraseEn": "I like cold sake."
+  },
+  "cupsake": {
+   "jp": "カップ酒",
+   "reading": "カップざけ",
+   "en": "sake in a single-serve cup",
+   "box": [
+    502,
+    352,
+    278,
+    92
+   ],
+   "phrase": "カップ酒は一人で飲むのにちょうどいい。",
+   "phraseEn": "Cup sake is just right for drinking alone."
+  },
+  "pack": {
+   "jp": "紙パック",
+   "reading": "かみパック",
+   "en": "paper carton (boxed sake)",
+   "box": [
+    405,
+    540,
+    180,
+    170
+   ],
+   "phrase": "紙パックのお酒は料理にも使う。",
+   "phraseEn": "Boxed sake is also used for cooking."
+  },
+  "umeshu": {
+   "jp": "梅酒",
+   "reading": "うめしゅ",
+   "en": "plum wine",
+   "box": [
+    576,
+    568,
+    118,
+    142
+   ],
+   "phrase": "梅酒はソーダで割るとおいしい。",
+   "phraseEn": "Plum wine is nice mixed with soda."
+  },
+  "beer": {
+   "jp": "缶ビール",
+   "reading": "かんビール",
+   "en": "canned beer",
+   "box": [
+    135,
+    808,
+    472,
+    222
+   ],
+   "phrase": "仕事のあとの缶ビールは最高だ。",
+   "phraseEn": "A can of beer after work is the best."
+  },
+  "wine": {
+   "jp": "ワイン",
+   "reading": "ワイン",
+   "en": "wine",
+   "box": [
+    160,
+    1068,
+    500,
+    315
+   ],
+   "phrase": "赤ワインを一本買った。",
+   "phraseEn": "I bought a bottle of red wine."
+  },
+  "notice": {
+   "jp": "「これはお酒です」",
+   "reading": "これはおさけです",
+   "en": "\"This is alcohol\" shelf label",
+   "box": [
+    60,
+    1022,
+    500,
+    34
+   ],
+   "phrase": "未成年者にはお酒を販売しません。",
+   "phraseEn": "We do not sell alcohol to minors."
+  },
+  "price": {
+   "jp": "値札",
+   "reading": "ねふだ",
+   "en": "price tag",
+   "box": [
+    8,
+    238,
+    84,
+    28
+   ],
+   "phrase": "値札は税込みの値段だ。",
+   "phraseEn": "The price tag shows the tax-included price."
+  }
+ }
+}
