@@ -1168,7 +1168,7 @@ body.showfam .fam{opacity:.85;transform:none}
 .kbd-hint{display:none}
 @media (min-width: 900px){
   main{max-width:1100px;padding-inline:32px}
-  header#top .bar, header#top .tabs{max-width:1036px;margin-inline:auto}
+  header#top .bar, header#top .tabs{max-width:860px;margin-inline:auto}
   .home{padding-top:24px}
   .core{grid-template-columns:2fr 1fr 1fr;gap:14px}
   .cover-play{grid-column:auto}
@@ -1177,16 +1177,17 @@ body.showfam .fam{opacity:.85;transform:none}
   .cover span{font-size:14px}
   .cover i{font-size:150px}
   .side{max-width:620px}
-  .complete-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:row dense;gap:10px;align-items:start}
-  .complete-cards > .card{margin:0}
-  .complete-cards > .card.open{grid-column:1 / -1}
-  .reading, .scene, .story, .novel-grid{max-width:760px;margin-inline:auto;width:100%}
+  .reading, .scene, .story, .novel-grid, .complete{max-width:860px;margin-inline:auto;width:100%}
   .play-stage .card{max-width:720px}
   .kbd-hint{display:block;position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 2px);text-align:center;font:500 10px var(--mono);color:var(--faint);pointer-events:none}
 }
-@media (min-width: 1300px){
-  .complete-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
-}
+/* v51: long dictionary entries collapse */
+.more-def{margin-top:4px}
+.more-def summary{cursor:pointer;list-style:none;font:600 11.5px var(--body);color:var(--faint);display:inline-block;padding:2px 0}
+.more-def summary::-webkit-details-marker{display:none}
+.more-def[open] summary{font-size:0}
+.more-def[open] summary::after{content:"閉じる ▴";font:600 11.5px var(--body)}
+.more-def[open] > .jp{margin-top:2px}
 </style>
 </head>
 
@@ -1234,7 +1235,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v50";
+const APP_VERSION = "v51";
 
 
 /* =========================================================
@@ -1477,6 +1478,21 @@ function srcLine(label,url){
    WORD CARD
    ========================================================= */
 
+/* 大辞泉 entries can be very long (手 = 1,468 chars). Show meaning 1 only (cut before 「２」), capped ~120 chars
+   at a sentence end; the full verbatim entry stays one tap away. Nothing is rewritten. */
+function defHTML(text, target){
+  let s = text;
+  const one = s.indexOf("１"), two = one >= 0 ? s.indexOf("２", one + 1) : -1;
+  if(two > 0) s = s.slice(0, two);
+  if(s.length > 130){
+    const cut = Math.max(s.lastIndexOf("。", 120), s.lastIndexOf("」", 120));
+    s = cut > 40 ? s.slice(0, cut + 1) : s.slice(0, 120) + "…";
+  }
+  if(s.length >= text.length - 2) return `<div class="jp">${hl(text, target)}</div>`;
+  return `<div class="jp">${hl(s, target)}</div>
+    <details class="more-def" onclick="event.stopPropagation()"><summary>全文 ▾</summary><div class="jp">${hl(text, target)}</div></details>`;
+}
+
 function wordCard(c){
 
   const back = [
@@ -1501,9 +1517,7 @@ function wordCard(c){
     c.jp
       ? `<h4>大辞泉</h4>
 
-         <div class="jp">
-           ${hl(c.jp,c.word)}
-         </div>
+         ${defHTML(c.jp, c.word)}
 
          ${srcLine(
            "デジタル大辞泉 (Kotobank)",
@@ -1624,12 +1638,7 @@ function kanjiCard(c){
 
 
     c.jp
-      ? `<div class="jp">
-           ${hl(
-             c.jp,
-             c.kanji
-           )}
-         </div>
+      ? `${defHTML(c.jp, c.kanji)}
 
          ${srcLine(
            "デジタル大辞泉［漢字項目］",
