@@ -78,6 +78,18 @@ ul.w li{font-size:15px}
 .exl{font-size:13px;color:var(--soft)}
 code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-radius:5px;display:inline-block}
 .empty{color:var(--soft);text-align:center;padding:40px}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pg label{font:700 12px var(--body);color:var(--soft);display:flex;align-items:center;gap:6px}
+.pg input,.pg select{width:56px;font:500 15px var(--mono);padding:6px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.pg select{width:auto}
+.pg .go{margin-left:auto;background:var(--shu);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:700 14px var(--body);cursor:pointer}
+.stat{font:500 12px var(--mono);color:var(--faint)}
+.btns{display:flex;gap:5px}
+.btns button{font:700 12px var(--mono);padding:6px 8px;border-radius:6px;border:1.5px solid var(--faint);background:transparent;color:var(--soft);cursor:pointer}
+.btns button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
+.done{text-align:center;padding:36px 10px;color:var(--soft)}
+.done b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);margin-bottom:6px}
+[hidden]{display:none!important}
 :focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 </style>
 </head>
@@ -98,7 +110,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v2";
+const APP_VERSION = "v3";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -164,9 +176,66 @@ function grammarCard(c){
 function card(t, no, head, back){
   const type = {w:"words",k:"kanji",g:"grammar"}[t];
   return `<div class="card ${t}" data-type="${type}" data-no="${no}">
-    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}</div>${dotsHTML(type,no)}</div>
+    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}</div>${dotsOrButtons(type,no)}</div>
     <div class="back">${back}</div></div>`;
 }
+
+// ---------- Playground (sample): pick untouched cards, hide for 3m / 10m / 1d ----------
+const PG = { pool: {}, now: () => Date.now() };
+const pgKey = (lvl, t, no) => `jc:due:${lvl}:${t}:${no}`;
+async function pgPool(level){
+  if (PG.pool[level]) return PG.pool[level];
+  const pool = {words:[], kanji:[], grammar:[]};
+  for (const x of INDEX.filter(i => i.level === level)){
+    try { const d = await (await fetch(`data/${x.id}.json`)).json();
+      for (const t of ["words","kanji","grammar"]) pool[t].push(...d[t]); } catch(e){}
+  }
+  return PG.pool[level] = pool;
+}
+function pgState(){ return store.get("jc:pg", {level:"N1", n:{words:10,kanji:5,grammar:2}, ids:[]}); }
+async function pgNew(){
+  const st = pgState();
+  st.level = $("#pgLevel").value;
+  for (const t of ["words","kanji","grammar"]) st.n[t] = Math.max(0, +$(`#pg_${t}`).value || 0);
+  const pool = await pgPool(st.level);
+  st.ids = [];
+  for (const t of ["words","kanji","grammar"]){
+    const fresh = pool[t].filter(c => store.get(pgKey(st.level,t,c.no), null) === null);
+    fresh.slice(0, st.n[t]).forEach(c => st.ids.push([t, c.no]));
+  }
+  store.set("jc:pg", st); renderPG();
+}
+async function renderPG(){
+  const st = pgState(), pool = await pgPool(st.level), now = PG.now();
+  const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard};
+  const live = [], later = [];
+  for (const [t,no] of st.ids){
+    const c = pool[t].find(x => x.no === no); if (!c) continue;
+    const due = store.get(pgKey(st.level,t,no), 0);
+    (due <= now ? live : later).push([t,c,due]);
+  }
+  const ctl = `<div class="pg">
+    <label>Level <select id="pgLevel">${["N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
+    <label>語 <input id="pg_words" type="number" min="0" value="${st.n.words}"></label>
+    <label>字 <input id="pg_kanji" type="number" min="0" value="${st.n.kanji}"></label>
+    <label>文 <input id="pg_grammar" type="number" min="0" value="${st.n.grammar}"></label>
+    <button class="go" id="pgGo">New set</button>
+    <div class="stat" style="width:100%">${live.length} to study · ${later.length} resting</div></div>`;
+  DATA = {level: st.level};
+  const cards = live.map(([t,c]) => make[t](c)).join("");
+  const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[2])) - now)/60000)) : null;
+  $("#list").innerHTML = ctl + (cards || (st.ids.length
+      ? `<div class="done"><b>全部できた</b>${next !== null ? `Next card is back in about ${next} min.` : ""}</div>`
+      : `<div class="done"><b>Set up a session</b>Pick how many cards, then tap New set.</div>`));
+  $("#count").textContent = `Playground · ${st.level}`;
+  $("#pgGo").onclick = pgNew;
+}
+function dotsOrButtons(type, no){
+  if (!PLAY) return dotsHTML(type, no);
+  return `<div class="btns" data-type="${type}" data-no="${no}"><button data-m="3">3m</button><button data-m="10">10m</button><button data-m="1440">1d</button></div>`;
+}
+let PLAY = false;
+setInterval(() => { if (PLAY) renderPG(); }, 30000);
 
 function render(){
   document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
@@ -184,6 +253,12 @@ function render(){
 }
 
 document.addEventListener("click", e => {
+  const pb = e.target.closest(".btns button");
+  if (pb){
+    const box = pb.parentElement, st = pgState();
+    store.set(pgKey(st.level, box.dataset.type, +box.dataset.no), PG.now() + (+pb.dataset.m)*60000);
+    renderPG(); return;
+  }
   const dot = e.target.closest(".dot");
   if (dot){
     const box = dot.parentElement, k = dotsKey(box.dataset.type, box.dataset.no);
@@ -196,7 +271,12 @@ document.addEventListener("click", e => {
   const tab = e.target.closest(".tab"); if (tab){ TAB = tab.dataset.t; store.set("jc:tab", TAB); render(); window.scrollTo(0,0); }
 });
 $("#filter").onclick = () => { ONLY_WEAK = !ONLY_WEAK; store.set("jc:weak", ONLY_WEAK); render(); };
-$("#lesson").onchange = e => { store.set("jc:lesson", e.target.value); load(e.target.value); };
+$("#lesson").onchange = e => { store.set("jc:lesson", e.target.value); pick(e.target.value); };
+function pick(id){
+  PLAY = id === "playground";
+  document.querySelector(".tabs").hidden = PLAY; $("#filter").hidden = PLAY;
+  if (PLAY) renderPG(); else load(id);
+}
 
 async function load(id){
   try {
@@ -209,10 +289,12 @@ async function load(id){
   try { INDEX = await (await fetch("data/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load lesson list.</div>`; return; }
   const sel = $("#lesson");
-  sel.innerHTML = INDEX.map(x => `<option value="${x.id}">${x.level} · Day ${x.day}  (${x.counts[0]}語 ${x.counts[1]}字 ${x.counts[2]}文法)</option>`).join("");
+  sel.innerHTML = `<option value="playground">▶ Playground</option>` + INDEX.map(x => `<option value="${x.id}">${x.level} · Day ${x.day}  (${x.counts[0]}語 ${x.counts[1]}字 ${x.counts[2]}文法)</option>`).join("");
   const saved = store.get("jc:lesson", null);
-  sel.value = INDEX.some(x => x.id === saved) ? saved : INDEX[0].id;
-  load(sel.value);
+  sel.value = (saved === "playground" || INDEX.some(x => x.id === saved)) ? saved : INDEX[0].id;
+  if (new URLSearchParams(location.search).has("play")) sel.value = "playground";
+  pick(sel.value);
+  if (new URLSearchParams(location.search).get("play") === "new") setTimeout(pgNew, 300);
 })();
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
