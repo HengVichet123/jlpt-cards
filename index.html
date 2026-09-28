@@ -87,6 +87,8 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 .btns{display:flex;gap:5px}
 .btns button{font:700 12px var(--mono);padding:6px 8px;border-radius:6px;border:1.5px solid var(--faint);background:transparent;color:var(--soft);cursor:pointer}
 .btns button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
+.play-card:not(.open) .btns{display:none}
+.play-hint{text-align:center;color:var(--soft);font-size:13px;margin:2px 0 4px}
 .done{text-align:center;padding:36px 10px;color:var(--soft)}
 .done b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);margin-bottom:6px}
 [hidden]{display:none!important}
@@ -110,7 +112,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v3";
+const APP_VERSION = "v4";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -222,7 +224,9 @@ async function renderPG(){
     <button class="go" id="pgGo">New set</button>
     <div class="stat" style="width:100%">${live.length} to study · ${later.length} resting</div></div>`;
   DATA = {level: st.level};
-  const cards = live.map(([t,c]) => make[t](c)).join("");
+  const current = live[0];
+  const cards = current ? `<div class="play-hint">Tap the card to reveal the answer</div>` +
+    make[current[0]](current[1]).replace('<div class="card ', '<div class="card play-card ') : "";
   const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[2])) - now)/60000)) : null;
   $("#list").innerHTML = ctl + (cards || (st.ids.length
       ? `<div class="done"><b>全部できた</b>${next !== null ? `Next card is back in about ${next} min.` : ""}</div>`
