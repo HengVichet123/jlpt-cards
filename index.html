@@ -517,6 +517,18 @@ code{
   display:block;
 }
 
+
+/* Lock the webpage on phone */
+
+body.playing{
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+  overscroll-behavior:none;
+  position:fixed;
+  inset:0;
+}
+
 .play-setup{
   max-width:560px;
   margin:0 auto;
@@ -545,7 +557,10 @@ code{
 }
 
 .play-screen{
-  min-height:100vh;
+  width:100%;
+  height:100dvh;
+  min-height:0;
+  overflow:hidden;
   display:flex;
   flex-direction:column;
   position:relative;
@@ -578,46 +593,84 @@ code{
 
 
 /* =========================================================
-   FIXED PLAYGROUND CARD
+   FIXED PHONE PLAYGROUND CARD
    ========================================================= */
 
 .play-stage{
-  position:fixed;
-  inset:0;
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   padding:56px 16px 112px;
+
+  overflow:hidden;
+
   z-index:1;
 }
 
 .play-stage .play-card{
-  width:min(620px,100%);
-  height:420px;
-  min-height:420px;
+  width:100%;
+  max-width:620px;
+
+  /*
+   * Fixed card window.
+   * On very small phones it shrinks only enough to fit.
+   */
+  height:min(420px, calc(100dvh - 220px));
+  min-height:300px;
   max-height:420px;
+
   display:flex;
   flex-direction:column;
+
   overflow:hidden;
+
   box-shadow:0 8px 30px rgba(0,0,0,.08);
+
   cursor:pointer;
+
+  /*
+   * Don't let the browser treat the whole card
+   * as a page-scrolling gesture.
+   */
+  touch-action:manipulation;
 }
 
 .play-stage .play-card .front{
   flex:0 0 170px;
+
+  height:170px;
   min-height:170px;
+
   padding:26px 28px 26px 48px;
+
   overflow:hidden;
 }
 
 .play-stage .play-card .back{
-  flex:1 1 auto;
+  /*
+   * Force this element to occupy only the remaining
+   * space inside the fixed-height card.
+   */
+  flex:1 1 0;
+  height:0;
   min-height:0;
+  max-height:none;
+
   padding:0 28px 0 48px;
+
   opacity:0;
-  overflow-y:hidden;
-  overflow-x:hidden;
+
+  overflow:hidden;
+
   border-top:1px dashed transparent;
+
   transition:
     opacity .2s ease,
     padding .2s ease,
@@ -625,13 +678,232 @@ code{
 }
 
 .play-stage .play-card.open .back{
+  flex:1 1 0;
+  height:0;
   min-height:0;
+  max-height:none;
+
   padding:8px 28px 28px 48px;
+
   opacity:1;
+
+  /*
+   * THIS is the scroll container.
+   */
   overflow-y:auto;
   overflow-x:hidden;
+
+  /*
+   * Phone touch scrolling.
+   */
+  touch-action:pan-y;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+
   border-top-color:var(--line);
-  scrollbar-width:thin;
+
+  scrollbar-width:none;
+}
+
+.play-stage .play-card.open .back::-webkit-scrollbar{
+  display:none;
+}
+
+
+/* Keep the rating buttons above the card */
+
+.play-ratings{
+  position:fixed;
+  left:16px;
+  right:16px;
+  bottom:calc(env(safe-area-inset-bottom,0px) + 18px);
+
+  display:flex;
+  justify-content:center;
+  gap:8px;
+
+  z-index:10;
+}
+
+.play-ratings button{
+  min-width:90px;
+
+  padding:9px 12px;
+
+  border:1px solid #ddd;
+  border-radius:8px;
+
+  background:#fff;
+  color:#444;
+
+  font:700 13px var(--body);
+
+  cursor:pointer;
+}
+
+.play-ratings button span{
+  display:block;
+  font:500 10px var(--mono);
+  color:#999;
+  margin-top:2px;
+}
+
+.play-ratings button[data-m="1440"]{
+  color:var(--shu);
+  border-color:#e8b8b3;
+}
+
+.play-top{
+  position:fixed;
+  left:50%;
+  top:18px;
+
+  transform:translateX(-50%);
+
+  z-index:5;
+}
+
+.play-queue{
+  display:flex;
+  gap:10px;
+
+  font:500 11px var(--mono);
+  color:#999;
+
+  white-space:nowrap;
+}
+
+.play-queue span{
+  display:flex;
+  gap:3px;
+}
+
+.play-queue b{
+  color:#555;
+}
+
+.play-empty{
+  width:min(620px,100%);
+  text-align:center;
+  color:#555;
+}
+
+.play-empty h2{
+  font-family:var(--display);
+  margin-bottom:4px;
+}
+
+.play-empty p{
+  color:#999;
+}
+
+
+/* Small phone adjustment */
+
+@media (max-height:600px){
+
+  .play-stage{
+    padding-top:52px;
+    padding-bottom:96px;
+  }
+
+  .play-stage .play-card{
+    height:calc(100dvh - 170px);
+    min-height:260px;
+  }
+
+  .play-stage .play-card .front{
+    flex-basis:130px;
+    height:130px;
+    min-height:130px;
+    padding-top:18px;
+    padding-bottom:18px;
+  }
+
+}
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+.home{
+  padding:20px 0;
+}
+
+.home h1{
+  font-family:var(--display);
+  margin:0 0 4px;
+}
+
+.home p{
+  color:var(--soft);
+  margin-top:0;
+}
+
+.home-grid{
+  display:grid;
+  gap:10px;
+}
+
+.home-card{
+  text-align:left;
+  padding:16px;
+
+  border:1px solid var(--line);
+  border-radius:8px;
+
+  background:var(--card);
+  color:var(--ink);
+
+  cursor:pointer;
+}
+
+.home-card b{
+  display:block;
+  margin-bottom:3px;
+}
+
+.home-card span{
+  color:var(--soft);
+  font-size:13px;
+}
+
+.complete-section h2{
+  font-family:var(--display);
+  margin:24px 0 8px;
+}
+
+
+/* =========================================================
+   COMPLETE
+   ========================================================= */
+
+.complete{
+  padding-bottom:20px;
+}
+
+.complete-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.complete-head h1{
+  font-family:var(--display);
+  margin:0;
+}
+
+.complete-head button{
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:var(--card);
+  color:var(--soft);
+  padding:7px 10px;
+  font:700 12px var(--body);
+  cursor:pointer;
 }
 
 </style>
@@ -705,7 +977,7 @@ code{
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v12";
+const APP_VERSION = "v13";
 
 
 /* =========================================================
@@ -1425,6 +1697,7 @@ function pgState(){
       },
 
       ids:[]
+
     }
 
   );
