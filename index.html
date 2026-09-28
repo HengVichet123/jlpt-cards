@@ -618,13 +618,12 @@ body.playing{
   width:100%;
   max-width:620px;
 
-  /*
-   * Fixed card window.
-   * On very small phones it shrinks only enough to fit.
-   */
-  height:min(420px, calc(100dvh - 220px));
-  min-height:300px;
-  max-height:420px;
+  /* Closed = Y */
+  height:220px;
+  min-height:220px;
+  max-height:220px;
+
+  transition:height .2s ease;
 
   display:flex;
   flex-direction:column;
@@ -647,6 +646,7 @@ body.playing{
 
   height:170px;
   min-height:170px;
+  max-height:170px;
 
   padding:26px 28px 26px 48px;
 
@@ -675,6 +675,14 @@ body.playing{
     opacity .2s ease,
     padding .2s ease,
     border-color .2s ease;
+}
+
+.play-stage .play-card.open{
+  /* Open = X. Every flipped card is exactly this height. */
+  height:420px;
+  min-height:420px;
+  max-height:420px;
+  overflow:hidden;
 }
 
 .play-stage .play-card.open .back{
@@ -808,8 +816,15 @@ body.playing{
   }
 
   .play-stage .play-card{
-    height:calc(100dvh - 170px);
-    min-height:260px;
+    height:220px;
+    min-height:220px;
+    max-height:220px;
+  }
+
+  .play-stage .play-card.open{
+    height:420px;
+    min-height:420px;
+    max-height:420px;
   }
 
   .play-stage .play-card .front{
