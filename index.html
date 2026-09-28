@@ -998,6 +998,35 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 .play-stage .card:not(.open){cursor:pointer}
 .play-stage .card.open .front{cursor:pointer}
 .play-bar .play-settings{font-size:16px;padding:5px 12px}
+
+/* ---------- v21: one nav button style + settings page ---------- */
+.nav-btn{font:700 13px var(--body);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:7px 12px;min-width:64px;cursor:pointer;line-height:1.2}
+.nav-btn:active{background:var(--chip)}
+.play-bar .nav-btn{position:static}
+
+.play-setup{padding:20px 0 36px;display:flex;flex-direction:column;gap:10px}
+.set-lead{margin:0 0 6px;color:var(--soft);font-size:14px;max-width:34em}
+.set-label{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--chip);border-radius:10px}
+.seg button{font:700 15px var(--mono);padding:10px 0;border:0;border-radius:7px;background:transparent;color:var(--soft);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.set-rows{display:flex;flex-direction:column;gap:8px}
+.set-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 12px 12px 34px}
+.set-row::before{content:"";position:absolute;left:12px;top:50%;margin-top:-5px;width:10px;height:10px;border-radius:50%;
+  background:var(--hole);box-shadow:inset 0 1px 2px rgba(0,0,0,.18)}
+.set-name{display:flex;align-items:center;gap:12px;min-width:0}
+.set-glyph{font:800 30px/1 var(--display)}
+.set-name b{display:block;font-size:15px}
+.set-name small{display:block;font:500 11px var(--mono);color:var(--faint)}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.stepper button{width:40px;height:40px;border:0;background:var(--paper);color:var(--ink);font:500 20px var(--body);cursor:pointer}
+.stepper button:active{background:var(--chip)}
+.stepper output{min-width:44px;text-align:center;font:500 20px var(--mono);font-variant-numeric:tabular-nums}
+.play-setup .go.start{margin-top:14px;width:100%;padding:15px;border:0;border-radius:8px;background:var(--shu);color:#fff;
+  font:700 16px var(--body);cursor:pointer}
+.play-setup .go.start span{font-family:var(--mono)}
 </style>
 </head>
 
@@ -1007,7 +1036,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 <header id="top">
 
   <div class="bar">
-    <button class="nav-home" id="goHome" aria-label="Home">Home</button>
+    <button class="nav-btn" id="goHome">Home</button>
     <div class="page-title" id="pageTitle"></div>
     <span id="ver"></span>
   </div>
@@ -1042,7 +1071,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v20";
+const APP_VERSION = "v21";
 
 
 /* =========================================================
@@ -1919,115 +1948,39 @@ async function renderPG(){
     };
 
 
+    const newLeft = t => pool[t].filter(c => !pgProfile(c.level || st.level, t, c.no).reviews).length;
+    const row = (t, glyph, name) => `
+          <div class="set-row">
+            <div class="set-name"><span class="set-glyph">${glyph}</span><span><b>${name}</b><small>${newLeft(t)} new left</small></span></div>
+            <div class="stepper" data-t="${t}">
+              <button type="button" data-d="-1" aria-label="Fewer ${name}">−</button>
+              <output id="out_${t}">${st.n[t]}</output>
+              <button type="button" data-d="1" aria-label="More ${name}">+</button>
+            </div>
+            <input id="pg_${t}" type="hidden" value="${st.n[t]}">
+          </div>`;
+    const total = st.n.words + st.n.kanji + st.n.grammar;
+
     const setup = `
 
       <section class="play-setup">
 
-        <button
-          class="play-exit"
-          id="pgExit"
-        >
-          Exit playground
-        </button>
+        <p class="set-lead">Pick a level and how many new cards to study. Cards come back when you mark them Again or Hard.</p>
 
+        <div class="set-label">Level</div>
+        <div class="seg" role="radiogroup">
+          ${["ALL","N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===st.level}" class="${l===st.level?"on":""}" data-l="${l}">${l}</button>`).join("")}
+        </div>
+        <select id="pgLevel" hidden>${["ALL","N1","N2"].map(l => `<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select>
 
-        <h2>
-          Playground
-        </h2>
-
-
-        <p>
-          Set up a short review session,
-          then start when you’re ready.
-        </p>
-
-
-        <div class="pg">
-
-          <label>
-
-            Level
-
-            <select id="pgLevel">
-
-              ${
-                ["ALL","N1","N2"]
-                  .map(
-                    l =>
-                      `<option${
-                        l === st.level
-                          ? " selected"
-                          : ""
-                      }>${l}</option>`
-                  )
-                  .join("")
-              }
-
-            </select>
-
-          </label>
-
-
-          <label>
-
-            語
-
-            <input
-              id="pg_words"
-              type="number"
-              min="0"
-              value="${st.n.words}"
-            >
-
-          </label>
-
-
-          <label>
-
-            字
-
-            <input
-              id="pg_kanji"
-              type="number"
-              min="0"
-              value="${st.n.kanji}"
-            >
-
-          </label>
-
-
-          <label>
-
-            文
-
-            <input
-              id="pg_grammar"
-              type="number"
-              min="0"
-              value="${st.n.grammar}"
-            >
-
-          </label>
-
-
-          <button
-            class="go"
-            id="pgGo"
-          >
-            Start
-          </button>
-
+        <div class="set-label">Cards per session</div>
+        <div class="set-rows">
+          ${row("words","語","Words")}
+          ${row("kanji","字","Kanji")}
+          ${row("grammar","文","Grammar")}
         </div>
 
-
-        <div class="stat">
-
-          New session cards:
-          ${st.n.words} words ·
-          ${st.n.kanji} kanji ·
-          ${st.n.grammar} grammar
-
-        </div>
+        <button class="go start" id="pgGo">Start · <span id="pgTotal">${total}</span> cards</button>
 
       </section>
 
@@ -2041,6 +1994,19 @@ async function renderPG(){
     $("#count").textContent =
       `Playground · ${st.level}`;
 
+
+    document.querySelectorAll(".seg button").forEach(btn => btn.onclick = () => {
+      document.querySelectorAll(".seg button").forEach(x => { x.classList.toggle("on", x === btn); x.setAttribute("aria-checked", x === btn); });
+      $("#pgLevel").value = btn.dataset.l;
+      const cur = pgState(); cur.level = btn.dataset.l; store.set("jc:pg", cur); renderPG();
+    });
+    document.querySelectorAll(".stepper button").forEach(btn => btn.onclick = () => {
+      const t = btn.parentElement.dataset.t, inp = $(`#pg_${t}`);
+      const v = Math.max(0, Math.min(99, (+inp.value || 0) + (+btn.dataset.d)));
+      inp.value = v; $(`#out_${t}`).textContent = v;
+      const cur = pgState(); cur.n[t] = v; store.set("jc:pg", cur);
+      $("#pgTotal").textContent = ["words","kanji","grammar"].reduce((n,k) => n + (+$(`#pg_${k}`).value || 0), 0);
+    });
 
     $("#pgGo").onclick =
       pgNew;
@@ -2253,9 +2219,9 @@ async function renderPG(){
     <div class="play-screen">
 
       <div class="play-bar">
-        <button class="play-settings" id="pgBack" aria-label="Back to settings">←</button>
+        <button class="nav-btn" id="pgBack">Back</button>
         <div class="play-top">${queue}</div>
-        <button class="play-exit" id="pgExit">Home</button>
+        <button class="nav-btn" id="pgExit">Home</button>
       </div>
 
 
