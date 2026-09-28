@@ -1309,47 +1309,28 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .shelf::-webkit-scrollbar{display:none}
 @media (min-width: 900px){ .library{max-width:860px;margin-inline:auto;width:100%} .shelf{grid-auto-columns:150px} }
 .reader-ch{font:800 19px var(--display);margin:26px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
-/* ---------- v69: library design ---------- */
-:root{--plank:#B89A76;--plank-edge:#8E7253}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--plank:#5A4A3A;--plank-edge:#3E3226}}
-:root[data-theme="dark"]{--plank:#5A4A3A;--plank-edge:#3E3226}
-.shelf-head{display:flex;align-items:baseline;justify-content:space-between;margin:24px 0 10px}
-.shelf-head h2{font:800 21px var(--display);margin:0}
+/* ---------- v71: library with image covers ---------- */
+.shelf-head{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 12px}
+.shelf-head h2{font:800 21px var(--display);margin:0;text-wrap:balance}
 .shelf-head h2 small{font:500 12px var(--body);color:var(--faint);margin-left:8px}
 .shelf-all{border:0;background:none;color:var(--shu);font:600 13px var(--body);cursor:pointer;padding:4px 2px}
-.shelf{display:flex;align-items:flex-end;gap:10px;overflow-x:auto;padding:4px 6px 0;scroll-snap-type:x mandatory;margin-bottom:0}
+.shelf-all:focus-visible,.book:focus-visible{outline:2px solid var(--shu);outline-offset:3px}
+.shelf{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 6px;scroll-snap-type:x mandatory}
 .shelf::-webkit-scrollbar{display:none}
-.plank{height:12px;margin:0 -2px 6px;border-radius:2px;background:linear-gradient(var(--plank), var(--plank-edge));
-  box-shadow:0 6px 10px -4px rgba(0,0,0,.35)}
-.book{flex:none;scroll-snap-align:start;position:relative;width:108px;aspect-ratio:2/3;border:0;border-radius:2px 6px 6px 2px;cursor:pointer;overflow:hidden;
-  background:var(--bk);color:#FBFAF6;text-align:left;padding:0;
-  background-image:linear-gradient(90deg, rgba(0,0,0,.28) 0 7px, rgba(255,255,255,.08) 7px 9px, transparent 9px),
-                   linear-gradient(160deg, rgba(255,255,255,.12), transparent 45%);
-  box-shadow:0 2px 3px rgba(0,0,0,.18), 0 8px 14px -8px rgba(0,0,0,.4)}
-.book:nth-child(3n+2){height:auto;width:112px}
-.book:active{transform:translateY(-3px)}
-.bk-mark{position:absolute;left:16px;top:10px;width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.55);
-  display:grid;place-items:center;font:700 11px var(--display)}
-.bk-t{position:absolute;right:12px;top:12px;bottom:52px;writing-mode:vertical-rl;text-orientation:upright;
-  font:800 17px/1.15 var(--display);letter-spacing:.06em;overflow:hidden}
-.bk-band{position:absolute;left:9px;right:0;bottom:0;padding:6px 8px 7px 9px;background:rgba(0,0,0,.22);display:flex;flex-direction:column;gap:2px}
-.bk-en{font:600 10px/1.25 var(--body);opacity:.92;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.bk-meta{font:500 9.5px var(--mono);opacity:.75}
-.shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:16px 12px}
-.shelf-grid .book{width:100%}
-@media (min-width: 900px){ .library{max-width:860px;margin-inline:auto;width:100%} .book{width:128px} .bk-t{font-size:19px} }
-/* v70: calm paper covers */
-:root{--pp1:#F4EFE4;--pp2:#EDE6D6;--pp3:#F2ECE0;--pp4:#E8E2D4;--pp-ink:#2B2824;--pp-soft:#6F685E}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pp1:#2C2A26;--pp2:#322F2A;--pp3:#2A2824;--pp4:#34312C;--pp-ink:#EDE7DC;--pp-soft:#A89F92}}
-:root[data-theme="dark"]{--pp1:#2C2A26;--pp2:#322F2A;--pp3:#2A2824;--pp4:#34312C;--pp-ink:#EDE7DC;--pp-soft:#A89F92}
-.book{background:var(--bk);color:var(--pp-ink);border:1px solid rgba(0,0,0,.08);
-  background-image:linear-gradient(90deg, var(--sp) 0 8px, rgba(0,0,0,.10) 8px 9px, transparent 9px);
-  box-shadow:0 1px 2px rgba(0,0,0,.12), 0 8px 14px -9px rgba(0,0,0,.35)}
-.bk-mark{border-color:var(--sp);color:var(--sp);left:17px}
-.bk-t{color:var(--pp-ink)}
-.bk-band{left:9px;background:none;border-top:1px solid color-mix(in srgb, var(--sp) 35%, transparent)}
-.bk-en{color:var(--pp-ink);opacity:.85}
-.bk-meta{color:var(--sp);opacity:1}
+.book{flex:none;width:128px;scroll-snap-align:start;border:0;background:none;padding:0;text-align:left;cursor:pointer;color:var(--ink);
+  display:flex;flex-direction:column;gap:6px}
+.bk-cover{display:block;aspect-ratio:3/4;max-width:100%;border-radius:6px;overflow:hidden;background:var(--chip);
+  box-shadow:0 1px 2px rgba(0,0,0,.10), 0 10px 18px -12px rgba(0,0,0,.45)}
+.bk-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+.book:hover .bk-cover img{transform:scale(1.03)}
+.bk-type{display:grid;place-items:center;height:100%;font:800 64px/1 var(--display);color:var(--ink);opacity:.82;
+  background:linear-gradient(160deg, var(--card), var(--chip))}
+.bk-t{font:700 14.5px/1.35 var(--display);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bk-meta{font:500 11px var(--mono);color:var(--soft);font-variant-numeric:tabular-nums}
+.shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:20px 14px}
+.shelf-grid .book{width:auto}
+@media (min-width: 900px){ .library{max-width:900px;margin-inline:auto;width:100%} .book{width:150px} }
+@media (prefers-reduced-motion: reduce){ .bk-cover img{transition:none} }
 </style>
 </head>
 
@@ -1397,7 +1378,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v70";
+const APP_VERSION = "v71";
 
 
 /* =========================================================
@@ -3191,7 +3172,7 @@ async function renderPrelearn(id){
     <div class="complete-cards">${list("words", R.words)}</div>
     ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
     ${R.kanji.length ? `<h3 class="pre-part">漢字 <small>${R.kanji.length} kanji</small></h3><div class="complete-cards">${list("kanji", R.kanji)}</div>` : ""}
-    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a></p>
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a>${R.imgCredit ? ` · <a href="${esc(R.imgUrl || R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.imgCredit)}</a>` : ""}</p>
   </section>`;
   $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
   $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
@@ -3250,12 +3231,14 @@ async function readIndex(){
   if(!READ_INDEX){ try{ READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ READ_INDEX = []; } }
   return READ_INDEX;
 }
-function bookHTML(x, i){
-  const k = x.shelf || "article", mins = Math.max(1, Math.round(x.chars / 400));
-  return `<button class="book" style="--bk:${PAPER[i % 4]};--sp:${SPINE[k]}" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
-    <span class="bk-mark">${SHELVES.find(s => s[0] === k)[3]}</span>
+function bookHTML(x){
+  const mins = Math.max(1, Math.round(x.chars / 400));
+  // the picture is the cover; without a free image, a typographic cover (the title's first kanji)
+  const first = (x.title.match(/[\u4e00-\u9fff]/) || [x.title[0]])[0];
+  return `<button class="book" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
+    <span class="bk-cover">${x.img ? `<img src="data/readings/${x.img}" alt="" loading="lazy">` : `<span class="bk-type">${esc(first)}</span>`}</span>
     <b class="bk-t">${esc(x.title)}</b>
-    <span class="bk-band"><span class="bk-en">${esc(x.titleEn)}</span><span class="bk-meta">${x.counts[0]}語 · ${mins}分</span></span>
+    <span class="bk-meta">${x.counts[0]}語 · ${mins}分</span>
   </button>`;
 }
 async function renderReading(){
@@ -3264,7 +3247,7 @@ async function renderReading(){
   $("#list").innerHTML = `<section class="library">
     ${SHELVES.filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => { const items = RD.filter(x => (x.shelf || "article") === k);
       return `<div class="shelf-head"><h2>${jp}<small>${en} · ${items.length}</small></h2><button class="shelf-all" data-shelf="${k}">All ›</button></div>
-      <div class="shelf">${items.map(bookHTML).join("")}</div><div class="plank"></div>`; }).join("")}
+      <div class="shelf">${items.map(x => bookHTML(x)).join("")}</div>`; }).join("")}
   </section>`;
   document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { renderShelf(b.dataset.shelf); scrollTo(0, 0); });
 }
@@ -3273,7 +3256,7 @@ async function renderShelf(k){
   $("#list").innerHTML = `<section class="library">
     <div class="story-top"><button class="nav-btn" id="shelfBack">Library</button></div>
     <h2 class="sec-title">${jp}<em>${en}</em><small>${items.length} books</small></h2>
-    <div class="shelf-grid">${items.map(bookHTML).join("")}</div></section>`;
+    <div class="shelf-grid">${items.map(x => bookHTML(x)).join("")}</div></section>`;
   $("#shelfBack").onclick = () => { renderReading(); scrollTo(0, 0); };
 }
 async function renderStory(id){
