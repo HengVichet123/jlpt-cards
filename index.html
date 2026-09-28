@@ -1373,6 +1373,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .use-input .go{margin:0;width:auto;padding:12px 18px}
 .use-input .go:disabled{opacity:.4;cursor:not-allowed}
 .use-input .go.start, .useit > .go.start{background:var(--shu);color:#fff;border:0;border-radius:10px;font:700 15px var(--body)}
+.use-note{margin:-4px 0 0;font:500 12px var(--body);color:var(--faint);text-align:right}
 </style>
 </head>
 
@@ -1420,7 +1421,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v77";
+const APP_VERSION = "v78";
 
 
 /* =========================================================
@@ -3282,7 +3283,8 @@ function usesWord(msg, c){
   return false;
 }
 async function pickUseWords(){
-  const all = [...(await pgPool("N1")).words, ...(await pgPool("N2")).words];
+  const affix = c => /[〜～]/.test(c.word + (c.reading || ""));   // suffix/prefix entries (～宛, ～化) are not usable on their own
+  const all = [...(await pgPool("N1")).words, ...(await pgPool("N2")).words].filter(c => !affix(c));
   const studied = all.filter(c => pgProfile(c.level, "words", c.no).reviews);
   const from = studied.length >= 2 ? studied : all.filter(c => c.level === "N1");
   const out = []; while(out.length < 2){ const c = from[Math.floor(Math.random() * from.length)]; if(!out.includes(c)) out.push(c); }
@@ -3291,13 +3293,14 @@ async function pickUseWords(){
 async function renderUseIt(){
   document.body.classList.remove("playing");
   const key = store.get("jc:apikey", "");
-  if(!key){
+  if(!key && USE.wantKey){
     $("#list").innerHTML = `<section class="useit">
       <h2 class="sec-title">使ってみる<em>Use your words in a message</em></h2>
       <p class="set-lead">This practice talks to Claude with your own Anthropic API key. The key is saved only in this browser.</p>
       <label class="set-label" for="useKey">Anthropic API key</label>
       <input id="useKey" class="use-key" type="password" autocomplete="off" placeholder="sk-ant-…">
-      <button class="go start" id="useKeySave">Save key</button></section>`;
+      <button class="go start" id="useKeySave">Save key</button><button class="use-keyx" id="useNoKey">Back to Claude-app mode</button></section>`;
+    $("#useNoKey").onclick = () => { USE.wantKey = false; renderUseIt(); };
     $("#useKeySave").onclick = () => { const v = $("#useKey").value.trim(); if(v){ store.set("jc:apikey", v); USE.client = null; renderUseIt(); } };
     return;
   }
@@ -3307,11 +3310,12 @@ async function renderUseIt(){
     <div class="use-task">
       <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words — study some in Playground first)</small>"}</div>
       <div class="use-chips">${chips}</div>
-      <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">Change key</button></div>
+      <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">${key ? "Remove API key" : "Use an API key"}</button></div>
     </div>
     <div class="use-log" id="useLog">${USE.history.map(m => `<div class="use-msg ${m.role}">${esc(m.content)}</div>`).join("")}</div>
     <div class="use-input"><textarea id="useText" rows="3" placeholder="日本語で書いてみよう…"></textarea>
-      <button class="go start" id="useSend" disabled>Send</button></div>
+      <button class="go start" id="useSend" disabled>${key ? "Send" : "Ask Claude ↗"}</button></div>
+    ${key ? "" : `<p class="use-note">Opens Claude with your sentence ready — it uses your Claude plan, no API key.</p>`}
   </section>`;
   const ta = $("#useText"), send = $("#useSend");
   const check = () => {
@@ -3321,7 +3325,7 @@ async function renderUseIt(){
   };
   ta.oninput = check;
   $("#useNew").onclick = async () => { USE.fromStudied = await pickUseWords(); renderUseIt(); };
-  $("#useKeyReset").onclick = () => { store.set("jc:apikey", ""); USE.client = null; renderUseIt(); };
+  $("#useKeyReset").onclick = () => { if(key){ store.set("jc:apikey", ""); USE.client = null; USE.wantKey = false; } else USE.wantKey = true; renderUseIt(); };
   $("#useHint").onclick = () => {
     // cheat mode: a real example sentence from the cards (logged)
     const parts = USE.words.map(c => { USE.hinted.add(c.no + c.level); const e = (c.ex && c.ex[0]) || c.use; return e ? e.jp : `${c.word}を使ってみました。`; });
@@ -3329,7 +3333,22 @@ async function renderUseIt(){
   };
   send.onclick = async () => {
     const text = ta.value.trim(); if(!text) return;
-    const log = store.get("jc:uselog", []);
+    const log0 = store.get("jc:uselog", []);
+    if(!key){
+      log0.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text, via: "claude-app"});
+      store.set("jc:uselog", log0.slice(-500));
+      const words = USE.words.map(c => `${c.word}（${c.reading}）= ${(c.en || "").split(" / ")[0]}`).join(" / ");
+      const prompt = `I'm learning Japanese for JLPT N1. I wrote a message that uses these target words: ${words}\n\nMy message:「${text}」\n\n`
+        + `1) If a target word is used wrongly or unnaturally, correct it in one line: ✎ 「wrong part」→「better」— short English reason. If it's fine, skip this.\n`
+        + `2) Then reply to my message naturally in Japanese (2–4 sentences, about N2 level), as if we're chatting.`;
+      try{ await navigator.clipboard.writeText(prompt); }catch(e){}
+      window.open("https://claude.ai/new?q=" + encodeURIComponent(prompt), "_blank", "noopener");
+      $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant">Opened in Claude ↗ (also copied, in case you need to paste)</div>`);
+      USE.history.push({role: "user", content: text}, {role: "assistant", content: "Opened in Claude ↗"});
+      USE.fromStudied = await pickUseWords(); const keep = [...USE.history]; renderUseIt(); USE.history = keep;
+      return;
+    }
+    const log = log0;
     log.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text});
     store.set("jc:uselog", log.slice(-500));
     USE.history.push({role: "user", content: text});
