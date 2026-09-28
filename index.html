@@ -1160,7 +1160,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v33";
+const APP_VERSION = "v34";
 
 
 /* =========================================================
@@ -2649,11 +2649,11 @@ async function renderScene(id){
   let view3d = null;
   if(sc.three){
     try{
-      await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js");
+      await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js?" + APP_VERSION);
       if(window.__scene3d) window.__scene3d.dispose();
       view3d = window.__scene3d = mountKonbini3D($("#scene3d"), k => show(k));
       const names = Object.fromEntries(Object.entries(sc.items).map(([k,v]) => [k, v.jp]));
-      const setAll = on => { view3d.showAll(names, on); $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); };
+      const setAll = on => { view3d.showAll && view3d.showAll(names, on); $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); };
       $("#showAll").onclick = () => setAll($("#showAll").getAttribute("aria-pressed") !== "true");
       setAll(store.get("jc:scenelabels", false));
     }catch(e){ $("#scene3d").innerHTML = `<div class="empty">3D could not start on this device.</div>`; }
