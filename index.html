@@ -942,7 +942,7 @@ body.playing{position:fixed;inset:0;height:100dvh;overflow:hidden;overscroll-beh
    ========================================================= */
 header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 .bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
-.back{font:700 13px var(--body);color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer}
+.nav-home{font:700 13px var(--body);color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer}
 .page-title{font:800 18px var(--display);text-align:center;text-wrap:balance}
 #ver{font:500 11px var(--mono);color:var(--faint)}
 
@@ -988,6 +988,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 .complete-head h1{display:none}
 .complete-section{display:flex;flex-direction:column;gap:10px}
 .complete-section h2{font:800 22px var(--display);margin:6px 0 2px;display:flex;align-items:baseline;gap:8px}
+[hidden]{display:none!important}
 </style>
 </head>
 
@@ -997,7 +998,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 <header id="top">
 
   <div class="bar">
-    <button class="back" id="goHome" aria-label="Back to home">← Home</button>
+    <button class="nav-home" id="goHome" aria-label="Back to home">← Home</button>
     <div class="page-title" id="pageTitle"></div>
     <span id="ver"></span>
   </div>
@@ -1032,7 +1033,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v17";
+const APP_VERSION = "v18";
 
 
 /* =========================================================
