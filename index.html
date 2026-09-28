@@ -1136,6 +1136,30 @@ body.showfam .fam{opacity:.85;transform:none}
 /* v45: novel chapters */
 .novel-ch{font-family:var(--display);font-size:19px;margin:26px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
 .novel-ch small{display:block;font:500 12px var(--body);color:var(--faint);margin-top:3px;letter-spacing:.02em}
+/* ---------- v46: Home — Study covers + Later tiles ---------- */
+:root{--cov-play:#1F2226;--cov-list:#2E4C80;--cov-read:#6A4C98;--cov-text:#FBFAF6;--cov-sub:rgba(251,250,246,.72)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--cov-play:#2A2E34;--cov-list:#28406B;--cov-read:#54407A;--cov-text:#F3EFE7;--cov-sub:rgba(243,239,231,.7)}}
+:root[data-theme="dark"]{--cov-play:#2A2E34;--cov-list:#28406B;--cov-read:#54407A;--cov-text:#F3EFE7;--cov-sub:rgba(243,239,231,.7)}
+.home-h{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:26px 0 10px}
+.home-h small{font-weight:500;letter-spacing:.04em;text-transform:none;margin-left:6px}
+.core{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cover{position:relative;overflow:hidden;text-align:left;border:0;border-radius:8px;padding:16px;color:var(--cov-text);
+  display:flex;flex-direction:column;justify-content:flex-end;gap:3px;min-height:132px;cursor:pointer;
+  box-shadow:inset 6px 0 0 rgba(0,0,0,.18), 0 1px 2px rgba(0,0,0,.12)}
+.cover i{position:absolute;right:-6px;top:-18px;font:800 112px/1 var(--display);font-style:normal;color:rgba(255,255,255,.1);pointer-events:none}
+.cover b{font:800 19px var(--display);position:relative}
+.cover span{font-size:12.5px;color:var(--cov-sub);position:relative}
+.cover-play{grid-column:1 / -1;min-height:150px;background:var(--cov-play)}
+.cover-play::after{content:"";position:absolute;left:18px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--shu)}
+.cover-list{background:var(--cov-list)}
+.cover-read{background:var(--cov-read)}
+.cover:active{transform:translateY(1px)}
+.side{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.side-tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px 8px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--soft);cursor:pointer;min-width:0}
+.side-tile i{font:700 20px/1 var(--display);font-style:normal;color:var(--ink)}
+.side-tile b{font:500 10.5px var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.side-tile.soon{opacity:.4;cursor:default}
 </style>
 </head>
 
@@ -1183,7 +1207,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v45";
+const APP_VERSION = "v46";
 
 
 /* =========================================================
@@ -2417,15 +2441,20 @@ function renderHome(){
       <div class="home-ver">${APP_VERSION}</div>
 
 
-      <div class="home-rail">
-        <button class="home-card" data-home="playground"><b>▶ Playground</b><span>Review cards one at a time</span></button>
-        <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card</span></button>
-        <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
-        <button class="home-card" data-home="novels"><b>本 Novels</b><span>Famous books in short Japanese</span></button>
-        <button class="home-card" data-home="scenes"><b>絵 Scenes</b><span>Learn through pictures</span></button>
-        <button class="home-card" data-home="photos"><b>写 Photos</b><span>Real photos, tap to learn</span></button>
-        <button class="home-card" data-home="explore"><b>探 Explorer</b><span>Zoom into life in Japan</span></button>
-        <button class="home-card soon" disabled><b>商 Business</b><span>Coming soon</span></button>
+      <h2 class="home-h">Study</h2>
+      <div class="core">
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>Review cards one at a time</span></button>
+        <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
+        <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Short stories</span></button>
+      </div>
+
+      <h2 class="home-h">Later <small>side projects</small></h2>
+      <div class="side">
+        <button class="side-tile" data-home="novels"><i>本</i><b>Novels</b></button>
+        <button class="side-tile" data-home="scenes"><i>絵</i><b>Scenes</b></button>
+        <button class="side-tile" data-home="photos"><i>写</i><b>Photos</b></button>
+        <button class="side-tile" data-home="explore"><i>探</i><b>Explorer</b></button>
+        <button class="side-tile soon" disabled><i>商</i><b>Business</b></button>
       </div>
 
 
