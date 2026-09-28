@@ -1095,10 +1095,19 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-row.on b{color:var(--shu)}
 
 /* ---------- v30: 3D scene ---------- */
-.scene-3d{position:relative;height:58dvh;min-height:320px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#EEF1F2;touch-action:none}
+.scene-3d{position:relative;aspect-ratio:5/4;height:auto;min-height:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#EEF1F2;touch-action:pan-y}
 .scene-3d canvas{display:block;width:100%;height:100%}
 .label3d{position:absolute;transform:translate(-50%,-100%);background:#C63A2F;color:#fff;font:700 13px var(--body);
   padding:3px 9px;border-radius:5px;pointer-events:none;white-space:nowrap}
+
+/* ---------- v31: novel art ---------- */
+.novel-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.novel-tile{display:flex;flex-direction:column;gap:2px;text-align:left;padding:0 0 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--ink);overflow:hidden;cursor:pointer}
+.novel-tile img{display:block;width:100%;max-width:100%;aspect-ratio:5/3;object-fit:cover;margin-bottom:6px}
+.novel-tile b{font:800 16px var(--display);padding-inline:10px}
+.novel-tile span{font-size:12px;color:var(--soft);padding-inline:10px}
+.novel-art{display:block;width:100%;max-width:100%;aspect-ratio:5/3;border-radius:8px;border:1px solid var(--line)}
 </style>
 </head>
 
@@ -1146,7 +1155,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v30";
+const APP_VERSION = "v32";
 
 
 /* =========================================================
@@ -2581,14 +2590,15 @@ async function renderNovels(){
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
   $("#list").innerHTML = `<section class="reading">
     <p class="set-lead">Famous books, summarized in simple Japanese. Tap a sentence for English.</p>
-    <div class="story-list">${NOVELS.map(x => `<button class="home-card story-item book-item" data-novel="${x.id}">
-      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${esc(x.author)}</span></button>`).join("")}</div></section>`;
+    <div class="novel-grid">${NOVELS.map(x => `<button class="novel-tile" data-novel="${x.id}">
+      <img src="data/novels/${x.id}.svg" alt="" loading="lazy"><b>${esc(x.title)}</b><span>${esc(x.titleEn)}</span></button>`).join("")}</div></section>`;
 }
 async function renderNovel(id){
   let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
   $("#pageTitle").textContent = st.title;
   $("#list").innerHTML = `<section class="reading story">
     <div class="story-top"><button class="nav-btn" id="novelBack">Back</button></div>
+    <img class="novel-art" src="data/novels/${st.id}.svg" alt="">
     <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
     <div class="story-meta">${esc(st.source)}</div>
     ${st.sentences.map(x => `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
@@ -2621,7 +2631,7 @@ async function renderScene(id){
   $("#pageTitle").textContent = sc.title;
   const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>${sc.three ? `<span class="story-meta">Drag to look around · pinch to move closer</span>` : ""}</div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>${sc.three ? `<span class="story-meta">Tap anything in the store</span>` : ""}</div>
     ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
     <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
     <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>

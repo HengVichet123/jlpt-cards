@@ -12,12 +12,21 @@ function mountKonbini3D(container, onPick){
 
   const scene = new T.Scene();
   scene.background = new T.Color(0xEEF1F2);
-  const camera = new T.PerspectiveCamera(50, W()/H(), 0.1, 100);
-  camera.position.set(0, 8.5, 12.5);
+  // isometric illustration: orthographic camera, fixed angle, fitted to the store
+  const camera = new T.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
+  camera.position.set(10, 10, 10);
+  const fit = () => {
+    const a = W()/H();
+    const hh = Math.max(7.6 / a, 4.4);            // whole store (±7.4 wide in iso view) always fits
+    camera.left = -hh*a; camera.right = hh*a; camera.top = hh; camera.bottom = -hh;
+    camera.updateProjectionMatrix();
+  };
+  fit();
 
   const controls = new T.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, .8, 0);
-  controls.enableDamping = true;
+  controls.target.set(0, .9, 0);
+  controls.enabled = false; // fixed view: tap only, no moving
+  controls.enableDamping = false;
   controls.minDistance = 4; controls.maxDistance = 20;
   controls.maxPolarAngle = 1.42; controls.enablePan = false;
 
@@ -121,7 +130,7 @@ function mountKonbini3D(container, onPick){
   function select(id, focus){
     if(selected) setGlow(selected, false);
     selected = groups[id] || null;
-    if(selected){ setGlow(selected, true); if(focus){ new T.Box3().setFromObject(selected).getCenter(v); aim = v.clone(); } }
+    if(selected){ setGlow(selected, true); }
     kick();
   }
   const ray = new T.Raycaster(), p = new T.Vector2();
@@ -158,7 +167,7 @@ function mountKonbini3D(container, onPick){
     if(controls.update()) kick(); renderer.render(scene, camera); placeLabel(); }
   function kick(){ if(!raf) raf = requestAnimationFrame(frame); }
   controls.addEventListener("change", kick);
-  const onResize = () => { renderer.setSize(W(), H()); camera.aspect = W()/H(); camera.updateProjectionMatrix(); kick(); };
+  const onResize = () => { renderer.setSize(W(), H()); fit(); kick(); };
   window.addEventListener("resize", onResize);
   kick();
 
