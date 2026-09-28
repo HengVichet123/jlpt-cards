@@ -1238,7 +1238,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v52";
+const APP_VERSION = "v53";
 
 
 /* =========================================================
@@ -1908,7 +1908,7 @@ async function pgPool(level){
       const d =
         await (
           await fetch(
-            `data/${x.id}.json`
+            `data/${x.id}.json`, {cache:"no-cache"}   // revalidate: card updates show up right away
           )
         ).json();
 
