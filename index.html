@@ -1210,7 +1210,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v47";
+const APP_VERSION = "v48";
 
 
 /* =========================================================
@@ -2461,38 +2461,7 @@ function renderHome(){
       </div>
 
 
-      <h2 class="complete-section h2">
-        Lessons
-      </h2>
 
-
-      <div class="home-grid">
-
-        ${
-          INDEX
-            .map(
-              x =>
-                `<button
-                  class="home-card"
-                  data-lesson="${x.id}"
-                >
-
-                  <b>
-                    ${x.level} · Day ${x.day}
-                  </b>
-
-                  <span>
-                    ${x.counts[0]} words ·
-                    ${x.counts[1]} kanji ·
-                    ${x.counts[2]} grammar
-                  </span>
-
-                </button>`
-            )
-            .join("")
-        }
-
-      </div>
 
     </section>
 
