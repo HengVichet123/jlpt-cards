@@ -4,5 +4,11 @@
   "title": "コンビニ",
   "titleEn": "Convenience store",
   "count": 15
+ },
+ {
+  "id": "konbini_drinks",
+  "title": "コンビニの冷蔵ケース",
+  "titleEn": "Konbini drinks case",
+  "count": 15
  }
 ]

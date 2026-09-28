@@ -1,9 +1,8 @@
 {
  "id": "konbini_drinks",
- "title": "冷蔵ケース",
+ "title": "コンビニの冷蔵ケース",
  "titleEn": "Drinks case",
  "svg": "konbini_drinks.svg",
- "parent": "konbini",
  "source": "Illustration and labels by Claude",
  "items": {
   "tea": {
