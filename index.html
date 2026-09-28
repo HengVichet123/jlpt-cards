@@ -1282,6 +1282,19 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .pre-part{display:flex;align-items:baseline;gap:8px;font:800 18px var(--display);margin:22px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--ink)}
 .pre-part small{font:500 11.5px var(--mono);color:var(--faint)}
 .pre-pop .pre-x{z-index:2}
+/* v62: clean reader + Japanese-first titles */
+.pre-btns{display:flex;gap:8px}
+.reader{position:relative;max-width:680px;margin:0 auto;width:100%}
+.reader-title{font:800 26px var(--display);margin:8px 0 18px;text-wrap:balance}
+.reader-text p{font:400 18px/2.05 var(--body);margin:0 0 18px}
+.tk{cursor:pointer;border-radius:3px}
+.tk:hover{background:var(--chip)}
+.tk.tk-own{border-bottom:1px dotted var(--shu)}
+.tk.on{background:color-mix(in srgb, var(--shu) 16%, transparent)}
+.tip-bubble{position:absolute;z-index:20;max-width:260px;padding:7px 11px;border-radius:8px;background:var(--ink);color:var(--paper);
+  font:600 13.5px/1.4 var(--body);box-shadow:0 6px 18px rgba(0,0,0,.22);pointer-events:none}
+.cover b{font-size:22px}
+.pt-en{display:block;font:500 10.5px var(--body);color:var(--faint);letter-spacing:.04em;margin-top:1px}
 </style>
 </head>
 
@@ -1329,7 +1342,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v61";
+const APP_VERSION = "v62";
 
 
 /* =========================================================
@@ -2637,12 +2650,12 @@ function renderHome(){
 
       <h2 class="home-h">Study</h2>
       <div class="core">
-        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>Review cards one at a time</span></button>
-        <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
-        <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Short stories</span></button>
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>練習</b><span>Playground · review one card at a time</span></button>
+        <button class="cover cover-list" data-home="complete"><i>覧</i><b>一覧</b><span>Complete list · ${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
+        <button class="cover cover-read" data-home="reading"><i>読</i><b>読解</b><span>Reading · learn, then read</span></button>
       </div>
 
-      <button class="sec-bar" data-home="sections"><i>節</i><b>Sections</b><span>Words grouped by topic, like a textbook</span><em>›</em></button>
+      <button class="sec-bar" data-home="sections"><i>節</i><b>分野別</b><span>Sections · words grouped by topic</span><em>›</em></button>
 
       <h2 class="home-h">Later <small>side projects</small></h2>
       <div class="side">
@@ -3021,7 +3034,7 @@ async function renderSections(){
   document.body.classList.remove("playing");
   const S = await loadSections();
   const LVL = store.get("jc:slevel", "N1") === "N2" ? "N2" : "N1";
-  $("#pageTitle").textContent = "Sections";
+  $("#pageTitle").innerHTML = `分野別<small class="pt-en">Sections</small>`;
   const part = s => /^[1-5]/.test(s.code) ? s.code[0] : "x";
   const parts = {}; S[LVL].forEach((s, i) => (parts[part(s)] = parts[part(s)] || []).push([s, i + 1]));
   const PN = ["一","二","三","四","五","六"];
@@ -3118,28 +3131,52 @@ async function renderPrelearn(id){
   const list = (t, rows) => rows.map(([lv, no]) => { const c = get(t, lv, no); return c ? miniFor(t, c, lv) : ""; }).join("");
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reading prelearn">
-    <div class="story-top"><button class="nav-btn" id="preBack">Back</button><button class="nav-btn sec-study" id="preStudy">Study in Playground</button></div>
+    <div class="story-top"><button class="nav-btn" id="preBack">Back</button><span class="pre-btns"><button class="nav-btn" id="preStudy">Study</button><button class="nav-btn sec-study" id="preReadBtn">Read 本文</button></span></div>
     <h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
-    <div class="pre-steps"><b>1</b> Learn these cards <span>→</span> <b>2</b> Read the text below</div>
+    <div class="pre-steps"><b>1</b> Learn these cards <span>→</span> <b>2</b> Tap <i>Read 本文</i></div>
     <h3 class="pre-part">言葉 <small>${R.words.length} words</small></h3>
     <div class="complete-cards">${list("words", R.words)}</div>
     ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
     ${R.kanji.length ? `<h3 class="pre-part">漢字 <small>${R.kanji.length} kanji</small></h3><div class="complete-cards">${list("kanji", R.kanji)}</div>` : ""}
-    <h3 class="pre-part" id="preRead">本文 <small>Read · tap an underlined word</small></h3>
-    <div class="pre-text">${html}</div>
     <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a></p>
-    <div class="pre-pop" id="prePop" hidden></div>
   </section>`;
-  $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+  $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
+  $("#preBack").onclick = () => { $("#pageTitle").innerHTML = `読解<small class="pt-en">Reading</small>`; renderReading(); };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
     cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
-  const pop = $("#prePop");
-  document.querySelector(".pre-text").onclick = e => {
-    const m = e.target.closest("mark.pw"); if(!m){ pop.hidden = true; return; }
-    const c = get(m.dataset.t, m.dataset.lv, +m.dataset.no); if(!c) return;
-    pop.innerHTML = `<button class="pre-x" aria-label="Close">×</button>` + miniFor(m.dataset.t, c, m.dataset.lv);
-    pop.hidden = false;
-    pop.querySelector(".pre-x").onclick = ev => { ev.stopPropagation(); pop.hidden = true; };
+
+}
+
+/* ---------- Clean reader: only the text; tap any word = quick English ---------- */
+async function renderReader(id){
+  const R = await loadReading(id);
+  const listed = new Set(R.spans.filter(x => x[2] === "words").map(x => x[0] + ":" + x[1]));
+  let html = "", at = 0;
+  for(const [s, e, g] of (R.tokens || [])){
+    if(s < at) continue;
+    html += esc(R.text.slice(at, s)) + `<span class="tk${listed.has(s + ":" + e) ? " tk-own" : ""}" data-g="${esc(g)}">${esc(R.text.slice(s, e))}</span>`;
+    at = e;
+  }
+  html += esc(R.text.slice(at));
+  $("#pageTitle").textContent = R.title;
+  $("#list").innerHTML = `<section class="reader">
+    <div class="story-top"><button class="nav-btn" id="rdBack">Cards</button></div>
+    <h1 class="reader-title">${esc(R.title)}</h1>
+    <div class="reader-text">${html.split("\n").map(p => `<p>${p}</p>`).join("")}</div>
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · tap a word for English</p>
+    <div class="tip-bubble" id="tipB" hidden></div>
+  </section>`;
+  $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  const tip = $("#tipB"), box = document.querySelector(".reader");
+  box.onclick = e => {
+    const w = e.target.closest(".tk");
+    document.querySelectorAll(".tk.on").forEach(x => x.classList.remove("on"));
+    if(!w){ tip.hidden = true; return; }
+    w.classList.add("on");
+    tip.textContent = w.dataset.g; tip.hidden = false;
+    const r = w.getBoundingClientRect(), br = box.getBoundingClientRect();
+    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
   };
 }
 
@@ -3167,7 +3204,7 @@ async function renderStory(id){
     <div class="story-meta">${st.level} · ${esc(st.source)}</div>
     ${st.sentences.map(x => `<div class="ex story-line">${sayBtn(x.jp)}<span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
   </section>`;
-  $("#storyBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+  $("#storyBack").onclick = () => { $("#pageTitle").innerHTML = `読解<small class="pt-en">Reading</small>`; renderReading(); };
 }
 
 function famBar(lvl, t, no){
@@ -3697,9 +3734,10 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections"};
+  const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
+  const titles = {home:"", playground:T2("練習","Playground"), complete:T2("一覧","Complete list"), reading:T2("読解","Reading"), novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:T2("分野別","Sections")};
   const lessonName = (INDEX.find(x => x.id === id) || {});
-  $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
+  $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
   $("#top").hidden = id === "home";
   document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
