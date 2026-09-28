@@ -936,57 +936,82 @@ body.playing{position:fixed;inset:0;height:100dvh;overflow:hidden;overscroll-beh
 .play-stage .card .back{flex:0 0 auto;max-height:0;overflow:hidden}
 .play-stage .card.open .back{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:24px}
+
+/* =========================================================
+   v17: page structure + polish
+   ========================================================= */
+header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
+.bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+.back{font:700 13px var(--body);color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer}
+.page-title{font:800 18px var(--display);text-align:center;text-wrap:balance}
+#ver{font:500 11px var(--mono);color:var(--faint)}
+
+/* Home */
+.home{padding:calc(env(safe-area-inset-top,0px) + 28px) 0 24px;display:flex;flex-direction:column;gap:14px}
+.home h1{font:800 40px/1.1 var(--display);margin:0;letter-spacing:.02em}
+.home h1::after{content:"単語帳";display:block;font-size:15px;font-weight:600;color:var(--shu);letter-spacing:.3em;margin-top:6px}
+.home p{margin:0 0 6px;color:var(--soft)}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.home-card{position:relative;text-align:left;padding:18px 16px 16px 30px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.home-card::before{content:"";position:absolute;left:11px;top:22px;width:9px;height:9px;border-radius:50%;background:var(--hole);box-shadow:inset 0 1px 2px rgba(0,0,0,.18)}
+.home-card b{font:800 18px var(--display);margin:0}
+.home-card span{font-size:13px;color:var(--soft)}
+.home-card[data-home="playground"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.home-card[data-home="playground"] span{color:var(--faint)}
+.home-card[data-home="playground"]::before{background:var(--shu);box-shadow:none}
+.home .complete-section.h2,.home h2{font:700 12px var(--body);letter-spacing:.14em;color:var(--faint);margin:14px 0 0;text-transform:uppercase}
+.home h2 + .home-grid{grid-template-columns:1fr}
+.home h2 + .home-grid .home-card{min-height:0;flex-direction:row;justify-content:space-between;align-items:baseline;padding-block:14px}
+
+/* Playground setup */
+.play-setup{padding:18px 0 32px}
+.play-setup .play-exit{display:none}
+.play-setup h2{display:none}
+.play-setup p{margin:0 0 16px;color:var(--soft)}
+.play-setup .pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px}
+.play-setup .pg label{display:flex;flex-direction:column;align-items:flex-start;gap:6px;font:700 12px var(--body);color:var(--soft)}
+.play-setup .pg input,.play-setup .pg select{width:100%;font:500 20px var(--mono);padding:10px 12px;border-radius:8px}
+.play-setup .go{grid-column:1/-1;width:100%;padding:14px;font-size:16px;border-radius:8px;margin:4px 0 0}
+
+/* Running session: one top bar, nothing overlaps */
+.play-bar{position:fixed;left:0;right:0;top:0;z-index:6;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;
+  padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;background:var(--paper);border-bottom:1px solid var(--line)}
+.play-bar .play-settings,.play-bar .play-exit{position:static;padding:7px 10px;font:700 13px var(--body);border-radius:8px}
+.play-bar .play-top{position:static;transform:none;left:auto;top:auto;display:flex;justify-content:center;flex-wrap:wrap;gap:4px 10px;font:500 12px var(--mono);color:var(--faint);min-width:0}
+.play-bar .play-top b{color:var(--ink);margin-right:3px}
+.play-bar .play-queue{position:static!important;inset:auto!important;transform:none!important;margin:0!important;
+  display:flex;justify-content:center;flex-wrap:wrap;gap:2px 10px;width:auto;background:none;border:0;padding:0}
+
+/* Complete list */
+.complete{padding-top:14px}
+.complete-head{margin-bottom:10px}
+.complete-head h1{display:none}
+.complete-section{display:flex;flex-direction:column;gap:10px}
+.complete-section h2{font:800 22px var(--display);margin:6px 0 2px;display:flex;align-items:baseline;gap:8px}
 </style>
 </head>
 
 
 <body>
 
-<header>
+<header id="top">
 
-  <div class="row">
-
-    <div class="brand">
-      単語<span>帳</span>
-    </div>
-
-    <select id="lesson"></select>
-
-    <button
-      class="small"
-      id="filter"
-      title="Show only cards with fewer than 3 dots"
-    >
-      All
-    </button>
-
-  </div>
-
-
-  <div class="tabs">
-
-    <div class="tab on" data-t="words">
-      <span class="jp">語</span>Words
-    </div>
-
-    <div class="tab" data-t="kanji">
-      <span class="jp">字</span>Kanji
-    </div>
-
-    <div class="tab" data-t="grammar">
-      <span class="jp">文</span>Grammar
-    </div>
-
-  </div>
-
-
-  <div class="meta">
-
-    <span id="count"></span>
-
+  <div class="bar">
+    <button class="back" id="goHome" aria-label="Back to home">← Home</button>
+    <div class="page-title" id="pageTitle"></div>
     <span id="ver"></span>
-
   </div>
+
+  <div class="tabs" hidden>
+    <div class="tab on" data-t="words"><span class="jp">語</span>Words</div>
+    <div class="tab" data-t="kanji"><span class="jp">字</span>Kanji</div>
+    <div class="tab" data-t="grammar"><span class="jp">文</span>Grammar</div>
+  </div>
+
+  <!-- kept for older code paths; not shown -->
+  <select id="lesson" hidden></select>
+  <button class="small" id="filter" hidden>All</button>
+  <span id="count" hidden></span>
 
 </header>
 
@@ -1007,7 +1032,7 @@ body.playing{position:fixed;inset:0;height:100dvh;overflow:hidden;overscroll-beh
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v16";
+const APP_VERSION = "v17";
 
 
 /* =========================================================
@@ -2217,24 +2242,10 @@ async function renderPG(){
 
     <div class="play-screen">
 
-      <button
-        class="play-settings"
-        id="pgBack"
-      >
-        Settings
-      </button>
-
-
-      <button
-        class="play-exit"
-        id="pgExit"
-      >
-        Exit playground
-      </button>
-
-
-      <div class="play-top">
-        ${queue}
+      <div class="play-bar">
+        <button class="play-settings" id="pgBack">Settings</button>
+        <div class="play-top">${queue}</div>
+        <button class="play-exit" id="pgExit">Exit</button>
       </div>
 
 
@@ -2451,24 +2462,18 @@ async function renderComplete(){
           </h1>
 
           <div class="stat">
-            Every card
+            ${pool.words.length} words · ${pool.kanji.length} kanji · ${pool.grammar.length} grammar
           </div>
 
         </div>
 
 
-        <button id="completeHome">
-          Home
-        </button>
+
 
       </div>
 
 
-      ${section("words","Words")}
-
-      ${section("kanji","Kanji")}
-
-      ${section("grammar","Grammar")}
+      ${section(TAB, {words:"Words",kanji:"Kanji",grammar:"Grammar"}[TAB] + ` <span class="stat">${pool[TAB].length}</span>`)}
 
     </section>
 
@@ -2479,7 +2484,8 @@ async function renderComplete(){
     "Complete list";
 
 
-  $("#completeHome").onclick =
+  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
+  if(false) $("#completeHome").onclick =
     () => {
 
       $("#lesson").value =
@@ -2516,7 +2522,7 @@ function dotsOrButtons(type,no){
 }
 
 
-let PLAY = false;
+let PLAY = false, CURRENT = "home";
 
 let PG_RUNNING = false;
 
@@ -2931,7 +2937,8 @@ document.addEventListener(
       );
 
 
-      render();
+      if(CURRENT === "complete") renderComplete();
+      else render();
 
 
       window.scrollTo(
@@ -2943,6 +2950,8 @@ document.addEventListener(
 
   }
 );
+
+$("#goHome").onclick = () => { store.set("jc:lesson","home"); pick("home"); };
 
 
 /* =========================================================
@@ -3012,24 +3021,16 @@ function pick(id){
   PLAY =
     id === "playground";
 
-
   PG_RUNNING = false;
+  CURRENT = id;
 
+  const titles = {home:"", playground:"Playground", complete:"Complete list"};
+  const lessonName = (INDEX.find(x => x.id === id) || {});
+  $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
-  const special =
-    PLAY ||
-    id === "home" ||
-    id === "complete";
-
-
-  document
-    .querySelector(".tabs")
-    .hidden = special;
-
-
-  $("#filter").hidden =
-    special;
-
+  $("#top").hidden = id === "home";
+  document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
+  $("#filter").hidden = true;
 
   if(PLAY)
     renderPG();
