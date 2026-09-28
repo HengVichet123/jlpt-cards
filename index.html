@@ -1342,7 +1342,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v62";
+const APP_VERSION = "v63";
 
 
 /* =========================================================
@@ -3114,11 +3114,9 @@ async function renderSection(id){
 /* ---------- Pre-learn reading page ---------- */
 async function renderPrelearn(id){
   document.body.classList.remove("playing");
-  $("#list").innerHTML = `<div class="empty">Loading…</div>`;   // instant feedback; card data can take a moment on a phone
   const R = await loadReading(id);
-  const need = [...new Set([...R.words, ...R.kanji, ...R.grammar].map(x => x[0]))];
-  const pools = {}; for(const lv of need) pools[lv] = await pgPool(lv);
-  const get = (t, lv, no) => (pools[lv] ? pools[lv][t].find(c => c.no === no) : null);
+  // the reading file carries its own cards, so the page opens without loading the whole database
+  const get = (t, lv, no) => ((R.cards || {})[t] || []).find(c => c.level === lv && c.no === no);
   const studied = R.words.filter(([lv, no]) => pgProfile(lv, "words", no).reviews).length;
   let html = "", at = 0;
   for(const [s, e, t, lv, no] of R.spans){
