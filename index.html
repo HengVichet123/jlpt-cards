@@ -1191,6 +1191,12 @@ body.showfam .fam{opacity:.85;transform:none}
 /* v52: extra 例文 */
 .back h4 .ex-count{font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint);margin-left:6px}
 .back .ex + .ex{margin-top:6px}
+/* v54: compact 例 lines */
+.ex.exc{background:none;border-radius:0;padding:3px 0;margin:2px 0;font-size:15px;line-height:1.65}
+.ex.exc .rei{color:var(--faint);font-size:13px;margin-right:2px}
+.ex.exc .tr{border-top:0;margin-top:0;padding-top:0;font-size:13px}
+.ex.exc.exl{font-size:13.5px;color:var(--soft);padding:1px 0 0 0}
+.exsrc{font:500 10.5px var(--mono);color:var(--faint);margin-left:6px}
 </style>
 </head>
 
@@ -1238,7 +1244,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v53";
+const APP_VERSION = "v54";
 
 
 /* =========================================================
@@ -1405,6 +1411,12 @@ function dotsHTML(type,no){
    EXAMPLES
    ========================================================= */
 
+/* compact 例 line (his preferred style): 「例： sentence」, tap shows English */
+function exLine(e, target){
+  const src = e.url ? ` <a class="exsrc" href="${esc(e.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${e.src && e.src.startsWith("Wikipedia") ? "Wikipedia" : esc(e.src || "source")}</a>` : "";
+  return `<div class="ex exc"><span class="rei">例：</span>${hl(e.jp, target)}${e.en || src ? `<div class="tr">${e.en ? esc(e.en) : ""}${src}</div>` : ""}</div>`;
+}
+
 function exHTML(e,targets){
 
 
@@ -1521,8 +1533,8 @@ function wordCard(c){
 
 
     (c.ex && c.ex.length) || c.use
-      ? `<h4>例文 <small class="ex-count">tap for English</small></h4>
-         ${[...(c.ex || []), ...(c.use ? [c.use] : [])].map(e => exHTML(e, c.word)).join("")}`
+      ? `<h4>例文</h4>
+         ${[...(c.ex || []), ...(c.use ? [c.use] : [])].map(e => exLine(e, c.word)).join("")}`
       : ""
 
   ].join("");
@@ -1576,13 +1588,7 @@ function kanjiCard(c){
 
                     ${
                       w.ex
-                        ? `<div class="exl">
-                             例：
-                             ${hl(
-                               w.ex,
-                               c.kanji
-                             )}
-                           </div>`
+                        ? exLine({jp:w.ex, en:w.exEn, url:w.exUrl, src:w.exUrl ? "Tatoeba" : ""}, c.kanji).replace('class="ex exc"', 'class="ex exc exl"')
                         : ""
                     }
 
@@ -1646,7 +1652,7 @@ function kanjiCard(c){
 
     c.use
       ? `<h4>例文</h4>
-         ${exHTML(
+         ${exLine(
            c.use,
            c.kanji
          )}`
@@ -1738,7 +1744,7 @@ function grammarCard(c){
            c.rei
              .map(
                e =>
-                 exHTML(
+                 exLine(
                    e,
                    c.variants
                  )
