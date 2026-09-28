@@ -1039,6 +1039,23 @@ body.showfam .fam{opacity:.85;transform:none}
 .fam-toggle{min-width:0;padding:6px 10px;color:var(--soft);display:flex;align-items:center}
 .fam-toggle[aria-pressed="true"]{color:var(--shu);border-color:var(--shu)}
 @media (prefers-reduced-motion: reduce){.fam{transition:none}}
+
+/* ---------- v25: home rail, reading, sound ---------- */
+.home-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,44%);gap:10px;overflow-x:auto;
+  scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}
+.home-rail::-webkit-scrollbar{display:none}
+.home-rail .home-card{scroll-snap-align:start;min-height:110px}
+.home-card[data-home="reading"] b{font-family:var(--display)}
+.say{border:0;background:transparent;padding:0 4px;font-size:15px;line-height:1;cursor:pointer;vertical-align:middle;opacity:.55}
+.say:active{opacity:1}
+.big .say{font-size:16px}
+.ex .say{float:right;margin-left:6px}
+.reading{padding:16px 0 32px;display:flex;flex-direction:column;gap:10px}
+.story-list{display:flex;flex-direction:column;gap:8px}
+.story-item{min-height:0}
+.story-top{display:flex;justify-content:space-between;align-items:center}
+.story-meta{font:500 11px var(--mono);color:var(--faint)}
+.story-line{font-size:18px;line-height:1.8;background:var(--card);border:1px solid var(--line)}
 </style>
 </head>
 
@@ -1086,7 +1103,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v24";
+const APP_VERSION = "v25";
 
 
 /* =========================================================
@@ -1254,6 +1271,8 @@ function dotsHTML(type,no){
    ========================================================= */
 
 function exHTML(e,targets){
+  if(e && e.jp && !exHTML.inner){ exHTML.inner = true; const h = exHTML(e,targets); exHTML.inner = false;
+    return h.replace('<div class="ex">', `<div class="ex">${sayBtn(e.jp)}`); }
 
   const tr =
     e.en
@@ -2319,39 +2338,10 @@ function renderHome(){
       <div class="home-ver">${APP_VERSION}</div>
 
 
-      <div class="home-grid">
-
-        <button
-          class="home-card"
-          data-home="playground"
-        >
-
-          <b>
-            ▶ Playground
-          </b>
-
-          <span>
-            Personalized review session
-          </span>
-
-        </button>
-
-
-        <button
-          class="home-card"
-          data-home="complete"
-        >
-
-          <b>
-            ▦ Complete list
-          </b>
-
-          <span>
-            Browse every card
-          </span>
-
-        </button>
-
+      <div class="home-rail">
+        <button class="home-card" data-home="playground"><b>▶ Playground</b><span>Review cards one at a time</span></button>
+        <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card</span></button>
+        <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
       </div>
 
 
@@ -2525,6 +2515,41 @@ function flipCard(card, open){
 }
 
 let CARD_LVL = null;
+
+/* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
+function speak(text){
+  try{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP"; u.rate = .9;
+    const v = speechSynthesis.getVoices().find(x => /ja/i.test(x.lang));
+    if(v) u.voice = v;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
+
+/* ---------- Reading ---------- */
+let STORIES = null;
+async function renderReading(){
+  document.body.classList.remove("playing");
+  try{ STORIES = STORIES || await (await fetch("data/stories/index.json", {cache:"no-cache"})).json(); }
+  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load stories.</div>`; return; }
+  $("#list").innerHTML = `<section class="reading">
+    <p class="set-lead">Short stories built from your cards. Tap a sentence for English, 🔊 to hear it.</p>
+    <div class="story-list">${STORIES.map(x => `<button class="home-card story-item" data-story="${x.id}">
+      <b>${esc(x.title)}</b><span>${x.level} · ${x.lines} sentences</span></button>`).join("")}</div></section>`;
+}
+async function renderStory(id){
+  let st; try{ st = await (await fetch(`data/stories/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
+  $("#pageTitle").textContent = st.title;
+  $("#list").innerHTML = `<section class="reading story">
+    <div class="story-top"><button class="nav-btn" id="storyBack">Back</button>${sayBtn(st.sentences.map(x=>x.jp).join(""))}</div>
+    <div class="story-meta">${st.level} · ${esc(st.source)}</div>
+    ${st.sentences.map(x => `<div class="ex story-line">${sayBtn(x.jp)}<span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
+  </section>`;
+  $("#storyBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+}
+
 function famBar(lvl, t, no){
   const f = Math.max(0, Math.min(5, (store.get(profileKey(lvl, t, no), {familiarity:0}).familiarity || 0))) / 5;
   return `<div class="fam" style="--f:${f}" aria-label="familiarity ${Math.round(f*5)} of 5"><i></i></div>`;
@@ -2649,6 +2674,12 @@ function render(){
 document.addEventListener(
   "click",
   e => {
+
+    const say = e.target.closest(".say");
+    if(say){ e.stopPropagation(); speak(say.dataset.say); return; }
+
+    const story = e.target.closest("[data-story]");
+    if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
 
 
     /* ---------- Playground rating ---------- */
@@ -3038,7 +3069,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3059,6 +3090,9 @@ function pick(id){
 
   else if(id === "complete")
     renderComplete();
+
+  else if(id === "reading")
+    renderReading();
 
   else
     load(id);
