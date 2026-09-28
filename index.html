@@ -1426,6 +1426,11 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .pv-en{font:600 15px var(--body);margin-top:4px}
 @media (min-width: 700px){ .pv-slide{flex-basis:90%} .pv-word b{font-size:44px} }
 @media (prefers-reduced-motion: reduce){ .pv-bar i{transition:none} }
+/* v82: whole photo, never cropped; soft blurred copy fills the frame */
+.pv-photo img{position:absolute;inset:0}
+.pv-photo .pv-bg{object-fit:cover;filter:blur(18px) saturate(1.1);transform:scale(1.15);opacity:.55}
+.pv-photo .pv-fg{object-fit:contain}
+.pv-spk{z-index:2}
 </style>
 </head>
 
@@ -1473,7 +1478,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v81";
+const APP_VERSION = "v82";
 
 
 /* =========================================================
@@ -3482,7 +3487,7 @@ function picView(C, W, clean){
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => `<div class="pv-slide" data-n="${n}">
-      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img src="data/pictures/${w.img}" alt="${esc(w.word)}" loading="${n < 3 ? "eager" : "lazy"}"><span class="pv-spk">${spk}</span></button>
+      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${w.img}" alt="" aria-hidden="true" loading="${n < 3 ? "eager" : "lazy"}"><img class="pv-fg" src="data/pictures/${w.img}" alt="${esc(w.word)}" loading="${n < 3 ? "eager" : "lazy"}"><span class="pv-spk">${spk}</span></button>
       <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span></div></div>`).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
