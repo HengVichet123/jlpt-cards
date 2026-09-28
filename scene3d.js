@@ -152,8 +152,42 @@ function mountKonbini3D(container, onPick){
   const label = document.createElement("div"); label.className = "label3d"; label.hidden = true;
   container.appendChild(label);
   const tmp = new T.Box3(), v = new T.Vector3();
+  // all labels at once ("Show all")
+  let allTags = [];
+  function showAll(names, on){
+    allTags.forEach(t => t.el.remove()); allTags = [];
+    if(on) for(const [id, grp] of Object.entries(groups)){
+      const el = document.createElement("div"); el.className = "label3d all"; el.textContent = names[id] || id;
+      container.appendChild(el); allTags.push({el, grp});
+    }
+    kick();
+  }
+  function placeAll(){
+    // anchor over each object, then relax: overlapping labels push apart, springs pull them home
+    const P = allTags.map(t => {
+      tmp.setFromObject(t.grp); tmp.getCenter(v); v.y = tmp.max.y + .1; v.project(camera);
+      t.el.classList.toggle("sel", t.grp === selected);
+      const x = (v.x + 1)/2 * W(), y = (1 - v.y)/2 * H();
+      return {t, ax:x, ay:y, x, y, w:t.el.offsetWidth + 4, h:t.el.offsetHeight + 2};
+    });
+    for(let it = 0; it < 120; it++){
+      for(let i = 0; i < P.length; i++) for(let j = i + 1; j < P.length; j++){
+        const p = P[i], q = P[j];
+        const ox = (p.w + q.w)/2 - Math.abs(p.x - q.x), oy = (p.h + q.h)/2 - Math.abs(p.y - q.y);
+        if(ox <= 0 || oy <= 0) continue;
+        if(oy < ox){ const s = (p.y < q.y || (p.y === q.y && p.ay <= q.ay)) ? -1 : 1; p.y += s*oy/2; q.y -= s*oy/2; }
+        else { const s = p.x < q.x ? -1 : 1; p.x += s*ox/2; q.x -= s*ox/2; }
+      }
+      for(const p of P){
+        p.x += (p.ax - p.x) * .02; p.y += (p.ay - p.y) * .02;
+        p.x = Math.min(Math.max(p.x, p.w/2), W() - p.w/2); p.y = Math.min(Math.max(p.y, p.h), H());
+      }
+    }
+    for(const p of P){ p.t.el.style.left = p.x + "px"; p.t.el.style.top = p.y + "px"; }
+  }
   function placeLabel(){
-    if(!selected){ label.hidden = true; return; }
+    placeAll();
+    if(!selected || allTags.length){ label.hidden = true; return; }
     tmp.setFromObject(selected); tmp.getCenter(v); v.y = tmp.max.y + .15; v.project(camera);
     label.hidden = false;
     label.style.left = ((v.x + 1)/2 * W()) + "px";
@@ -172,7 +206,7 @@ function mountKonbini3D(container, onPick){
   kick();
 
   return {
-    select, setLabel: t => { label.textContent = t; kick(); },
+    select, showAll, setLabel: t => { label.textContent = t; kick(); },
     dispose(){ alive = false; window.removeEventListener("resize", onResize); controls.dispose(); renderer.dispose(); container.innerHTML = ""; }
   };
 }

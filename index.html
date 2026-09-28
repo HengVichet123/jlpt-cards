@@ -1108,6 +1108,11 @@ body.showfam .fam{opacity:.85;transform:none}
 .novel-tile b{font:800 16px var(--display);padding-inline:10px}
 .novel-tile span{font-size:12px;color:var(--soft);padding-inline:10px}
 .novel-art{display:block;width:100%;max-width:100%;aspect-ratio:5/3;border-radius:8px;border:1px solid var(--line)}
+
+/* ---------- v33: show all labels ---------- */
+#showAll[aria-pressed="true"]{color:var(--shu);border-color:var(--shu)}
+.label3d.all{background:rgba(31,34,38,.78);font-size:11px;padding:2px 7px}
+.label3d.all.sel{background:#C63A2F;z-index:2}
 </style>
 </head>
 
@@ -1155,7 +1160,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v32";
+const APP_VERSION = "v33";
 
 
 /* =========================================================
@@ -2631,7 +2636,7 @@ async function renderScene(id){
   $("#pageTitle").textContent = sc.title;
   const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>${sc.three ? `<span class="story-meta">Tap anything in the store</span>` : ""}</div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>${sc.three ? `<button class="nav-btn" id="showAll" aria-pressed="false">Show all</button>` : ""}</div>
     ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
     <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
     <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
@@ -2647,6 +2652,10 @@ async function renderScene(id){
       await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js");
       if(window.__scene3d) window.__scene3d.dispose();
       view3d = window.__scene3d = mountKonbini3D($("#scene3d"), k => show(k));
+      const names = Object.fromEntries(Object.entries(sc.items).map(([k,v]) => [k, v.jp]));
+      const setAll = on => { view3d.showAll(names, on); $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); };
+      $("#showAll").onclick = () => setAll($("#showAll").getAttribute("aria-pressed") !== "true");
+      setAll(store.get("jc:scenelabels", false));
     }catch(e){ $("#scene3d").innerHTML = `<div class="empty">3D could not start on this device.</div>`; }
   }
   const tag = (g, text) => {
