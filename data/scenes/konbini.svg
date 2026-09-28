@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Inside a convenience store">
+  <!-- room -->
+  <rect x="0" y="0" width="400" height="300" fill="#EEF1F2"/>
+  <rect x="0" y="0" width="400" height="16" fill="#2E8B57"/>
+  <rect x="0" y="16" width="400" height="5" fill="#F29B38"/>
+  <rect x="0" y="16" width="400" height="0" fill="#D94A3D"/>
+  <rect x="0" y="232" width="400" height="68" fill="#D9DEE0"/>
+  <line x1="0" y1="232" x2="400" y2="232" stroke="#B9C1C4" stroke-width="1"/>
+
+  <!-- drinks fridge -->
+  <g class="spot" data-id="fridge">
+    <rect x="14" y="32" width="136" height="150" rx="3" fill="#C9D3D8" stroke="#8A979D"/>
+    <rect x="20" y="38" width="40" height="138" fill="#E4F1F7" stroke="#8A979D"/>
+    <rect x="64" y="38" width="40" height="138" fill="#E4F1F7" stroke="#8A979D"/>
+    <rect x="108" y="38" width="36" height="138" fill="#E4F1F7" stroke="#8A979D"/>
+    <g fill="#3A86C8"><rect x="24" y="48" width="7" height="22" rx="2"/><rect x="34" y="48" width="7" height="22" rx="2"/><rect x="44" y="48" width="7" height="22" rx="2"/></g>
+    <g fill="#E0503F"><rect x="68" y="48" width="7" height="22" rx="2"/><rect x="78" y="48" width="7" height="22" rx="2"/><rect x="88" y="48" width="7" height="22" rx="2"/></g>
+    <g fill="#5BAE5B"><rect x="112" y="48" width="7" height="22" rx="2"/><rect x="122" y="48" width="7" height="22" rx="2"/><rect x="132" y="48" width="7" height="22" rx="2"/></g>
+    <g fill="#F2C14E"><rect x="24" y="92" width="8" height="18" rx="2"/><rect x="36" y="92" width="8" height="18" rx="2"/><rect x="68" y="92" width="8" height="18" rx="2"/><rect x="80" y="92" width="8" height="18" rx="2"/><rect x="112" y="92" width="8" height="18" rx="2"/><rect x="124" y="92" width="8" height="18" rx="2"/></g>
+    <g fill="#9C6ADE"><rect x="26" y="134" width="10" height="16" rx="2"/><rect x="40" y="134" width="10" height="16" rx="2"/><rect x="70" y="134" width="10" height="16" rx="2"/><rect x="84" y="134" width="10" height="16" rx="2"/><rect x="114" y="134" width="10" height="16" rx="2"/></g>
+  </g>
+
+  <!-- onigiri / bento / snacks shelf -->
+  <g class="spot" data-id="onigiri">
+    <rect x="164" y="84" width="112" height="34" fill="#FFFFFF" stroke="#8A979D"/>
+    <g fill="#FFFFFF" stroke="#555"><path d="M172 112 l8 -18 l8 18 z"/><path d="M190 112 l8 -18 l8 18 z"/><path d="M208 112 l8 -18 l8 18 z"/><path d="M226 112 l8 -18 l8 18 z"/><path d="M244 112 l8 -18 l8 18 z"/></g>
+    <g fill="#1F2D2A"><rect x="176" y="104" width="8" height="8"/><rect x="194" y="104" width="8" height="8"/><rect x="212" y="104" width="8" height="8"/><rect x="230" y="104" width="8" height="8"/><rect x="248" y="104" width="8" height="8"/></g>
+  </g>
+  <g class="spot" data-id="bento">
+    <rect x="164" y="120" width="112" height="32" fill="#FFFFFF" stroke="#8A979D"/>
+    <g><rect x="170" y="128" width="30" height="18" rx="2" fill="#2B2B2B"/><rect x="173" y="131" width="12" height="12" fill="#FFFFFF"/><rect x="187" y="131" width="10" height="5" fill="#E0503F"/><rect x="187" y="138" width="10" height="5" fill="#6BB36B"/></g>
+    <g><rect x="206" y="128" width="30" height="18" rx="2" fill="#2B2B2B"/><rect x="209" y="131" width="12" height="12" fill="#FFFFFF"/><rect x="223" y="131" width="10" height="12" fill="#C97B3A"/></g>
+    <g><rect x="242" y="128" width="28" height="18" rx="2" fill="#2B2B2B"/><rect x="245" y="131" width="22" height="12" fill="#F2C14E"/></g>
+  </g>
+  <g class="spot" data-id="snacks">
+    <rect x="164" y="154" width="112" height="30" fill="#FFFFFF" stroke="#8A979D"/>
+    <g><rect x="170" y="160" width="18" height="20" rx="3" fill="#E0503F"/><rect x="192" y="160" width="18" height="20" rx="3" fill="#F2C14E"/><rect x="214" y="160" width="18" height="20" rx="3" fill="#3A86C8"/><rect x="236" y="160" width="18" height="20" rx="3" fill="#5BAE5B"/><rect x="258" y="160" width="14" height="20" rx="3" fill="#9C6ADE"/></g>
+  </g>
+  <rect x="164" y="184" width="112" height="48" fill="#C9D3D8" stroke="#8A979D"/>
+
+  <!-- microwave + coffee on back counter -->
+  <rect x="286" y="120" width="104" height="8" fill="#8A979D"/>
+  <g class="spot" data-id="coffee">
+    <rect x="290" y="80" width="38" height="40" rx="3" fill="#3B3B3B"/>
+    <rect x="296" y="86" width="26" height="10" rx="2" fill="#7FC4E8"/>
+    <rect x="302" y="104" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#555"/>
+  </g>
+  <g class="spot" data-id="microwave">
+    <rect x="336" y="92" width="50" height="28" rx="3" fill="#D8DCDE" stroke="#6E7A80"/>
+    <rect x="341" y="97" width="30" height="18" rx="2" fill="#3B3B3B"/>
+    <circle cx="378" cy="102" r="3" fill="#6E7A80"/><circle cx="378" cy="111" r="3" fill="#6E7A80"/>
+  </g>
+
+  <!-- clerk -->
+  <g class="spot" data-id="clerk">
+    <circle cx="344" cy="150" r="12" fill="#F2D2B3"/>
+    <path d="M332 146 q12 -16 24 0" fill="#3B2A20"/>
+    <rect x="328" y="162" width="32" height="30" rx="8" fill="#2E8B57"/>
+    <rect x="340" y="166" width="8" height="6" fill="#FFFFFF"/>
+  </g>
+
+  <!-- counter with register, hot snacks, bag -->
+  <rect x="246" y="192" width="148" height="44" fill="#B9C1C4" stroke="#6E7A80"/>
+  <rect x="246" y="186" width="148" height="8" fill="#6E7A80"/>
+  <g class="spot" data-id="register">
+    <rect x="352" y="164" width="32" height="22" rx="2" fill="#3B3B3B"/>
+    <rect x="356" y="168" width="24" height="10" fill="#7FC4E8"/>
+    <rect x="348" y="178" width="40" height="8" rx="2" fill="#555"/>
+  </g>
+  <g class="spot" data-id="hotsnack">
+    <rect x="252" y="152" width="56" height="34" rx="3" fill="#F7E7C6" stroke="#C97B3A"/>
+    <rect x="252" y="152" width="56" height="7" fill="#E0503F"/>
+    <ellipse cx="266" cy="175" rx="8" ry="6" fill="#C97B3A"/>
+    <ellipse cx="282" cy="176" rx="7" ry="5" fill="#D9A45B"/>
+    <rect x="292" y="168" width="10" height="14" rx="3" fill="#B5652A"/>
+  </g>
+  <g class="spot" data-id="bag">
+    <path d="M314 186 l4 -18 h18 l4 18 z" fill="#FFFFFF" stroke="#8A979D"/>
+    <path d="M320 168 q7 -10 14 0" fill="none" stroke="#8A979D"/>
+  </g>
+
+  <!-- ATM + copy machine + magazines -->
+  <g class="spot" data-id="atm">
+    <rect x="12" y="196" width="46" height="72" rx="3" fill="#2F5D8A"/>
+    <rect x="18" y="204" width="34" height="20" rx="2" fill="#7FC4E8"/>
+    <rect x="20" y="230" width="30" height="16" rx="2" fill="#DDE6EE"/>
+    <text x="35" y="262" font-size="8" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif">ATM</text>
+  </g>
+  <g class="spot" data-id="copier">
+    <rect x="64" y="212" width="52" height="56" rx="3" fill="#E6E9EB" stroke="#8A979D"/>
+    <rect x="68" y="204" width="44" height="10" rx="2" fill="#C9D3D8" stroke="#8A979D"/>
+    <rect x="72" y="222" width="18" height="10" rx="1" fill="#7FC4E8"/>
+    <rect x="72" y="244" width="36" height="6" fill="#FFFFFF" stroke="#8A979D"/>
+  </g>
+  <g class="spot" data-id="magazines">
+    <rect x="122" y="206" width="36" height="62" fill="#C9D3D8" stroke="#8A979D"/>
+    <rect x="126" y="210" width="13" height="18" fill="#E0503F"/><rect x="141" y="210" width="13" height="18" fill="#3A86C8"/>
+    <rect x="126" y="232" width="13" height="18" fill="#F2C14E"/><rect x="141" y="232" width="13" height="18" fill="#5BAE5B"/>
+  </g>
+
+  <!-- basket + trash -->
+  <g class="spot" data-id="basket">
+    <path d="M172 250 h40 l-5 22 h-30 z" fill="#E0503F"/>
+    <path d="M178 250 q14 -16 28 0" fill="none" stroke="#B53A2F" stroke-width="3"/>
+  </g>
+  <g class="spot" data-id="trash">
+    <rect x="222" y="244" width="30" height="30" rx="2" fill="#6E7A80"/>
+    <circle cx="230" cy="252" r="3" fill="#2B2B2B"/><circle cx="244" cy="252" r="3" fill="#2B2B2B"/>
+    <rect x="226" y="262" width="22" height="3" fill="#2B2B2B"/>
+  </g>
+</svg>

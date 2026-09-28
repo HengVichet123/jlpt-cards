@@ -1,0 +1,30 @@
+{
+ "id": "n06",
+ "title": "罪と罰",
+ "titleEn": "Crime and Punishment",
+ "author": "ドストエフスキー（ロシア）",
+ "level": "N2",
+ "source": "Summary written by Claude",
+ "sentences": [
+  {
+   "jp": "貧しい大学生ラスコーリニコフは、「特別な人間は罪を犯してもよい」と考える。",
+   "en": "Raskolnikov, a poor student, believes that extraordinary people may commit crimes."
+  },
+  {
+   "jp": "彼はその考えを証明するため、金貸しの老婆を殺してしまう。",
+   "en": "To prove this idea, he murders an old pawnbroker."
+  },
+  {
+   "jp": "しかし罪悪感に苦しみ、心も体も弱っていく。",
+   "en": "But he is tormented by guilt, and his mind and body weaken."
+  },
+  {
+   "jp": "心の優しい女性ソーニャとの出会いが、彼を変えていく。",
+   "en": "Meeting Sonya, a kind-hearted woman, begins to change him."
+  },
+  {
+   "jp": "最後に彼は自首し、シベリアで罪を償いながら新しい人生を歩み始める。",
+   "en": "In the end he confesses, and while serving his sentence in Siberia he starts a new life."
+  }
+ ]
+}

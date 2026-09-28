@@ -1,0 +1,30 @@
+{
+ "id": "n01",
+ "title": "オデュッセイア",
+ "titleEn": "The Odyssey",
+ "author": "ホメロス（古代ギリシャ）",
+ "level": "N2",
+ "source": "Summary written by Claude",
+ "sentences": [
+  {
+   "jp": "トロイア戦争に勝った英雄オデュッセウスは、故郷のイタケーへ帰ろうとする。",
+   "en": "After winning the Trojan War, the hero Odysseus tries to return home to Ithaca."
+  },
+  {
+   "jp": "しかし海の神ポセイドンの怒りを買い、十年も海をさまようことになる。",
+   "en": "But he angers Poseidon, god of the sea, and ends up wandering the seas for ten years."
+  },
+  {
+   "jp": "一つ目の巨人や魔女キルケー、歌で船乗りを誘うセイレーンなど、多くの危険に出会う。",
+   "en": "He faces many dangers: a one-eyed giant, the witch Circe, and the Sirens who lure sailors with song."
+  },
+  {
+   "jp": "その間、故郷では妻ペネロペイアに多くの男たちが結婚を迫っていた。",
+   "en": "Meanwhile, at home, many men are pressing his wife Penelope to marry them."
+  },
+  {
+   "jp": "ようやく帰郷した彼は、乞食に変装して男たちを倒し、家族と再会する。",
+   "en": "Finally home, he disguises himself as a beggar, defeats the suitors, and reunites with his family."
+  }
+ ]
+}

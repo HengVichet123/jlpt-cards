@@ -1,0 +1,72 @@
+[
+ {
+  "id": "n01",
+  "title": "オデュッセイア",
+  "titleEn": "The Odyssey",
+  "author": "ホメロス（古代ギリシャ）",
+  "lines": 5
+ },
+ {
+  "id": "n02",
+  "title": "イーリアス",
+  "titleEn": "The Iliad",
+  "author": "ホメロス（古代ギリシャ）",
+  "lines": 5
+ },
+ {
+  "id": "n03",
+  "title": "ドン・キホーテ",
+  "titleEn": "Don Quixote",
+  "author": "セルバンテス（スペイン）",
+  "lines": 5
+ },
+ {
+  "id": "n04",
+  "title": "ハムレット",
+  "titleEn": "Hamlet",
+  "author": "シェイクスピア（イギリス）",
+  "lines": 5
+ },
+ {
+  "id": "n05",
+  "title": "高慢と偏見",
+  "titleEn": "Pride and Prejudice",
+  "author": "ジェイン・オースティン（イギリス）",
+  "lines": 5
+ },
+ {
+  "id": "n06",
+  "title": "罪と罰",
+  "titleEn": "Crime and Punishment",
+  "author": "ドストエフスキー（ロシア）",
+  "lines": 5
+ },
+ {
+  "id": "n07",
+  "title": "源氏物語",
+  "titleEn": "The Tale of Genji",
+  "author": "紫式部（日本・平安時代）",
+  "lines": 5
+ },
+ {
+  "id": "n08",
+  "title": "坊っちゃん",
+  "titleEn": "Botchan",
+  "author": "夏目漱石（日本）",
+  "lines": 5
+ },
+ {
+  "id": "n09",
+  "title": "羅生門",
+  "titleEn": "Rashōmon",
+  "author": "芥川龍之介（日本）",
+  "lines": 5
+ },
+ {
+  "id": "n10",
+  "title": "星の王子さま",
+  "titleEn": "The Little Prince",
+  "author": "サン＝テグジュペリ（フランス）",
+  "lines": 5
+ }
+]

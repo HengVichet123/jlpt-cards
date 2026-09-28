@@ -1056,6 +1056,28 @@ body.showfam .fam{opacity:.85;transform:none}
 .story-top{display:flex;justify-content:space-between;align-items:center}
 .story-meta{font:500 11px var(--mono);color:var(--faint)}
 .story-line{font-size:18px;line-height:1.8;background:var(--card);border:1px solid var(--line)}
+
+/* ---------- v28: bookshelf home, novels, scenes ---------- */
+.home-rail{grid-auto-columns:minmax(128px,36%)}
+.home-rail .home-card{aspect-ratio:3/4;min-height:0;justify-content:flex-end;padding:14px 12px 14px 22px;
+  border-radius:3px 8px 8px 3px;box-shadow:inset 8px 0 0 rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.06)}
+.home-rail .home-card::before{top:14px;left:9px}
+.home-rail .home-card b{font-size:17px}
+.home-rail .home-card.soon{opacity:.45;cursor:default}
+.book-title{font:800 26px/1.3 var(--display);margin:4px 0 0}
+.book-title small{display:block;font:500 13px var(--body);color:var(--soft);margin-top:4px}
+.scene{padding:16px 0 32px;display:flex;flex-direction:column;gap:10px}
+.scene-art{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#EEF1F2}
+.scene-art svg{display:block;width:100%;height:auto}
+.scene-art .spot{cursor:pointer;transition:opacity .15s}
+.scene-art .spot:hover{opacity:.85}
+.scene-art .spot.on{filter:drop-shadow(0 0 3px #C63A2F) drop-shadow(0 0 1px #C63A2F)}
+.scene-info{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-height:96px}
+.scene-hint{color:var(--faint);font-size:14px}
+.scene-word{font:800 26px var(--display)}
+.scene-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 13px var(--body);padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip.on{border-color:var(--shu);color:var(--shu)}
 </style>
 </head>
 
@@ -1103,7 +1125,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v27";
+const APP_VERSION = "v28";
 
 
 /* =========================================================
@@ -2341,6 +2363,9 @@ function renderHome(){
         <button class="home-card" data-home="playground"><b>▶ Playground</b><span>Review cards one at a time</span></button>
         <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card</span></button>
         <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
+        <button class="home-card" data-home="novels"><b>本 Novels</b><span>Famous books in short Japanese</span></button>
+        <button class="home-card" data-home="scene"><b>店 Konbini</b><span>Tap things to learn their names</span></button>
+        <button class="home-card soon" disabled><b>商 Business</b><span>Coming soon</span></button>
       </div>
 
 
@@ -2527,6 +2552,56 @@ function speak(text){
 }
 const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
 
+/* ---------- Novels ---------- */
+let NOVELS = null;
+async function renderNovels(){
+  document.body.classList.remove("playing");
+  try{ NOVELS = NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
+  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
+  $("#list").innerHTML = `<section class="reading">
+    <p class="set-lead">Famous books, summarized in simple Japanese. Tap a sentence for English.</p>
+    <div class="story-list">${NOVELS.map(x => `<button class="home-card story-item book-item" data-novel="${x.id}">
+      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${esc(x.author)}</span></button>`).join("")}</div></section>`;
+}
+async function renderNovel(id){
+  let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
+  $("#pageTitle").textContent = st.title;
+  $("#list").innerHTML = `<section class="reading story">
+    <div class="story-top"><button class="nav-btn" id="novelBack">Back</button></div>
+    <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
+    <div class="story-meta">${esc(st.source)}</div>
+    ${st.sentences.map(x => `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
+  </section>`;
+  $("#novelBack").onclick = () => { $("#pageTitle").textContent = "Novels"; renderNovels(); };
+}
+
+/* ---------- Scenes (tap an object to learn its name) ---------- */
+async function renderScene(id){
+  document.body.classList.remove("playing");
+  let sc, svg;
+  try{
+    sc = await (await fetch(`data/scenes/${id}.json`, {cache:"no-cache"})).json();
+    svg = await (await fetch(`data/scenes/${sc.svg}`, {cache:"no-cache"})).text();
+  }catch(e){ $("#list").innerHTML = `<div class="empty">Could not load the scene.</div>`; return; }
+  $("#list").innerHTML = `<section class="scene">
+    <p class="set-lead">Tap anything in the store.</p>
+    <div class="scene-art">${svg}</div>
+    <div class="scene-info" id="sceneInfo"><div class="scene-hint">Nothing selected yet.</div></div>
+    <div class="scene-chips">${Object.entries(sc.items).map(([k,v]) => `<button class="chip" data-spot="${k}">${esc(v.jp)}</button>`).join("")}</div>
+    <div class="story-meta">${esc(sc.source)}</div>
+  </section>`;
+  const show = k => {
+    const v = sc.items[k]; if(!v) return;
+    document.querySelectorAll(".scene-art .spot").forEach(g => g.classList.toggle("on", g.dataset.id === k));
+    document.querySelectorAll(".scene-chips .chip").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
+    $("#sceneInfo").innerHTML = `<div class="scene-word">${esc(v.jp)} ${sayBtn(v.jp)}</div>
+      <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
+      <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>`;
+  };
+  document.querySelectorAll(".scene-art .spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
+  document.querySelectorAll(".scene-chips .chip").forEach(c => c.onclick = () => show(c.dataset.spot));
+}
+
 /* ---------- Reading ---------- */
 let STORIES = null;
 async function renderReading(){
@@ -2676,6 +2751,9 @@ document.addEventListener(
 
     const say = e.target.closest(".say");
     if(say){ e.stopPropagation(); speak(say.dataset.say); return; }
+
+    const novel = e.target.closest("[data-novel]");
+    if(novel){ renderNovel(novel.dataset.novel); window.scrollTo(0,0); return; }
 
     const story = e.target.closest("[data-story]");
     if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
@@ -3068,7 +3146,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scene:"コンビニ"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3092,6 +3170,12 @@ function pick(id){
 
   else if(id === "reading")
     renderReading();
+
+  else if(id === "novels")
+    renderNovels();
+
+  else if(id === "scene")
+    renderScene("konbini");
 
   else
     load(id);

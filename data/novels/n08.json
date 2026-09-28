@@ -1,0 +1,30 @@
+{
+ "id": "n08",
+ "title": "坊っちゃん",
+ "titleEn": "Botchan",
+ "author": "夏目漱石（日本）",
+ "level": "N2",
+ "source": "Summary written by Claude",
+ "sentences": [
+  {
+   "jp": "正直で気の短い江戸っ子の「おれ」は、四国の中学校に数学教師として赴任する。",
+   "en": "\"I\", an honest, short-tempered Tokyo man, takes a job teaching math at a middle school in Shikoku."
+  },
+  {
+   "jp": "生徒たちのいたずらに悩まされ、同僚の教師たちとも衝突する。",
+   "en": "He is troubled by students' pranks and clashes with his fellow teachers."
+  },
+  {
+   "jp": "ずるい教頭「赤シャツ」たちのやり方に、おれは我慢できない。",
+   "en": "He cannot stand the sly vice-principal \"Red Shirt\" and his crowd."
+  },
+  {
+   "jp": "正義感の強い同僚「山嵐」と協力し、赤シャツをこらしめる。",
+   "en": "Teaming up with his righteous colleague \"Porcupine\", he punishes Red Shirt."
+  },
+  {
+   "jp": "おれは学校を辞めて東京に帰り、自分を大切にしてくれた清のもとへ戻る。",
+   "en": "He quits, returns to Tokyo, and goes back to Kiyo, the old maid who always cared for him."
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "id": "n02",
+ "title": "イーリアス",
+ "titleEn": "The Iliad",
+ "author": "ホメロス（古代ギリシャ）",
+ "level": "N2",
+ "source": "Summary written by Claude",
+ "sentences": [
+  {
+   "jp": "ギリシャ軍とトロイアの戦争は、すでに十年目に入っていた。",
+   "en": "The war between the Greeks and Troy has entered its tenth year."
+  },
+  {
+   "jp": "最強の戦士アキレウスは、総大将と争い、戦いに出ることを拒む。",
+   "en": "Achilles, the strongest warrior, quarrels with the commander and refuses to fight."
+  },
+  {
+   "jp": "その間にギリシャ軍は押され、親友パトロクロスがトロイアの英雄ヘクトールに殺される。",
+   "en": "The Greeks are pushed back, and his close friend Patroclus is killed by the Trojan hero Hector."
+  },
+  {
+   "jp": "怒りに燃えたアキレウスは戦場に戻り、ヘクトールを倒す。",
+   "en": "Burning with rage, Achilles returns to battle and kills Hector."
+  },
+  {
+   "jp": "最後に、ヘクトールの父が遺体を返してほしいと頼み、アキレウスは心を動かされる。",
+   "en": "In the end, Hector's father begs for his son's body, and Achilles is moved."
+  }
+ ]
+}

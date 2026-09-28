@@ -1,0 +1,30 @@
+{
+ "id": "n10",
+ "title": "星の王子さま",
+ "titleEn": "The Little Prince",
+ "author": "サン＝テグジュペリ（フランス）",
+ "level": "N2",
+ "source": "Summary written by Claude",
+ "sentences": [
+  {
+   "jp": "飛行機の故障で砂漠に不時着したパイロットは、小さな王子に出会う。",
+   "en": "A pilot who crash-lands in the desert meets a little prince."
+  },
+  {
+   "jp": "王子は小さな星から来て、一輪のバラを残して旅に出たのだという。",
+   "en": "The prince came from a tiny planet and left behind a single rose to travel."
+  },
+  {
+   "jp": "旅の途中で、王様や実業家など、おかしな大人たちに出会った。",
+   "en": "On his journey he met strange grown-ups, like a king and a businessman."
+  },
+  {
+   "jp": "キツネは王子に「大切なものは目に見えない」と教える。",
+   "en": "A fox teaches him that \"what is essential is invisible to the eye.\""
+  },
+  {
+   "jp": "王子はバラのもとへ帰るため、静かに地球を去っていく。",
+   "en": "To return to his rose, the prince quietly leaves the Earth."
+  }
+ ]
+}
