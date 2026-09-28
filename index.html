@@ -922,23 +922,20 @@ body.playing{
 
 
 /* =========================================================
-   v15: let the page scroll instead of a fixed box.
-   The card grows to its full height; the rating buttons stay
-   pinned at the bottom. Native page scrolling works on iPhone.
+   v16: the card is a small page. The page itself never moves;
+   the card fills the space between the top bar and the rating
+   buttons, and its inside scrolls when the content is long.
    ========================================================= */
-body.playing{position:static;height:auto;min-height:100dvh;overflow:auto;overscroll-behavior:auto}
-.playing #list{min-height:100dvh}
-.play-screen{height:auto;min-height:100dvh;overflow:visible}
-.play-stage{position:relative;inset:auto;display:block;overflow:visible;
-  padding:64px 16px calc(env(safe-area-inset-bottom,0px) + 130px)}
-.play-stage .play-card,
-.play-stage .play-card.open{height:auto;min-height:220px;max-height:none;overflow:visible;margin:0 auto;touch-action:auto}
-.play-stage .play-card .front{flex:none;height:auto;min-height:170px;max-height:none}
-.play-stage .play-card .back{flex:none;height:auto;max-height:0;overflow:hidden}
-.play-stage .play-card.open .back{flex:none;height:auto;max-height:none;overflow:visible;touch-action:auto}
-/* the playground renders plain .card elements, so target those too */
-.play-stage .card{max-width:620px;margin:0 auto;overflow:visible}
-.playing .card.open .back{max-height:none;overflow:visible}
+body.playing{position:fixed;inset:0;height:100dvh;overflow:hidden;overscroll-behavior:none}
+.play-screen{height:100dvh;overflow:hidden}
+.play-stage{position:fixed;left:16px;right:16px;overflow:visible;padding:0;display:flex;align-items:center;justify-content:center;
+  top:calc(env(safe-area-inset-top,0px) + 64px);bottom:calc(env(safe-area-inset-bottom,0px) + 88px)}
+.play-stage .card{width:100%;max-width:620px;margin:0 auto;max-height:100%;display:flex;flex-direction:column;overflow:hidden}
+.play-stage .card.open{height:100%}
+.play-stage .card .front{flex:0 0 auto}
+.play-stage .card .back{flex:0 0 auto;max-height:0;overflow:hidden}
+.play-stage .card.open .back{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:24px}
 </style>
 </head>
 
@@ -1010,7 +1007,7 @@ body.playing{position:static;height:auto;min-height:100dvh;overflow:auto;overscr
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v15";
+const APP_VERSION = "v16";
 
 
 /* =========================================================
