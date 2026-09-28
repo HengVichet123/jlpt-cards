@@ -7,11 +7,11 @@
 <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="JLPT Cards">
+<meta name="apple-mobile-web-app-title" content="Mind Palace">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 
-<title>JLPT Cards</title>
+<title>Japanese Mind Palace</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -949,7 +949,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 /* Home */
 .home{padding:calc(env(safe-area-inset-top,0px) + 28px) 0 24px;display:flex;flex-direction:column;gap:14px}
 .home h1{font:800 40px/1.1 var(--display);margin:0;letter-spacing:.02em}
-.home h1::after{content:"単語帳";display:block;font-size:15px;font-weight:600;color:var(--shu);letter-spacing:.3em;margin-top:6px}
+.home h1::after{content:"記憶の宮殿";display:block;font-size:15px;font-weight:600;color:var(--shu);letter-spacing:.3em;margin-top:6px}
 .home p{margin:0 0 6px;color:var(--soft)}
 .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .home-card{position:relative;text-align:left;padding:18px 16px 16px 30px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
@@ -1247,6 +1247,31 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
 /* v58: section titles in English */
 .toc-name small{display:block;font:500 11.5px var(--body);color:var(--faint);margin-top:1px}
 .sec-title em{display:block;font:600 14px var(--body);font-style:normal;color:var(--soft);margin-top:2px}
+/* ---------- v60: learn, then read ---------- */
+.pre-item{border-left:3px solid var(--shu)}
+.pre-box{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:14px 16px;margin:4px 0 18px}
+.pre-h{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--shu)}
+.pre-counts{font-size:16px;margin-top:6px}
+.pre-counts b{font:700 20px var(--display)}
+.pre-prog{height:5px;background:var(--chip);border-radius:3px;margin-top:10px;overflow:hidden}
+.pre-prog span{display:block;height:100%;width:calc(var(--p) * 100%);background:var(--shu)}
+.pre-sub{font:500 11.5px var(--mono);color:var(--faint);margin-top:6px}
+.pre-actions{display:flex;gap:8px;margin-top:12px;align-items:stretch}
+.pre-actions .go{flex:1;margin:0}
+.pre-list{margin-top:12px}
+.pre-kanji{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pre-kanji span{font:700 20px var(--display);padding:2px 8px;border:1px solid var(--line);border-radius:5px}
+.pre-text p{font-size:17px;line-height:2;margin:0 0 14px}
+mark.pw{background:none;color:inherit;border-bottom:2px solid var(--shu);cursor:pointer;padding:0 1px}
+mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
+.pre-pop{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:30;max-width:620px;margin:0 auto;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.18);padding:8px}
+.pre-pop .mini{border:0;margin:0}
+.pre-x{position:absolute;right:8px;top:6px;border:0;background:none;font-size:22px;color:var(--faint);cursor:pointer}
+.rd-from{margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.rd-from span{display:block;font:500 11.5px var(--mono);color:var(--faint);margin-top:2px}
+.pre-actions .go.start{background:var(--shu);color:#fff;border:0;border-radius:8px;font:700 15px var(--body);padding:12px}
+.home h1{text-wrap:balance}
 </style>
 </head>
 
@@ -1294,7 +1319,7 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v59";
+const APP_VERSION = "v60";
 
 
 /* =========================================================
@@ -2008,6 +2033,12 @@ async function loadSections(){
   if(!SECTIONS){ try{ SECTIONS = await (await fetch("data/sections.json", {cache:"no-cache"})).json(); }catch(e){ SECTIONS = {N1:[], N2:[]}; } }
   return SECTIONS;
 }
+/* Pre-learn readings: a real text + the list of our cards it uses */
+const READINGS = {};
+async function loadReading(id){
+  if(!READINGS[id]) READINGS[id] = await (await fetch(`data/readings/${id}.json`, {cache:"no-cache"})).json();
+  return READINGS[id];
+}
 const secSeen = (lvl, s) => s.words.filter(no => pgProfile(lvl, "words", no).reviews).length;
 
 function pgState(){
@@ -2077,6 +2108,13 @@ async function pgNew(){
     if(sec){ secNos = new Set(sec.words); st.level = lv; secPool = await pgPool(lv); }
   }
 
+  let rdSet = null, rdPool = null;
+  if(st.from === "reading" && st.reading){
+    const R = await loadReading(st.reading);
+    rdSet = {}; for(const t of ["words","kanji","grammar"]) rdSet[t] = new Set(R[t].map(x => x[0] + ":" + x[1]));
+    rdPool = await pgPool("ALL");
+  }
+
   st.ids = [];
 
 
@@ -2090,7 +2128,7 @@ async function pgNew(){
 
     if(secNos && t !== "words") continue;
     const candidates =
-      (secNos ? secPool[t].filter(c => secNos.has(c.no)) : pool[t])
+      (rdSet ? rdPool[t].filter(c => rdSet[t].has(c.level + ":" + c.no)) : secNos ? secPool[t].filter(c => secNos.has(c.no)) : pool[t])
 
         .filter(
           c => {
@@ -2196,7 +2234,14 @@ async function renderPG(){
       if(!ok){ st.section = (S0[lvls0[0]][0] || {}).id; store.set("jc:pg", st); }
     }
     const secSet = st.from === "section" && st.section ? new Set(((await loadSections())[st.section.split("-")[0]].find(x => x.id === st.section) || {words:[]}).words) : null;
-    const newLeft = t => pool[t].filter(c => (!secSet || (t === "words" && secSet.has(c.no) && c.level === st.section.split("-")[0])) && !pgProfile(c.level || st.level, t, c.no).reviews).length;
+    const inRead = st.from === "reading" && st.reading;
+    let rdInfo = null, rdKeys = null;
+    if(inRead){
+      rdInfo = await loadReading(st.reading);
+      rdKeys = {}; for(const t of ["words","kanji","grammar"]) rdKeys[t] = new Set(rdInfo[t].map(x => x[0] + ":" + x[1]));
+    }
+    const pool2 = inRead ? await pgPool("ALL") : pool;
+    const newLeft = t => inRead ? pool2[t].filter(c => rdKeys[t].has(c.level + ":" + c.no) && !pgProfile(c.level, t, c.no).reviews).length : pool[t].filter(c => (!secSet || (t === "words" && secSet.has(c.no) && c.level === st.section.split("-")[0])) && !pgProfile(c.level || st.level, t, c.no).reviews).length;
     const row = (t, glyph, name) => `
           <div class="set-row">
             <div class="set-name"><span class="set-glyph">${glyph}</span><span><b>${name}</b><small>${newLeft(t)} new left</small></span></div>
@@ -2208,6 +2253,7 @@ async function renderPG(){
             <input id="pg_${t}" type="hidden" value="${st.n[t]}">
           </div>`;
     const inSec = st.from === "section";
+
     let secOptions = "";
     if(inSec){
       const S = await loadSections();
@@ -2231,10 +2277,11 @@ async function renderPG(){
         <select id="pgLevel" hidden>${["ALL","N1","N2"].map(l => `<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select>
 
         <div class="set-label">From</div>
-        <div class="seg seg-2" id="pgFrom" role="radiogroup">
-          ${[["all","All cards"],["section","Section"]].map(([v,l]) => `<button type="button" role="radio" aria-checked="${(st.from||"all")===v}" class="${(st.from||"all")===v?"on":""}" data-from="${v}">${l}</button>`).join("")}
+        <div class="seg ${st.reading ? "" : "seg-2"}" id="pgFrom" role="radiogroup">
+          ${[["all","All cards"],["section","Section"], ...(st.reading ? [["reading","Reading"]] : [])].map(([v,l]) => `<button type="button" role="radio" aria-checked="${(st.from||"all")===v}" class="${(st.from||"all")===v?"on":""}" data-from="${v}">${l}</button>`).join("")}
         </div>
         ${inSec ? `<select id="pgSection" class="sec-select">${secOptions}</select>` : ""}
+        ${inRead ? `<div class="rd-from">📖 <b>${esc(rdInfo.title)}</b> <span>${rdInfo.words.length} words · ${rdInfo.kanji.length} kanji · ${rdInfo.grammar.length} grammar</span></div>` : ""}
 
         <div class="set-label">Cards per session</div>
         <div class="set-rows">
@@ -2561,7 +2608,7 @@ function renderHome(){
     <section class="home">
 
       <h1>
-        JLPT Cards
+        Japanese Mind Palace
       </h1>
 
 
@@ -3014,13 +3061,69 @@ async function renderSection(id){
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
 
+/* ---------- Pre-learn reading page ---------- */
+async function renderPrelearn(id){
+  document.body.classList.remove("playing");
+  const R = await loadReading(id), all = await pgPool("ALL");
+  const get = (t, lv, no) => all[t].find(c => c.level === lv && c.no === no);
+  const studied = R.words.filter(([lv, no]) => pgProfile(lv, "words", no).reviews).length;
+  // text with every listed word marked
+  let html = "", at = 0;
+  for(const [s, e, t, lv, no] of R.spans){
+    if(s < at) continue;
+    html += esc(R.text.slice(at, s)) + `<mark class="pw pw-${t}" data-t="${t}" data-lv="${lv}" data-no="${no}">${esc(R.text.slice(s, e))}</mark>`;
+    at = e;
+  }
+  html += esc(R.text.slice(at));
+  html = html.split("\n").map(p => `<p>${p}</p>`).join("");
+  $("#pageTitle").textContent = R.title;
+  $("#list").innerHTML = `<section class="reading prelearn">
+    <div class="story-top"><button class="nav-btn" id="preBack">Back</button></div>
+    <h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · ${R.text.length} characters · about ${Math.max(1, Math.round(R.text.length / 400))} min</small></h2>
+    <div class="pre-box">
+      <div class="pre-h">Before you read</div>
+      <div class="pre-counts"><b>${R.words.length}</b> words · <b>${R.kanji.length}</b> kanji · <b>${R.grammar.length}</b> grammar</div>
+      <div class="pre-prog"><span style="--p:${studied / R.words.length}"></span></div>
+      <div class="pre-sub">${studied} of ${R.words.length} words studied</div>
+      <div class="pre-actions"><button class="go start" id="preStudy">Study these cards</button>
+        <button class="nav-btn" id="preList">Word list</button></div>
+      <div class="pre-list" id="preListBox" hidden>
+        ${R.words.map(([lv, no]) => { const c = get("words", lv, no); return c ? miniCard(c, lv) : ""; }).join("")}
+        ${R.grammar.length ? `<div class="pre-sub">Grammar</div>` + R.grammar.map(([lv, no]) => { const g = get("grammar", lv, no); return g ? `<div class="mini"><span class="mini-top"><b class="mini-w">${esc(g.pattern)}</b></span><span class="mini-en">${esc(g.en || "")}</span></div>` : ""; }).join("") : ""}
+        ${R.kanji.length ? `<div class="pre-sub">Kanji</div><div class="pre-kanji">` + R.kanji.map(([lv, no]) => { const k = get("kanji", lv, no); return k ? `<span title="${esc(k.en)}">${esc(k.kanji)}</span>` : ""; }).join("") + `</div>` : ""}
+      </div>
+    </div>
+    <div class="pre-text">${html}</div>
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · highlighted: words from your list (tap one)</p>
+    <div class="pre-pop" id="prePop" hidden></div>
+  </section>`;
+  $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+  $("#preList").onclick = () => { const b = $("#preListBox"); b.hidden = !b.hidden; };
+  $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
+    cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
+  const pop = $("#prePop");
+  document.querySelector(".pre-text").onclick = e => {
+    const m = e.target.closest("mark.pw"); if(!m){ pop.hidden = true; return; }
+    const c = get(m.dataset.t, m.dataset.lv, +m.dataset.no); if(!c) return;
+    pop.innerHTML = `<button class="pre-x" aria-label="Close">×</button>` + (m.dataset.t === "words" ? miniCard(c, m.dataset.lv)
+      : `<div class="mini"><span class="mini-top"><b class="mini-w">${esc(c.pattern || c.kanji)}</b></span><span class="mini-en">${esc(c.en || "")}</span></div>`);
+    pop.hidden = false;
+    pop.querySelector(".pre-x").onclick = () => pop.hidden = true;
+  };
+}
+
 /* ---------- Reading ---------- */
 let STORIES = null;
 async function renderReading(){
   document.body.classList.remove("playing");
   try{ STORIES = STORIES || await (await fetch("data/stories/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load stories.</div>`; return; }
+  let RD = []; try{ RD = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){}
   $("#list").innerHTML = `<section class="reading">
+    ${RD.length ? `<h2 class="home-h">Learn, then read</h2>
+    <div class="story-list">${RD.map(x => `<button class="home-card story-item pre-item" data-prelearn="${x.id}">
+      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · about ${Math.max(1, Math.round(x.chars / 400))} min · learn ${x.counts[0]} words first</span></button>`).join("")}</div>
+    <h2 class="home-h">Short stories</h2>` : ""}
     <p class="set-lead">Short stories built from your cards. Tap a sentence for English, 🔊 to hear it.</p>
     <div class="story-list">${STORIES.map(x => `<button class="home-card story-item" data-story="${x.id}">
       <b>${esc(x.title)}</b><span>${x.level} · ${x.lines} sentences</span></button>`).join("")}</div></section>`;
@@ -3170,6 +3273,8 @@ document.addEventListener(
     const novel = e.target.closest("[data-novel]");
     if(novel){ renderNovel(novel.dataset.novel); window.scrollTo(0,0); return; }
 
+    const pre = e.target.closest("[data-prelearn]");
+    if(pre){ renderPrelearn(pre.dataset.prelearn); window.scrollTo(0,0); return; }
     const story = e.target.closest("[data-story]");
     if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
 
