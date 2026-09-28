@@ -1197,6 +1197,26 @@ body.showfam .fam{opacity:.85;transform:none}
 .ex.exc .tr{border-top:0;margin-top:0;padding-top:0;font-size:13px}
 .ex.exc.exl{font-size:13.5px;color:var(--soft);padding:1px 0 0 0}
 .exsrc{font:500 10.5px var(--mono);color:var(--faint);margin-left:6px}
+/* ---------- v55: sections ---------- */
+.sec-bar{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;
+  margin-top:10px;width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+.sec-bar i{grid-row:1 / 3;font:800 24px/1 var(--display);font-style:normal;color:var(--shu)}
+.sec-bar b{font:800 16px var(--display)}
+.sec-bar span{grid-column:2;font-size:12.5px;color:var(--soft)}
+.sec-bar em{grid-row:1 / 3;grid-column:3;font-style:normal;color:var(--faint);font-size:20px}
+.sec-list{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.sec-item{position:relative;overflow:hidden;display:grid;grid-template-columns:34px 1fr auto;align-items:baseline;gap:8px;text-align:left;
+  padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer}
+.sec-no{font:500 11px var(--mono);color:var(--faint)}
+.sec-item b{font:700 16px var(--display)}
+.sec-meta{font:500 11.5px var(--mono);color:var(--soft);white-space:nowrap}
+.sec-prog{position:absolute;left:0;bottom:0;height:3px;width:calc(var(--p) * 100%);background:var(--shu);opacity:.7}
+.sec-title{font:800 24px var(--display);margin:6px 0 12px}
+.sec-title small{display:block;font:500 12px var(--mono);color:var(--faint);margin-top:4px}
+.sec-study{color:var(--shu);border-color:var(--shu)}
+.sec-select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:500 15px var(--body);margin-top:8px}
+@media (min-width: 900px){ .sections{max-width:860px;margin-inline:auto;width:100%} }
+#pgFrom.seg-2{width:auto}
 </style>
 </head>
 
@@ -1244,7 +1264,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v54";
+const APP_VERSION = "v55";
 
 
 /* =========================================================
@@ -1952,6 +1972,14 @@ async function pgPool(level){
 }
 
 
+/* Sections: N1/N2 words grouped by meaning (分類語彙表), like chapters in a textbook */
+let SECTIONS = null;
+async function loadSections(){
+  if(!SECTIONS){ try{ SECTIONS = await (await fetch("data/sections.json", {cache:"no-cache"})).json(); }catch(e){ SECTIONS = {N1:[], N2:[]}; } }
+  return SECTIONS;
+}
+const secSeen = (lvl, s) => s.words.filter(no => pgProfile(lvl, "words", no).reviews).length;
+
 function pgState(){
 
   return store.get(
@@ -1997,7 +2025,7 @@ async function pgNew(){
     ]
   ){
 
-    st.n[t] =
+    if($(`#pg_${t}`)) st.n[t] =
       Math.max(
         0,
         +$(`#pg_${t}`).value || 0
@@ -2012,6 +2040,13 @@ async function pgNew(){
     );
 
 
+  // Section mode: words only, from the chosen section
+  let secNos = null, secPool = null;
+  if(st.from === "section" && st.section){
+    const S = await loadSections(), lv = st.section.split("-")[0], sec = (S[lv] || []).find(x => x.id === st.section);
+    if(sec){ secNos = new Set(sec.words); st.level = lv; secPool = await pgPool(lv); }
+  }
+
   st.ids = [];
 
 
@@ -2023,8 +2058,9 @@ async function pgNew(){
     ]
   ){
 
+    if(secNos && t !== "words") continue;
     const candidates =
-      pool[t]
+      (secNos ? secPool[t].filter(c => secNos.has(c.no)) : pool[t])
 
         .filter(
           c => {
@@ -2124,7 +2160,13 @@ async function renderPG(){
     };
 
 
-    const newLeft = t => pool[t].filter(c => !pgProfile(c.level || st.level, t, c.no).reviews).length;
+    if(st.from === "section"){   // saved section may be gone (sections rebuilt) or from the other level -> first one
+      const S0 = await loadSections(), lvls0 = st.level === "ALL" ? ["N1","N2"] : [st.level];
+      const ok = st.section && lvls0.includes(st.section.split("-")[0]) && S0[st.section.split("-")[0]].some(x => x.id === st.section);
+      if(!ok){ st.section = (S0[lvls0[0]][0] || {}).id; store.set("jc:pg", st); }
+    }
+    const secSet = st.from === "section" && st.section ? new Set(((await loadSections())[st.section.split("-")[0]].find(x => x.id === st.section) || {words:[]}).words) : null;
+    const newLeft = t => pool[t].filter(c => (!secSet || (t === "words" && secSet.has(c.no) && c.level === st.section.split("-")[0])) && !pgProfile(c.level || st.level, t, c.no).reviews).length;
     const row = (t, glyph, name) => `
           <div class="set-row">
             <div class="set-name"><span class="set-glyph">${glyph}</span><span><b>${name}</b><small>${newLeft(t)} new left</small></span></div>
@@ -2135,7 +2177,16 @@ async function renderPG(){
             </div>
             <input id="pg_${t}" type="hidden" value="${st.n[t]}">
           </div>`;
-    const total = st.n.words + st.n.kanji + st.n.grammar;
+    const inSec = st.from === "section";
+    let secOptions = "";
+    if(inSec){
+      const S = await loadSections();
+      const lvls = st.level === "ALL" ? ["N1","N2"] : [st.level];
+      if(!st.section || !lvls.includes(st.section.split("-")[0])){ st.section = (S[lvls[0]][0] || {}).id; store.set("jc:pg", st); }
+      secOptions = lvls.map(lv => `<optgroup label="${lv}">${S[lv].map((s, i) =>
+        `<option value="${s.id}"${s.id === st.section ? " selected" : ""}>${i + 1}. ${esc(s.name)} · ${secSeen(lv, s)}/${s.words.length}</option>`).join("")}</optgroup>`).join("");
+    }
+    const total = inSec ? st.n.words : st.n.words + st.n.kanji + st.n.grammar;
 
     const setup = `
 
@@ -2149,11 +2200,17 @@ async function renderPG(){
         </div>
         <select id="pgLevel" hidden>${["ALL","N1","N2"].map(l => `<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select>
 
+        <div class="set-label">From</div>
+        <div class="seg seg-2" id="pgFrom" role="radiogroup">
+          ${[["all","All cards"],["section","Section"]].map(([v,l]) => `<button type="button" role="radio" aria-checked="${(st.from||"all")===v}" class="${(st.from||"all")===v?"on":""}" data-from="${v}">${l}</button>`).join("")}
+        </div>
+        ${inSec ? `<select id="pgSection" class="sec-select">${secOptions}</select>` : ""}
+
         <div class="set-label">Cards per session</div>
         <div class="set-rows">
           ${row("words","語","Words")}
-          ${row("kanji","字","Kanji")}
-          ${row("grammar","文","Grammar")}
+          ${inSec ? "" : row("kanji","字","Kanji")}
+          ${inSec ? "" : row("grammar","文","Grammar")}
         </div>
 
         <button class="go start" id="pgGo">Start · <span id="pgTotal">${total}</span> cards</button>
@@ -2181,9 +2238,13 @@ async function renderPG(){
       const v = Math.max(0, Math.min(99, (+inp.value || 0) + (+btn.dataset.d)));
       inp.value = v; $(`#out_${t}`).textContent = v;
       const cur = pgState(); cur.n[t] = v; store.set("jc:pg", cur);
-      $("#pgTotal").textContent = ["words","kanji","grammar"].reduce((n,k) => n + (+$(`#pg_${k}`).value || 0), 0);
+      $("#pgTotal").textContent = ["words","kanji","grammar"].reduce((n,k) => n + (+($(`#pg_${k}`) || {}).value || 0), 0);
     });
 
+    document.querySelectorAll("#pgFrom button").forEach(btn => btn.onclick = () => {
+      const cur = pgState(); cur.from = btn.dataset.from; store.set("jc:pg", cur); renderPG();
+    });
+    if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); renderPG(); };
     $("#pgGo").onclick =
       pgNew;
 
@@ -2487,6 +2548,8 @@ function renderHome(){
         <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Short stories</span></button>
       </div>
+
+      <button class="sec-bar" data-home="sections"><i>節</i><b>Sections</b><span>Words grouped by topic, like a textbook</span><em>›</em></button>
 
       <h2 class="home-h">Later <small>side projects</small></h2>
       <div class="side">
@@ -2856,6 +2919,36 @@ async function renderScene(id, arrive){
   };
   else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; }
     if(SCENE_DIR === "explore") pick("home"); else renderScenes(); };
+}
+
+/* ---------- Sections: topic chapters ---------- */
+async function renderSections(){
+  document.body.classList.remove("playing");
+  const S = await loadSections();
+  const LVL = store.get("jc:slevel", "N1") === "N2" ? "N2" : "N1";
+  $("#pageTitle").textContent = "Sections";
+  $("#list").innerHTML = `<section class="sections">
+    <div class="complete-head"><div><div class="stat">${S[LVL].length} sections · ${S[LVL].reduce((n, s) => n + s.words.length, 0)} words</div></div>
+      <div class="seg seg-2" role="radiogroup">${["N1","N2"].map(l => `<button type="button" class="${l===LVL?"on":""}" data-slevel="${l}">${l}</button>`).join("")}</div></div>
+    <div class="sec-list">${S[LVL].map((s, i) => { const seen = secSeen(LVL, s);
+      return `<button class="sec-item" data-sec="${s.id}"><span class="sec-no">${i + 1}</span><b>${esc(s.name)}</b>
+        <span class="sec-meta">${s.words.length} words${seen ? ` · ${seen} studied` : ""}</span>
+        <span class="sec-prog" style="--p:${seen / s.words.length}"></span></button>`; }).join("")}</div>
+    <p class="story-meta">${esc(S.source || "")}</p></section>`;
+  document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
+  document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
+}
+async function renderSection(id){
+  const S = await loadSections(), lv = id.split("-")[0], idx = S[lv].findIndex(x => x.id === id), s = S[lv][idx];
+  const pool = await pgPool(lv), set = new Set(s.words);
+  const cards = pool.words.filter(c => set.has(c.no));
+  $("#pageTitle").textContent = s.name;
+  $("#list").innerHTML = `<section class="complete">
+    <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
+    <h2 class="sec-title">${esc(s.name)}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
+    <div class="complete-cards">${cards.map(c => { CARD_LVL = lv; return wordCard(c); }).join("")}</div></section>`;
+  $("#secBack").onclick = () => { renderSections(); };
+  $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
 
 /* ---------- Reading ---------- */
@@ -3405,7 +3498,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3435,6 +3528,9 @@ function pick(id){
 
   else if(id === "scenes"){
     SCENE_DIR = "scenes"; renderScenes(); }
+
+  else if(id === "sections")
+    renderSections();
 
   else if(id === "photos"){
     SCENE_DIR = "photos"; renderScenes(); }
