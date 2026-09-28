@@ -1295,6 +1295,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
   font:600 13.5px/1.4 var(--body);box-shadow:0 6px 18px rgba(0,0,0,.22);pointer-events:none}
 .pt-en{display:block;font:500 10.5px var(--body);color:var(--faint);letter-spacing:.04em;margin-top:1px}
 .home h1::after{letter-spacing:.08em;font-size:14px}
+.tip-rd{display:block;font:500 12px var(--body);opacity:.75;margin-bottom:1px}
 </style>
 </head>
 
@@ -1342,7 +1343,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v64";
+const APP_VERSION = "v65";
 
 
 /* =========================================================
@@ -3150,9 +3151,9 @@ async function renderReader(id){
   const R = await loadReading(id);
   const listed = new Set(R.spans.filter(x => x[2] === "words").map(x => x[0] + ":" + x[1]));
   let html = "", at = 0;
-  for(const [s, e, g] of (R.tokens || [])){
+  for(const [s, e, g, rd] of (R.tokens || [])){
     if(s < at) continue;
-    html += esc(R.text.slice(at, s)) + `<span class="tk${listed.has(s + ":" + e) ? " tk-own" : ""}" data-g="${esc(g)}">${esc(R.text.slice(s, e))}</span>`;
+    html += esc(R.text.slice(at, s)) + `<span class="tk${listed.has(s + ":" + e) ? " tk-own" : ""}" data-g="${esc(g || "")}" data-r="${esc(rd || "")}">${esc(R.text.slice(s, e))}</span>`;
     at = e;
   }
   html += esc(R.text.slice(at));
@@ -3171,7 +3172,10 @@ async function renderReader(id){
     document.querySelectorAll(".tk.on").forEach(x => x.classList.remove("on"));
     if(!w){ tip.hidden = true; return; }
     w.classList.add("on");
-    tip.textContent = w.dataset.g; tip.hidden = false;
+    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (w.dataset.g ? esc(w.dataset.g) : "");
+    tip.hidden = false;
+    clearTimeout(tip._t);   // quick look: disappears by itself after 2 s
+    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); }, 2000);
     const r = w.getBoundingClientRect(), br = box.getBoundingClientRect();
     tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
     tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
