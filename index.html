@@ -104,6 +104,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 .play-stage .play-card .front{min-height:170px;padding:26px 28px 26px 48px}
 .play-stage .play-card .big{font-size:42px}
 .play-stage .play-card .back{padding:8px 28px 28px 48px}
+.play-familiarity{position:absolute;top:56px;left:50%;transform:translateX(-50%);color:#888;font:500 11px var(--mono);letter-spacing:.04em}
 .play-ratings{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;padding:12px max(16px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;justify-content:center;gap:8px;z-index:4}
 .play-ratings button{min-width:92px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;padding:9px 12px;font:600 13px var(--body);cursor:pointer}
 .play-ratings button span{display:block;color:#888;font:500 11px var(--mono);margin-top:2px}
@@ -134,7 +135,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v6";
+const APP_VERSION = "v7";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -204,19 +205,24 @@ function card(t, no, head, back){
     <div class="back">${back}</div></div>`;
 }
 
-// ---------- Playground (sample): pick untouched cards, hide for 3m / 10m / 1d ----------
+// ---------- Playground: persistent familiarity profile and spaced review ----------
 const PG = { pool: {}, now: () => Date.now() };
 const pgKey = (lvl, t, no) => `jc:due:${lvl}:${t}:${no}`;
+const profileKey = (lvl, t, no) => `jc:profile:${lvl}:${t}:${no}`;
+function pgProfile(lvl, t, no){
+  const oldDue = store.get(pgKey(lvl,t,no), null);
+  return store.get(profileKey(lvl,t,no), {familiarity:0,reviews:0,correct:0,incorrect:0,dueAt:oldDue || 0});
+}
 async function pgPool(level){
   if (PG.pool[level]) return PG.pool[level];
   const pool = {words:[], kanji:[], grammar:[]};
-  for (const x of INDEX.filter(i => i.level === level)){
+  for (const x of INDEX.filter(i => level === "ALL" || i.level === level)){
     try { const d = await (await fetch(`data/${x.id}.json`)).json();
-      for (const t of ["words","kanji","grammar"]) pool[t].push(...d[t]); } catch(e){}
+      for (const t of ["words","kanji","grammar"]) pool[t].push(...d[t].map(c => ({...c, level:x.level}))); } catch(e){}
   }
   return PG.pool[level] = pool;
 }
-function pgState(){ return store.get("jc:pg", {level:"N1", n:{words:10,kanji:5,grammar:2}, ids:[]}); }
+function pgState(){ return store.get("jc:pg", {level:"ALL", n:{words:10,kanji:5,grammar:2}, ids:[]}); }
 async function pgNew(){
   const st = pgState();
   st.level = $("#pgLevel").value;
@@ -224,8 +230,10 @@ async function pgNew(){
   const pool = await pgPool(st.level);
   st.ids = [];
   for (const t of ["words","kanji","grammar"]){
-    const fresh = pool[t].filter(c => store.get(pgKey(st.level,t,c.no), null) === null);
-    fresh.slice(0, st.n[t]).forEach(c => st.ids.push([t, c.no]));
+    const candidates = pool[t].filter(c => {
+      const p = pgProfile(c.level,t,c.no); return !p.dueAt || p.dueAt <= PG.now();
+    }).sort((a,b) => pgProfile(a.level,t,a.no).familiarity - pgProfile(b.level,t,b.no).familiarity);
+    candidates.slice(0, st.n[t]).forEach(c => st.ids.push([c.level, t, c.no]));
   }
   store.set("jc:pg", st); PG_RUNNING = true; renderPG();
 }
@@ -237,7 +245,7 @@ async function renderPG(){
     const setup = `<section class="play-setup"><button class="play-exit" id="pgExit">Exit playground</button>
       <h2>Playground</h2><p>Set up a short review session, then start when you’re ready.</p>
       <div class="pg">
-        <label>Level <select id="pgLevel">${["N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
+        <label>Level <select id="pgLevel">${["ALL","N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
         <label>語 <input id="pg_words" type="number" min="0" value="${st.n.words}"></label>
         <label>字 <input id="pg_kanji" type="number" min="0" value="${st.n.kanji}"></label>
         <label>文 <input id="pg_grammar" type="number" min="0" value="${st.n.grammar}"></label>
@@ -253,27 +261,28 @@ async function renderPG(){
   }
   const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard};
   const live = [], later = [];
-  for (const [t,no] of st.ids){
-    const c = pool[t].find(x => x.no === no); if (!c) continue;
-    const due = store.get(pgKey(st.level,t,no), 0);
-    (due <= now ? live : later).push([t,c,due]);
+  for (const [lvl,t,no] of st.ids){
+    const c = pool[t].find(x => x.level === lvl && x.no === no); if (!c) continue;
+    const due = pgProfile(lvl,t,no).dueAt || 0;
+    (due <= now ? live : later).push([lvl,t,c,due]);
   }
   DATA = {level: st.level};
   const current = live[0];
   const buckets = [
     ["Now", live.length],
-    ["3m", later.filter(x => x[2] - now <= 3*60000).length],
-    ["10m", later.filter(x => x[2] - now <= 10*60000).length],
-    ["1d", later.filter(x => x[2] - now <= 1440*60000).length]
+    ["3m", later.filter(x => x[3] - now <= 3*60000).length],
+    ["10m", later.filter(x => x[3] - now <= 10*60000).length],
+    ["1d", later.filter(x => x[3] - now <= 1440*60000).length]
   ];
-  const card = current ? make[current[0]](current[1]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
-  const ratings = current ? `<div class="play-ratings" data-type="${current[0]}" data-no="${current[1].no}">
+  const cp = current ? pgProfile(current[0], current[1], current[2].no) : null;
+  const card = current ? `<div class="play-familiarity">Familiarity ${cp.familiarity} · ${cp.reviews} reviews</div>` + make[current[1]](current[2]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
+  const ratings = current ? `<div class="play-ratings" data-level="${current[0]}" data-type="${current[1]}" data-no="${current[2].no}">
     <button data-m="3">Again<span>3 min</span></button>
-    <button data-m="10">Good<span>10 min</span></button>
+    <button data-m="10">Hard<span>10 min</span></button>
     <button data-m="1440">Easy<span>1 day</span></button>
   </div>` : "";
   const queue = `<div class="play-queue">${buckets.map(x=>`<span><b>${x[1]}</b>${x[0]}</span>`).join("")}</div>`;
-  const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[2])) - now)/60000)) : null;
+  const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[3])) - now)/60000)) : null;
   $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button><button class="play-exit" id="pgExit">Exit playground</button>${queue}<div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
   $("#count").textContent = `Playground · ${st.level}`;
   $("#pgBack").onclick = () => { PG_RUNNING = false; renderPG(); };
@@ -312,7 +321,14 @@ document.addEventListener("click", e => {
   const pb = e.target.closest(".play-ratings button");
   if (pb){
     const box = pb.parentElement, st = pgState();
-    store.set(pgKey(st.level, box.dataset.type, +box.dataset.no), PG.now() + (+pb.dataset.m)*60000);
+    const lvl = box.dataset.level, type = box.dataset.type, no = +box.dataset.no;
+    const p = pgProfile(lvl, type, no), m = +pb.dataset.m;
+    p.reviews += 1;
+    if (m === 3){ p.incorrect += 1; p.familiarity = Math.max(0, p.familiarity - 1); }
+    else { p.correct += 1; p.familiarity += m === 1440 ? 2 : 1; }
+    p.dueAt = PG.now() + m * 60000;
+    store.set(profileKey(lvl,type,no), p);
+    store.set(pgKey(lvl,type,no), p.dueAt);
     renderPG(); return;
   }
   const dot = e.target.closest(".dot");
