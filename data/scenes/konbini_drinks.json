@@ -1,0 +1,115 @@
+{
+ "id": "konbini_drinks",
+ "title": "冷蔵ケース",
+ "titleEn": "Drinks case",
+ "svg": "konbini_drinks.svg",
+ "parent": "konbini",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "tea": {
+   "jp": "お茶",
+   "reading": "おちゃ",
+   "en": "green tea",
+   "phrase": "お茶、温かいのと冷たいの、どっちにする？",
+   "phraseEn": "Tea, hot or cold, which one?"
+  },
+  "water": {
+   "jp": "天然水",
+   "reading": "てんねんすい",
+   "en": "natural mineral water",
+   "phrase": "天然水を一本買っておこう。",
+   "phraseEn": "I'll buy a bottle of water just in case."
+  },
+  "sports": {
+   "jp": "スポーツドリンク",
+   "reading": "スポーツドリンク",
+   "en": "sports drink",
+   "phrase": "運動のあとはスポーツドリンクがいい。",
+   "phraseEn": "A sports drink is good after exercise."
+  },
+  "milk": {
+   "jp": "牛乳",
+   "reading": "ぎゅうにゅう",
+   "en": "milk",
+   "phrase": "牛乳は一番下の段にあります。",
+   "phraseEn": "The milk is on the bottom shelf."
+  },
+  "juice": {
+   "jp": "ジュース",
+   "reading": "ジュース",
+   "en": "juice",
+   "phrase": "子どもにオレンジジュースを買ってあげた。",
+   "phraseEn": "I bought my kid an orange juice."
+  },
+  "soda": {
+   "jp": "炭酸飲料",
+   "reading": "たんさんいんりょう",
+   "en": "carbonated drink, soda",
+   "phrase": "炭酸飲料は飲みすぎないようにしている。",
+   "phraseEn": "I try not to drink too much soda."
+  },
+  "cancoffee": {
+   "jp": "缶コーヒー",
+   "reading": "かんコーヒー",
+   "en": "canned coffee",
+   "phrase": "朝はいつも缶コーヒーを一本飲む。",
+   "phraseEn": "I always drink a can of coffee in the morning."
+  },
+  "vegjuice": {
+   "jp": "野菜ジュース",
+   "reading": "やさいジュース",
+   "en": "vegetable juice",
+   "phrase": "野菜不足なので野菜ジュースを飲んでいる。",
+   "phraseEn": "I don't eat enough vegetables, so I drink vegetable juice."
+  },
+  "blacktea": {
+   "jp": "紅茶",
+   "reading": "こうちゃ",
+   "en": "black tea",
+   "phrase": "ミルクティーは紅茶の段にあります。",
+   "phraseEn": "Milk tea is on the black tea shelf."
+  },
+  "beer": {
+   "jp": "缶ビール",
+   "reading": "かんビール",
+   "en": "canned beer",
+   "phrase": "お酒をお買い上げの際は、年齢確認ボタンを押してください。",
+   "phraseEn": "When buying alcohol, please press the age confirmation button."
+  },
+  "energy": {
+   "jp": "エナジードリンク",
+   "reading": "エナジードリンク",
+   "en": "energy drink",
+   "phrase": "徹夜の前にエナジードリンクを飲んだ。",
+   "phraseEn": "I had an energy drink before pulling an all-nighter."
+  },
+  "soymilk": {
+   "jp": "豆乳",
+   "reading": "とうにゅう",
+   "en": "soy milk",
+   "phrase": "豆乳は牛乳の隣にあります。",
+   "phraseEn": "The soy milk is next to the milk."
+  },
+  "pricetag": {
+   "jp": "値札",
+   "reading": "ねふだ",
+   "en": "price tag",
+   "phrase": "値札と商品が合っているか確認してください。",
+   "phraseEn": "Please check that the price tag matches the item."
+  },
+  "handle": {
+   "jp": "取っ手",
+   "reading": "とって",
+   "en": "handle",
+   "phrase": "扉の取っ手を引いて開けてください。",
+   "phraseEn": "Pull the door handle to open it."
+  },
+  "newitem": {
+   "jp": "新商品",
+   "reading": "しんしょうひん",
+   "en": "new product",
+   "phrase": "新商品が入りました！",
+   "phraseEn": "New products are in!"
+  }
+ }
+}

@@ -10,7 +10,8 @@
    "reading": "れいぞうケース",
    "en": "refrigerated case (drinks)",
    "phrase": "冷たい飲み物はこちらです。",
-   "phraseEn": "Cold drinks are over here."
+   "phraseEn": "Cold drinks are over here.",
+   "zoom": "konbini_drinks"
   },
   "onigiri": {
    "jp": "おにぎり",

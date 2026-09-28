@@ -1117,6 +1117,8 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-canvas .spot{cursor:pointer}
 .scene-canvas .spot.on{filter:drop-shadow(0 0 2px #C63A2F) drop-shadow(0 0 1px #C63A2F)}
 .scene-canvas .tag text{font-family:var(--body)}
+.scene-zoom{overflow:hidden}
+.scene-info .zoom-in{margin-top:10px;width:100%;color:var(--shu);border-color:var(--shu)}
 </style>
 </head>
 
@@ -1164,7 +1166,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v35";
+const APP_VERSION = "v36";
 
 
 /* =========================================================
@@ -2631,16 +2633,17 @@ async function renderScenes(){
     <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
       <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${x.count} words</span></button>`).join("")}</div></section>`;
 }
-async function renderScene(id){
+async function renderScene(id, arrive){
   let sc, svg;
   try{
     sc = await (await fetch(`data/scenes/${id}.json`, {cache:"no-cache"})).json();
     svg = await (await fetch(`data/scenes/${sc.svg}`, {cache:"no-cache"})).text();
   }catch(e){ return; }
   $("#pageTitle").textContent = sc.title;
+  if(sc.parent){ try{ const par = await (await fetch(`data/scenes/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
   const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">${sc.parent ? "Zoom out" : "Back"}</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
     ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
     <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
     <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
@@ -2668,7 +2671,7 @@ async function renderScene(id){
     const P = keys.map(k => {
       const g = svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
       const bb = g.getBBox(), t = document.createElementNS(ns, "g"), label = document.createElementNS(ns, "text");
-      t.setAttribute("class", "tag"); label.textContent = sc.items[k].jp;
+      t.setAttribute("class", "tag"); label.textContent = sc.items[k].jp + (sc.items[k].zoom ? " 🔍" : "");
       label.setAttribute("font-size", allOn ? "10.5" : "12"); label.setAttribute("font-weight", "700");
       label.setAttribute("text-anchor", "middle"); label.setAttribute("fill", "#fff");
       t.appendChild(label); svgEl.appendChild(t);
@@ -2708,13 +2711,47 @@ async function renderScene(id){
     speak(v.jp);
     $("#sceneInfo").innerHTML = `<div class="scene-word">${esc(v.jp)} ${sayBtn(v.jp)}</div>
       <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
-      <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>`;
+      <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>
+      ${v.zoom ? `<button class="nav-btn zoom-in" id="zoomIn">Zoom in</button>` : ""}`;
+    if(v.zoom) $("#zoomIn").onclick = () => zoomTo(k);
   };
   setAll(store.get("jc:scenelabels", false));
   if(svgEl) svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
   document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); (document.querySelector("#scene3d, #sceneZoom")).scrollIntoView({behavior:"smooth", block:"start"}); });
   document.querySelector(".scene-words").addEventListener("toggle", e => store.set("jc:scenewords", e.target.open));
-  $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; } renderScenes(); };
+  // zoom: fly into a spot, then open the closer scene; zoom out flies back from it
+  const canvas = $("#sceneCanvas"), VB = svgEl && svgEl.viewBox.baseVal;
+  const focus = k => {
+    const g = svgEl && svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
+    const bb = g.getBBox();
+    return {ox: (bb.x + bb.width/2)/VB.width*100, oy: (bb.y + bb.height/2)/VB.height*100,
+            s: Math.min(4, .9*Math.min(VB.width/bb.width, VB.height/bb.height))};
+  };
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const play = (frames, opt) => { const an = canvas.animate(frames, opt);
+    return Promise.race([an.finished, new Promise(r => setTimeout(r, opt.duration + 60))]); };
+  async function zoomTo(k){
+    const f = focus(k), next = sc.items[k].zoom;
+    if(f && !still && canvas.animate){
+      canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
+      await play([{transform:"scale(1)", opacity:1}, {transform:`scale(${f.s})`, opacity:0}],
+        {duration:480, easing:"cubic-bezier(.5,0,.8,.4)", fill:"forwards"});
+    }
+    renderScene(next, {dir:"in"});
+  }
+  if(arrive && canvas && !still && canvas.animate){
+    const f = arrive.dir === "out" && arrive.spot ? focus(arrive.spot) : null;
+    if(f){ canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
+      canvas.animate([{transform:`scale(${f.s})`, opacity:0}, {transform:"scale(1)", opacity:1}], {duration:480, easing:"cubic-bezier(.2,.6,.3,1)"}); }
+    else canvas.animate([{transform:"scale(.85)", opacity:0}, {transform:"scale(1)", opacity:1}], {duration:380, easing:"cubic-bezier(.2,.6,.3,1)"});
+  }
+  if(sc.parent) $("#sceneBack").onclick = async () => {
+    if(canvas && !still && canvas.animate){ canvas.style.transformOrigin = "50% 50%";
+      await play([{transform:"scale(1)", opacity:1}, {transform:"scale(.7)", opacity:0}], {duration:320, easing:"ease-in", fill:"forwards"}); }
+    const par = await (await fetch(`data/scenes/${sc.parent}.json`, {cache:"no-cache"})).json();
+    renderScene(sc.parent, {dir:"out", spot: Object.keys(par.items).find(x => par.items[x].zoom === id)});
+  };
+  else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; } renderScenes(); };
 }
 
 /* ---------- Reading ---------- */
