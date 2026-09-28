@@ -1078,6 +1078,21 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font:500 13px var(--body);padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .chip.on{border-color:var(--shu);color:var(--shu)}
+
+/* ---------- v29: scenes ---------- */
+.zoom{display:flex;gap:6px}
+.zoom .nav-btn{min-width:40px;font-size:16px;padding:5px 0}
+.scene-zoom{border:1px solid var(--line);border-radius:8px;overflow:auto;background:#EEF1F2;-webkit-overflow-scrolling:touch;max-height:70dvh}
+.scene-canvas{width:100%;transition:width .2s ease}
+.scene-canvas svg{display:block;width:100%;height:auto}
+.scene-words summary{font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);cursor:pointer;padding:6px 0}
+.scene-list{display:flex;flex-direction:column;gap:6px}
+.scene-row{display:grid;grid-template-columns:auto auto 1fr;align-items:baseline;gap:10px;text-align:left;padding:10px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer}
+.scene-row b{font:800 17px var(--display)}
+.scene-row .en{font-weight:500;font-size:13px;color:var(--soft);text-align:right}
+.scene-row.on{border-color:var(--shu)}
+.scene-row.on b{color:var(--shu)}
 </style>
 </head>
 
@@ -1125,7 +1140,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v28";
+const APP_VERSION = "v29";
 
 
 /* =========================================================
@@ -2364,7 +2379,7 @@ function renderHome(){
         <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card</span></button>
         <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
         <button class="home-card" data-home="novels"><b>本 Novels</b><span>Famous books in short Japanese</span></button>
-        <button class="home-card" data-home="scene"><b>店 Konbini</b><span>Tap things to learn their names</span></button>
+        <button class="home-card" data-home="scenes"><b>絵 Scenes</b><span>Learn through pictures</span></button>
         <button class="home-card soon" disabled><b>商 Business</b><span>Coming soon</span></button>
       </div>
 
@@ -2575,31 +2590,73 @@ async function renderNovel(id){
   $("#novelBack").onclick = () => { $("#pageTitle").textContent = "Novels"; renderNovels(); };
 }
 
-/* ---------- Scenes (tap an object to learn its name) ---------- */
-async function renderScene(id){
+/* ---------- Scenes: learn words through pictures ---------- */
+async function renderScenes(){
   document.body.classList.remove("playing");
+  let list; try{ list = await (await fetch("data/scenes/index.json", {cache:"no-cache"})).json(); }
+  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
+  $("#pageTitle").textContent = "Scenes";
+  $("#list").innerHTML = `<section class="reading">
+    <p class="set-lead">Tap things in a picture to learn what they are called.</p>
+    <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
+      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${x.count} words</span></button>`).join("")}</div></section>`;
+}
+async function renderScene(id){
   let sc, svg;
   try{
     sc = await (await fetch(`data/scenes/${id}.json`, {cache:"no-cache"})).json();
     svg = await (await fetch(`data/scenes/${sc.svg}`, {cache:"no-cache"})).text();
-  }catch(e){ $("#list").innerHTML = `<div class="empty">Could not load the scene.</div>`; return; }
+  }catch(e){ return; }
+  $("#pageTitle").textContent = sc.title;
+  const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <p class="set-lead">Tap anything in the store.</p>
-    <div class="scene-art">${svg}</div>
-    <div class="scene-info" id="sceneInfo"><div class="scene-hint">Nothing selected yet.</div></div>
-    <div class="scene-chips">${Object.entries(sc.items).map(([k,v]) => `<button class="chip" data-spot="${k}">${esc(v.jp)}</button>`).join("")}</div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>
+      <div class="zoom"><button class="nav-btn" data-z="-1" aria-label="Zoom out">−</button><button class="nav-btn" data-z="1" aria-label="Zoom in">+</button></div></div>
+    <div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>
+    <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
+    <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
+      <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
+        <b>${esc(v.jp)}</b><span class="rd">${esc(v.reading)}</span><span class="en">${esc(v.en)}</span></button>`).join("")}</div>
+    </details>
     <div class="story-meta">${esc(sc.source)}</div>
   </section>`;
+  const svgEl = document.querySelector("#sceneCanvas svg");
+  let zoom = 1;
+  document.querySelectorAll(".zoom button").forEach(b => b.onclick = () => {
+    zoom = Math.max(1, Math.min(3, zoom + (+b.dataset.z) * .5));
+    $("#sceneCanvas").style.width = (zoom * 100) + "%";
+  });
+  const tag = (g, text) => {
+    svgEl.querySelectorAll(".tag").forEach(t => t.remove());
+    const bb = g.getBBox(), ns = "http://www.w3.org/2000/svg";
+    const t = document.createElementNS(ns, "g"); t.setAttribute("class", "tag");
+    const label = document.createElementNS(ns, "text");
+    label.textContent = text; label.setAttribute("font-size", "11"); label.setAttribute("font-weight", "700");
+    label.setAttribute("text-anchor", "middle"); label.setAttribute("fill", "#fff");
+    t.appendChild(label); svgEl.appendChild(t);
+    const w = label.getComputedTextLength() + 12;
+    const cx = Math.max(w/2 + 2, Math.min(398 - w/2, bb.x + bb.width/2));
+    const y = Math.max(16, bb.y - 6);
+    const r = document.createElementNS(ns, "rect");
+    r.setAttribute("x", cx - w/2); r.setAttribute("y", y - 13); r.setAttribute("width", w); r.setAttribute("height", 17);
+    r.setAttribute("rx", 4); r.setAttribute("fill", "#C63A2F");
+    t.insertBefore(r, label); label.setAttribute("x", cx); label.setAttribute("y", y);
+  };
   const show = k => {
     const v = sc.items[k]; if(!v) return;
-    document.querySelectorAll(".scene-art .spot").forEach(g => g.classList.toggle("on", g.dataset.id === k));
-    document.querySelectorAll(".scene-chips .chip").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
+    const g = svgEl.querySelector(`.spot[data-id="${k}"]`);
+    svgEl.querySelectorAll(".spot").forEach(x => x.classList.toggle("on", x === g));
+    document.querySelectorAll(".scene-row").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
+    if(g) tag(g, v.jp);
+    speak(v.jp);
     $("#sceneInfo").innerHTML = `<div class="scene-word">${esc(v.jp)} ${sayBtn(v.jp)}</div>
       <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
       <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>`;
   };
-  document.querySelectorAll(".scene-art .spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
-  document.querySelectorAll(".scene-chips .chip").forEach(c => c.onclick = () => show(c.dataset.spot));
+  svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
+  document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); $("#sceneZoom").scrollIntoView({behavior:"smooth", block:"start"}); });
+  document.querySelector(".scene-words").addEventListener("toggle", e => store.set("jc:scenewords", e.target.open));
+  $("#sceneBack").onclick = () => renderScenes();
 }
 
 /* ---------- Reading ---------- */
@@ -2751,6 +2808,9 @@ document.addEventListener(
 
     const say = e.target.closest(".say");
     if(say){ e.stopPropagation(); speak(say.dataset.say); return; }
+
+    const scene = e.target.closest("[data-scene]");
+    if(scene){ renderScene(scene.dataset.scene); window.scrollTo(0,0); return; }
 
     const novel = e.target.closest("[data-novel]");
     if(novel){ renderNovel(novel.dataset.novel); window.scrollTo(0,0); return; }
@@ -3146,7 +3206,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scene:"コンビニ"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3174,8 +3234,8 @@ function pick(id){
   else if(id === "novels")
     renderNovels();
 
-  else if(id === "scene")
-    renderScene("konbini");
+  else if(id === "scenes")
+    renderScenes();
 
   else
     load(id);

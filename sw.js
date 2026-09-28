@@ -1,6 +1,6 @@
 // network-first: always try fresh lessons, fall back to cache offline
 
-const CACHE = "jc-v28";
+const CACHE = "jc-v29";
 
 self.addEventListener("install", e => self.skipWaiting());
 
