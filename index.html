@@ -920,6 +920,25 @@ body.playing{
   cursor:pointer;
 }
 
+
+/* =========================================================
+   v15: let the page scroll instead of a fixed box.
+   The card grows to its full height; the rating buttons stay
+   pinned at the bottom. Native page scrolling works on iPhone.
+   ========================================================= */
+body.playing{position:static;height:auto;min-height:100dvh;overflow:auto;overscroll-behavior:auto}
+.playing #list{min-height:100dvh}
+.play-screen{height:auto;min-height:100dvh;overflow:visible}
+.play-stage{position:relative;inset:auto;display:block;overflow:visible;
+  padding:64px 16px calc(env(safe-area-inset-bottom,0px) + 130px)}
+.play-stage .play-card,
+.play-stage .play-card.open{height:auto;min-height:220px;max-height:none;overflow:visible;margin:0 auto;touch-action:auto}
+.play-stage .play-card .front{flex:none;height:auto;min-height:170px;max-height:none}
+.play-stage .play-card .back{flex:none;height:auto;max-height:0;overflow:hidden}
+.play-stage .play-card.open .back{flex:none;height:auto;max-height:none;overflow:visible;touch-action:auto}
+/* the playground renders plain .card elements, so target those too */
+.play-stage .card{max-width:620px;margin:0 auto;overflow:visible}
+.playing .card.open .back{max-height:none;overflow:visible}
 </style>
 </head>
 
@@ -991,7 +1010,7 @@ body.playing{
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v14";
+const APP_VERSION = "v15";
 
 
 /* =========================================================
