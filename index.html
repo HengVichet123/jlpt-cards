@@ -1093,6 +1093,12 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-row .en{font-weight:500;font-size:13px;color:var(--soft);text-align:right}
 .scene-row.on{border-color:var(--shu)}
 .scene-row.on b{color:var(--shu)}
+
+/* ---------- v30: 3D scene ---------- */
+.scene-3d{position:relative;height:58dvh;min-height:320px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#EEF1F2;touch-action:none}
+.scene-3d canvas{display:block;width:100%;height:100%}
+.label3d{position:absolute;transform:translate(-50%,-100%);background:#C63A2F;color:#fff;font:700 13px var(--body);
+  padding:3px 9px;border-radius:5px;pointer-events:none;white-space:nowrap}
 </style>
 </head>
 
@@ -1140,7 +1146,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v29";
+const APP_VERSION = "v30";
 
 
 /* =========================================================
@@ -2591,6 +2597,11 @@ async function renderNovel(id){
 }
 
 /* ---------- Scenes: learn words through pictures ---------- */
+const loadScript = src => new Promise((ok, bad) => {
+  if(document.querySelector(`script[data-src="${src}"]`)) return ok();
+  const el = document.createElement("script"); el.src = src; el.dataset.src = src; el.onload = ok; el.onerror = bad;
+  document.head.appendChild(el);
+});
 async function renderScenes(){
   document.body.classList.remove("playing");
   let list; try{ list = await (await fetch("data/scenes/index.json", {cache:"no-cache"})).json(); }
@@ -2610,9 +2621,8 @@ async function renderScene(id){
   $("#pageTitle").textContent = sc.title;
   const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>
-      <div class="zoom"><button class="nav-btn" data-z="-1" aria-label="Zoom out">−</button><button class="nav-btn" data-z="1" aria-label="Zoom in">+</button></div></div>
-    <div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">Back</button>${sc.three ? `<span class="story-meta">Drag to look around · pinch to move closer</span>` : ""}</div>
+    ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
     <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
     <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
       <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
@@ -2621,11 +2631,14 @@ async function renderScene(id){
     <div class="story-meta">${esc(sc.source)}</div>
   </section>`;
   const svgEl = document.querySelector("#sceneCanvas svg");
-  let zoom = 1;
-  document.querySelectorAll(".zoom button").forEach(b => b.onclick = () => {
-    zoom = Math.max(1, Math.min(3, zoom + (+b.dataset.z) * .5));
-    $("#sceneCanvas").style.width = (zoom * 100) + "%";
-  });
+  let view3d = null;
+  if(sc.three){
+    try{
+      await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js");
+      if(window.__scene3d) window.__scene3d.dispose();
+      view3d = window.__scene3d = mountKonbini3D($("#scene3d"), k => show(k));
+    }catch(e){ $("#scene3d").innerHTML = `<div class="empty">3D could not start on this device.</div>`; }
+  }
   const tag = (g, text) => {
     svgEl.querySelectorAll(".tag").forEach(t => t.remove());
     const bb = g.getBBox(), ns = "http://www.w3.org/2000/svg";
@@ -2644,8 +2657,9 @@ async function renderScene(id){
   };
   const show = k => {
     const v = sc.items[k]; if(!v) return;
-    const g = svgEl.querySelector(`.spot[data-id="${k}"]`);
-    svgEl.querySelectorAll(".spot").forEach(x => x.classList.toggle("on", x === g));
+    const g = svgEl ? svgEl.querySelector(`.spot[data-id="${k}"]`) : null;
+    if(svgEl) svgEl.querySelectorAll(".spot").forEach(x => x.classList.toggle("on", x === g));
+    if(view3d){ view3d.select(k, true); view3d.setLabel(v.jp); }
     document.querySelectorAll(".scene-row").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
     if(g) tag(g, v.jp);
     speak(v.jp);
@@ -2653,10 +2667,10 @@ async function renderScene(id){
       <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
       <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>`;
   };
-  svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
-  document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); $("#sceneZoom").scrollIntoView({behavior:"smooth", block:"start"}); });
+  if(svgEl) svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
+  document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); (document.querySelector("#scene3d, #sceneZoom")).scrollIntoView({behavior:"smooth", block:"start"}); });
   document.querySelector(".scene-words").addEventListener("toggle", e => store.set("jc:scenewords", e.target.open));
-  $("#sceneBack").onclick = () => renderScenes();
+  $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; } renderScenes(); };
 }
 
 /* ---------- Reading ---------- */
