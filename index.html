@@ -1301,6 +1301,23 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .tip-rd{color:var(--shu);opacity:1}
 .rd-voice[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
 .rd-voice[aria-pressed="true"]{color:var(--shu);border-color:var(--shu)}
+/* ---------- v68: reading library ---------- */
+.library{display:flex;flex-direction:column}
+.shelf-h{display:flex;align-items:baseline;gap:8px;font:800 20px var(--display);margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+.shelf-h small{font:500 12px var(--body);color:var(--faint)}
+.shelf{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(118px,32%);gap:10px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory}
+.shelf::-webkit-scrollbar{display:none}
+.book{scroll-snap-align:start;position:relative;aspect-ratio:3/4;border:0;border-radius:4px 8px 8px 4px;padding:14px 10px 10px 16px;text-align:left;cursor:pointer;
+  display:flex;flex-direction:column;gap:4px;color:#FBFAF6;box-shadow:inset 7px 0 0 rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.14)}
+.book b{font:800 17px/1.25 var(--display);text-wrap:balance}
+.book span{font-size:11.5px;opacity:.8;line-height:1.3}
+.book em{margin-top:auto;font:500 10.5px var(--mono);font-style:normal;opacity:.75}
+.book-article{background:#2E4C80}
+.book-news{background:#2F6B5E}
+.book-novel{background:#6A4C98}
+.book-story{background:#B8791A}
+@media (min-width: 900px){ .library{max-width:860px;margin-inline:auto;width:100%} .shelf{grid-auto-columns:150px} }
+.reader-ch{font:800 19px var(--display);margin:26px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
 </style>
 </head>
 
@@ -1348,7 +1365,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v67";
+const APP_VERSION = "v68";
 
 
 /* =========================================================
@@ -3166,7 +3183,7 @@ async function renderReader(id){
   $("#list").innerHTML = `<section class="reader">
     <div class="story-top"><button class="nav-btn" id="rdBack">Cards</button><button class="nav-btn rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}">🔊 Voice</button></div>
     <h1 class="reader-title">${esc(R.title)}</h1>
-    <div class="reader-text">${html.split("\n").map(p => `<p>${p}</p>`).join("")}</div>
+    <div class="reader-text">${html.split("\n").map(p => p.startsWith("§") ? `<h3 class="reader-ch">${p.slice(1)}</h3>` : `<p>${p}</p>`).join("")}</div>
     <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · tap a word for English</p>
     <div class="tip-bubble" id="tipB" hidden></div>
   </section>`;
@@ -3191,19 +3208,20 @@ async function renderReader(id){
 
 /* ---------- Reading ---------- */
 let STORIES = null;
+/* Reading = a library: shelves of books, every book works the same (learn cards -> read -> tap a word) */
+const SHELVES = [["article","記事","Articles"],["news","ニュース","News"],["novel","小説","Novels"],["story","物語","Short stories"]];
 async function renderReading(){
   document.body.classList.remove("playing");
-  try{ STORIES = STORIES || await (await fetch("data/stories/index.json", {cache:"no-cache"})).json(); }
-  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load stories.</div>`; return; }
   let RD = []; try{ RD = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){}
-  $("#list").innerHTML = `<section class="reading">
-    ${RD.length ? `<h2 class="home-h">Learn, then read</h2>
-    <div class="story-list">${RD.map(x => `<button class="home-card story-item pre-item" data-prelearn="${x.id}">
-      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · about ${Math.max(1, Math.round(x.chars / 400))} min · learn ${x.counts[0]} words first</span></button>`).join("")}</div>
-    <h2 class="home-h">Short stories</h2>` : ""}
-    <p class="set-lead">Short stories built from your cards. Tap a sentence for English, 🔊 to hear it.</p>
-    <div class="story-list">${STORIES.map(x => `<button class="home-card story-item" data-story="${x.id}">
-      <b>${esc(x.title)}</b><span>${x.level} · ${x.lines} sentences</span></button>`).join("")}</div></section>`;
+  const mins = x => Math.max(1, Math.round(x.chars / 400));
+  $("#list").innerHTML = `<section class="library">
+    ${SHELVES.filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => `
+      <h2 class="shelf-h">${jp}<small>${en}</small></h2>
+      <div class="shelf">${RD.filter(x => (x.shelf || "article") === k).map(x => `
+        <button class="book book-${k}" data-prelearn="${x.id}">
+          <b>${esc(x.title)}</b><span>${esc(x.titleEn)}</span>
+          <em>${mins(x)} min · ${x.counts[0]} words</em></button>`).join("")}</div>`).join("")}
+  </section>`;
 }
 async function renderStory(id){
   let st; try{ st = await (await fetch(`data/stories/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
