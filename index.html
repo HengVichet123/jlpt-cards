@@ -109,8 +109,23 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 .play-ratings button{min-width:92px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;padding:9px 12px;font:600 13px var(--body);cursor:pointer}
 .play-ratings button span{display:block;color:#888;font:500 11px var(--mono);margin-top:2px}
 .play-ratings button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
-.play-queue{position:fixed;right:18px;top:18px;display:flex;gap:10px;color:#777;font:500 11px var(--mono);z-index:2}
+.play-queue{display:flex;justify-content:center;gap:14px;color:#777;font:500 11px var(--mono);padding:58px 16px 0}
 .play-queue b{color:#333;font-size:13px;margin-right:2px}
+.play-familiarity-bar{height:3px;width:84px;background:#eee;border-radius:3px;overflow:hidden;margin:0 auto 10px}
+.play-familiarity-bar i{display:block;height:100%;background:var(--shu);border-radius:3px}
+.home{max-width:680px;margin:0 auto;padding:34px 16px}
+.home h1,.complete h1{font-family:var(--display);font-size:32px;margin:0 0 6px}
+.home p{color:var(--soft);margin:0 0 24px}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.home-card{display:block;text-align:left;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--ink);cursor:pointer}
+.home-card b{display:block;font-family:var(--display);font-size:20px;margin-bottom:4px}
+.home-card span{font-size:13px;color:var(--soft)}
+.complete{max-width:760px;margin:0 auto;padding:28px 16px 60px}
+.complete-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:18px}
+.complete-head button{border:1px solid var(--line);background:var(--card);border-radius:7px;padding:7px 10px;color:var(--soft);cursor:pointer}
+.complete-section h2{font-family:var(--display);font-size:22px;margin:24px 0 8px}
+.familiarity-bar{height:3px;width:54px;background:var(--hole);border-radius:3px;overflow:hidden;margin-top:7px}
+.familiarity-bar i{display:block;height:100%;background:var(--shu);border-radius:3px}
 .play-empty{text-align:center;color:#777}
 .done{text-align:center;padding:36px 10px;color:var(--soft)}
 .done b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);margin-bottom:6px}
@@ -135,7 +150,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v7";
+const APP_VERSION = "v8";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -173,7 +188,7 @@ function wordCard(c){
     c.jp ? `<h4>大辞泉</h4><div class="jp">${hl(c.jp, c.word)}</div>${srcLine("デジタル大辞泉 (Kotobank)", c.jpUrl)}` : "",
     c.use ? `<h4>例文</h4>${exHTML(c.use, c.word)}` : ""
   ].join("");
-  return card("w", c.no, `<div class="rd">${esc(c.reading)}</div><div class="big">${esc(c.word)}</div>`, back);
+  return card("w", c.no, `<div class="rd">${esc(c.reading)}</div><div class="big">${esc(c.word)}</div>`, back, c.level);
 }
 function kanjiCard(c){
   const words = c.words.length ? `<h4>言葉</h4><ul class="w">` + c.words.map(w =>
@@ -186,7 +201,7 @@ function kanjiCard(c){
     c.use ? `<h4>例文</h4>${exHTML(c.use, c.kanji)}` : ""
   ].join("");
   const rd = [c.on.join("・"), c.kun.join("・")].filter(Boolean).join(" · ");
-  return card("k", c.no, `<div class="rd">${esc(rd)}</div><div class="big">${esc(c.kanji)}</div>`, back);
+  return card("k", c.no, `<div class="rd">${esc(rd)}</div><div class="big">${esc(c.kanji)}</div>`, back, c.level);
 }
 function grammarCard(c){
   const back = [
@@ -196,12 +211,14 @@ function grammarCard(c){
     c.rei.length ? `<h4>例文 <span class="src">(tap for English)</span></h4>${c.rei.map(e=>exHTML(e, c.variants)).join("")}` : "",
     srcLine("日本語教師NET", c.url)
   ].join("");
-  return card("g", c.no, `<div class="rd"></div><div class="big">${esc(c.pattern)}</div>`, back);
+  return card("g", c.no, `<div class="rd"></div><div class="big">${esc(c.pattern)}</div>`, back, c.level);
 }
-function card(t, no, head, back){
+function card(t, no, head, back, level){
   const type = {w:"words",k:"kanji",g:"grammar"}[t];
+  const familiarity = level ? pgProfile(level,type,no).familiarity : null;
+  const bar = familiarity === null ? "" : `<div class="familiarity-bar" title="Familiarity ${familiarity}"><i style="width:${Math.min(100, familiarity*20)}%"></i></div>`;
   return `<div class="card ${t}" data-type="${type}" data-no="${no}">
-    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}</div>${dotsOrButtons(type,no)}</div>
+    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}${bar}</div>${dotsOrButtons(type,no)}</div>
     <div class="back">${back}</div></div>`;
 }
 
@@ -275,7 +292,7 @@ async function renderPG(){
     ["1d", later.filter(x => x[3] - now <= 1440*60000).length]
   ];
   const cp = current ? pgProfile(current[0], current[1], current[2].no) : null;
-  const card = current ? `<div class="play-familiarity">Familiarity ${cp.familiarity} · ${cp.reviews} reviews</div>` + make[current[1]](current[2]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
+  const card = current ? `<div class="play-familiarity-bar" title="Familiarity ${cp.familiarity}"><i style="width:${Math.min(100, cp.familiarity*20)}%"></i></div>` + make[current[1]](current[2]).replace('<div class="card ', '<div class="card play-card ') : `<div class="play-empty"><h2>Session complete</h2><p>All cards are resting.</p></div>`;
   const ratings = current ? `<div class="play-ratings" data-level="${current[0]}" data-type="${current[1]}" data-no="${current[2].no}">
     <button data-m="3">Again<span>3 min</span></button>
     <button data-m="10">Hard<span>10 min</span></button>
@@ -283,16 +300,36 @@ async function renderPG(){
   </div>` : "";
   const queue = `<div class="play-queue">${buckets.map(x=>`<span><b>${x[1]}</b>${x[0]}</span>`).join("")}</div>`;
   const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[3])) - now)/60000)) : null;
-  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button><button class="play-exit" id="pgExit">Exit playground</button>${queue}<div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
+  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button><button class="play-exit" id="pgExit">Exit playground</button><div class="play-top">${queue}</div><div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
   $("#count").textContent = `Playground · ${st.level}`;
   $("#pgBack").onclick = () => { PG_RUNNING = false; renderPG(); };
   $("#pgExit").onclick = pgExit;
 }
 function pgExit(){
-  const id = store.get("jc:returnLesson", INDEX[0]?.id || "");
-  $("#lesson").value = id;
-  store.set("jc:lesson", id);
-  pick(id);
+  $("#lesson").value = "home";
+  store.set("jc:lesson", "home");
+  pick("home");
+}
+function renderHome(){
+  document.body.classList.remove("playing");
+  $("#list").innerHTML = `<section class="home">
+    <h1>JLPT Cards</h1><p>Build your Japanese memory one review at a time.</p>
+    <div class="home-grid">
+      <button class="home-card" data-home="playground"><b>▶ Playground</b><span>Personalized review session</span></button>
+      <button class="home-card" data-home="complete"><b>▦ Complete list</b><span>Browse every card and its familiarity</span></button>
+    </div>
+    <h2 class="complete-section h2">Lessons</h2>
+    <div class="home-grid">${INDEX.map(x=>`<button class="home-card" data-lesson="${x.id}"><b>${x.level} · Day ${x.day}</b><span>${x.counts[0]} words · ${x.counts[1]} kanji · ${x.counts[2]} grammar</span></button>`).join("")}</div>
+  </section>`;
+  $("#count").textContent = "Home";
+}
+async function renderComplete(){
+  document.body.classList.remove("playing");
+  const pool = await pgPool("ALL"), make = {words:wordCard,kanji:kanjiCard,grammar:grammarCard};
+  const section = (t,label) => `<section class="complete-section"><h2>${label}</h2>${pool[t].map(make[t]).join("")}</section>`;
+  $("#list").innerHTML = `<section class="complete"><div class="complete-head"><div><h1>Complete list</h1><div class="stat">Every card · familiarity is saved locally</div></div><button id="completeHome">Home</button></div>${section("words","Words")}${section("kanji","Kanji")}${section("grammar","Grammar")}</section>`;
+  $("#count").textContent = "Complete list";
+  $("#completeHome").onclick = () => { $("#lesson").value="home"; store.set("jc:lesson","home"); pick("home"); };
 }
 function dotsOrButtons(type, no){
   if (!PLAY) return dotsHTML(type, no);
@@ -341,6 +378,8 @@ document.addEventListener("click", e => {
   const ex = e.target.closest(".ex"); if (ex){ ex.classList.toggle("open"); return; }
   const playCard = e.target.closest(".play-card"); if (playCard){ playCard.classList.toggle("open"); return; }
   const front = e.target.closest(".front"); if (front){ front.parentElement.classList.toggle("open"); return; }
+  const home = e.target.closest("[data-home]"); if (home){ $("#lesson").value = home.dataset.home; store.set("jc:lesson", home.dataset.home); pick(home.dataset.home); return; }
+  const lesson = e.target.closest("[data-lesson]"); if (lesson){ $("#lesson").value = lesson.dataset.lesson; store.set("jc:lesson", lesson.dataset.lesson); pick(lesson.dataset.lesson); return; }
   const tab = e.target.closest(".tab"); if (tab){ TAB = tab.dataset.t; store.set("jc:tab", TAB); render(); window.scrollTo(0,0); }
 });
 $("#filter").onclick = () => { ONLY_WEAK = !ONLY_WEAK; store.set("jc:weak", ONLY_WEAK); render(); };
@@ -351,8 +390,9 @@ $("#lesson").onchange = e => {
 function pick(id){
   PLAY = id === "playground";
   PG_RUNNING = false;
-  document.querySelector(".tabs").hidden = PLAY; $("#filter").hidden = PLAY;
-  if (PLAY) renderPG(); else load(id);
+  const special = PLAY || id === "home" || id === "complete";
+  document.querySelector(".tabs").hidden = special; $("#filter").hidden = special;
+  if (PLAY) renderPG(); else if (id === "home") renderHome(); else if (id === "complete") renderComplete(); else load(id);
 }
 
 async function load(id){
@@ -366,9 +406,9 @@ async function load(id){
   try { INDEX = await (await fetch("data/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load lesson list.</div>`; return; }
   const sel = $("#lesson");
-  sel.innerHTML = `<option value="playground">▶ Playground</option>` + INDEX.map(x => `<option value="${x.id}">${x.level} · Day ${x.day}  (${x.counts[0]}語 ${x.counts[1]}字 ${x.counts[2]}文法)</option>`).join("");
+  sel.innerHTML = `<option value="home">⌂ Home</option><option value="playground">▶ Playground</option>` + INDEX.map(x => `<option value="${x.id}">${x.level} · Day ${x.day}  (${x.counts[0]}語 ${x.counts[1]}字 ${x.counts[2]}文法)</option>`).join("");
   const saved = store.get("jc:lesson", null);
-  sel.value = (saved === "playground" || INDEX.some(x => x.id === saved)) ? saved : INDEX[0].id;
+  sel.value = (saved === "home" || saved === "playground" || INDEX.some(x => x.id === saved)) ? saved : "home";
   if (new URLSearchParams(location.search).has("play")) sel.value = "playground";
   pick(sel.value);
   if (new URLSearchParams(location.search).get("play") === "new") setTimeout(pgNew, 300);
