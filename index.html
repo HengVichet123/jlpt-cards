@@ -96,7 +96,9 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 .play-setup .pg{margin-bottom:14px}
 .play-setup .go{width:100%;margin:8px 0 0;padding:12px}
 .play-screen{min-height:100vh;display:flex;flex-direction:column;position:relative;background:#fff}
-.play-settings{position:absolute;top:18px;left:18px;border:0;background:transparent;color:#777;font:500 13px var(--body);cursor:pointer;z-index:2}
+.play-settings,.play-exit{position:absolute;top:18px;border:1px solid #ddd;border-radius:7px;background:#fff;color:#555;font:600 13px var(--body);cursor:pointer;z-index:2;padding:7px 10px}
+.play-settings{left:18px}
+.play-exit{right:18px;color:var(--shu);border-color:#e8b8b3}
 .play-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:72px 16px 124px}
 .play-stage .play-card{width:min(620px,100%);box-shadow:0 8px 30px rgba(0,0,0,.08);cursor:pointer}
 .play-stage .play-card .front{min-height:170px;padding:26px 28px 26px 48px}
@@ -132,7 +134,7 @@ code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-rad
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v5";
+const APP_VERSION = "v6";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -232,7 +234,7 @@ async function renderPG(){
   const st = pgState(), pool = await pgPool(st.level), now = PG.now();
   if (!PG_RUNNING){
     DATA = {level: st.level};
-    const setup = `<section class="play-setup">
+    const setup = `<section class="play-setup"><button class="play-exit" id="pgExit">Exit playground</button>
       <h2>Playground</h2><p>Set up a short review session, then start when you’re ready.</p>
       <div class="pg">
         <label>Level <select id="pgLevel">${["N1","N2"].map(l=>`<option${l===st.level?" selected":""}>${l}</option>`).join("")}</select></label>
@@ -246,6 +248,7 @@ async function renderPG(){
     $("#list").innerHTML = setup;
     $("#count").textContent = `Playground · ${st.level}`;
     $("#pgGo").onclick = pgNew;
+    $("#pgExit").onclick = pgExit;
     return;
   }
   const make = {words: wordCard, kanji: kanjiCard, grammar: grammarCard};
@@ -271,9 +274,16 @@ async function renderPG(){
   </div>` : "";
   const queue = `<div class="play-queue">${buckets.map(x=>`<span><b>${x[1]}</b>${x[0]}</span>`).join("")}</div>`;
   const next = later.length ? Math.max(0, Math.round((Math.min(...later.map(x=>x[2])) - now)/60000)) : null;
-  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button>${queue}<div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
+  $("#list").innerHTML = `<div class="play-screen"><button class="play-settings" id="pgBack">Settings</button><button class="play-exit" id="pgExit">Exit playground</button>${queue}<div class="play-stage">${card}</div>${ratings}${!current && next !== null ? `<div class="stat" style="text-align:center">Next card in about ${next} min.</div>` : ""}</div>`;
   $("#count").textContent = `Playground · ${st.level}`;
   $("#pgBack").onclick = () => { PG_RUNNING = false; renderPG(); };
+  $("#pgExit").onclick = pgExit;
+}
+function pgExit(){
+  const id = store.get("jc:returnLesson", INDEX[0]?.id || "");
+  $("#lesson").value = id;
+  store.set("jc:lesson", id);
+  pick(id);
 }
 function dotsOrButtons(type, no){
   if (!PLAY) return dotsHTML(type, no);
@@ -318,7 +328,10 @@ document.addEventListener("click", e => {
   const tab = e.target.closest(".tab"); if (tab){ TAB = tab.dataset.t; store.set("jc:tab", TAB); render(); window.scrollTo(0,0); }
 });
 $("#filter").onclick = () => { ONLY_WEAK = !ONLY_WEAK; store.set("jc:weak", ONLY_WEAK); render(); };
-$("#lesson").onchange = e => { store.set("jc:lesson", e.target.value); pick(e.target.value); };
+$("#lesson").onchange = e => {
+  if (e.target.value === "playground") store.set("jc:returnLesson", store.get("jc:lesson", INDEX[0]?.id || ""));
+  store.set("jc:lesson", e.target.value); pick(e.target.value);
+};
 function pick(id){
   PLAY = id === "playground";
   PG_RUNNING = false;
