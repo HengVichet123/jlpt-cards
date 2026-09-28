@@ -1217,6 +1217,21 @@ body.showfam .fam{opacity:.85;transform:none}
 .sec-select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:500 15px var(--body);margin-top:8px}
 @media (min-width: 900px){ .sections{max-width:860px;margin-inline:auto;width:100%} }
 #pgFrom.seg-2{width:auto}
+/* v56: sections as a table of contents */
+.toc-h{font:800 26px var(--display);margin:0}
+.toc-h small{font:500 12px var(--mono);color:var(--faint);margin-left:8px}
+.toc-part{display:flex;align-items:baseline;gap:10px;font:800 19px var(--display);margin:28px 0 6px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+.toc-part span{font:700 12px var(--body);color:var(--shu);letter-spacing:.08em}
+.toc-part small{margin-left:auto;font:500 11.5px var(--body);color:var(--faint)}
+ol.toc{list-style:none;margin:0;padding:0}
+ol.toc li button{display:flex;align-items:baseline;gap:10px;width:100%;padding:9px 2px;border:0;border-bottom:1px solid var(--line);
+  background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+ol.toc li button:hover .toc-name{color:var(--shu)}
+.toc-no{flex:none;width:28px;font:500 12px var(--mono);color:var(--faint);text-align:right}
+.toc-name{font:600 16px var(--display)}
+.toc-dots{flex:1;border-bottom:1px dotted var(--faint);transform:translateY(-4px);min-width:16px;opacity:.6}
+.toc-n{flex:none;font:500 12px var(--mono);color:var(--soft)}
+.toc-n.on{color:var(--shu)}
 </style>
 </head>
 
@@ -1264,7 +1279,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v55";
+const APP_VERSION = "v56";
 
 
 /* =========================================================
@@ -2922,18 +2937,24 @@ async function renderScene(id, arrive){
 }
 
 /* ---------- Sections: topic chapters ---------- */
+const SEC_PARTS = {"1":["関係","Relations & abstract ideas"],"2":["人間","People & society"],"3":["活動","Actions, mind & life"],
+  "4":["生産物","Things people make"],"5":["自然","Nature"],"x":["その他","Other words"]};
 async function renderSections(){
   document.body.classList.remove("playing");
   const S = await loadSections();
   const LVL = store.get("jc:slevel", "N1") === "N2" ? "N2" : "N1";
   $("#pageTitle").textContent = "Sections";
-  $("#list").innerHTML = `<section class="sections">
-    <div class="complete-head"><div><div class="stat">${S[LVL].length} sections · ${S[LVL].reduce((n, s) => n + s.words.length, 0)} words</div></div>
+  const part = s => /^[1-5]/.test(s.code) ? s.code[0] : "x";
+  const parts = {}; S[LVL].forEach((s, i) => (parts[part(s)] = parts[part(s)] || []).push([s, i + 1]));
+  const PN = ["一","二","三","四","五","六"];
+  $("#list").innerHTML = `<section class="sections toc-page">
+    <div class="complete-head"><div><h2 class="toc-h">目次 <small>${S[LVL].length} sections · ${S[LVL].reduce((n, s) => n + s.words.length, 0)} words</small></h2></div>
       <div class="seg seg-2" role="radiogroup">${["N1","N2"].map(l => `<button type="button" class="${l===LVL?"on":""}" data-slevel="${l}">${l}</button>`).join("")}</div></div>
-    <div class="sec-list">${S[LVL].map((s, i) => { const seen = secSeen(LVL, s);
-      return `<button class="sec-item" data-sec="${s.id}"><span class="sec-no">${i + 1}</span><b>${esc(s.name)}</b>
-        <span class="sec-meta">${s.words.length} words${seen ? ` · ${seen} studied` : ""}</span>
-        <span class="sec-prog" style="--p:${seen / s.words.length}"></span></button>`; }).join("")}</div>
+    ${Object.keys(SEC_PARTS).filter(k => parts[k]).map((k, pi) => `
+      <h3 class="toc-part"><span>第${PN[pi]}部</span>${SEC_PARTS[k][0]}<small>${SEC_PARTS[k][1]}</small></h3>
+      <ol class="toc">${parts[k].map(([s, n]) => { const seen = secSeen(LVL, s);
+        return `<li><button data-sec="${s.id}"><span class="toc-no">${n}</span><span class="toc-name">${esc(s.name)}</span><span class="toc-dots"></span>
+          <span class="toc-n${seen ? " on" : ""}">${seen ? `${seen}/` : ""}${s.words.length}語</span></button></li>`; }).join("")}</ol>`).join("")}
     <p class="story-meta">${esc(S.source || "")}</p></section>`;
   document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
   document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
@@ -2946,7 +2967,7 @@ async function renderSection(id){
   $("#list").innerHTML = `<section class="complete">
     <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
     <h2 class="sec-title">${esc(s.name)}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
-    <div class="complete-cards">${cards.map(c => { CARD_LVL = lv; return wordCard(c); }).join("")}</div></section>`;
+    <div class="complete-cards">${cards.map(c => { CARD_LVL = lv; return wordCard(c).replace('class="card w"', 'class="card w open"'); }).join("")}</div></section>`;
   $("#secBack").onclick = () => { renderSections(); };
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
