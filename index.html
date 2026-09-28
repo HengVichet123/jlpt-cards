@@ -1164,6 +1164,29 @@ body.showfam .fam{opacity:.85;transform:none}
 .seg.seg-2{grid-template-columns:repeat(2,1fr);width:132px;flex:none}
 .complete-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
 .complete-more{height:1px}
+/* ---------- v50: desktop ---------- */
+.kbd-hint{display:none}
+@media (min-width: 900px){
+  main{max-width:1100px;padding-inline:32px}
+  header#top .bar, header#top .tabs{max-width:1036px;margin-inline:auto}
+  .home{padding-top:24px}
+  .core{grid-template-columns:2fr 1fr 1fr;gap:14px}
+  .cover-play{grid-column:auto}
+  .cover{min-height:230px;padding:22px}
+  .cover b{font-size:24px}
+  .cover span{font-size:14px}
+  .cover i{font-size:150px}
+  .side{max-width:620px}
+  .complete-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:row dense;gap:10px;align-items:start}
+  .complete-cards > .card{margin:0}
+  .complete-cards > .card.open{grid-column:1 / -1}
+  .reading, .scene, .story, .novel-grid{max-width:760px;margin-inline:auto;width:100%}
+  .play-stage .card{max-width:720px}
+  .kbd-hint{display:block;position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 2px);text-align:center;font:500 10px var(--mono);color:var(--faint);pointer-events:none}
+}
+@media (min-width: 1300px){
+  .complete-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 </style>
 </head>
 
@@ -1211,7 +1234,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v49";
+const APP_VERSION = "v50";
 
 
 /* =========================================================
@@ -1911,6 +1934,9 @@ async function pgPool(level){
   }
 
 
+  for(const t of ["words","kanji","grammar"])
+    pool[t].sort((a, b) => a.level.localeCompare(b.level) || a.no - b.no);
+
   return PG.pool[level] =
     pool;
 
@@ -2329,6 +2355,7 @@ async function renderPG(){
           </button>
 
         </div>
+        <div class="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy</div>
 
       `
 
@@ -2601,6 +2628,22 @@ async function renderComplete(){
 
 /* Open/close with motion: the word glides to its new place (FLIP),
    the back drops down like a curtain. */
+/* Desktop keyboard in Playground: Space/Enter = flip, 1/2/3 = Again/Hard/Easy */
+addEventListener("keydown", e => {
+  if(!document.body.classList.contains("playing") || e.metaKey || e.ctrlKey || e.altKey) return;
+  if(/INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ""))) return;
+  const card = document.querySelector(".play-stage .card");
+  if((e.key === " " || e.key === "Enter") && card){
+    e.preventDefault();
+    const hit = card.classList.contains("open") ? card.querySelector(".front") : card;
+    (hit || card).dispatchEvent(new MouseEvent("click", {bubbles:true}));
+    return;
+  }
+  const m = {"1":"3", "2":"10", "3":"1440"}[e.key];
+  const btn = m && document.querySelector(`.play-ratings button[data-m="${m}"]`);
+  if(btn){ e.preventDefault(); btn.click(); }
+});
+
 function flipCard(card, open){
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const back = card.querySelector(".back");
