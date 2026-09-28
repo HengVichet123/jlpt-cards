@@ -1125,6 +1125,9 @@ body.showfam .fam{opacity:.85;transform:none}
 .photo-scene .spot.on .hit{fill:rgba(198,58,47,.12);stroke:#C63A2F;stroke-width:4}
 .scene .story-meta a{color:inherit}
 .scene-canvas svg.photo-scene{max-height:66dvh;background:#1E1C22}
+/* v42: Show all on photos outlines every tap area so each label is tied to its object */
+.photo-scene.all .hit{fill:rgba(255,255,255,.08);stroke:#FFFFFF;stroke-width:3;stroke-dasharray:10 6}
+.photo-scene.all .spot.on .hit{stroke:#C63A2F;stroke-dasharray:none}
 </style>
 </head>
 
@@ -1172,7 +1175,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v41";
+const APP_VERSION = "v42";
 
 
 /* =========================================================
@@ -2714,7 +2717,7 @@ async function renderScene(id, arrive){
       p.t.style.pointerEvents = "none";
     }
   };
-  const setAll = on => { allOn = on; $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on);
+  const setAll = on => { allOn = on; $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); if(svgEl) svgEl.classList.toggle("all", on);
     if(view3d && view3d.showAll) view3d.showAll(Object.fromEntries(Object.entries(sc.items).map(([k,v]) => [k, v.jp])), on); tags(); };
   $("#showAll").onclick = () => setAll($("#showAll").getAttribute("aria-pressed") !== "true");
   const show = k => {
