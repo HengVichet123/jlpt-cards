@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
+<rect width="300" height="400" fill="#F6F2EA"/>
+<line x1="24" y1="30" x2="276" y2="30" stroke="#1F2226" stroke-width="3"/><line x1="24" y1="36" x2="276" y2="36" stroke="#1F2226" stroke-width="1"/>
+<text x="24" y="60" font-family="'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif" font-weight="800" font-size="20" fill="#1F2226">ニュース</text>
+<text x="276" y="60" text-anchor="end" font-family="monospace" font-size="13" fill="#1F2226" opacity=".6">2026</text>
+<rect x="24" y="74" width="40" height="5" fill="#C63A2F"/>
+<text x="24" y="140" font-family="'Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif" font-weight="800" font-size="36" fill="#1F2226">警戒レベル</text>
+<rect x="62" y="300" width="30" height="40" rx="3" fill="none" stroke="#1F2226" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="100" y="278" width="30" height="62" rx="3" fill="none" stroke="#1F2226" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="138" y="256" width="30" height="84" rx="3" fill="none" stroke="#1F2226" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="176" y="234" width="30" height="106" rx="3" fill="#C63A2F"/><rect x="214" y="212" width="30" height="128" rx="3" fill="none" stroke="#1F2226" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="191" y="228" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="22" fill="#C63A2F">4</text>
+<line x1="24" y1="370" x2="276" y2="370" stroke="#D9D2C4" stroke-width="1.5"/>
+</svg>
