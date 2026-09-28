@@ -1294,7 +1294,7 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v58";
+const APP_VERSION = "v59";
 
 
 /* =========================================================
@@ -2994,11 +2994,22 @@ async function renderSection(id){
     <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
     <h2 class="sec-title">${esc(s.name)}${s.en ? `<em>${esc(s.en)}</em>` : ""}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
     <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
-  // tap a mini card -> the full card, opened, in its place
-  document.querySelectorAll(".mini").forEach(m => m.onclick = () => {
-    const c = cards.find(x => x.no === +m.dataset.no); CARD_LVL = lv;
-    m.outerHTML = wordCard(c).replace('class="card w"', 'class="card w open"');
-  });
+  // tap a mini card -> the full card, opened, in its place; closing the full card -> back to the mini card
+  const box = document.querySelector(".complete-cards");
+  box.addEventListener("click", e => {
+    const m = e.target.closest(".mini");
+    if(m){
+      const c = cards.find(x => x.no === +m.dataset.no); CARD_LVL = lv;
+      m.outerHTML = wordCard(c).replace('class="card w"', 'class="card w open"');
+      return;
+    }
+    const f = e.target.closest(".card .front");
+    if(f){
+      e.stopPropagation();
+      const card = f.closest(".card"), c = cards.find(x => x.no === +card.dataset.no);
+      if(c) card.outerHTML = miniCard(c, lv);
+    }
+  }, true);
   $("#secBack").onclick = () => { renderSections(); };
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
