@@ -1103,7 +1103,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v26";
+const APP_VERSION = "v27";
 
 
 /* =========================================================
@@ -1271,8 +1271,7 @@ function dotsHTML(type,no){
    ========================================================= */
 
 function exHTML(e,targets){
-  if(e && e.jp && !exHTML.inner){ exHTML.inner = true; const h = exHTML(e,targets); exHTML.inner = false;
-    return h.replace('<div class="ex">', `<div class="ex">${sayBtn(e.jp)}`); }
+
 
   const tr =
     e.en
@@ -1433,7 +1432,7 @@ function kanjiCard(c){
                       c.kanji
                     )}
 
-                    （${esc(w.r)}）${sayBtn(w.w)}
+                    （${esc(w.r)}）
                     — ${esc(w.m)}
 
                     ${
@@ -1443,7 +1442,7 @@ function kanjiCard(c){
                              ${hl(
                                w.ex,
                                c.kanji
-                             )} ${sayBtn(w.ex)}
+                             )}
                            </div>`
                         : ""
                     }
@@ -1540,7 +1539,7 @@ function kanjiCard(c){
      </div>
 
      <div class="big">
-       ${esc(c.kanji)} ${sayBtn(c.kanji)}
+       ${esc(c.kanji)}
      </div>`,
 
     back,
@@ -1630,7 +1629,7 @@ function grammarCard(c){
     `<div class="rd"></div>
 
      <div class="big">
-       ${esc(c.pattern)} ${sayBtn(c.variants && c.variants[0] ? c.variants[0] : c.pattern)}
+       ${esc(c.pattern)}
      </div>`,
 
     back,
