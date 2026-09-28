@@ -1391,7 +1391,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v73";
+const APP_VERSION = "v74";
 
 
 /* =========================================================
@@ -3242,6 +3242,8 @@ const PAPER = ["var(--pp1)","var(--pp2)","var(--pp3)","var(--pp4)"];
 let READ_INDEX = null;
 async function readIndex(){
   if(!READ_INDEX){ try{ READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ READ_INDEX = []; } }
+  // News: newest first (by publish date); other shelves keep their order
+  READ_INDEX.sort((a, b) => (a.shelf === "news" && b.shelf === "news") ? (b.date || "").localeCompare(a.date || "") : 0);
   return READ_INDEX;
 }
 function bookHTML(x){
@@ -3251,7 +3253,7 @@ function bookHTML(x){
   return `<button class="book" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
     <span class="bk-cover">${x.img ? `<img src="data/readings/${x.img}" alt="" loading="lazy">` : `<span class="bk-type">${esc(first)}</span>`}</span>
     <b class="bk-t">${esc(x.title)}</b>
-    <span class="bk-meta">${x.counts[0]}語 · ${mins}分</span>
+    <span class="bk-meta">${x.date ? `${+x.date.slice(5, 7)}/${+x.date.slice(8, 10)} · ` : ""}${x.counts[0]}語 · ${mins}分</span>
   </button>`;
 }
 async function renderReading(){
