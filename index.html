@@ -1395,7 +1395,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v75";
+const APP_VERSION = "v76";
 
 
 /* =========================================================
@@ -3192,7 +3192,7 @@ async function renderPrelearn(id){
     <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a>${R.imgCredit ? ` · <a href="${esc(R.imgUrl || R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.imgCredit)}</a>` : ""}</p>
   </section>`;
   $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
-  $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+  $("#preBack").onclick = () => { renderReader(id); scrollTo(0, 0); };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
     cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
 
@@ -3211,7 +3211,7 @@ async function renderReader(id){
   html += esc(R.text.slice(at));
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reader">
-    <div class="story-top"><button class="nav-btn" id="rdBack">Cards</button><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
+    <div class="story-top"><span class="pre-btns"><button class="nav-btn" id="rdShelf">Back</button><button class="nav-btn" id="rdBack">Cards</button></span><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
       <path class="wv" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
     <h1 class="reader-title">${esc(R.title)}</h1>
@@ -3220,6 +3220,7 @@ async function renderReader(id){
     <div class="tip-bubble" id="tipB" hidden></div>
   </section>`;
   $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  $("#rdShelf").onclick = () => { renderShelf(R.shelf || "article"); scrollTo(0, 0); };
   $("#rdVoice").onclick = e => { e.stopPropagation(); const on = !store.get("jc:tapvoice", true); store.set("jc:tapvoice", on); $("#rdVoice").setAttribute("aria-pressed", on); };
   const tip = $("#tipB"), box = document.querySelector(".reader");
   box.onclick = e => {
@@ -3430,7 +3431,7 @@ document.addEventListener(
     if(novel){ renderNovel(novel.dataset.novel); window.scrollTo(0,0); return; }
 
     const pre = e.target.closest("[data-prelearn]");
-    if(pre){ renderPrelearn(pre.dataset.prelearn); window.scrollTo(0,0); return; }
+    if(pre){ renderReader(pre.dataset.prelearn); window.scrollTo(0,0); return; }   // a book opens straight into the text
     const story = e.target.closest("[data-story]");
     if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
 
