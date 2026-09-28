@@ -3,80 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#16181d">
+<meta name="theme-color" content="#FBFAF6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex, nofollow">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="JLPT Cards">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 <title>JLPT Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 :root{
-  --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1f; --soft:#6b6b70; --line:#e6e4df;
-  --hl:#d93025; --word:#2b5fd9; --kanji:#7b3fc4; --gram:#d7700f; --dot:#c9c7c1; --chip:#efeee9;
+  --paper:#FBFAF6; --card:#FFFFFF; --ink:#1F2226; --soft:#6F6B64; --faint:#A9A49A; --line:#E7E3DA; --chip:#F2EFE8;
+  --shu:#C63A2F; --ai:#2E4C80; --murasaki:#6A4C98; --yamabuki:#B8791A; --hole:#EAE6DD;
+  --display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){ :root{
-  --bg:#121317; --card:#1c1e24; --ink:#ecebe8; --soft:#9a9aa2; --line:#2c2f37;
-  --hl:#ff6b5e; --word:#7aa2ff; --kanji:#c49bff; --gram:#ffb259; --dot:#454852; --chip:#262932;
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#15171A; --card:#1E2125; --ink:#ECE8E0; --soft:#A29D94; --faint:#6E6A63; --line:#2C3036; --chip:#262A30;
+  --shu:#FF6E5E; --ai:#8FB0EE; --murasaki:#C2A6F0; --yamabuki:#E6B25A; --hole:#15171A; color-scheme:dark;
 }}
+:root[data-theme="dark"]{
+  --paper:#15171A; --card:#1E2125; --ink:#ECE8E0; --soft:#A29D94; --faint:#6E6A63; --line:#2C3036; --chip:#262A30;
+  --shu:#FF6E5E; --ai:#8FB0EE; --murasaki:#C2A6F0; --yamabuki:#E6B25A; --hole:#15171A; color-scheme:dark;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
-header{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;border-bottom:1px solid var(--line)}
+html{background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--body)}
+header{position:sticky;top:0;z-index:5;background:var(--paper);padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 10px;border-bottom:1px solid var(--line)}
 .row{display:flex;gap:8px;align-items:center}
-select{flex:1;font:inherit;font-size:16px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.tabs{display:flex;gap:6px;margin-top:8px}
-.tab{flex:1;text-align:center;padding:7px 0;border-radius:10px;background:var(--chip);color:var(--soft);font-weight:600;font-size:14px}
-.tab.on{color:#fff}
-.tab.on[data-t=words]{background:var(--word)} .tab.on[data-t=kanji]{background:var(--kanji)} .tab.on[data-t=grammar]{background:var(--gram)}
-.meta{font-size:12px;color:var(--soft);margin-top:6px;display:flex;justify-content:space-between}
-main{padding:12px 12px calc(env(safe-area-inset-bottom) + 40px);max-width:720px;margin:0 auto}
-.card{background:var(--card);border-radius:14px;margin-bottom:10px;border-left:5px solid var(--word);box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.card.k{border-left-color:var(--kanji)} .card.g{border-left-color:var(--gram)}
-.front{display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;cursor:pointer}
-.num{font-size:12px;color:var(--soft);min-width:30px}
-.head{flex:1;min-width:0}
-.big{font-size:26px;font-weight:700;line-height:1.25;word-break:break-word}
-.card.g .big{font-size:20px}
-.rd{font-size:14px;color:var(--soft)}
-.dots{display:flex;gap:7px}
-.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--dot)}
-.dot.on{background:var(--hl);border-color:var(--hl)}
-.back{display:none;padding:0 14px 14px;border-top:1px dashed var(--line)}
+.brand{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em}
+.brand span{color:var(--shu)}
+select{flex:1;min-width:0;font:500 15px var(--body);padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:10px;padding:3px;background:var(--chip);border-radius:10px}
+.tab{text-align:center;padding:7px 0;border-radius:8px;color:var(--soft);font-weight:700;font-size:14px;cursor:pointer}
+.tab.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tab .jp{font-family:var(--display);margin-right:4px}
+.tab.on[data-t=words] .jp{color:var(--ai)} .tab.on[data-t=kanji] .jp{color:var(--murasaki)} .tab.on[data-t=grammar] .jp{color:var(--yamabuki)}
+.meta{font:500 12px var(--mono);color:var(--faint);margin-top:8px;display:flex;justify-content:space-between;letter-spacing:.02em}
+button.small{font:700 12px var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer}
+button.small.on{color:var(--shu);border-color:var(--shu)}
+main{padding-block:14px calc(env(safe-area-inset-bottom,0px) + 48px);padding-inline:16px;max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.card::before{content:"";position:absolute;left:12px;top:26px;width:10px;height:10px;border-radius:50%;background:var(--hole);box-shadow:inset 0 1px 2px rgba(0,0,0,.18)}
+.front{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 14px 12px 34px;cursor:pointer}
+.head{min-width:0}
+.num{font:500 11px var(--mono);letter-spacing:.04em}
+.card.w .num{color:var(--ai)} .card.k .num{color:var(--murasaki)} .card.g .num{color:var(--yamabuki)}
+.rd{font-size:13px;color:var(--soft);line-height:1.2;margin-top:2px}
+.big{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.2;word-break:break-word}
+.card.g .big{font-size:21px;font-weight:600;text-wrap:balance}
+.dots{display:flex;gap:6px}
+.dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--faint);cursor:pointer}
+.dot.on{background:var(--shu);border-color:var(--shu)}
+.back{display:none;padding:2px 16px 16px 34px;border-top:1px dashed var(--line)}
 .card.open .back{display:block}
-.back h4{margin:12px 0 4px;font-size:13px;color:var(--soft);font-weight:600}
-.en{font-weight:700}
-.jp{margin-top:6px}
-.src{font-size:12px;color:var(--soft)} .src a{color:var(--soft)}
-b.hl{color:var(--hl)}
-.ex{background:var(--chip);border-radius:10px;padding:8px 10px;margin:6px 0;cursor:pointer}
-.ex .tr{display:none;color:var(--soft);font-size:14px;margin-top:4px}
+.back h4{margin:14px 0 4px;font:700 11px var(--body);letter-spacing:.12em;color:var(--faint)}
+.en{font-weight:700;font-size:16px}
+.jp{font-size:15px}
+.src{font-size:12px;color:var(--faint)} .src a{color:var(--faint)}
+b.hl{color:var(--shu);font-weight:700}
+.big b.hl{color:inherit}
+.ex{background:var(--chip);border-radius:6px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:15px}
+.ex .tip{float:right;font:500 10px var(--mono);color:var(--faint);margin-left:8px;margin-top:4px}
+.ex .tr{display:none;color:var(--soft);font-size:14px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
 .ex.open .tr{display:block}
-.ex .tip{float:right;font-size:12px;color:var(--soft)}
-.img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin-top:10px}
-ul.w{margin:4px 0;padding-left:18px} ul.w li{margin:4px 0}
-.exl{font-size:14px;color:var(--soft)}
-code{background:var(--chip);padding:2px 6px;border-radius:6px;font-size:14px}
+.img{display:block;width:100%;max-width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-top:14px}
+ul.w{margin:4px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.w li{font-size:15px}
+.exl{font-size:13px;color:var(--soft)}
+code{font:500 13px var(--mono);background:var(--chip);padding:3px 7px;border-radius:5px;display:inline-block}
 .empty{color:var(--soft);text-align:center;padding:40px}
-button.small{font:inherit;font-size:13px;padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 </style>
 </head>
 <body>
 <header>
   <div class="row">
+    <div class="brand">単語<span>帳</span></div>
     <select id="lesson"></select>
     <button class="small" id="filter" title="Show only cards with fewer than 3 dots">All</button>
   </div>
   <div class="tabs">
-    <div class="tab on" data-t="words">Words</div>
-    <div class="tab" data-t="kanji">Kanji</div>
-    <div class="tab" data-t="grammar">Grammar</div>
+    <div class="tab on" data-t="words"><span class="jp">語</span>Words</div>
+    <div class="tab" data-t="kanji"><span class="jp">字</span>Kanji</div>
+    <div class="tab" data-t="grammar"><span class="jp">文</span>Grammar</div>
   </div>
   <div class="meta"><span id="count"></span><span id="ver"></span></div>
 </header>
 <main id="list"><div class="empty">Loading…</div></main>
 
 <script>
-const APP_VERSION = "v1";
+const APP_VERSION = "v2";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function hl(text, targets){
@@ -103,7 +125,7 @@ function dotsHTML(type, no){
 function exHTML(e, targets){
   const tr = e.en ? esc(e.en) : "—";
   const src = e.url ? ` · <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>` : "";
-  return `<div class="ex"><span class="tip">EN ▾</span>${e.src && e.src.startsWith("Wikipedia") ? "🌐 " : ""}${hl(e.jp, targets)}<div class="tr">${tr}${src}</div></div>`;
+  return `<div class="ex"><span class="tip">EN</span>${e.src && e.src.startsWith("Wikipedia") ? "🌐 " : ""}${hl(e.jp, targets)}<div class="tr">${tr}${src}</div></div>`;
 }
 function srcLine(label, url){ return `<div class="src">— ${esc(label)}${url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">link</a>` : ""}</div>`; }
 
@@ -114,7 +136,7 @@ function wordCard(c){
     c.jp ? `<h4>大辞泉</h4><div class="jp">${hl(c.jp, c.word)}</div>${srcLine("デジタル大辞泉 (Kotobank)", c.jpUrl)}` : "",
     c.use ? `<h4>例文</h4>${exHTML(c.use, c.word)}` : ""
   ].join("");
-  return card("w", c.no, `<div class="big">${esc(c.word)}</div><div class="rd">${esc(c.reading)}</div>`, back);
+  return card("w", c.no, `<div class="rd">${esc(c.reading)}</div><div class="big">${esc(c.word)}</div>`, back);
 }
 function kanjiCard(c){
   const words = c.words.length ? `<h4>言葉</h4><ul class="w">` + c.words.map(w =>
@@ -127,7 +149,7 @@ function kanjiCard(c){
     c.use ? `<h4>例文</h4>${exHTML(c.use, c.kanji)}` : ""
   ].join("");
   const rd = [c.on.join("・"), c.kun.join("・")].filter(Boolean).join(" · ");
-  return card("k", c.no, `<div class="big">${esc(c.kanji)}</div><div class="rd">${esc(rd)}</div>`, back);
+  return card("k", c.no, `<div class="rd">${esc(rd)}</div><div class="big">${esc(c.kanji)}</div>`, back);
 }
 function grammarCard(c){
   const back = [
@@ -137,18 +159,19 @@ function grammarCard(c){
     c.rei.length ? `<h4>例文 <span class="src">(tap for English)</span></h4>${c.rei.map(e=>exHTML(e, c.variants)).join("")}` : "",
     srcLine("日本語教師NET", c.url)
   ].join("");
-  return card("g", c.no, `<div class="big">${esc(c.pattern)}</div>`, back);
+  return card("g", c.no, `<div class="rd"></div><div class="big">${esc(c.pattern)}</div>`, back);
 }
 function card(t, no, head, back){
   const type = {w:"words",k:"kanji",g:"grammar"}[t];
   return `<div class="card ${t}" data-type="${type}" data-no="${no}">
-    <div class="front"><div class="num">#${t.toUpperCase()}${no}</div><div class="head">${head}</div>${dotsHTML(type,no)}</div>
+    <div class="front"><div class="head">${head.replace('<div class="rd">', `<div class="rd"><span class="num">#${t.toUpperCase()}${no}</span>　`)}</div>${dotsHTML(type,no)}</div>
     <div class="back">${back}</div></div>`;
 }
 
 function render(){
   document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
-  $("#filter").textContent = ONLY_WEAK ? "Weak" : "All";
+  $("#filter").textContent = ONLY_WEAK ? "Weak only" : "All";
+  $("#filter").classList.toggle("on", ONLY_WEAK);
   if (!DATA) return;
   let items = DATA[TAB];
   if (ONLY_WEAK) items = items.filter(c => store.get(dotsKey(TAB, c.no), [0,0,0]).filter(Boolean).length < 3);
