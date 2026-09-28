@@ -1299,6 +1299,8 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 /* v66: light bubble, like a small card */
 .tip-bubble{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:0 6px 20px rgba(0,0,0,.12)}
 .tip-rd{color:var(--shu);opacity:1}
+.rd-voice[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.rd-voice[aria-pressed="true"]{color:var(--shu);border-color:var(--shu)}
 </style>
 </head>
 
@@ -1346,7 +1348,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v66";
+const APP_VERSION = "v67";
 
 
 /* =========================================================
@@ -3162,13 +3164,14 @@ async function renderReader(id){
   html += esc(R.text.slice(at));
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reader">
-    <div class="story-top"><button class="nav-btn" id="rdBack">Cards</button></div>
+    <div class="story-top"><button class="nav-btn" id="rdBack">Cards</button><button class="nav-btn rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}">🔊 Voice</button></div>
     <h1 class="reader-title">${esc(R.title)}</h1>
     <div class="reader-text">${html.split("\n").map(p => `<p>${p}</p>`).join("")}</div>
     <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · tap a word for English</p>
     <div class="tip-bubble" id="tipB" hidden></div>
   </section>`;
   $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  $("#rdVoice").onclick = e => { e.stopPropagation(); const on = !store.get("jc:tapvoice", true); store.set("jc:tapvoice", on); $("#rdVoice").setAttribute("aria-pressed", on); };
   const tip = $("#tipB"), box = document.querySelector(".reader");
   box.onclick = e => {
     const w = e.target.closest(".tk");
@@ -3177,6 +3180,7 @@ async function renderReader(id){
     w.classList.add("on");
     tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (w.dataset.g ? esc(w.dataset.g) : "");
     tip.hidden = false;
+    if(store.get("jc:tapvoice", true)) speak(w.textContent);   // hear the word as written in the text
     clearTimeout(tip._t);   // quick look: disappears by itself after 2 s
     tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); }, 2000);
     const r = w.getBoundingClientRect(), br = box.getBoundingClientRect();
