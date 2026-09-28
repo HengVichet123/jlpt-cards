@@ -1160,6 +1160,9 @@ body.showfam .fam{opacity:.85;transform:none}
 .side-tile i{font:700 20px/1 var(--display);font-style:normal;color:var(--ink)}
 .side-tile b{font:500 10.5px var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .side-tile.soon{opacity:.4;cursor:default}
+/* v47: Complete list level switch */
+.seg.seg-2{grid-template-columns:repeat(2,1fr);width:132px;flex:none}
+.complete-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
 </style>
 </head>
 
@@ -1207,7 +1210,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v46";
+const APP_VERSION = "v47";
 
 
 /* =========================================================
@@ -2513,8 +2516,9 @@ async function renderComplete(){
   );
 
 
+  const LVL = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";   // one level at a time
   const pool =
-    await pgPool("ALL");
+    await pgPool(LVL);
 
 
   const make = {
@@ -2563,6 +2567,10 @@ async function renderComplete(){
 
         </div>
 
+        <div class="seg seg-2" role="radiogroup" aria-label="Level">
+          ${["N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===LVL}" class="${l===LVL?"on":""}" data-clevel="${l}">${l}</button>`).join("")}
+        </div>
+
 
 
 
@@ -2581,6 +2589,7 @@ async function renderComplete(){
 
 
   document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
+  document.querySelectorAll("[data-clevel]").forEach(el => el.onclick = () => { store.set("jc:clevel", el.dataset.clevel); renderComplete(); });
   if(false) $("#completeHome").onclick =
     () => {
 
