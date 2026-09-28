@@ -4,27 +4,227 @@
  "titleEn": "The Odyssey",
  "author": "ホメロス（古代ギリシャ）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "トロイア戦争に勝った英雄オデュッセウスは、故郷のイタケーへ帰ろうとする。",
-   "en": "After winning the Trojan War, the hero Odysseus tries to return home to Ithaca."
+   "h": "第一章　帰れない英雄",
+   "en": "Chapter 1: The hero who cannot go home"
   },
   {
-   "jp": "しかし海の神ポセイドンの怒りを買い、十年も海をさまようことになる。",
-   "en": "But he angers Poseidon, god of the sea, and ends up wandering the seas for ten years."
+   "jp": "トロイア戦争が終わって十年がたった。",
+   "en": "Ten years have passed since the Trojan War ended."
   },
   {
-   "jp": "一つ目の巨人や魔女キルケー、歌で船乗りを誘うセイレーンなど、多くの危険に出会う。",
-   "en": "He faces many dangers: a one-eyed giant, the witch Circe, and the Sirens who lure sailors with song."
+   "jp": "戦争に勝ったギリシャの英雄たちは、みな故郷へ帰っていった。",
+   "en": "The Greek heroes who won the war have all gone home."
   },
   {
-   "jp": "その間、故郷では妻ペネロペイアに多くの男たちが結婚を迫っていた。",
-   "en": "Meanwhile, at home, many men are pressing his wife Penelope to marry them."
+   "jp": "ただ一人、知恵者として知られるオデュッセウスだけが、まだ帰れずにいた。",
+   "en": "Only one, Odysseus, famous for his cleverness, still has not made it back."
   },
   {
-   "jp": "ようやく帰郷した彼は、乞食に変装して男たちを倒し、家族と再会する。",
-   "en": "Finally home, he disguises himself as a beggar, defeats the suitors, and reunites with his family."
+   "jp": "彼は海の女神カリュプソの島に閉じ込められていたのだ。",
+   "en": "He has been held captive on the island of the sea nymph Calypso."
+  },
+  {
+   "jp": "カリュプソは彼を愛し、「ここにいれば、永遠に生きられる」と言った。",
+   "en": "Calypso loves him and says, \"If you stay here, you can live forever.\""
+  },
+  {
+   "jp": "しかしオデュッセウスは毎日海岸に座り、故郷のイタケーを思って泣いていた。",
+   "en": "But every day Odysseus sits on the shore and weeps, thinking of his home, Ithaca."
+  },
+  {
+   "jp": "一方イタケーでは、妻のペネロペが夫の帰りを待ち続けていた。",
+   "en": "Meanwhile in Ithaca, his wife Penelope keeps waiting for her husband's return."
+  },
+  {
+   "jp": "家には百人以上の求婚者が押しかけ、「早く新しい夫を選べ」と迫っていた。",
+   "en": "Over a hundred suitors have crowded into the house, pressing her: \"Choose a new husband now.\""
+  },
+  {
+   "jp": "彼らは毎日宴会を開き、オデュッセウスの財産を食いつぶしていた。",
+   "en": "They feast every day, eating through Odysseus's wealth."
+  },
+  {
+   "jp": "女神アテナはオデュッセウスを哀れに思い、神々の王ゼウスに頼んだ。",
+   "en": "The goddess Athena pities Odysseus and appeals to Zeus, king of the gods."
+  },
+  {
+   "jp": "こうして、ついにオデュッセウスは島を出ることを許された。",
+   "en": "And so, at last, Odysseus is allowed to leave the island."
+  },
+  {
+   "h": "第二章　一つ目の巨人",
+   "en": "Chapter 2: The one-eyed giant"
+  },
+  {
+   "jp": "いかだで海に出たオデュッセウスは、嵐にあって、ある国の海岸に流れ着いた。",
+   "en": "Setting out on a raft, Odysseus is caught in a storm and washes up on the shore of a kingdom."
+  },
+  {
+   "jp": "その国の王に迎えられ、彼はこれまでの旅の話を語り始めた。",
+   "en": "Welcomed by the king, he begins to tell the story of his journey so far."
+  },
+  {
+   "jp": "トロイアを出てすぐ、彼と部下たちはある島で大きな洞窟を見つけた。",
+   "en": "Soon after leaving Troy, he and his men found a huge cave on an island."
+  },
+  {
+   "jp": "そこは一つ目の巨人キュクロプスの住みかだった。",
+   "en": "It was the home of the Cyclops, a one-eyed giant."
+  },
+  {
+   "jp": "巨人は入口を大きな岩でふさぎ、部下を一人ずつ食べてしまった。",
+   "en": "The giant blocked the entrance with a huge rock and ate his men one by one."
+  },
+  {
+   "jp": "オデュッセウスは巨人に強い酒を飲ませ、「私の名前は『だれでもない』だ」と言った。",
+   "en": "Odysseus gave the giant strong wine and said, \"My name is Nobody.\""
+  },
+  {
+   "jp": "巨人が眠ると、彼らは焼いた木の棒でその一つ目を突き刺した。",
+   "en": "When the giant fell asleep, they drove a burning stake into his one eye."
+  },
+  {
+   "jp": "巨人は「だれでもないにやられた！」と叫んだので、仲間の巨人は助けに来なかった。",
+   "en": "The giant screamed, \"Nobody has hurt me!\", so the other giants did not come to help."
+  },
+  {
+   "jp": "翌朝、彼らは羊の腹の下にしがみついて、洞窟から逃げ出した。",
+   "en": "The next morning they escaped from the cave clinging to the bellies of the sheep."
+  },
+  {
+   "jp": "しかしこの巨人は、海の神ポセイドンの息子だった。",
+   "en": "But this giant was the son of Poseidon, god of the sea."
+  },
+  {
+   "jp": "怒ったポセイドンは、オデュッセウスが二度と故郷に帰れないようにしようと決めた。",
+   "en": "Enraged, Poseidon resolved that Odysseus would never reach home."
+  },
+  {
+   "h": "第三章　魔女と歌声",
+   "en": "Chapter 3: The witch and the singing"
+  },
+  {
+   "jp": "次に着いた島には、魔女キルケーが住んでいた。",
+   "en": "On the next island lived the witch Circe."
+  },
+  {
+   "jp": "キルケーは部下たちに魔法の料理を食べさせ、豚に変えてしまった。",
+   "en": "Circe fed his men a magic meal and turned them into pigs."
+  },
+  {
+   "jp": "オデュッセウスは神からもらった薬草のおかげで、魔法にかからなかった。",
+   "en": "Thanks to an herb given to him by a god, Odysseus was not affected by the spell."
+  },
+  {
+   "jp": "キルケーは彼の強さに驚き、部下たちを人間の姿に戻した。",
+   "en": "Circe, amazed at his strength, turned his men back into humans."
+  },
+  {
+   "jp": "その後、船はセイレーンの海を通ることになった。",
+   "en": "Afterward, the ship had to pass through the sea of the Sirens."
+  },
+  {
+   "jp": "セイレーンの美しい歌を聞いた船乗りは、みな海に飛び込んで死んでしまうという。",
+   "en": "It is said that every sailor who hears the Sirens' beautiful song leaps into the sea and dies."
+  },
+  {
+   "jp": "オデュッセウスは部下たちの耳をろうでふさぎ、自分の体を帆柱にしばらせた。",
+   "en": "Odysseus plugged his men's ears with wax and had himself tied to the mast."
+  },
+  {
+   "jp": "「どんなに頼んでも、ほどくな」と命じて、彼は一人だけその歌を聞いた。",
+   "en": "Ordering \"Don't untie me, no matter how I beg,\" he alone listened to the song."
+  },
+  {
+   "jp": "しかし旅はさらに厳しくなり、部下たちは次々と命を落とした。",
+   "en": "But the journey grew harder still, and his men lost their lives one after another."
+  },
+  {
+   "jp": "最後に残ったのは、オデュッセウス一人だけだった。",
+   "en": "In the end, only Odysseus himself was left."
+  },
+  {
+   "h": "第四章　乞食の姿で",
+   "en": "Chapter 4: In the guise of a beggar"
+  },
+  {
+   "jp": "話を聞いた王は感動し、船を出して彼をイタケーまで送り届けた。",
+   "en": "Moved by his story, the king sent a ship to carry him home to Ithaca."
+  },
+  {
+   "jp": "二十年ぶりの故郷だった。",
+   "en": "It was his first time home in twenty years."
+  },
+  {
+   "jp": "アテナは彼を年老いた乞食の姿に変え、「まだ正体を明かしてはいけない」と言った。",
+   "en": "Athena disguised him as an old beggar and said, \"Don't reveal who you are yet.\""
+  },
+  {
+   "jp": "彼はまず、立派な青年に成長した息子テレマコスに会い、すべてを打ち明けた。",
+   "en": "First he met his son Telemachus, now a fine young man, and told him everything."
+  },
+  {
+   "jp": "二人は求婚者たちを倒す計画を立てた。",
+   "en": "Together they made a plan to defeat the suitors."
+  },
+  {
+   "jp": "屋敷に入ると、年老いた飼い犬だけが主人に気づき、しっぽを振って息を引き取った。",
+   "en": "When he entered the house, only his old dog recognized its master, wagged its tail, and died."
+  },
+  {
+   "jp": "求婚者たちは乞食をばかにし、物を投げつけた。",
+   "en": "The suitors mocked the beggar and threw things at him."
+  },
+  {
+   "jp": "オデュッセウスは怒りをおさえ、じっと機会を待った。",
+   "en": "Odysseus held back his anger and patiently waited for his chance."
+  },
+  {
+   "h": "第五章　弓の試練",
+   "en": "Chapter 5: The trial of the bow"
+  },
+  {
+   "jp": "ペネロペは求婚者たちに言った。「夫の弓を引き、十二の斧の穴に矢を通した人と結婚します」",
+   "en": "Penelope told the suitors: \"I will marry the man who can string my husband's bow and shoot an arrow through twelve axe heads.\""
+  },
+  {
+   "jp": "求婚者たちは次々に挑戦したが、だれも弓を引くことさえできなかった。",
+   "en": "The suitors tried one after another, but none could even string the bow."
+  },
+  {
+   "jp": "最後に乞食が弓を手に取ると、軽々と引いて、矢を十二の穴に通した。",
+   "en": "At last the beggar took the bow, strung it with ease, and shot the arrow through all twelve holes."
+  },
+  {
+   "jp": "そして正体を明かし、息子と共に求婚者たちを一人残らず倒した。",
+   "en": "Then he revealed himself and, with his son, struck down every last one of the suitors."
+  },
+  {
+   "jp": "それでもペネロペは、すぐには彼を信じなかった。",
+   "en": "Even so, Penelope did not believe him right away."
+  },
+  {
+   "jp": "彼女は「寝台を部屋の外に動かして」と召使いに命じ、夫を試した。",
+   "en": "She tested him by telling a servant, \"Move the bed out of the room.\""
+  },
+  {
+   "jp": "オデュッセウスは「それは無理だ。あの寝台は、私がオリーブの木の根元から作ったものだ」と答えた。",
+   "en": "Odysseus answered, \"That's impossible. I built that bed myself from the trunk of a rooted olive tree.\""
+  },
+  {
+   "jp": "それは二人しか知らない秘密だった。",
+   "en": "It was a secret only the two of them knew."
+  },
+  {
+   "jp": "ペネロペは泣きながら夫を抱きしめた。",
+   "en": "Weeping, Penelope embraced her husband."
+  },
+  {
+   "jp": "長い長い旅は、こうしてようやく終わったのである。",
+   "en": "And so, at long last, the long, long journey came to an end."
   }
  ]
 }

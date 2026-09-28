@@ -4,27 +4,159 @@
  "titleEn": "The Iliad",
  "author": "ホメロス（古代ギリシャ）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "ギリシャ軍とトロイアの戦争は、すでに十年目に入っていた。",
-   "en": "The war between the Greeks and Troy has entered its tenth year."
+   "h": "第一章　戦争のはじまり",
+   "en": "Chapter 1: How the war began"
   },
   {
-   "jp": "最強の戦士アキレウスは、総大将と争い、戦いに出ることを拒む。",
-   "en": "Achilles, the strongest warrior, quarrels with the commander and refuses to fight."
+   "jp": "スパルタの王妃ヘレネは、世界で一番美しい女性だと言われていた。",
+   "en": "Helen, queen of Sparta, was said to be the most beautiful woman in the world."
   },
   {
-   "jp": "その間にギリシャ軍は押され、親友パトロクロスがトロイアの英雄ヘクトールに殺される。",
-   "en": "The Greeks are pushed back, and his close friend Patroclus is killed by the Trojan hero Hector."
+   "jp": "ある日、トロイアの王子パリスが彼女を連れ去ってしまった。",
+   "en": "One day Paris, a prince of Troy, carried her away."
   },
   {
-   "jp": "怒りに燃えたアキレウスは戦場に戻り、ヘクトールを倒す。",
-   "en": "Burning with rage, Achilles returns to battle and kills Hector."
+   "jp": "怒ったギリシャの王たちは大軍を集め、海を渡ってトロイアを攻めた。",
+   "en": "Furious, the Greek kings gathered a huge army and crossed the sea to attack Troy."
   },
   {
-   "jp": "最後に、ヘクトールの父が遺体を返してほしいと頼み、アキレウスは心を動かされる。",
-   "en": "In the end, Hector's father begs for his son's body, and Achilles is moved."
+   "jp": "しかしトロイアの城壁は高く、戦いは九年たっても終わらなかった。",
+   "en": "But Troy's walls were high, and after nine years the fighting still had not ended."
+  },
+  {
+   "jp": "この物語は、戦争十年目のわずか数十日の出来事を描いている。",
+   "en": "This story covers just a few dozen days in the tenth year of the war."
+  },
+  {
+   "h": "第二章　アキレウスの怒り",
+   "en": "Chapter 2: The wrath of Achilles"
+  },
+  {
+   "jp": "ギリシャ軍で最も強い戦士は、アキレウスという若者だった。",
+   "en": "The strongest warrior in the Greek army was a young man named Achilles."
+  },
+  {
+   "jp": "ところが総大将アガメムノンが、アキレウスの大切な女性を取り上げてしまった。",
+   "en": "But the commander-in-chief, Agamemnon, took away a woman precious to Achilles."
+  },
+  {
+   "jp": "誇りを傷つけられたアキレウスは、「もう二度と戦わない」と言って、自分の陣地にこもった。",
+   "en": "His pride wounded, Achilles declared, \"I will never fight again,\" and shut himself away in his camp."
+  },
+  {
+   "jp": "アキレウスがいなくなると、ギリシャ軍はどんどん負け始めた。",
+   "en": "Without Achilles, the Greek army began to lose again and again."
+  },
+  {
+   "jp": "トロイアの王子ヘクトルは勇敢に戦い、ギリシャの船に火をつけるところまで攻め込んだ。",
+   "en": "Hector, a prince of Troy, fought bravely and pushed all the way to setting fire to the Greek ships."
+  },
+  {
+   "jp": "仲間たちは何度も頼みに来たが、アキレウスは首を縦に振らなかった。",
+   "en": "His comrades came to beg him again and again, but Achilles would not say yes."
+  },
+  {
+   "h": "第三章　親友の死",
+   "en": "Chapter 3: The death of his best friend"
+  },
+  {
+   "jp": "アキレウスには、子どものころからの親友パトロクロスがいた。",
+   "en": "Achilles had a best friend since childhood, Patroclus."
+  },
+  {
+   "jp": "パトロクロスは仲間が死んでいくのを見ていられなかった。",
+   "en": "Patroclus could not bear to watch his comrades dying."
+  },
+  {
+   "jp": "「せめて君のよろいを貸してくれ。君だと思えば、敵は逃げるだろう」",
+   "en": "\"At least lend me your armor. If they think I'm you, the enemy will run.\""
+  },
+  {
+   "jp": "アキレウスのよろいを着たパトロクロスは、トロイア軍を押し返した。",
+   "en": "Wearing Achilles's armor, Patroclus drove the Trojans back."
+  },
+  {
+   "jp": "しかし深追いしすぎて、ヘクトルに討たれてしまった。",
+   "en": "But he chased them too far and was killed by Hector."
+  },
+  {
+   "jp": "知らせを聞いたアキレウスは地面に倒れ、声を上げて泣いた。",
+   "en": "When he heard the news, Achilles fell to the ground and wept aloud."
+  },
+  {
+   "jp": "彼の怒りは、今度はヘクトルに向けられた。",
+   "en": "Now his anger turned toward Hector."
+  },
+  {
+   "h": "第四章　ヘクトルとの一騎打ち",
+   "en": "Chapter 4: The duel with Hector"
+  },
+  {
+   "jp": "アキレウスは新しいよろいを身につけ、再び戦場に戻った。",
+   "en": "Achilles put on new armor and returned to the battlefield."
+  },
+  {
+   "jp": "トロイア兵は彼の姿を見ただけで、城の中へ逃げ込んだ。",
+   "en": "The Trojan soldiers fled inside the city at the mere sight of him."
+  },
+  {
+   "jp": "ただ一人、ヘクトルだけが城門の外に残った。",
+   "en": "Only Hector stayed outside the city gate."
+  },
+  {
+   "jp": "城壁の上から、年老いた父プリアモス王と母が「中に入って」と泣いて頼んだ。",
+   "en": "From the top of the wall, his old father King Priam and his mother tearfully begged him to come inside."
+  },
+  {
+   "jp": "しかしヘクトルは国を守るために、逃げずに戦うことを選んだ。",
+   "en": "But to protect his country, Hector chose to fight rather than flee."
+  },
+  {
+   "jp": "二人の戦いは激しかったが、最後にアキレウスの槍がヘクトルを貫いた。",
+   "en": "The fight between them was fierce, but in the end Achilles's spear pierced Hector."
+  },
+  {
+   "jp": "アキレウスは怒りがおさまらず、ヘクトルの体を戦車で引きずり回した。",
+   "en": "Still consumed by rage, Achilles dragged Hector's body behind his chariot."
+  },
+  {
+   "h": "第五章　父の願い",
+   "en": "Chapter 5: A father's plea"
+  },
+  {
+   "jp": "ある夜、プリアモス王はたった一人でアキレウスの陣地を訪ねた。",
+   "en": "One night, King Priam went alone to Achilles's camp."
+  },
+  {
+   "jp": "王はアキレウスの足元にひざまずき、その手に口づけをした。",
+   "en": "The king knelt at Achilles's feet and kissed his hands."
+  },
+  {
+   "jp": "「あなたにも年老いたお父上がいるでしょう。どうか息子の体を返してください」",
+   "en": "\"You too have an old father. Please, give me back my son's body.\""
+  },
+  {
+   "jp": "アキレウスは自分の父を思い出し、老人と一緒に泣いた。",
+   "en": "Achilles remembered his own father and wept together with the old man."
+  },
+  {
+   "jp": "敵同士の二人は、同じ悲しみを分け合ったのだ。",
+   "en": "The two enemies shared the same grief."
+  },
+  {
+   "jp": "アキレウスはヘクトルの体を返し、葬式の間は戦わないと約束した。",
+   "en": "Achilles returned Hector's body and promised not to fight during the funeral."
+  },
+  {
+   "jp": "トロイアの人々はヘクトルのために盛大な葬式を行った。",
+   "en": "The people of Troy held a great funeral for Hector."
+  },
+  {
+   "jp": "物語はここで終わるが、アキレウスもやがて戦場で命を落とす運命にあった。",
+   "en": "The story ends here, but Achilles, too, was fated to die in battle before long."
   }
  ]
 }

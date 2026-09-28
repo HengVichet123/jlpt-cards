@@ -4,27 +4,135 @@
  "titleEn": "Rashōmon",
  "author": "芥川龍之介（日本）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "平安時代の京都、仕事を失った下人が羅生門の下で雨がやむのを待っていた。",
-   "en": "In Heian-era Kyoto, a servant who has lost his job waits for the rain to stop under the Rashōmon gate."
+   "h": "第一章　雨の羅生門",
+   "en": "Chapter 1: Rashōmon in the rain"
   },
   {
-   "jp": "生きるために盗人になるべきか、彼は迷っていた。",
-   "en": "He is torn over whether to become a thief to survive."
+   "jp": "ある日の夕方のことである。",
+   "en": "It happened one evening."
   },
   {
-   "jp": "門の上で、死人の髪を抜いてかつらを作ろうとする老婆を見つける。",
-   "en": "Above the gate, he finds an old woman pulling hair from corpses to make wigs."
+   "jp": "一人の下人が、羅生門の下で雨がやむのを待っていた。",
+   "en": "A lowly servant was waiting under the Rashōmon gate for the rain to stop."
   },
   {
-   "jp": "老婆は「生きるためには仕方がない」と言い訳をする。",
-   "en": "She excuses herself: \"It can't be helped if you want to live.\""
+   "jp": "そのころの京都は、地震や火事、飢饉が続いて、すっかり荒れ果てていた。",
+   "en": "In those days Kyoto had been laid waste by one earthquake, fire, and famine after another."
   },
   {
-   "jp": "その言葉を聞いた下人は、老婆の着物を奪い、闇の中へ消えていく。",
-   "en": "Hearing this, the servant steals her kimono and vanishes into the dark."
+   "jp": "羅生門も修理する人がなく、狐やどろぼうが住みつき、ついには引き取り手のない死体が捨てられる場所になっていた。",
+   "en": "No one repaired Rashōmon either; foxes and thieves made their homes there, and in the end it became a place where unclaimed corpses were dumped."
+  },
+  {
+   "jp": "下人は数日前に主人から暇を出され、行くところがなかった。",
+   "en": "A few days earlier the servant had been dismissed by his master and had nowhere to go."
+  },
+  {
+   "h": "第二章　迷う心",
+   "en": "Chapter 2: A wavering heart"
+  },
+  {
+   "jp": "「このままでは、飢え死にするしかない」",
+   "en": "\"At this rate, all I can do is starve to death.\""
+  },
+  {
+   "jp": "「生きるためには、盗人になるほかないのではないか」",
+   "en": "\"To survive, isn't there nothing left but to become a thief?\""
+  },
+  {
+   "jp": "しかし、下人にはその勇気が出なかった。",
+   "en": "But the servant could not find the courage to do it."
+  },
+  {
+   "jp": "彼は、頬にできた大きなにきびを気にしながら、雨の音を聞いていた。",
+   "en": "He listened to the rain, fiddling with a big pimple on his cheek."
+  },
+  {
+   "jp": "その夜を過ごす場所を探して、下人は門の上の楼へはしごを上った。",
+   "en": "Looking for somewhere to spend the night, the servant climbed the ladder to the tower above the gate."
+  },
+  {
+   "h": "第三章　楼の上の老婆",
+   "en": "Chapter 3: The old woman in the tower"
+  },
+  {
+   "jp": "楼の上には、いくつもの死体が転がっていた。",
+   "en": "Several corpses lay scattered in the tower."
+  },
+  {
+   "jp": "その中で、小さな火の光が動いていた。",
+   "en": "Among them, a small flame was moving."
+  },
+  {
+   "jp": "やせた猿のような老婆が、女の死体の髪の毛を一本ずつ抜いていたのだ。",
+   "en": "A skinny, monkey-like old woman was plucking the hair from a woman's corpse, one strand at a time."
+  },
+  {
+   "jp": "下人の心には、あらゆる悪に対する激しい怒りが燃え上がった。",
+   "en": "A fierce anger at every kind of evil flared up in the servant's heart."
+  },
+  {
+   "jp": "さっきまで盗人になろうか迷っていたことなど、すっかり忘れていた。",
+   "en": "He had completely forgotten that a moment ago he had been wondering whether to become a thief."
+  },
+  {
+   "jp": "彼は刀を抜いて老婆を押さえつけ、「何をしていた」と問いつめた。",
+   "en": "He drew his sword, pinned the old woman down, and demanded, \"What were you doing?\""
+  },
+  {
+   "h": "第四章　老婆の言い分",
+   "en": "Chapter 4: The old woman's excuse"
+  },
+  {
+   "jp": "老婆は震えながら答えた。「この髪を抜いて、かつらにしようと思ったのじゃ」",
+   "en": "Trembling, the old woman answered, \"I was pulling out this hair to make a wig.\""
+  },
+  {
+   "jp": "「この女は生きていたころ、蛇を干して魚だと言って売っていた」",
+   "en": "\"When this woman was alive, she dried snakes and sold them as fish.\""
+  },
+  {
+   "jp": "「それも、しなければ飢え死にするから、しかたなくしたことじゃ」",
+   "en": "\"She did that because she had to; otherwise she'd have starved.\""
+  },
+  {
+   "jp": "「だから、わしがこうするのも、生きるためだから、この女も許してくれるじゃろう」",
+   "en": "\"So she'll forgive me for doing this too, since it's to stay alive.\""
+  },
+  {
+   "h": "第五章　下人の行方",
+   "en": "Chapter 5: Where the servant went"
+  },
+  {
+   "jp": "それを聞いているうちに、下人の心にある勇気が生まれてきた。",
+   "en": "As he listened, a certain courage was born in the servant's heart."
+  },
+  {
+   "jp": "それは、さっき門の下で欠けていた勇気だった。",
+   "en": "It was the very courage he had lacked earlier under the gate."
+  },
+  {
+   "jp": "「では、おれが引きはぎをしようと恨むまいな。おれもそうしなければ、飢え死にする体なのだ」",
+   "en": "\"Then you won't blame me for robbing you. I'm someone who'll starve too if I don't.\""
+  },
+  {
+   "jp": "下人は老婆の着物をはぎ取り、老婆を死体の上にけり倒した。",
+   "en": "The servant stripped the old woman of her clothes and kicked her down onto the corpses."
+  },
+  {
+   "jp": "そして着物を抱えて、はしごを駆け下り、夜の闇の中へ消えていった。",
+   "en": "Then, clutching the clothes, he ran down the ladder and vanished into the dark of night."
+  },
+  {
+   "jp": "老婆がはしごの口から下をのぞくと、外にはただ真っ暗な夜があるばかりだった。",
+   "en": "When the old woman peered down from the top of the ladder, there was nothing outside but pitch-black night."
+  },
+  {
+   "jp": "下人の行方は、だれも知らない。",
+   "en": "No one knows where the servant went."
   }
  ]
 }

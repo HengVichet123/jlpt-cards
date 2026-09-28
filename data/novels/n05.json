@@ -4,27 +4,147 @@
  "titleEn": "Pride and Prejudice",
  "author": "ジェイン・オースティン（イギリス）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "田舎に住むベネット家の次女エリザベスは、頭がよく意志の強い女性だ。",
-   "en": "Elizabeth, the second daughter of the country Bennet family, is clever and strong-willed."
+   "h": "第一章　舞踏会の出会い",
+   "en": "Chapter 1: Meeting at the ball"
   },
   {
-   "jp": "お金持ちのダーシーと出会うが、彼の高慢な態度に反感を持つ。",
-   "en": "She meets the wealthy Mr. Darcy but dislikes his proud manner."
+   "jp": "イギリスの田舎に、娘が五人いるベネット家があった。",
+   "en": "In the English countryside lived the Bennet family, who had five daughters."
   },
   {
-   "jp": "さらに悪いうわさを信じ、彼への偏見を強めていく。",
-   "en": "Believing bad rumors, her prejudice against him grows."
+   "jp": "母親の一番の願いは、娘たちを金持ちと結婚させることだった。",
+   "en": "The mother's greatest wish was to marry her daughters to rich men."
   },
   {
-   "jp": "しかし、彼の本当の優しさを知り、自分の誤りに気づく。",
-   "en": "But she learns of his real kindness and realizes her mistake."
+   "jp": "ある日、近くの屋敷に、お金持ちの青年ビングリーが引っ越してきた。",
+   "en": "One day, a wealthy young man named Bingley moved into a nearby estate."
   },
   {
-   "jp": "二人は互いの高慢と偏見を乗り越え、結ばれる。",
-   "en": "The two overcome their pride and prejudice and end up together."
+   "jp": "町の舞踏会で、ビングリーは美しい長女ジェインに一目で心を引かれた。",
+   "en": "At the town ball, Bingley was drawn to the beautiful eldest daughter, Jane, at first sight."
+  },
+  {
+   "jp": "ビングリーの友人ダーシーは、さらに大金持ちだったが、とても無口で高慢に見えた。",
+   "en": "Bingley's friend Darcy was even richer, but he seemed very quiet and proud."
+  },
+  {
+   "jp": "ダーシーは次女エリザベスを見て、「踊りたいほどの美人ではない」と言った。",
+   "en": "Looking at the second daughter, Elizabeth, Darcy said, \"She's not pretty enough to tempt me to dance.\""
+  },
+  {
+   "jp": "それを聞いたエリザベスは、ダーシーを嫌な男だと決めつけた。",
+   "en": "Hearing this, Elizabeth decided Darcy was a disagreeable man."
+  },
+  {
+   "h": "第二章　うわさと誤解",
+   "en": "Chapter 2: Rumors and misunderstanding"
+  },
+  {
+   "jp": "やがて町に、ウィッカムという感じのいい軍人がやって来た。",
+   "en": "Before long, a charming officer named Wickham came to town."
+  },
+  {
+   "jp": "ウィッカムはエリザベスに「ダーシーにひどい目にあわされた」と話した。",
+   "en": "Wickham told Elizabeth, \"Darcy treated me terribly.\""
+  },
+  {
+   "jp": "エリザベスはその話を信じ、ますますダーシーを嫌いになった。",
+   "en": "Elizabeth believed his story and came to dislike Darcy even more."
+  },
+  {
+   "jp": "さらに、ビングリーが急にロンドンへ去り、ジェインは深く悲しんだ。",
+   "en": "Then Bingley suddenly left for London, and Jane was heartbroken."
+  },
+  {
+   "jp": "エリザベスは、ダーシーが二人の仲をじゃましたと知って、怒りに震えた。",
+   "en": "When Elizabeth learned that Darcy had come between the two, she shook with anger."
+  },
+  {
+   "h": "第三章　思いがけないプロポーズ",
+   "en": "Chapter 3: An unexpected proposal"
+  },
+  {
+   "jp": "ところがある日、ダーシーが突然エリザベスの前に現れた。",
+   "en": "But one day Darcy suddenly appeared before Elizabeth."
+  },
+  {
+   "jp": "「どうしても気持ちをおさえられない。あなたを愛しています」",
+   "en": "\"I cannot suppress my feelings. I love you.\""
+  },
+  {
+   "jp": "しかし彼は、エリザベスの家族の身分が低いことも正直に口にした。",
+   "en": "But he also frankly mentioned that her family was of low standing."
+  },
+  {
+   "jp": "エリザベスは怒ってはっきりと断った。「あなたはこの世で最後に結婚したい人です」",
+   "en": "Elizabeth angrily refused outright: \"You are the last man in the world I would ever marry.\""
+  },
+  {
+   "jp": "翌日、ダーシーは長い手紙を渡した。",
+   "en": "The next day, Darcy handed her a long letter."
+  },
+  {
+   "jp": "手紙には、ウィッカムがうそつきで、お金のために悪いことをしてきた本当の話が書いてあった。",
+   "en": "The letter told the true story: that Wickham was a liar who had done wicked things for money."
+  },
+  {
+   "jp": "エリザベスは何度も読み返し、自分の偏見に気づいて恥ずかしくなった。",
+   "en": "Elizabeth read it over and over, realized her own prejudice, and felt ashamed."
+  },
+  {
+   "h": "第四章　妹の駆け落ち",
+   "en": "Chapter 4: The sister's elopement"
+  },
+  {
+   "jp": "数か月後、末の妹リディアがウィッカムと駆け落ちしたという知らせが届いた。",
+   "en": "A few months later, news came that the youngest sister, Lydia, had run off with Wickham."
+  },
+  {
+   "jp": "結婚せずに駆け落ちすれば、家族全員の名誉が傷つく時代だった。",
+   "en": "It was an age when running off without marrying would disgrace the whole family."
+  },
+  {
+   "jp": "ベネット家は絶望したが、やがて二人は正式に結婚することになった。",
+   "en": "The Bennets despaired, but eventually the two were properly married."
+  },
+  {
+   "jp": "実は、ダーシーが陰でウィッカムを探し出し、借金を払って結婚させたのだった。",
+   "en": "In fact, Darcy had secretly tracked Wickham down, paid his debts, and made him marry her."
+  },
+  {
+   "jp": "ダーシーはそれを、だれにも言わないでほしいと頼んでいた。",
+   "en": "Darcy had asked that no one be told."
+  },
+  {
+   "h": "第五章　高慢と偏見を越えて",
+   "en": "Chapter 5: Beyond pride and prejudice"
+  },
+  {
+   "jp": "ビングリーは町に戻り、ジェインに結婚を申し込んだ。",
+   "en": "Bingley returned to town and proposed to Jane."
+  },
+  {
+   "jp": "エリザベスは、ダーシーがしてくれたことを知り、心から感謝した。",
+   "en": "Elizabeth learned what Darcy had done and thanked him from her heart."
+  },
+  {
+   "jp": "ダーシーはもう一度、静かに聞いた。「あなたの気持ちは、あの時のままですか」",
+   "en": "Darcy asked once more, quietly: \"Are your feelings still what they were then?\""
+  },
+  {
+   "jp": "エリザベスは答えた。「いいえ、すっかり変わりました」",
+   "en": "Elizabeth answered, \"No, they have completely changed.\""
+  },
+  {
+   "jp": "ダーシーは高慢さを、エリザベスは偏見を乗り越えたのだ。",
+   "en": "Darcy had overcome his pride, and Elizabeth her prejudice."
+  },
+  {
+   "jp": "二組の姉妹は、それぞれ幸せな結婚をした。",
+   "en": "The two sisters each made happy marriages."
   }
  ]
 }

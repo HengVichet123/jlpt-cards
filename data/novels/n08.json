@@ -4,27 +4,143 @@
  "titleEn": "Botchan",
  "author": "夏目漱石（日本）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "正直で気の短い江戸っ子の「おれ」は、四国の中学校に数学教師として赴任する。",
-   "en": "\"I\", an honest, short-tempered Tokyo man, takes a job teaching math at a middle school in Shikoku."
+   "h": "第一章　無鉄砲な子ども",
+   "en": "Chapter 1: A reckless child"
   },
   {
-   "jp": "生徒たちのいたずらに悩まされ、同僚の教師たちとも衝突する。",
-   "en": "He is troubled by students' pranks and clashes with his fellow teachers."
+   "jp": "親譲りの無鉄砲で、おれは子どものころから損ばかりしている。",
+   "en": "Reckless by inheritance, I've done nothing but lose out ever since I was a kid."
   },
   {
-   "jp": "ずるい教頭「赤シャツ」たちのやり方に、おれは我慢できない。",
-   "en": "He cannot stand the sly vice-principal \"Red Shirt\" and his crowd."
+   "jp": "学校の二階から飛び降りて、一週間ほど腰を抜かしたこともある。",
+   "en": "I once jumped from the second floor of my school and couldn't stand up for about a week."
   },
   {
-   "jp": "正義感の強い同僚「山嵐」と協力し、赤シャツをこらしめる。",
-   "en": "Teaming up with his righteous colleague \"Porcupine\", he punishes Red Shirt."
+   "jp": "父にも母にもかわいがられなかったが、家の女中の清だけは、おれを大事にしてくれた。",
+   "en": "Neither my father nor my mother cared for me, but Kiyo, our maid, treated me like a treasure."
   },
   {
-   "jp": "おれは学校を辞めて東京に帰り、自分を大切にしてくれた清のもとへ戻る。",
-   "en": "He quits, returns to Tokyo, and goes back to Kiyo, the old maid who always cared for him."
+   "jp": "清はいつも「あなたはまっすぐで、よいご気性だ」とほめてくれた。",
+   "en": "Kiyo always praised me: \"You're honest and have a fine character.\""
+  },
+  {
+   "jp": "両親が亡くなったあと、おれは物理学校を出て、四国の中学校の数学の先生になった。",
+   "en": "After my parents died, I graduated from a physics school and became a math teacher at a middle school in Shikoku."
+  },
+  {
+   "jp": "駅で別れるとき、清は目にいっぱい涙をためていた。",
+   "en": "When we parted at the station, Kiyo's eyes were full of tears."
+  },
+  {
+   "h": "第二章　あだ名",
+   "en": "Chapter 2: Nicknames"
+  },
+  {
+   "jp": "着いた町は小さな田舎町で、学校の先生たちは変わった人ばかりだった。",
+   "en": "The town was a small country town, and the teachers at the school were all odd characters."
+  },
+  {
+   "jp": "おれは心の中で、みんなにあだ名をつけた。",
+   "en": "In my head, I gave them all nicknames."
+  },
+  {
+   "jp": "校長は「狸」、いつも赤いシャツを着ている教頭は「赤シャツ」。",
+   "en": "The principal was \"Tanuki,\" and the vice-principal who always wore a red shirt was \"Red Shirt.\""
+  },
+  {
+   "jp": "赤シャツにいつもくっついている美術の先生は「野だいこ」。",
+   "en": "The art teacher who always stuck to Red Shirt was \"Nodaiko,\" the flatterer."
+  },
+  {
+   "jp": "正義感が強く、けんかっ早い数学の先生は「山嵐」。",
+   "en": "The fellow math teacher, strong on justice and quick to fight, was \"Yama-arashi,\" the Porcupine."
+  },
+  {
+   "jp": "顔色の悪い、おとなしい英語の先生は「うらなり」と呼んだ。",
+   "en": "The pale, quiet English teacher I called \"Uranari,\" the last gourd on the vine."
+  },
+  {
+   "h": "第三章　いたずらな生徒たち",
+   "en": "Chapter 3: Mischievous students"
+  },
+  {
+   "jp": "生徒たちは、新しい先生をからかうのが大好きだった。",
+   "en": "The students loved teasing new teachers."
+  },
+  {
+   "jp": "おれが天ぷらそばを四杯食べると、次の日の黒板に「天ぷら先生」と書かれていた。",
+   "en": "When I ate four bowls of tempura soba, the next day \"Mr. Tempura\" was written on the blackboard."
+  },
+  {
+   "jp": "宿直の夜には、布団の中にバッタを何十匹も入れられた。",
+   "en": "On my night-duty shift, they put dozens of grasshoppers in my bedding."
+  },
+  {
+   "jp": "おれは怒って生徒を問いつめたが、だれも「やっていない」と言い張った。",
+   "en": "I angrily questioned the students, but they all insisted they hadn't done it."
+  },
+  {
+   "jp": "「悪いことをしたなら、正直に言え。それが卑怯でないということだ」",
+   "en": "\"If you did something wrong, say so honestly. That's what it means not to be a coward.\""
+  },
+  {
+   "h": "第四章　赤シャツのたくらみ",
+   "en": "Chapter 4: Red Shirt's scheme"
+  },
+  {
+   "jp": "やがて、うらなり先生が遠い町へ転勤させられることになった。",
+   "en": "Before long, Uranari was to be transferred to a distant town."
+  },
+  {
+   "jp": "実は、赤シャツがうらなりの婚約者「マドンナ」を自分のものにしようとしていたのだ。",
+   "en": "In truth, Red Shirt wanted to take Uranari's fiancée, \"Madonna,\" for himself."
+  },
+  {
+   "jp": "赤シャツはさらに、おれと山嵐の仲を悪くしようと、うそのうわさを流した。",
+   "en": "Red Shirt also spread false rumors to turn me and the Porcupine against each other."
+  },
+  {
+   "jp": "しかし真相を知ったおれと山嵐は、仲直りして手を組んだ。",
+   "en": "But when we learned the truth, the Porcupine and I made up and joined forces."
+  },
+  {
+   "jp": "山嵐は、生徒のけんかに巻き込まれた責任を取らされ、学校をやめることになった。",
+   "en": "The Porcupine was made to take the blame for a student brawl he'd been dragged into, and had to leave the school."
+  },
+  {
+   "h": "第五章　天誅",
+   "en": "Chapter 5: Justice"
+  },
+  {
+   "jp": "おれと山嵐は、赤シャツと野だいこが夜にこっそり遊びに行くのを待ちぶせした。",
+   "en": "The Porcupine and I lay in wait for Red Shirt and Nodaiko as they sneaked out at night to have fun."
+  },
+  {
+   "jp": "そして二人を、生卵をぶつけたり、げんこつで殴ったりして、こらしめた。",
+   "en": "Then we taught them a lesson, pelting them with raw eggs and hitting them with our fists."
+  },
+  {
+   "jp": "おれはその日のうちに辞表を書いて、船で東京へ帰った。",
+   "en": "I wrote my resignation that same day and went back to Tokyo by boat."
+  },
+  {
+   "jp": "東京に着くと、真っ先に清に会いに行った。",
+   "en": "When I reached Tokyo, the first thing I did was go to see Kiyo."
+  },
+  {
+   "jp": "清は涙を流して喜び、「よく帰ってきてくださいました」と言った。",
+   "en": "Kiyo wept for joy and said, \"I'm so glad you've come home.\""
+  },
+  {
+   "jp": "おれは街鉄の技手になり、清と一緒に暮らした。",
+   "en": "I became an engineer on the streetcar line and lived with Kiyo."
+  },
+  {
+   "jp": "清は翌年の二月に肺炎で亡くなったが、最後まで「坊っちゃんのお寺に埋めてください」と言っていた。",
+   "en": "Kiyo died of pneumonia the next February, and to the end she kept saying, \"Please bury me in Botchan's family temple.\""
   }
  ]
 }

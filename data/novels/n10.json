@@ -4,27 +4,151 @@
  "titleEn": "The Little Prince",
  "author": "サン＝テグジュペリ（フランス）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "飛行機の故障で砂漠に不時着したパイロットは、小さな王子に出会う。",
-   "en": "A pilot who crash-lands in the desert meets a little prince."
+   "h": "第一章　砂漠の出会い",
+   "en": "Chapter 1: A meeting in the desert"
   },
   {
-   "jp": "王子は小さな星から来て、一輪のバラを残して旅に出たのだという。",
-   "en": "The prince came from a tiny planet and left behind a single rose to travel."
+   "jp": "パイロットの「ぼく」は、サハラ砂漠に飛行機で不時着した。",
+   "en": "\"I,\" a pilot, crash-landed my plane in the Sahara Desert."
   },
   {
-   "jp": "旅の途中で、王様や実業家など、おかしな大人たちに出会った。",
-   "en": "On his journey he met strange grown-ups, like a king and a businessman."
+   "jp": "水は一週間分しかなく、エンジンを一人で直さなければならなかった。",
+   "en": "I had only a week's worth of water and had to fix the engine alone."
   },
   {
-   "jp": "キツネは王子に「大切なものは目に見えない」と教える。",
-   "en": "A fox teaches him that \"what is essential is invisible to the eye.\""
+   "jp": "次の朝、小さな男の子の声で目が覚めた。「ねえ、ヒツジの絵をかいて」",
+   "en": "The next morning, I was woken by a little boy's voice: \"Please, draw me a sheep.\""
   },
   {
-   "jp": "王子はバラのもとへ帰るため、静かに地球を去っていく。",
-   "en": "To return to his rose, the prince quietly leaves the Earth."
+   "jp": "その子は遠い小さな星から来た王子さまだった。",
+   "en": "The child was a little prince who had come from a tiny faraway planet."
+  },
+  {
+   "jp": "ぼくが箱の絵をかいて「ヒツジはこの中にいるよ」と言うと、王子さまは大喜びした。",
+   "en": "When I drew a box and said, \"The sheep is inside,\" the little prince was delighted."
+  },
+  {
+   "h": "第二章　一輪のバラ",
+   "en": "Chapter 2: A single rose"
+  },
+  {
+   "jp": "王子さまの星は、家ほどの大きさしかなかった。",
+   "en": "The little prince's planet was no bigger than a house."
+  },
+  {
+   "jp": "そこに、ある日、美しいバラが一輪咲いた。",
+   "en": "One day, a beautiful rose bloomed there."
+  },
+  {
+   "jp": "バラはわがままで、王子さまを困らせてばかりいた。",
+   "en": "The rose was demanding and was always troubling the little prince."
+  },
+  {
+   "jp": "王子さまは悲しくなり、星を出て旅に出ることにした。",
+   "en": "Saddened, the little prince decided to leave his planet and go traveling."
+  },
+  {
+   "jp": "別れのとき、バラは初めて言った。「あなたが好きだったのよ」",
+   "en": "When they parted, the rose said for the first time, \"I loved you.\""
+  },
+  {
+   "h": "第三章　おかしな大人たち",
+   "en": "Chapter 3: Strange grown-ups"
+  },
+  {
+   "jp": "王子さまは、いくつもの小さな星を訪ねた。",
+   "en": "The little prince visited several small planets."
+  },
+  {
+   "jp": "ある星には、だれもいないのに命令ばかりしている王さまがいた。",
+   "en": "On one lived a king who did nothing but give orders, though no one was there."
+  },
+  {
+   "jp": "ほめられることしか聞かない、うぬぼれ屋もいた。",
+   "en": "There was a conceited man who only heard praise."
+  },
+  {
+   "jp": "飲むのが恥ずかしいことを忘れるために飲む、酒飲みもいた。",
+   "en": "There was a drinker who drank to forget that he was ashamed of drinking."
+  },
+  {
+   "jp": "星を数えて「全部おれのものだ」と言う、忙しいビジネスマンもいた。",
+   "en": "There was a busy businessman who counted the stars and said, \"They're all mine.\""
+  },
+  {
+   "jp": "「大人って、本当に変だなあ」と王子さまは思った。",
+   "en": "\"Grown-ups really are strange,\" the little prince thought."
+  },
+  {
+   "h": "第四章　キツネの秘密",
+   "en": "Chapter 4: The fox's secret"
+  },
+  {
+   "jp": "七番目に着いたのが地球だった。",
+   "en": "The seventh planet he reached was Earth."
+  },
+  {
+   "jp": "ある庭で、王子さまは五千本ものバラを見て、泣いてしまった。",
+   "en": "In a garden, the little prince saw five thousand roses and burst into tears."
+  },
+  {
+   "jp": "「ぼくのバラは、世界に一つだけの花だと思っていたのに」",
+   "en": "\"I thought my rose was the only flower of her kind in the world.\""
+  },
+  {
+   "jp": "そこへ一匹のキツネが現れ、「ぼくと仲よくなって」と言った。",
+   "en": "Then a fox appeared and said, \"Tame me.\""
+  },
+  {
+   "jp": "毎日少しずつ近づいて、二人は友だちになった。",
+   "en": "Coming a little closer each day, the two became friends."
+  },
+  {
+   "jp": "別れのとき、キツネは秘密を教えてくれた。",
+   "en": "When they parted, the fox told him a secret."
+  },
+  {
+   "jp": "「大切なものは、目に見えないんだよ」",
+   "en": "\"What is essential is invisible to the eye.\""
+  },
+  {
+   "jp": "「きみがバラのために使った時間が、きみのバラを大切なものにしたんだ」",
+   "en": "\"It's the time you spent on your rose that makes your rose so important.\""
+  },
+  {
+   "h": "第五章　星に帰る",
+   "en": "Chapter 5: Going back to the stars"
+  },
+  {
+   "jp": "ぼくと王子さまは、水を探して砂漠を歩き、夜明けに井戸を見つけた。",
+   "en": "The little prince and I walked through the desert looking for water and found a well at dawn."
+  },
+  {
+   "jp": "「砂漠が美しいのは、どこかに井戸をかくしているからだね」",
+   "en": "\"What makes the desert beautiful is that somewhere it hides a well.\""
+  },
+  {
+   "jp": "地球に来てちょうど一年目の夜、王子さまは言った。「ぼくは自分の星に帰るよ」",
+   "en": "On the night exactly one year after arriving on Earth, the little prince said, \"I'm going back to my planet.\""
+  },
+  {
+   "jp": "「体は重すぎて持っていけないから、ヘビにかんでもらうんだ」",
+   "en": "\"My body is too heavy to take along, so I'll have the snake bite me.\""
+  },
+  {
+   "jp": "次の瞬間、王子さまは声もなく、静かに砂の上に倒れた。",
+   "en": "The next moment, the little prince fell silently onto the sand without a sound."
+  },
+  {
+   "jp": "翌朝、その体はどこにもなかった。",
+   "en": "The next morning, his body was nowhere to be found."
+  },
+  {
+   "jp": "今でもぼくは、夜空を見上げると、星がみんな笑っているように聞こえる。",
+   "en": "Even now, when I look up at the night sky, it sounds to me as though all the stars are laughing."
   }
  ]
 }

@@ -4,27 +4,127 @@
  "titleEn": "The Tale of Genji",
  "author": "紫式部（日本・平安時代）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "天皇の息子として生まれた光源氏は、美しく才能にあふれた人物だった。",
-   "en": "Born the son of an emperor, the Shining Genji is beautiful and gifted."
+   "h": "第一章　光る君",
+   "en": "Chapter 1: The Shining Prince"
   },
   {
-   "jp": "幼いころに母を亡くし、母に似た女性を一生求め続ける。",
-   "en": "Having lost his mother as a child, he spends his life searching for women who resemble her."
+   "jp": "平安時代、ある天皇が、身分の高くない桐壺更衣という女性を深く愛していた。",
+   "en": "In the Heian period, an emperor deeply loved a woman of not very high rank, Lady Kiritsubo."
   },
   {
-   "jp": "多くの女性との恋愛を通して、宮廷の華やかさと悲しみが描かれる。",
-   "en": "Through his many love affairs, the splendor and sorrow of court life are depicted."
+   "jp": "ほかの女性たちのねたみを受け、更衣は病気になり、男の子を産んでまもなく亡くなった。",
+   "en": "Resented by the other women, she fell ill and died soon after giving birth to a son."
   },
   {
-   "jp": "やがて源氏も年を取り、愛する人を失う苦しみを味わう。",
-   "en": "In time Genji grows old and suffers the loss of those he loves."
+   "jp": "その子はとても美しく、才能にあふれていたので、「光る君」と呼ばれた。",
+   "en": "The boy was so beautiful and gifted that he was called \"the Shining Prince.\""
   },
   {
-   "jp": "世界最古の長編小説の一つとして、今も読み継がれている。",
-   "en": "As one of the world's oldest novels, it is still read today."
+   "jp": "しかし強い後ろだてがなかったため、天皇は彼を皇族からはずし、「源」という姓を与えた。",
+   "en": "But because he had no powerful backers, the emperor removed him from the imperial family and gave him the surname Minamoto (Genji)."
+  },
+  {
+   "jp": "こうして彼は、光源氏と呼ばれるようになった。",
+   "en": "And so he came to be called Hikaru Genji."
+  },
+  {
+   "h": "第二章　かなわぬ恋",
+   "en": "Chapter 2: A love that cannot be"
+  },
+  {
+   "jp": "天皇は、亡き更衣にそっくりな藤壺という女性を新しい妃に迎えた。",
+   "en": "The emperor took as a new consort a woman named Fujitsubo, who looked just like the late Lady Kiritsubo."
+  },
+  {
+   "jp": "母の顔を知らない源氏は、藤壺を慕い、やがて恋をしてしまう。",
+   "en": "Genji, who never knew his mother's face, adored Fujitsubo and eventually fell in love with her."
+  },
+  {
+   "jp": "それは父の妃への、決して許されない恋だった。",
+   "en": "It was a forbidden love for his own father's consort."
+  },
+  {
+   "jp": "源氏は多くの女性と恋をしたが、心の中にはいつも藤壺がいた。",
+   "en": "Genji had love affairs with many women, but Fujitsubo was always in his heart."
+  },
+  {
+   "jp": "二人の間には、ひそかに男の子が生まれ、その子はのちに天皇になる。",
+   "en": "A son was secretly born to the two of them, and that child would later become emperor."
+  },
+  {
+   "h": "第三章　紫の上",
+   "en": "Chapter 3: Murasaki"
+  },
+  {
+   "jp": "ある春、源氏は山寺で、藤壺によく似た十歳ほどの少女を見つけた。",
+   "en": "One spring, at a mountain temple, Genji found a girl of about ten who closely resembled Fujitsubo."
+  },
+  {
+   "jp": "少女は藤壺の姪だった。",
+   "en": "The girl was Fujitsubo's niece."
+  },
+  {
+   "jp": "源氏は彼女を自分の屋敷に引き取り、理想の女性に育てた。",
+   "en": "Genji took her into his mansion and raised her to be his ideal woman."
+  },
+  {
+   "jp": "この少女がのちの紫の上で、源氏の一生で最も大切な人となった。",
+   "en": "This girl was the later Lady Murasaki, who became the most important person in Genji's life."
+  },
+  {
+   "h": "第四章　須磨への旅",
+   "en": "Chapter 4: Exile to Suma"
+  },
+  {
+   "jp": "源氏は敵の一族の娘と恋をしたことが知られ、都にいられなくなった。",
+   "en": "When it became known that Genji had an affair with a daughter of a rival clan, he could no longer stay in the capital."
+  },
+  {
+   "jp": "彼は自分から須磨の海辺へ下り、寂しい日々を送った。",
+   "en": "He withdrew of his own accord to the seashore at Suma and spent lonely days there."
+  },
+  {
+   "jp": "そこで明石の君という女性と出会い、娘が生まれた。",
+   "en": "There he met a woman, the Lady of Akashi, and a daughter was born."
+  },
+  {
+   "jp": "やがて都に呼び戻されると、源氏は以前よりも高い地位にのぼっていった。",
+   "en": "Eventually he was called back to the capital and rose to an even higher position than before."
+  },
+  {
+   "h": "第五章　栄華と孤独",
+   "en": "Chapter 5: Glory and loneliness"
+  },
+  {
+   "jp": "源氏は広大な屋敷、六条院を建て、愛する女性たちをそこに住まわせた。",
+   "en": "Genji built a vast mansion, the Rokujō-in, and had the women he loved live there."
+  },
+  {
+   "jp": "娘は天皇の后になり、源氏の栄華は頂点に達した。",
+   "en": "His daughter became the emperor's consort, and Genji's glory reached its peak."
+  },
+  {
+   "jp": "しかし年をとると、若い妻が別の男と通じ、子どもが生まれた。",
+   "en": "But as he grew old, his young wife had an affair with another man, and a child was born."
+  },
+  {
+   "jp": "源氏は、かつて自分が父にしたことが、自分に返ってきたと感じた。",
+   "en": "Genji felt that what he had once done to his father had come back to him."
+  },
+  {
+   "jp": "やがて最愛の紫の上が病気で亡くなった。",
+   "en": "Before long, his beloved Murasaki died of illness."
+  },
+  {
+   "jp": "源氏は深い悲しみの中で出家を決意し、物語の舞台から静かに姿を消す。",
+   "en": "In deep grief, Genji resolved to become a monk and quietly disappears from the story."
+  },
+  {
+   "jp": "物語は、その後の子どもや孫の世代へと続いていく。",
+   "en": "The tale goes on to the generations of his children and grandchildren."
   }
  ]
 }

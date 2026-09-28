@@ -4,27 +4,151 @@
  "titleEn": "Hamlet",
  "author": "シェイクスピア（イギリス）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "デンマークの王子ハムレットの前に、死んだ父の亡霊が現れる。",
-   "en": "The ghost of his dead father appears before Hamlet, Prince of Denmark."
+   "h": "第一章　父の亡霊",
+   "en": "Chapter 1: The father's ghost"
   },
   {
-   "jp": "亡霊は、叔父に毒殺されたのだと告げ、復讐を求める。",
-   "en": "The ghost says he was poisoned by Hamlet's uncle and demands revenge."
+   "jp": "デンマークの王が突然亡くなった。",
+   "en": "The king of Denmark died suddenly."
   },
   {
-   "jp": "ハムレットは狂ったふりをしながら、真実を確かめようと悩み続ける。",
-   "en": "Pretending to be mad, Hamlet agonizes as he tries to confirm the truth."
+   "jp": "王子ハムレットが大学から戻ると、母の王妃はもう王の弟クローディアスと結婚していた。",
+   "en": "When Prince Hamlet returned from university, his mother the queen had already married the king's brother, Claudius."
   },
   {
-   "jp": "「生きるべきか、死ぬべきか」という有名なせりふは、この迷いから生まれた。",
-   "en": "The famous line \"To be, or not to be\" comes from this hesitation."
+   "jp": "クローディアスは新しい王になり、城では毎晩宴会が開かれていた。",
+   "en": "Claudius became the new king, and there were banquets in the castle every night."
   },
   {
-   "jp": "最後は決闘の中で、主要な人物がほとんど死んでしまう悲劇である。",
-   "en": "It is a tragedy: in a final duel, almost all the main characters die."
+   "jp": "ハムレットは深く悲しみ、黒い服を着たまま一人で過ごしていた。",
+   "en": "Hamlet grieved deeply and spent his time alone, still dressed in black."
+  },
+  {
+   "jp": "ある夜、城の見張りの兵士が「先王の亡霊を見た」と知らせてきた。",
+   "en": "One night, the castle guards reported, \"We saw the ghost of the late king.\""
+  },
+  {
+   "jp": "ハムレットが行くと、確かに父の亡霊が現れた。",
+   "en": "When Hamlet went, his father's ghost did indeed appear."
+  },
+  {
+   "jp": "亡霊は言った。「私は病気で死んだのではない。弟に毒を耳に注がれて殺されたのだ」",
+   "en": "The ghost said, \"I did not die of illness. My brother poured poison in my ear and murdered me.\""
+  },
+  {
+   "jp": "「かたきを討ってくれ」と言い残して、亡霊は消えた。",
+   "en": "\"Avenge me,\" it said, and vanished."
+  },
+  {
+   "h": "第二章　狂ったふり",
+   "en": "Chapter 2: Pretending to be mad"
+  },
+  {
+   "jp": "ハムレットは本当のことを確かめるまで、狂ったふりをすることにした。",
+   "en": "Hamlet decided to pretend to be mad until he could confirm the truth."
+  },
+  {
+   "jp": "恋人のオフィーリアにも冷たい言葉をぶつけ、彼女を深く傷つけた。",
+   "en": "He threw cold words even at Ophelia, whom he loved, and hurt her deeply."
+  },
+  {
+   "jp": "彼は一人で考え続けた。「生きるべきか、死ぬべきか、それが問題だ」",
+   "en": "He kept brooding alone: \"To be, or not to be, that is the question.\""
+  },
+  {
+   "jp": "亡霊の言葉は本当なのか、悪魔のうそなのか、彼には分からなかった。",
+   "en": "He could not tell whether the ghost's words were true or a devil's lie."
+  },
+  {
+   "h": "第三章　芝居の罠",
+   "en": "Chapter 3: The play as a trap"
+  },
+  {
+   "jp": "そのころ、旅の役者たちが城にやって来た。",
+   "en": "Around that time, a troupe of traveling actors came to the castle."
+  },
+  {
+   "jp": "ハムレットは、父の殺され方とそっくりな芝居をさせることにした。",
+   "en": "Hamlet had them perform a play that closely matched the way his father was killed."
+  },
+  {
+   "jp": "芝居で毒を耳に注ぐ場面になると、クローディアスは真っ青になって席を立った。",
+   "en": "When the play reached the scene of poison poured into an ear, Claudius went pale and left his seat."
+  },
+  {
+   "jp": "「やはり、あいつが犯人だ」とハムレットは確信した。",
+   "en": "\"So he really is the murderer,\" Hamlet was convinced."
+  },
+  {
+   "jp": "その後、母と話している時、カーテンの陰でだれかが盗み聞きしていた。",
+   "en": "Later, while he was talking with his mother, someone was eavesdropping behind a curtain."
+  },
+  {
+   "jp": "王だと思って剣で刺すと、それはオフィーリアの父ポローニアスだった。",
+   "en": "Thinking it was the king, he stabbed through it with his sword, but it was Ophelia's father, Polonius."
+  },
+  {
+   "h": "第四章　オフィーリアの悲劇",
+   "en": "Chapter 4: Ophelia's tragedy"
+  },
+  {
+   "jp": "王はこの事件を理由に、ハムレットをイギリスへ送った。",
+   "en": "Using this incident as an excuse, the king sent Hamlet away to England."
+  },
+  {
+   "jp": "実は、イギリスで彼を殺させる計画だったが、ハムレットは途中で逃げ帰った。",
+   "en": "In truth it was a plan to have him killed in England, but Hamlet escaped on the way and came back."
+  },
+  {
+   "jp": "一方、父を失ったオフィーリアは心を病み、花を持って歌いながら川に落ちて死んだ。",
+   "en": "Meanwhile, Ophelia, having lost her father, fell ill in her mind and drowned, falling into a river while singing and holding flowers."
+  },
+  {
+   "jp": "彼女の兄レアティーズは、父と妹を奪ったハムレットを激しく憎んだ。",
+   "en": "Her brother Laertes hated Hamlet fiercely for taking his father and sister."
+  },
+  {
+   "jp": "王はレアティーズと手を組み、ハムレットを殺す新しい計画を立てた。",
+   "en": "The king joined forces with Laertes and made a new plan to kill Hamlet."
+  },
+  {
+   "h": "第五章　最後の決闘",
+   "en": "Chapter 5: The final duel"
+  },
+  {
+   "jp": "王はハムレットとレアティーズの剣の試合を開いた。",
+   "en": "The king arranged a fencing match between Hamlet and Laertes."
+  },
+  {
+   "jp": "レアティーズの剣の先には毒が塗られ、王は毒入りの酒も用意していた。",
+   "en": "The tip of Laertes's sword was coated with poison, and the king had also prepared a cup of poisoned wine."
+  },
+  {
+   "jp": "試合の途中、王妃が知らずにその酒を飲み、倒れてしまった。",
+   "en": "During the match, the queen unknowingly drank the wine and collapsed."
+  },
+  {
+   "jp": "ハムレットもレアティーズも、毒の剣で傷ついた。",
+   "en": "Both Hamlet and Laertes were wounded by the poisoned blade."
+  },
+  {
+   "jp": "死ぬ前にレアティーズは「すべて王の計画だ」と告白した。",
+   "en": "Before he died, Laertes confessed, \"It was all the king's plan.\""
+  },
+  {
+   "jp": "ハムレットは最後の力で王を刺し、ついに父のかたきを討った。",
+   "en": "With the last of his strength, Hamlet stabbed the king and at last avenged his father."
+  },
+  {
+   "jp": "そして親友ホレイショーに「この話を正しく伝えてくれ」と頼み、静かに息を引き取った。",
+   "en": "Then he asked his friend Horatio, \"Tell this story truly,\" and quietly died."
+  },
+  {
+   "jp": "「あとは沈黙」、それがハムレットの最後の言葉だった。",
+   "en": "\"The rest is silence\" were Hamlet's last words."
   }
  ]
 }

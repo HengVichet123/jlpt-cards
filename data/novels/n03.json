@@ -4,27 +4,159 @@
  "titleEn": "Don Quixote",
  "author": "セルバンテス（スペイン）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "騎士の物語を読みすぎた男が、自分は騎士だと思い込む。",
-   "en": "A man who has read too many knight stories becomes convinced he is a knight."
+   "h": "第一章　本を読みすぎた男",
+   "en": "Chapter 1: The man who read too many books"
   },
   {
-   "jp": "彼はドン・キホーテと名乗り、農民サンチョ・パンサを家来にして旅に出る。",
-   "en": "Calling himself Don Quixote, he sets out with the farmer Sancho Panza as his squire."
+   "jp": "スペインのラ・マンチャ地方に、五十歳くらいの貧しい貴族が住んでいた。",
+   "en": "In the La Mancha region of Spain lived a poor nobleman of about fifty."
   },
   {
-   "jp": "風車を巨人だと思って突撃するなど、失敗ばかりを繰り返す。",
-   "en": "He keeps failing, for example charging at windmills he thinks are giants."
+   "jp": "彼は騎士の物語が大好きで、畑を売ってまで本を買い集めた。",
+   "en": "He loved tales of knights so much that he even sold his fields to buy books."
   },
   {
-   "jp": "それでも彼は、弱い者を助けるという理想を捨てなかった。",
-   "en": "Still, he never gives up his ideal of helping the weak."
+   "jp": "昼も夜も読み続けているうちに、とうとう頭がおかしくなってしまった。",
+   "en": "Reading day and night, he finally lost his mind."
   },
   {
-   "jp": "最後に正気に戻った彼は、静かに人生を終える。",
-   "en": "At the end he regains his sanity and dies peacefully."
+   "jp": "「自分も騎士になって、世の中の悪を正そう」と彼は決心した。",
+   "en": "\"I too will become a knight and right the wrongs of the world,\" he decided."
+  },
+  {
+   "jp": "古いよろいを磨き、やせた馬にロシナンテという立派な名前をつけた。",
+   "en": "He polished some old armor and gave his skinny horse the grand name Rocinante."
+  },
+  {
+   "jp": "自分のことは「ドン・キホーテ」と名乗ることにした。",
+   "en": "He decided to call himself \"Don Quixote.\""
+  },
+  {
+   "jp": "騎士には愛する女性が必要なので、近くの村の農家の娘を「ドゥルシネア姫」と呼んだ。",
+   "en": "Since a knight needs a lady to love, he named a farm girl from a nearby village \"Princess Dulcinea.\""
+  },
+  {
+   "h": "第二章　従者サンチョ",
+   "en": "Chapter 2: Sancho the squire"
+  },
+  {
+   "jp": "騎士には従者も必要だ。",
+   "en": "A knight also needs a squire."
+  },
+  {
+   "jp": "ドン・キホーテは近所の農夫サンチョ・パンサに声をかけた。",
+   "en": "Don Quixote called on his neighbor, a farmer named Sancho Panza."
+  },
+  {
+   "jp": "「ついて来れば、いつか島の領主にしてやろう」",
+   "en": "\"Come with me, and someday I'll make you governor of an island.\""
+  },
+  {
+   "jp": "単純なサンチョはその言葉を信じ、ロバに乗ってついて行った。",
+   "en": "Simple Sancho believed him and followed along on his donkey."
+  },
+  {
+   "jp": "背の高いやせた騎士と、背の低い太った従者の、おかしな二人旅が始まった。",
+   "en": "So began the odd journey of a tall, thin knight and a short, fat squire."
+  },
+  {
+   "h": "第三章　風車との戦い",
+   "en": "Chapter 3: The battle with the windmills"
+  },
+  {
+   "jp": "ある日、野原に三十ほどの風車が並んでいるのが見えた。",
+   "en": "One day they saw about thirty windmills standing in a field."
+  },
+  {
+   "jp": "「見ろ、サンチョ！あれは恐ろしい巨人たちだ」",
+   "en": "\"Look, Sancho! Those are terrible giants!\""
+  },
+  {
+   "jp": "「旦那様、あれは巨人じゃなくて風車ですよ」とサンチョは言った。",
+   "en": "\"Master, those aren't giants, they're windmills,\" said Sancho."
+  },
+  {
+   "jp": "しかしドン・キホーテは聞かず、槍を構えて突撃した。",
+   "en": "But Don Quixote would not listen; he leveled his lance and charged."
+  },
+  {
+   "jp": "風車の羽根に槍が刺さり、彼は馬ごと遠くへ投げ飛ばされた。",
+   "en": "His lance caught in a sail, and he and his horse were flung far away."
+  },
+  {
+   "jp": "体中が痛かったが、彼は言った。「悪い魔法使いが、巨人を風車に変えたのだ」",
+   "en": "Aching all over, he said, \"An evil wizard turned the giants into windmills.\""
+  },
+  {
+   "jp": "その後も、羊の群れを軍隊と間違えたり、宿屋を城だと思い込んだりした。",
+   "en": "After that, too, he mistook a flock of sheep for an army and believed an inn was a castle."
+  },
+  {
+   "jp": "そのたびに二人はひどい目にあったが、ドン・キホーテは決してあきらめなかった。",
+   "en": "Each time the two got into terrible trouble, but Don Quixote never gave up."
+  },
+  {
+   "h": "第四章　島の領主",
+   "en": "Chapter 4: Governor of an island"
+  },
+  {
+   "jp": "旅の途中、ある公爵夫妻が二人をからかって楽しもうと考えた。",
+   "en": "During the journey, a duke and duchess decided to amuse themselves by playing tricks on the pair."
+  },
+  {
+   "jp": "公爵は冗談で、サンチョを小さな町の「領主」にした。",
+   "en": "As a joke, the duke made Sancho the \"governor\" of a small town."
+  },
+  {
+   "jp": "ところがサンチョは、難しい争いを知恵と正直さで見事に解決した。",
+   "en": "But Sancho settled difficult disputes brilliantly, with wisdom and honesty."
+  },
+  {
+   "jp": "人々は驚いたが、サンチョは十日ほどで領主をやめてしまった。",
+   "en": "People were amazed, but after about ten days Sancho quit being governor."
+  },
+  {
+   "jp": "「おれにはロバと自由な生活のほうが合っている」",
+   "en": "\"My donkey and a free life suit me better.\""
+  },
+  {
+   "h": "第五章　夢から覚めて",
+   "en": "Chapter 5: Waking from the dream"
+  },
+  {
+   "jp": "村の友人たちは、ドン・キホーテを家に連れ戻そうと考えた。",
+   "en": "Friends from the village wanted to bring Don Quixote home."
+  },
+  {
+   "jp": "一人の若者が「白い月の騎士」に変装して、彼に決闘を申し込んだ。",
+   "en": "A young man disguised himself as the \"Knight of the White Moon\" and challenged him to a duel."
+  },
+  {
+   "jp": "「負けたら一年間、村に帰っておとなしく暮らすこと」",
+   "en": "\"If you lose, you must go home and live quietly for a year.\""
+  },
+  {
+   "jp": "ドン・キホーテは負け、約束どおり村へ帰った。",
+   "en": "Don Quixote lost and, as promised, went home."
+  },
+  {
+   "jp": "家に着くと、彼は重い病気になった。",
+   "en": "When he got home, he fell seriously ill."
+  },
+  {
+   "jp": "死ぬ前に、彼は正気を取り戻して言った。「私は騎士ではない。ただのアロンソ・キハーノだ」",
+   "en": "Before he died, he came back to his senses and said, \"I am not a knight. I'm just Alonso Quijano.\""
+  },
+  {
+   "jp": "サンチョは泣きながら言った。「旦那様、死なないで。また一緒に旅に出ましょう」",
+   "en": "Sancho wept and said, \"Master, don't die. Let's go on another journey together.\""
+  },
+  {
+   "jp": "笑われ続けた騎士の夢は、最後に一番の友の心に残ったのである。",
+   "en": "The dream of the knight everyone laughed at lived on, in the end, in the heart of his best friend."
   }
  ]
 }

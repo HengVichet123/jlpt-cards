@@ -1133,6 +1133,9 @@ body.showfam .fam{opacity:.85;transform:none}
 .scene-canvas svg.styled .spot.on :is(rect,path,circle,ellipse,polygon){opacity:.35;fill:#C63A2F}
 .scene-canvas svg.styled .tag rect{opacity:1}
 .scene-canvas svg.styled > g > text, .scene-canvas svg.styled > text{paint-order:stroke;stroke:rgba(20,16,24,.6);stroke-width:1.4px}
+/* v45: novel chapters */
+.novel-ch{font-family:var(--display);font-size:19px;margin:26px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+.novel-ch small{display:block;font:500 12px var(--body);color:var(--faint);margin-top:3px;letter-spacing:.02em}
 </style>
 </head>
 
@@ -1180,7 +1183,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v44";
+const APP_VERSION = "v45";
 
 
 /* =========================================================
@@ -2628,7 +2631,8 @@ async function renderNovel(id){
     <img class="novel-art" src="data/novels/${st.id}.svg" alt="">
     <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
     <div class="story-meta">${esc(st.source)}</div>
-    ${st.sentences.map(x => `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
+    ${st.sentences.map(x => x.h ? `<h3 class="novel-ch">${esc(x.h)}<small>${esc(x.en || "")}</small></h3>`
+      : `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
   </section>`;
   $("#novelBack").onclick = () => { $("#pageTitle").textContent = "Novels"; renderNovels(); };
 }

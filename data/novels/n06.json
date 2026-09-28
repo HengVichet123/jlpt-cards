@@ -4,27 +4,139 @@
  "titleEn": "Crime and Punishment",
  "author": "ドストエフスキー（ロシア）",
  "level": "N2",
- "source": "Summary written by Claude",
+ "source": "Retold in simple Japanese by Claude (N2 level)",
  "sentences": [
   {
-   "jp": "貧しい大学生ラスコーリニコフは、「特別な人間は罪を犯してもよい」と考える。",
-   "en": "Raskolnikov, a poor student, believes that extraordinary people may commit crimes."
+   "h": "第一章　屋根裏の青年",
+   "en": "Chapter 1: The young man in the attic"
   },
   {
-   "jp": "彼はその考えを証明するため、金貸しの老婆を殺してしまう。",
-   "en": "To prove this idea, he murders an old pawnbroker."
+   "jp": "ロシアの都ペテルブルクの、狭い屋根裏部屋に、ラスコーリニコフという貧しい元大学生が住んでいた。",
+   "en": "In a cramped attic room in St. Petersburg, the Russian capital, lived a poor former student named Raskolnikov."
   },
   {
-   "jp": "しかし罪悪感に苦しみ、心も体も弱っていく。",
-   "en": "But he is tormented by guilt, and his mind and body weaken."
+   "jp": "お金がなくて大学をやめ、家賃も払えず、毎日横になって考えてばかりいた。",
+   "en": "Having quit university for lack of money and unable to pay his rent, he spent every day lying down, just thinking."
   },
   {
-   "jp": "心の優しい女性ソーニャとの出会いが、彼を変えていく。",
-   "en": "Meeting Sonya, a kind-hearted woman, begins to change him."
+   "jp": "彼には恐ろしい考えがあった。",
+   "en": "He had a terrible idea."
   },
   {
-   "jp": "最後に彼は自首し、シベリアで罪を償いながら新しい人生を歩み始める。",
-   "en": "In the end he confesses, and while serving his sentence in Siberia he starts a new life."
+   "jp": "「特別な人間は、世の中のためなら、法を越えてもよいのではないか」",
+   "en": "\"Isn't an extraordinary person allowed to step over the law, if it's for the good of the world?\""
+  },
+  {
+   "jp": "近所には、人々から高い利息を取る欲深い金貸しの老婆が住んでいた。",
+   "en": "Nearby lived a greedy old pawnbroker who charged people high interest."
+  },
+  {
+   "jp": "「あの老婆を殺して、その金で多くの貧しい人を救えば、正しいことになる」",
+   "en": "\"If I kill that old woman and use her money to save many poor people, it will be right.\""
+  },
+  {
+   "h": "第二章　罪",
+   "en": "Chapter 2: The crime"
+  },
+  {
+   "jp": "ある夕方、彼は斧を服の下に隠して、老婆の部屋へ向かった。",
+   "en": "One evening, he hid an axe under his coat and went to the old woman's room."
+  },
+  {
+   "jp": "そして老婆を殺した。",
+   "en": "And he killed her."
+  },
+  {
+   "jp": "ところが、そこへ老婆の妹が帰ってきて、彼は妹まで殺してしまった。",
+   "en": "But then the old woman's sister came home, and he killed the sister too."
+  },
+  {
+   "jp": "彼は少しの品物を盗んで逃げたが、それを使うこともできず、石の下に隠した。",
+   "en": "He stole a few items and fled, but could not bring himself to use them and hid them under a stone."
+  },
+  {
+   "h": "第三章　罰",
+   "en": "Chapter 3: The punishment"
+  },
+  {
+   "jp": "事件のあと、ラスコーリニコフは高い熱を出して何日も寝込んだ。",
+   "en": "After the crime, Raskolnikov came down with a high fever and was bedridden for days."
+  },
+  {
+   "jp": "だれにも疑われていないのに、彼の心は少しも休まらなかった。",
+   "en": "Though no one suspected him, his mind never had a moment's rest."
+  },
+  {
+   "jp": "警察の話を聞くたびに、自分から秘密をしゃべってしまいそうになった。",
+   "en": "Every time he heard the police mentioned, he felt he might blurt out his secret himself."
+  },
+  {
+   "jp": "予審判事のポルフィーリーは、彼が犯人だと気づいていた。",
+   "en": "The investigating magistrate, Porfiry, realized he was the culprit."
+  },
+  {
+   "jp": "しかし証拠がないため、何度も会話をしながら、彼の心をゆっくりと追いつめていった。",
+   "en": "But having no proof, he slowly cornered him through one conversation after another."
+  },
+  {
+   "jp": "本当の罰は、法律ではなく、彼自身の良心から来ていたのだ。",
+   "en": "The real punishment came not from the law but from his own conscience."
+  },
+  {
+   "h": "第四章　ソーニャ",
+   "en": "Chapter 4: Sonya"
+  },
+  {
+   "jp": "そのころ、彼はソーニャという貧しい娘と知り合った。",
+   "en": "Around that time, he got to know a poor young woman named Sonya."
+  },
+  {
+   "jp": "ソーニャは家族を養うために、体を売って生きていた。",
+   "en": "Sonya was selling her body to support her family."
+  },
+  {
+   "jp": "それでも彼女は、心の優しさと強い信仰を失っていなかった。",
+   "en": "Even so, she had not lost her kindness of heart or her strong faith."
+  },
+  {
+   "jp": "ラスコーリニコフは、ついにソーニャにだけ罪を打ち明けた。",
+   "en": "At last, Raskolnikov confessed his crime to Sonya alone."
+  },
+  {
+   "jp": "ソーニャは泣きながら言った。「広場に行って、大地に口づけして、みんなに言いなさい。『私は人を殺しました』と」",
+   "en": "Sonya wept and said, \"Go to the square, kiss the earth, and tell everyone: 'I have killed.'\""
+  },
+  {
+   "h": "第五章　シベリアで",
+   "en": "Chapter 5: In Siberia"
+  },
+  {
+   "jp": "ラスコーリニコフは警察に行き、自首した。",
+   "en": "Raskolnikov went to the police and turned himself in."
+  },
+  {
+   "jp": "裁判の結果、彼はシベリアで八年間働く刑を受けた。",
+   "en": "At his trial, he was sentenced to eight years of hard labor in Siberia."
+  },
+  {
+   "jp": "ソーニャは彼を追ってシベリアに移り、毎日のように会いに来た。",
+   "en": "Sonya followed him to Siberia and came to see him almost every day."
+  },
+  {
+   "jp": "はじめ、彼は心を閉ざし、自分が本当に悪いとは思っていなかった。",
+   "en": "At first he shut his heart and did not truly believe he had done wrong."
+  },
+  {
+   "jp": "しかしある春の朝、川のほとりでソーニャの足元に泣き崩れた。",
+   "en": "But one spring morning, by the riverbank, he broke down weeping at Sonya's feet."
+  },
+  {
+   "jp": "その時、彼は初めて、彼女を心から愛していると気づいた。",
+   "en": "At that moment, he realized for the first time that he loved her with all his heart."
+  },
+  {
+   "jp": "刑期はまだ七年残っていたが、二人には新しい人生が始まろうとしていた。",
+   "en": "Seven years of his sentence remained, but a new life was about to begin for the two of them."
   }
  ]
 }
