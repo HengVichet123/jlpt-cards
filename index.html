@@ -1272,6 +1272,16 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .rd-from span{display:block;font:500 11.5px var(--mono);color:var(--faint);margin-top:2px}
 .pre-actions .go.start{background:var(--shu);color:#fff;border:0;border-radius:8px;font:700 15px var(--body);padding:12px}
 .home h1{text-wrap:balance}
+/* v61: minis everywhere (not Playground); reading = cards first */
+.complete-cards > .mini, .complete-cards > .card{margin:0 0 6px}
+.mini-kanji .mini-w{font-size:26px}
+.mini-grammar .mini-w{font-size:18px}
+.pre-steps{font-size:13.5px;color:var(--soft);margin:0 0 6px}
+.pre-steps b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--shu);color:#fff;font:700 11px var(--mono);margin-right:4px}
+.pre-steps span{margin:0 6px;color:var(--faint)}
+.pre-part{display:flex;align-items:baseline;gap:8px;font:800 18px var(--display);margin:22px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--ink)}
+.pre-part small{font:500 11.5px var(--mono);color:var(--faint)}
+.pre-pop .pre-x{z-index:2}
 </style>
 </head>
 
@@ -1319,7 +1329,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v60";
+const APP_VERSION = "v61";
 
 
 /* =========================================================
@@ -1967,6 +1977,12 @@ async function pgPool(level){
 
   if(PG.pool[level])
     return PG.pool[level];
+
+  if(level === "ALL"){   // build from the per-level pools (loaded once each)
+    const a = await pgPool("N1"), b = await pgPool("N2"), m = {};
+    for(const t of ["words","kanji","grammar"]) m[t] = [...a[t], ...b[t]];
+    return PG.pool.ALL = m;
+  }
 
 
   const pool = {
@@ -2687,7 +2703,7 @@ async function renderComplete(){
 
           <div class="complete-cards">${
             pool[t].slice(0, PAGE)
-              .map(c => { CARD_LVL = c.level; return make[t](c); })
+              .map(c => miniFor(t, c, c.level))
               .join("")
           }</div>
           <div class="complete-more" aria-hidden="true"></div>
@@ -2746,7 +2762,7 @@ async function renderComplete(){
       if(more.getBoundingClientRect().top > innerHeight + 800) return;
       const next = pool[TAB].slice(shown, shown + PAGE); shown += next.length;
       document.querySelector(".complete-cards").insertAdjacentHTML("beforeend",
-        next.map(c => { CARD_LVL = c.level; return make[TAB](c); }).join(""));
+        next.map(c => miniFor(TAB, c, c.level)).join(""));
     };
     new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)) grow(); }, {rootMargin:"800px"}).observe(more);
     addEventListener("scroll", grow, {passive:true});
@@ -3021,16 +3037,52 @@ async function renderSections(){
   document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
   document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
 }
-/* mini card: word + reading, short English, one 例 (tap = full card) */
-function miniCard(c, lv){
-  const en = (c.en || "").split(" / ")[0];
-  const e = (c.ex && c.ex[0]) || c.use;
-  return `<button class="mini" data-no="${c.no}">
-    <span class="mini-top"><span class="mini-no">#W${c.no}</span><b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span></span>
-    <span class="mini-en">${esc(en)}</span>
-    ${e ? `<span class="mini-ex"><span class="rei">例：</span>${hl(e.jp, c.word)}</span>` : ""}
+/* ===== Cards outside Playground: MINI by default, tap = full card, tap its top = back to mini =====
+   MINI.reg holds the card objects so any list (Complete list, sections, readings) can swap mini <-> full. */
+const MINI = {reg: new Map()};
+const miniKey = (t, lv, no) => `${t}:${lv}:${no}`;
+function miniCard(c, lv){ return miniFor("words", c, lv); }
+function miniFor(t, c, lv){
+  lv = lv || c.level;
+  MINI.reg.set(miniKey(t, lv, c.no), c);
+  const tag = {words:"W", kanji:"K", grammar:"G"}[t];
+  let head = "", en = "", e = null, target = "";
+  if(t === "words"){
+    head = `<b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span>`;
+    en = (c.en || "").split(" / ")[0]; e = (c.ex && c.ex[0]) || c.use; target = c.word;
+  }else if(t === "kanji"){
+    head = `<b class="mini-w">${esc(c.kanji)}</b><span class="mini-rd">${esc([(c.on || []).join("・"), (c.kun || []).join("・")].filter(Boolean).join(" ／ "))}</span>`;
+    en = c.en || ""; const w = (c.words || [])[0];
+    e = w ? {jp: `${w.w}（${w.r}）${w.m ? " — " + w.m : ""}`} : null; target = c.kanji;
+  }else{
+    head = `<b class="mini-w">${esc(c.pattern)}</b>`;
+    en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern;
+  }
+  return `<button class="mini mini-${t}" data-mt="${t}" data-mlv="${lv}" data-no="${c.no}">
+    <span class="mini-top"><span class="mini-no">#${tag}${c.no}</span>${head}</span>
+    ${en ? `<span class="mini-en">${esc(en)}</span>` : ""}
+    ${e ? `<span class="mini-ex">${t === "kanji" ? "" : `<span class="rei">例：</span>`}${t === "kanji" ? esc(e.jp) : hl(e.jp, target)}</span>` : ""}
   </button>`;
 }
+function fullFor(t, c, lv){
+  CARD_LVL = lv;
+  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c);
+  return html.replace(/class="card (\w)"/, `class="card $1 open" data-mt="${t}" data-mlv="${lv}"`);
+}
+// one handler for every mini list on any page (Playground never renders minis)
+document.addEventListener("click", e => {
+  const m = e.target.closest(".mini[data-mt]");
+  if(m && !e.target.closest("a")){
+    const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
+    if(c){ e.stopPropagation(); m.outerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv); }
+    return;
+  }
+  const f = e.target.closest(".card[data-mt] .front");
+  if(f){
+    const card = f.closest(".card"), c = MINI.reg.get(miniKey(card.dataset.mt, card.dataset.mlv, card.dataset.no));
+    if(c){ e.stopPropagation(); card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }
+  }
+}, true);
 
 async function renderSection(id){
   const S = await loadSections(), lv = id.split("-")[0], idx = S[lv].findIndex(x => x.id === id), s = S[lv][idx];
@@ -3041,22 +3093,7 @@ async function renderSection(id){
     <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
     <h2 class="sec-title">${esc(s.name)}${s.en ? `<em>${esc(s.en)}</em>` : ""}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
     <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
-  // tap a mini card -> the full card, opened, in its place; closing the full card -> back to the mini card
-  const box = document.querySelector(".complete-cards");
-  box.addEventListener("click", e => {
-    const m = e.target.closest(".mini");
-    if(m){
-      const c = cards.find(x => x.no === +m.dataset.no); CARD_LVL = lv;
-      m.outerHTML = wordCard(c).replace('class="card w"', 'class="card w open"');
-      return;
-    }
-    const f = e.target.closest(".card .front");
-    if(f){
-      e.stopPropagation();
-      const card = f.closest(".card"), c = cards.find(x => x.no === +card.dataset.no);
-      if(c) card.outerHTML = miniCard(c, lv);
-    }
-  }, true);
+
   $("#secBack").onclick = () => { renderSections(); };
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
@@ -3064,10 +3101,12 @@ async function renderSection(id){
 /* ---------- Pre-learn reading page ---------- */
 async function renderPrelearn(id){
   document.body.classList.remove("playing");
-  const R = await loadReading(id), all = await pgPool("ALL");
-  const get = (t, lv, no) => all[t].find(c => c.level === lv && c.no === no);
+  $("#list").innerHTML = `<div class="empty">Loading…</div>`;   // instant feedback; card data can take a moment on a phone
+  const R = await loadReading(id);
+  const need = [...new Set([...R.words, ...R.kanji, ...R.grammar].map(x => x[0]))];
+  const pools = {}; for(const lv of need) pools[lv] = await pgPool(lv);
+  const get = (t, lv, no) => (pools[lv] ? pools[lv][t].find(c => c.no === no) : null);
   const studied = R.words.filter(([lv, no]) => pgProfile(lv, "words", no).reviews).length;
-  // text with every listed word marked
   let html = "", at = 0;
   for(const [s, e, t, lv, no] of R.spans){
     if(s < at) continue;
@@ -3076,39 +3115,31 @@ async function renderPrelearn(id){
   }
   html += esc(R.text.slice(at));
   html = html.split("\n").map(p => `<p>${p}</p>`).join("");
+  const list = (t, rows) => rows.map(([lv, no]) => { const c = get(t, lv, no); return c ? miniFor(t, c, lv) : ""; }).join("");
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reading prelearn">
-    <div class="story-top"><button class="nav-btn" id="preBack">Back</button></div>
-    <h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · ${R.text.length} characters · about ${Math.max(1, Math.round(R.text.length / 400))} min</small></h2>
-    <div class="pre-box">
-      <div class="pre-h">Before you read</div>
-      <div class="pre-counts"><b>${R.words.length}</b> words · <b>${R.kanji.length}</b> kanji · <b>${R.grammar.length}</b> grammar</div>
-      <div class="pre-prog"><span style="--p:${studied / R.words.length}"></span></div>
-      <div class="pre-sub">${studied} of ${R.words.length} words studied</div>
-      <div class="pre-actions"><button class="go start" id="preStudy">Study these cards</button>
-        <button class="nav-btn" id="preList">Word list</button></div>
-      <div class="pre-list" id="preListBox" hidden>
-        ${R.words.map(([lv, no]) => { const c = get("words", lv, no); return c ? miniCard(c, lv) : ""; }).join("")}
-        ${R.grammar.length ? `<div class="pre-sub">Grammar</div>` + R.grammar.map(([lv, no]) => { const g = get("grammar", lv, no); return g ? `<div class="mini"><span class="mini-top"><b class="mini-w">${esc(g.pattern)}</b></span><span class="mini-en">${esc(g.en || "")}</span></div>` : ""; }).join("") : ""}
-        ${R.kanji.length ? `<div class="pre-sub">Kanji</div><div class="pre-kanji">` + R.kanji.map(([lv, no]) => { const k = get("kanji", lv, no); return k ? `<span title="${esc(k.en)}">${esc(k.kanji)}</span>` : ""; }).join("") + `</div>` : ""}
-      </div>
-    </div>
+    <div class="story-top"><button class="nav-btn" id="preBack">Back</button><button class="nav-btn sec-study" id="preStudy">Study in Playground</button></div>
+    <h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
+    <div class="pre-steps"><b>1</b> Learn these cards <span>→</span> <b>2</b> Read the text below</div>
+    <h3 class="pre-part">言葉 <small>${R.words.length} words</small></h3>
+    <div class="complete-cards">${list("words", R.words)}</div>
+    ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
+    ${R.kanji.length ? `<h3 class="pre-part">漢字 <small>${R.kanji.length} kanji</small></h3><div class="complete-cards">${list("kanji", R.kanji)}</div>` : ""}
+    <h3 class="pre-part" id="preRead">本文 <small>Read · tap an underlined word</small></h3>
     <div class="pre-text">${html}</div>
-    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · highlighted: words from your list (tap one)</p>
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a></p>
     <div class="pre-pop" id="prePop" hidden></div>
   </section>`;
   $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
-  $("#preList").onclick = () => { const b = $("#preListBox"); b.hidden = !b.hidden; };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
     cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
   const pop = $("#prePop");
   document.querySelector(".pre-text").onclick = e => {
     const m = e.target.closest("mark.pw"); if(!m){ pop.hidden = true; return; }
     const c = get(m.dataset.t, m.dataset.lv, +m.dataset.no); if(!c) return;
-    pop.innerHTML = `<button class="pre-x" aria-label="Close">×</button>` + (m.dataset.t === "words" ? miniCard(c, m.dataset.lv)
-      : `<div class="mini"><span class="mini-top"><b class="mini-w">${esc(c.pattern || c.kanji)}</b></span><span class="mini-en">${esc(c.en || "")}</span></div>`);
+    pop.innerHTML = `<button class="pre-x" aria-label="Close">×</button>` + miniFor(m.dataset.t, c, m.dataset.lv);
     pop.hidden = false;
-    pop.querySelector(".pre-x").onclick = () => pop.hidden = true;
+    pop.querySelector(".pre-x").onclick = ev => { ev.stopPropagation(); pop.hidden = true; };
   };
 }
 
