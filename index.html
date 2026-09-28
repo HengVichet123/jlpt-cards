@@ -1232,6 +1232,18 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
 .toc-dots{flex:1;border-bottom:1px dotted var(--faint);transform:translateY(-4px);min-width:16px;opacity:.6}
 .toc-n{flex:none;font:500 12px var(--mono);color:var(--soft)}
 .toc-n.on{color:var(--shu)}
+/* v57: mini cards in sections */
+.mini{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;padding:11px 14px;border:1px solid var(--line);border-radius:6px;
+  background:var(--card);color:var(--ink);cursor:pointer;font:inherit;margin:0 0 6px}
+.mini:hover{border-color:var(--faint)}
+.mini-top{display:flex;align-items:baseline;gap:10px}
+.mini-no{font:500 10.5px var(--mono);color:var(--ai);min-width:44px}
+.mini-w{font:800 21px var(--display)}
+.mini-rd{font-size:13px;color:var(--soft)}
+.mini-en{font-size:14px;font-weight:600;padding-left:54px}
+.mini-ex{font-size:14px;color:var(--soft);padding-left:54px;line-height:1.6}
+.mini-ex .rei{color:var(--faint);font-size:12px}
+.complete-cards > .card.open{margin-bottom:6px}
 </style>
 </head>
 
@@ -1279,7 +1291,7 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v56";
+const APP_VERSION = "v57";
 
 
 /* =========================================================
@@ -2959,6 +2971,17 @@ async function renderSections(){
   document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
   document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
 }
+/* mini card: word + reading, short English, one 例 (tap = full card) */
+function miniCard(c, lv){
+  const en = (c.en || "").split(" / ")[0];
+  const e = (c.ex && c.ex[0]) || c.use;
+  return `<button class="mini" data-no="${c.no}">
+    <span class="mini-top"><span class="mini-no">#W${c.no}</span><b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span></span>
+    <span class="mini-en">${esc(en)}</span>
+    ${e ? `<span class="mini-ex"><span class="rei">例：</span>${hl(e.jp, c.word)}</span>` : ""}
+  </button>`;
+}
+
 async function renderSection(id){
   const S = await loadSections(), lv = id.split("-")[0], idx = S[lv].findIndex(x => x.id === id), s = S[lv][idx];
   const pool = await pgPool(lv), set = new Set(s.words);
@@ -2967,7 +2990,12 @@ async function renderSection(id){
   $("#list").innerHTML = `<section class="complete">
     <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
     <h2 class="sec-title">${esc(s.name)}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
-    <div class="complete-cards">${cards.map(c => { CARD_LVL = lv; return wordCard(c).replace('class="card w"', 'class="card w open"'); }).join("")}</div></section>`;
+    <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
+  // tap a mini card -> the full card, opened, in its place
+  document.querySelectorAll(".mini").forEach(m => m.onclick = () => {
+    const c = cards.find(x => x.no === +m.dataset.no); CARD_LVL = lv;
+    m.outerHTML = wordCard(c).replace('class="card w"', 'class="card w open"');
+  });
   $("#secBack").onclick = () => { renderSections(); };
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
 }
