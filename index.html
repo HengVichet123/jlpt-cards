@@ -1348,6 +1348,31 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .rd-voice[aria-pressed="false"]{color:var(--faint)}
 .rd-voice[aria-pressed="false"] .wv{opacity:0}
 .rd-voice:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+/* ---------- v74: Use it (chat practice) ---------- */
+.useit{display:flex;flex-direction:column;gap:12px;max-width:720px;margin:0 auto;width:100%}
+.use-key{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:500 15px var(--mono)}
+.use-task{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:14px}
+.use-h{font:700 13px var(--body);color:var(--soft)}
+.use-h small{font-weight:500;color:var(--faint)}
+.use-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.use-chip{display:flex;flex-direction:column;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper)}
+.use-chip b{font:800 20px var(--display)}
+.use-chip small{font:500 11.5px var(--body);color:var(--soft)}
+.use-chip.ok{border-color:var(--shu)}
+.use-chip.ok b::after{content:" ✓";color:var(--shu);font-size:15px}
+.use-tools{display:flex;gap:8px;align-items:center}
+.use-keyx{margin-left:auto;border:0;background:none;color:var(--faint);font:500 12px var(--body);cursor:pointer;text-decoration:underline}
+.use-log{display:flex;flex-direction:column;gap:8px;max-height:48dvh;overflow-y:auto;padding:2px}
+.use-msg{max-width:86%;padding:10px 13px;border-radius:14px;font-size:15.5px;line-height:1.7;white-space:pre-wrap}
+.use-msg.user{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:4px}
+.use-msg.assistant{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.use-msg.pending{color:var(--faint)}
+.use-msg.err{border-color:var(--shu);color:var(--shu)}
+.use-input{display:flex;gap:8px;align-items:flex-end;position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)}
+.use-input textarea{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:400 16px var(--body);resize:vertical}
+.use-input .go{margin:0;width:auto;padding:12px 18px}
+.use-input .go:disabled{opacity:.4;cursor:not-allowed}
+.use-input .go.start, .useit > .go.start{background:var(--shu);color:#fff;border:0;border-radius:10px;font:700 15px var(--body)}
 </style>
 </head>
 
@@ -1395,7 +1420,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v76";
+const APP_VERSION = "v77";
 
 
 /* =========================================================
@@ -2710,6 +2735,8 @@ function renderHome(){
 
       <button class="sec-bar" data-home="sections"><i>節</i><b>Sections</b><span>Words grouped by topic</span><em>›</em></button>
 
+      <button class="sec-bar" data-home="useit"><i>使</i><b>Use it</b><span>Write a message with your words — AI replies</span><em>›</em></button>
+
       <h2 class="home-h">Later <small>side projects</small></h2>
       <div class="side">
         <button class="side-tile" data-home="novels"><i>本</i><b>Novels</b></button>
@@ -3237,6 +3264,115 @@ async function renderReader(id){
     tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
     tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
   };
+}
+
+/* ---------- Use it: write a message that uses the target words; Claude replies (and corrects misuse) ----------
+   Skeleton: Send unlocks only when every target word is in the message; Hint fills a real example (logged as a hint).
+   The user's own API key stays in this browser (localStorage). Log: jc:uselog [{ts, words, hint, text}]. */
+const USE = {words: [], hinted: new Set(), history: [], client: null};
+const SDK_URL = "https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.128.0/+esm";
+function usesWord(msg, c){
+  const w = c.word.replace(/[（(].*?[）)]|[〜～]/g, "").trim();
+  if(msg.includes(w)) return true;
+  // conjugated verbs / i-adjectives: accept the stem when it keeps a kanji (掲げる -> 掲げ, 著しい -> 著し)
+  if(/[\u4e00-\u9fff]/.test(w) && /[うくぐすつぬぶむるい]$/.test(w) && w.length >= 2){
+    const stem = w.slice(0, -1);
+    if(/[\u4e00-\u9fff]/.test(stem) && msg.includes(stem)) return true;
+  }
+  return false;
+}
+async function pickUseWords(){
+  const all = [...(await pgPool("N1")).words, ...(await pgPool("N2")).words];
+  const studied = all.filter(c => pgProfile(c.level, "words", c.no).reviews);
+  const from = studied.length >= 2 ? studied : all.filter(c => c.level === "N1");
+  const out = []; while(out.length < 2){ const c = from[Math.floor(Math.random() * from.length)]; if(!out.includes(c)) out.push(c); }
+  USE.words = out; USE.hinted = new Set(); return studied.length >= 2;
+}
+async function renderUseIt(){
+  document.body.classList.remove("playing");
+  const key = store.get("jc:apikey", "");
+  if(!key){
+    $("#list").innerHTML = `<section class="useit">
+      <h2 class="sec-title">使ってみる<em>Use your words in a message</em></h2>
+      <p class="set-lead">This practice talks to Claude with your own Anthropic API key. The key is saved only in this browser.</p>
+      <label class="set-label" for="useKey">Anthropic API key</label>
+      <input id="useKey" class="use-key" type="password" autocomplete="off" placeholder="sk-ant-…">
+      <button class="go start" id="useKeySave">Save key</button></section>`;
+    $("#useKeySave").onclick = () => { const v = $("#useKey").value.trim(); if(v){ store.set("jc:apikey", v); USE.client = null; renderUseIt(); } };
+    return;
+  }
+  if(!USE.words.length) USE.fromStudied = await pickUseWords();
+  const chips = USE.words.map((c, i) => `<span class="use-chip" data-i="${i}"><b>${esc(c.word)}</b><small>${esc(c.reading)} · ${esc((c.en || "").split(" / ")[0].split(";")[0])}</small></span>`).join("");
+  $("#list").innerHTML = `<section class="useit">
+    <div class="use-task">
+      <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words — study some in Playground first)</small>"}</div>
+      <div class="use-chips">${chips}</div>
+      <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">Change key</button></div>
+    </div>
+    <div class="use-log" id="useLog">${USE.history.map(m => `<div class="use-msg ${m.role}">${esc(m.content)}</div>`).join("")}</div>
+    <div class="use-input"><textarea id="useText" rows="3" placeholder="日本語で書いてみよう…"></textarea>
+      <button class="go start" id="useSend" disabled>Send</button></div>
+  </section>`;
+  const ta = $("#useText"), send = $("#useSend");
+  const check = () => {
+    const ok = USE.words.map(c => usesWord(ta.value, c));
+    document.querySelectorAll(".use-chip").forEach((el, i) => el.classList.toggle("ok", ok[i]));
+    send.disabled = !ok.every(Boolean) || !ta.value.trim();
+  };
+  ta.oninput = check;
+  $("#useNew").onclick = async () => { USE.fromStudied = await pickUseWords(); renderUseIt(); };
+  $("#useKeyReset").onclick = () => { store.set("jc:apikey", ""); USE.client = null; renderUseIt(); };
+  $("#useHint").onclick = () => {
+    // cheat mode: a real example sentence from the cards (logged)
+    const parts = USE.words.map(c => { USE.hinted.add(c.no + c.level); const e = (c.ex && c.ex[0]) || c.use; return e ? e.jp : `${c.word}を使ってみました。`; });
+    ta.value = parts.join(""); check(); ta.focus();
+  };
+  send.onclick = async () => {
+    const text = ta.value.trim(); if(!text) return;
+    const log = store.get("jc:uselog", []);
+    log.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text});
+    store.set("jc:uselog", log.slice(-500));
+    USE.history.push({role: "user", content: text});
+    $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant pending" id="usePending">…</div>`);
+    ta.value = ""; check(); send.disabled = true;
+    const pend = $("#usePending"); pend.removeAttribute("id");
+    try{
+      if(!USE.client){ const { default: Anthropic } = await import(SDK_URL);
+        USE.client = new Anthropic({apiKey: store.get("jc:apikey", ""), dangerouslyAllowBrowser: true}); USE.Anthropic = Anthropic; }
+      const target = USE.words.map(c => `${c.word}（${c.reading}）: ${(c.en || "").split(" / ")[0]}`).join("\n");
+      const response = await USE.client.beta.messages.create({
+        model: "claude-opus-5",
+        max_tokens: 1024,
+        betas: ["server-side-fallback-2026-07-01"],
+        fallbacks: "default",
+        output_config: {effort: "low"},
+        system: `You are a friendly Japanese conversation partner for a JLPT N1/N2 learner.
+The learner's message had to use these target words:
+${target}
+Reply in natural Japanese, 2 to 4 short sentences, at about N2 level, continuing the conversation.
+If a target word is used incorrectly or unnaturally, begin with one correction line in this form:
+✎ 「wrong part」→「better phrasing」— one short English explanation
+then continue the conversation. If the usage is fine, do not comment on it; just reply naturally.`,
+        messages: USE.history,
+      });
+      if(response.stop_reason === "refusal"){ pend.textContent = "The model declined to answer this message. Try writing it differently."; USE.history.pop(); return; }
+      const reply = response.content.filter(b => b.type === "text").map(b => b.text).join("").trim();
+      USE.history.push({role: "assistant", content: reply});
+      pend.classList.remove("pending"); pend.textContent = reply;
+      USE.fromStudied = await pickUseWords();   // next round: new words
+      const keep = [...USE.history]; renderUseIt(); USE.history = keep;
+      document.querySelector("#useLog").scrollTop = 1e9;
+    }catch(err){
+      USE.history.pop();
+      const A = USE.Anthropic;
+      pend.classList.add("err");
+      pend.textContent = A && err instanceof A.AuthenticationError ? "The API key was rejected. Tap “Change key” and enter a valid key."
+        : A && err instanceof A.RateLimitError ? "Too many requests right now. Wait a moment and send again."
+        : A && err instanceof A.APIConnectionError ? "No connection to the API. Check your internet and send again."
+        : `Could not get a reply: ${err.message || err}`;
+    }
+  };
+  check();
 }
 
 /* ---------- Reading ---------- */
@@ -3824,7 +3960,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3857,6 +3993,9 @@ function pick(id){
 
   else if(id === "sections")
     renderSections();
+
+  else if(id === "useit")
+    renderUseIt();
 
   else if(id === "photos"){
     SCENE_DIR = "photos"; renderScenes(); }
