@@ -226,6 +226,7 @@ main{
   padding:14px 14px 14px 34px;
   cursor:pointer;
 }
+
 .head{
   min-width:0
 }
@@ -286,18 +287,11 @@ main{
   border-color:var(--shu)
 }
 
+/* Familiarity: visual bar only */
 .familiarity{
   margin-top:8px;
-  max-width:180px;
-}
-
-.familiarity-label{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:4px;
-  color:var(--faint);
-  font:500 10px var(--mono);
-  letter-spacing:.03em;
+  width:180px;
+  max-width:100%;
 }
 
 .familiarity-bar{
@@ -313,7 +307,27 @@ main{
   height:100%;
   background:var(--shu);
   border-radius:4px;
-  transition:width .25s ease;
+  transition:width .15s ease;
+}
+
+.back{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  padding:0 16px 0 34px;
+  border-top:1px dashed transparent;
+  transition:
+    max-height .3s ease,
+    opacity .2s ease,
+    padding .3s ease,
+    border-color .3s ease;
+}
+
+.card.open .back{
+  max-height:1200px;
+  opacity:1;
+  padding:2px 16px 16px 34px;
+  border-top-color:var(--line);
 }
 
 .back h4{
@@ -593,17 +607,11 @@ code{
 }
 
 .play-stage .play-card .back{
-  padding:8px 28px 28px 48px
+  padding:0 28px 0 48px;
 }
 
-.play-familiarity{
-  position:absolute;
-  top:56px;
-  left:50%;
-  transform:translateX(-50%);
-  color:#888;
-  font:500 11px var(--mono);
-  letter-spacing:.04em
+.play-stage .play-card.open .back{
+  padding:8px 28px 28px 48px;
 }
 
 .play-ratings{
@@ -651,22 +659,6 @@ code{
   color:#333;
   font-size:13px;
   margin-right:2px
-}
-
-.play-familiarity-bar{
-  height:3px;
-  width:84px;
-  background:#eee;
-  border-radius:3px;
-  overflow:hidden;
-  margin:0 auto 10px
-}
-
-.play-familiarity-bar i{
-  display:block;
-  height:100%;
-  background:var(--shu);
-  border-radius:3px
 }
 
 .home{
@@ -744,44 +736,6 @@ code{
   margin:24px 0 8px
 }
 
-.familiarity{
-  margin-top:8px;
-  max-width:180px;
-}
-
-.familiarity-label{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:4px;
-  color:var(--faint);
-  font:500 10px var(--mono);
-  letter-spacing:.03em;
-}
-
-.familiarity-bar{
-  height:4px;
-  width:100%;
-  background:var(--hole);
-  border-radius:4px;
-  overflow:hidden;
-}
-
-.familiarity-bar i{
-  display:block;
-  height:100%;
-  background:var(--shu);
-  border-radius:4px;
-  transition:width .25s ease;
-}
-
-.familiarity-bar i{
-  display:block;
-  height:100%;
-  background:var(--shu);
-  border-radius:4px;
-  transition:width .15s ease
-}
-
 .play-empty{
   text-align:center;
   color:#777
@@ -817,17 +771,27 @@ code{
 <header>
   <div class="row">
     <div class="brand">単語<span>帳</span></div>
+
     <select id="lesson"></select>
-    <button class="small" id="filter" title="Show only cards with fewer than 3 dots">All</button>
+
+    <button
+      class="small"
+      id="filter"
+      title="Show only cards with fewer than 3 dots"
+    >
+      All
+    </button>
   </div>
 
   <div class="tabs">
     <div class="tab on" data-t="words">
       <span class="jp">語</span>Words
     </div>
+
     <div class="tab" data-t="kanji">
       <span class="jp">字</span>Kanji
     </div>
+
     <div class="tab" data-t="grammar">
       <span class="jp">文</span>Grammar
     </div>
@@ -847,7 +811,8 @@ code{
 
 const APP_VERSION = "v8";
 
-const $ = s => document.querySelector(s);
+const $ = s =>
+  document.querySelector(s);
 
 const esc = s =>
   String(s ?? "").replace(
@@ -861,19 +826,24 @@ const esc = s =>
   );
 
 function hl(text, targets){
+
   let out = esc(text);
 
-  for (
+  for(
     const t of [].concat(targets)
       .filter(Boolean)
       .sort((a,b) => b.length-a.length)
   ){
+
     const e = esc(t);
 
-    if (out.includes(e)){
-      out = out.split(e).join(
-        `<b class="hl">${e}</b>`
-      );
+    if(out.includes(e)){
+
+      out =
+        out.split(e).join(
+          `<b class="hl">${e}</b>`
+        );
+
       break;
     }
   }
@@ -881,41 +851,75 @@ function hl(text, targets){
   return out;
 }
 
+
 const store = {
-  get(k, d){
+
+  get(k,d){
+
     try{
-      const v = localStorage.getItem(k);
-      return v ? JSON.parse(v) : d;
+
+      const v =
+        localStorage.getItem(k);
+
+      return v
+        ? JSON.parse(v)
+        : d;
+
     }catch(e){
+
       return d;
+
     }
+
   },
 
-  set(k, v){
+  set(k,v){
+
     try{
-      localStorage.setItem(k, JSON.stringify(v));
+
+      localStorage.setItem(
+        k,
+        JSON.stringify(v)
+      );
+
     }catch(e){}
+
   }
+
 };
+
 
 let INDEX = [];
 let DATA = null;
 
 let TAB =
-  new URLSearchParams(location.search).get("tab")
-  || store.get("jc:tab", "words");
+  new URLSearchParams(location.search)
+    .get("tab")
+  ||
+  store.get(
+    "jc:tab",
+    "words"
+  );
 
 let ONLY_WEAK =
-  store.get("jc:weak", false);
+  store.get(
+    "jc:weak",
+    false
+  );
 
-function dotsKey(type, no){
+
+function dotsKey(type,no){
+
   return `jc:dots:${DATA.level}:${type}:${no}`;
+
 }
 
-function dotsHTML(type, no){
+
+function dotsHTML(type,no){
+
   const v =
     store.get(
-      dotsKey(type, no),
+      dotsKey(type,no),
       [0,0,0]
     );
 
@@ -928,66 +932,115 @@ function dotsHTML(type, no){
       ${
         v.map(
           (on,i) =>
-            `<div class="dot${on ? " on" : ""}" data-i="${i}"></div>`
+            `<div
+              class="dot${on ? " on" : ""}"
+              data-i="${i}"
+            ></div>`
         ).join("")
       }
     </div>
   `;
+
 }
 
-function exHTML(e, targets){
+
+function exHTML(e,targets){
+
   const tr =
-    e.en ? esc(e.en) : "—";
+    e.en
+      ? esc(e.en)
+      : "—";
 
   const src =
     e.url
-      ? ` · <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`
+      ? ` · <a
+            href="${esc(e.url)}"
+            target="_blank"
+            rel="noopener"
+          >${esc(e.src||"source")}</a>`
       : "";
 
   return `
     <div class="ex">
-      <span class="tip">EN</span>
-      ${e.src && e.src.startsWith("Wikipedia") ? "🌐 " : ""}
-      ${hl(e.jp, targets)}
+
+      <span class="tip">
+        EN
+      </span>
+
+      ${
+        e.src &&
+        e.src.startsWith("Wikipedia")
+          ? "🌐 "
+          : ""
+      }
+
+      ${hl(e.jp,targets)}
+
       <div class="tr">
         ${tr}${src}
       </div>
+
     </div>
   `;
+
 }
 
-function srcLine(label, url){
+
+function srcLine(label,url){
+
   return `
     <div class="src">
+
       — ${esc(label)}
+
       ${
         url
-          ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">link</a>`
+          ? ` · <a
+                href="${esc(url)}"
+                target="_blank"
+                rel="noopener"
+              >link</a>`
           : ""
       }
+
     </div>
   `;
+
 }
+
 
 function wordCard(c){
 
   const back = [
 
     c.img
-      ? `<img class="img" loading="lazy" src="${esc(c.img)}" alt="">`
+      ? `<img
+          class="img"
+          loading="lazy"
+          src="${esc(c.img)}"
+          alt=""
+        >`
       : "",
 
     `<h4>English</h4>
-     <div class="en">${esc(c.en)}</div>`,
+     <div class="en">
+       ${esc(c.en)}
+     </div>`,
 
     c.jp
       ? `<h4>大辞泉</h4>
-         <div class="jp">${hl(c.jp, c.word)}</div>
-         ${srcLine("デジタル大辞泉 (Kotobank)", c.jpUrl)}`
+         <div class="jp">
+           ${hl(c.jp,c.word)}
+         </div>
+         ${srcLine(
+           "デジタル大辞泉 (Kotobank)",
+           c.jpUrl
+         )}`
       : "",
 
     c.use
-      ? `<h4>例文</h4>${exHTML(c.use, c.word)}`
+      ? `<h4>例文</h4>
+         ${exHTML(c.use,c.word)}`
       : ""
 
   ].join("");
@@ -995,61 +1048,121 @@ function wordCard(c){
   return card(
     "w",
     c.no,
-    `<div class="rd">${esc(c.reading)}</div>
-     <div class="big">${esc(c.word)}</div>`,
+    `<div class="rd">
+       ${esc(c.reading)}
+     </div>
+     <div class="big">
+       ${esc(c.word)}
+     </div>`,
     back,
     c.level
   );
+
 }
+
 
 function kanjiCard(c){
 
   const words =
     c.words.length
+
       ? `<h4>言葉</h4>
+
          <ul class="w">
+
            ${
-             c.words.map(w =>
-               `<li>
-                  ${hl(w.w, c.kanji)}
-                  （${esc(w.r)}）— ${esc(w.m)}
-                  ${
-                    w.ex
-                      ? `<div class="exl">例：${hl(w.ex, c.kanji)}</div>`
-                      : ""
-                  }
-                </li>`
+             c.words.map(
+               w =>
+                 `<li>
+
+                    ${hl(
+                      w.w,
+                      c.kanji
+                    )}
+
+                    （${esc(w.r)}）
+                    — ${esc(w.m)}
+
+                    ${
+                      w.ex
+                        ? `<div class="exl">
+                             例：
+                             ${hl(
+                               w.ex,
+                               c.kanji
+                             )}
+                           </div>`
+                        : ""
+                    }
+
+                  </li>`
              ).join("")
            }
+
          </ul>`
+
       : "";
+
 
   const back = [
 
     `<h4>読み</h4>
+
      <div>
-       音 <b>${esc(c.on.join("・") || "—")}</b>
+
+       音
+       <b>
+         ${esc(
+           c.on.join("・") || "—"
+         )}
+       </b>
+
       　
-       訓 <b>${esc(c.kun.join("・") || "—")}</b>
+       訓
+       <b>
+         ${esc(
+           c.kun.join("・") || "—"
+         )}
+       </b>
+
       　
-       <span class="src">${c.strokes}画</span>
+       <span class="src">
+         ${c.strokes}画
+       </span>
+
      </div>`,
 
     `<h4>意味</h4>
-     <div class="en">${esc(c.en)}</div>`,
+
+     <div class="en">
+       ${esc(c.en)}
+     </div>`,
 
     c.jp
-      ? `<div class="jp">${hl(c.jp, c.kanji)}</div>
-         ${srcLine("デジタル大辞泉［漢字項目］", c.jpUrl)}`
+      ? `<div class="jp">
+           ${hl(
+             c.jp,
+             c.kanji
+           )}
+         </div>
+         ${srcLine(
+           "デジタル大辞泉［漢字項目］",
+           c.jpUrl
+         )}`
       : "",
 
     words,
 
     c.use
-      ? `<h4>例文</h4>${exHTML(c.use, c.kanji)}`
+      ? `<h4>例文</h4>
+         ${exHTML(
+           c.use,
+           c.kanji
+         )}`
       : ""
 
   ].join("");
+
 
   const rd =
     [
@@ -1059,15 +1172,23 @@ function kanjiCard(c){
     .filter(Boolean)
     .join(" · ");
 
+
   return card(
     "k",
     c.no,
-    `<div class="rd">${esc(rd)}</div>
-     <div class="big">${esc(c.kanji)}</div>`,
+    `<div class="rd">
+       ${esc(rd)}
+     </div>
+
+     <div class="big">
+       ${esc(c.kanji)}
+     </div>`,
     back,
     c.level
   );
+
 }
+
 
 function grammarCard(c){
 
@@ -1075,36 +1196,73 @@ function grammarCard(c){
 
     c.en
       ? `<h4>English</h4>
-         <div class="en">${esc(c.en)}</div>`
+         <div class="en">
+           ${esc(c.en)}
+         </div>`
       : "",
 
     c.imi.length
       ? `<h4>意味</h4>
-         ${c.imi.map(x => `<div>${esc(x)}</div>`).join("")}`
+         ${
+           c.imi
+             .map(
+               x =>
+                 `<div>${esc(x)}</div>`
+             )
+             .join("")
+         }`
       : "",
 
     c.setsuzoku.length
       ? `<h4>接続</h4>
-         <code>${esc(c.setsuzoku.join(" / "))}</code>`
+         <code>
+           ${esc(
+             c.setsuzoku.join(" / ")
+           )}
+         </code>`
       : "",
 
     c.rei.length
-      ? `<h4>例文 <span class="src">(tap for English)</span></h4>
-         ${c.rei.map(e => exHTML(e, c.variants)).join("")}`
+      ? `<h4>
+           例文
+           <span class="src">
+             (tap for English)
+           </span>
+         </h4>
+
+         ${
+           c.rei
+             .map(
+               e =>
+                 exHTML(
+                   e,
+                   c.variants
+                 )
+             )
+             .join("")
+         }`
       : "",
 
-    srcLine("日本語教師NET", c.url)
+    srcLine(
+      "日本語教師NET",
+      c.url
+    )
 
   ].join("");
+
 
   return card(
     "g",
     c.no,
     `<div class="rd"></div>
-     <div class="big">${esc(c.pattern)}</div>`,
+
+     <div class="big">
+       ${esc(c.pattern)}
+     </div>`,
     back,
     c.level
   );
+
 }
 
 
@@ -1112,7 +1270,13 @@ function grammarCard(c){
    CARD
    ========================================================= */
 
-function card(t, no, head, back, level){
+function card(
+  t,
+  no,
+  head,
+  back,
+  level
+){
 
   const type = {
     w:"words",
@@ -1120,45 +1284,38 @@ function card(t, no, head, back, level){
     g:"grammar"
   }[t];
 
-  /*
-    Use the card's own level when available.
-    For normal lesson cards, fall back to DATA.level.
-  */
   const lvl =
     level || DATA?.level;
 
-  /*
-    Every card has a familiarity value.
-    New cards start at 0.
-  */
   const familiarity =
     lvl
-      ? pgProfile(lvl, type, no).familiarity
+      ? pgProfile(
+          lvl,
+          type,
+          no
+        ).familiarity
       : 0;
 
   /*
     Familiarity is 0–5.
-    Therefore each point represents 20%.
+    The bar is the only visual indicator.
   */
+
   const bar = `
-  <div class="familiarity">
-    <div class="familiarity-label">
-      <span>Familiarity</span>
-      <span>${familiarity}/5</span>
+    <div class="familiarity">
+      <div class="familiarity-bar">
+        <i
+          style="width:${Math.min(
+            100,
+            Math.max(
+              0,
+              familiarity * 20
+            )
+          )}%"
+        ></i>
+      </div>
     </div>
-    <div
-      class="familiarity-bar"
-      aria-label="Familiarity ${familiarity} out of 5"
-    >
-      <i
-        style="width:${Math.min(
-          100,
-          familiarity * 20
-        )}%"
-      ></i>
-    </div>
-  </div>
-`;
+  `;
 
   return `
     <div
@@ -1196,6 +1353,7 @@ function card(t, no, head, back, level){
 
     </div>
   `;
+
 }
 
 
@@ -1216,6 +1374,7 @@ const profileKey =
   (lvl,t,no) =>
     `jc:profile:${lvl}:${t}:${no}`;
 
+
 function pgProfile(lvl,t,no){
 
   const oldDue =
@@ -1234,7 +1393,9 @@ function pgProfile(lvl,t,no){
       dueAt:oldDue || 0
     }
   );
+
 }
+
 
 async function pgPool(level){
 
@@ -1249,7 +1410,9 @@ async function pgPool(level){
 
   for(
     const x of INDEX.filter(
-      i => level === "ALL" || i.level === level
+      i =>
+        level === "ALL" ||
+        i.level === level
     )
   ){
 
@@ -1257,7 +1420,9 @@ async function pgPool(level){
 
       const d =
         await (
-          await fetch(`data/${x.id}.json`)
+          await fetch(
+            `data/${x.id}.json`
+          )
         ).json();
 
       for(
@@ -1284,7 +1449,9 @@ async function pgPool(level){
   }
 
   return PG.pool[level] = pool;
+
 }
+
 
 function pgState(){
 
@@ -1292,20 +1459,24 @@ function pgState(){
     "jc:pg",
     {
       level:"ALL",
+
       n:{
         words:10,
         kanji:5,
         grammar:2
       },
+
       ids:[]
     }
   );
 
 }
 
+
 async function pgNew(){
 
-  const st = pgState();
+  const st =
+    pgState();
 
   st.level =
     $("#pgLevel").value;
@@ -1341,19 +1512,23 @@ async function pgNew(){
 
     const candidates =
       pool[t]
-        .filter(c => {
+        .filter(
+          c => {
 
-          const p =
-            pgProfile(
-              c.level,
-              t,
-              c.no
+            const p =
+              pgProfile(
+                c.level,
+                t,
+                c.no
+              );
+
+            return (
+              !p.dueAt ||
+              p.dueAt <= PG.now()
             );
 
-          return !p.dueAt ||
-                 p.dueAt <= PG.now();
-
-        })
+          }
+        )
         .sort(
           (a,b) =>
             pgProfile(
@@ -1370,7 +1545,7 @@ async function pgNew(){
         );
 
     candidates
-      .slice(0, st.n[t])
+      .slice(0,st.n[t])
       .forEach(
         c =>
           st.ids.push([
@@ -1382,12 +1557,17 @@ async function pgNew(){
 
   }
 
-  store.set("jc:pg",st);
+  store.set(
+    "jc:pg",
+    st
+  );
 
   PG_RUNNING = true;
 
   renderPG();
+
 }
+
 
 async function renderPG(){
 
@@ -1396,7 +1576,8 @@ async function renderPG(){
     PLAY && PG_RUNNING
   );
 
-  const st = pgState();
+  const st =
+    pgState();
 
   const pool =
     await pgPool(st.level);
@@ -1431,24 +1612,28 @@ async function renderPG(){
 
           <label>
             Level
+
             <select id="pgLevel">
+
               ${
                 ["ALL","N1","N2"]
-                .map(
-                  l =>
-                    `<option${
-                      l===st.level
-                        ? " selected"
-                        : ""
-                    }>${l}</option>`
-                )
-                .join("")
+                  .map(
+                    l =>
+                      `<option${
+                        l === st.level
+                          ? " selected"
+                          : ""
+                      }>${l}</option>`
+                  )
+                  .join("")
               }
+
             </select>
           </label>
 
           <label>
             語
+
             <input
               id="pg_words"
               type="number"
@@ -1459,6 +1644,7 @@ async function renderPG(){
 
           <label>
             字
+
             <input
               id="pg_kanji"
               type="number"
@@ -1469,6 +1655,7 @@ async function renderPG(){
 
           <label>
             文
+
             <input
               id="pg_grammar"
               type="number"
@@ -1509,7 +1696,9 @@ async function renderPG(){
       pgExit;
 
     return;
+
   }
+
 
   const make = {
     words:wordCard,
@@ -1517,8 +1706,10 @@ async function renderPG(){
     grammar:grammarCard
   };
 
+
   const live = [];
   const later = [];
+
 
   for(
     const [lvl,t,no] of st.ids
@@ -1554,15 +1745,22 @@ async function renderPG(){
 
   }
 
+
   DATA = {
     level:st.level
   };
 
+
   const current =
     live[0];
 
+
   const buckets = [
-    ["Now",live.length],
+
+    [
+      "Now",
+      live.length
+    ],
 
     [
       "3m",
@@ -1590,15 +1788,11 @@ async function renderPG(){
           1440 * 60000
       ).length
     ]
+
   ];
 
-  /*
-    IMPORTANT:
-    The familiarity bar is now INSIDE the card,
-    so the play-stage only centers one element:
-    the card itself.
-  */
-  const card =
+
+  const cardHTML =
     current
 
       ? make[current[1]](
@@ -1610,13 +1804,22 @@ async function renderPG(){
 
       : `
         <div class="play-empty">
-          <h2>Session complete</h2>
-          <p>All cards are resting.</p>
+
+          <h2>
+            Session complete
+          </h2>
+
+          <p>
+            All cards are resting.
+          </p>
+
         </div>
       `;
 
+
   const ratings =
     current
+
       ? `
         <div
           class="play-ratings"
@@ -1642,10 +1845,13 @@ async function renderPG(){
 
         </div>
       `
+
       : "";
+
 
   const queue = `
     <div class="play-queue">
+
       ${
         buckets
           .map(
@@ -1656,11 +1862,14 @@ async function renderPG(){
           )
           .join("")
       }
+
     </div>
   `;
 
+
   const next =
     later.length
+
       ? Math.max(
           0,
           Math.round(
@@ -1675,9 +1884,12 @@ async function renderPG(){
             ) / 60000
           )
         )
+
       : null;
 
+
   $("#list").innerHTML = `
+
     <div class="play-screen">
 
       <button
@@ -1699,7 +1911,7 @@ async function renderPG(){
       </div>
 
       <div class="play-stage">
-        ${card}
+        ${cardHTML}
       </div>
 
       ${ratings}
@@ -1719,20 +1931,29 @@ async function renderPG(){
       }
 
     </div>
+
   `;
+
 
   $("#count").textContent =
     `Playground · ${st.level}`;
 
+
   $("#pgBack").onclick =
     () => {
+
       PG_RUNNING = false;
+
       renderPG();
+
     };
+
 
   $("#pgExit").onclick =
     pgExit;
+
 }
+
 
 function pgExit(){
 
@@ -1745,6 +1966,7 @@ function pgExit(){
   );
 
   pick("home");
+
 }
 
 
@@ -1759,9 +1981,12 @@ function renderHome(){
   );
 
   $("#list").innerHTML = `
+
     <section class="home">
 
-      <h1>JLPT Cards</h1>
+      <h1>
+        JLPT Cards
+      </h1>
 
       <p>
         Build your Japanese memory
@@ -1774,7 +1999,10 @@ function renderHome(){
           class="home-card"
           data-home="playground"
         >
-          <b>▶ Playground</b>
+          <b>
+            ▶ Playground
+          </b>
+
           <span>
             Personalized review session
           </span>
@@ -1784,7 +2012,10 @@ function renderHome(){
           class="home-card"
           data-home="complete"
         >
-          <b>▦ Complete list</b>
+          <b>
+            ▦ Complete list
+          </b>
+
           <span>
             Browse every card and its familiarity
           </span>
@@ -1806,14 +2037,17 @@ function renderHome(){
                   class="home-card"
                   data-lesson="${x.id}"
                 >
+
                   <b>
                     ${x.level} · Day ${x.day}
                   </b>
+
                   <span>
                     ${x.counts[0]} words ·
                     ${x.counts[1]} kanji ·
                     ${x.counts[2]} grammar
                   </span>
+
                 </button>`
             )
             .join("")
@@ -1822,10 +2056,13 @@ function renderHome(){
       </div>
 
     </section>
+
   `;
+
 
   $("#count").textContent =
     "Home";
+
 }
 
 
@@ -1842,18 +2079,23 @@ async function renderComplete(){
   const pool =
     await pgPool("ALL");
 
+
   const make = {
     words:wordCard,
     kanji:kanjiCard,
     grammar:grammarCard
   };
 
+
   const section =
     (t,label) =>
       `
+
         <section class="complete-section">
 
-          <h2>${label}</h2>
+          <h2>
+            ${label}
+          </h2>
 
           ${
             pool[t]
@@ -1862,9 +2104,12 @@ async function renderComplete(){
           }
 
         </section>
+
       `;
 
+
   $("#list").innerHTML = `
+
     <section class="complete">
 
       <div class="complete-head">
@@ -1893,13 +2138,17 @@ async function renderComplete(){
       ${section("grammar","Grammar")}
 
     </section>
+
   `;
+
 
   $("#count").textContent =
     "Complete list";
 
+
   $("#completeHome").onclick =
     () => {
+
       $("#lesson").value =
         "home";
 
@@ -1909,7 +2158,9 @@ async function renderComplete(){
       );
 
       pick("home");
+
     };
+
 }
 
 
@@ -1926,6 +2177,7 @@ function dotsOrButtons(type,no){
     );
 
   return "";
+
 }
 
 
@@ -1936,10 +2188,13 @@ function dotsOrButtons(type,no){
 let PLAY = false;
 let PG_RUNNING = false;
 
+
 setInterval(
   () => {
+
     if(PLAY)
       renderPG();
+
   },
   30000
 );
@@ -1961,21 +2216,26 @@ function render(){
         )
     );
 
+
   $("#filter").textContent =
     ONLY_WEAK
       ? "Weak only"
       : "All";
+
 
   $("#filter").classList.toggle(
     "on",
     ONLY_WEAK
   );
 
+
   if(!DATA)
     return;
 
+
   let items =
     DATA[TAB];
+
 
   if(ONLY_WEAK){
 
@@ -1996,26 +2256,37 @@ function render(){
 
   }
 
+
   const make = {
     words:wordCard,
     kanji:kanjiCard,
     grammar:grammarCard
   }[TAB];
 
+
   $("#list").innerHTML =
     items.length
-      ? items.map(make).join("")
-      : `<div class="empty">
-           Nothing here.
-         </div>`;
+
+      ? items
+          .map(make)
+          .join("")
+
+      : `
+        <div class="empty">
+          Nothing here.
+        </div>
+      `;
+
 
   $("#count").textContent =
     `${DATA.level} Day ${DATA.day} · ${items.length} cards`;
+
 
   const q =
     new URLSearchParams(
       location.search
     );
+
 
   if(q.has("open")){
 
@@ -2023,16 +2294,22 @@ function render(){
       .querySelectorAll(".card")
       .forEach(
         (c,i) => {
+
           if(
             i < +q.get("open")
-          )
+          ){
+
             c.classList.add(
               "open"
             );
+
+          }
+
         }
       );
 
   }
+
 
   if(q.has("ex")){
 
@@ -2046,6 +2323,7 @@ function render(){
       );
 
   }
+
 }
 
 
@@ -2061,6 +2339,7 @@ document.addEventListener(
       e.target.closest(
         ".play-ratings button"
       );
+
 
     if(pb){
 
@@ -2089,7 +2368,9 @@ document.addEventListener(
       const m =
         +pb.dataset.m;
 
+
       p.reviews += 1;
+
 
       if(m === 3){
 
@@ -2105,16 +2386,24 @@ document.addEventListener(
 
         p.correct += 1;
 
-        p.familiarity +=
-          m === 1440
-            ? 2
-            : 1;
+        p.familiarity =
+          Math.min(
+            5,
+            p.familiarity +
+            (
+              m === 1440
+                ? 2
+                : 1
+            )
+          );
 
       }
+
 
       p.dueAt =
         PG.now() +
         m * 60000;
+
 
       store.set(
         profileKey(
@@ -2125,6 +2414,7 @@ document.addEventListener(
         p
       );
 
+
       store.set(
         pgKey(
           lvl,
@@ -2134,14 +2424,19 @@ document.addEventListener(
         p.dueAt
       );
 
+
       renderPG();
 
       return;
+
     }
 
 
     const dot =
-      e.target.closest(".dot");
+      e.target.closest(
+        ".dot"
+      );
+
 
     if(dot){
 
@@ -2160,6 +2455,7 @@ document.addEventListener(
           [0,0,0]
         );
 
+
       v[
         +dot.dataset.i
       ] =
@@ -2169,7 +2465,12 @@ document.addEventListener(
           ? 0
           : 1;
 
-      store.set(k,v);
+
+      store.set(
+        k,
+        v
+      );
+
 
       dot.classList.toggle(
         "on",
@@ -2178,7 +2479,9 @@ document.addEventListener(
         ]
       );
 
+
       return;
+
     }
 
 
@@ -2189,7 +2492,10 @@ document.addEventListener(
 
 
     const ex =
-      e.target.closest(".ex");
+      e.target.closest(
+        ".ex"
+      );
+
 
     if(ex){
 
@@ -2198,6 +2504,7 @@ document.addEventListener(
       );
 
       return;
+
     }
 
 
@@ -2206,6 +2513,7 @@ document.addEventListener(
         ".play-card"
       );
 
+
     if(playCard){
 
       playCard.classList.toggle(
@@ -2213,6 +2521,7 @@ document.addEventListener(
       );
 
       return;
+
     }
 
 
@@ -2220,6 +2529,7 @@ document.addEventListener(
       e.target.closest(
         ".front"
       );
+
 
     if(front){
 
@@ -2229,6 +2539,7 @@ document.addEventListener(
         );
 
       return;
+
     }
 
 
@@ -2236,6 +2547,7 @@ document.addEventListener(
       e.target.closest(
         "[data-home]"
       );
+
 
     if(home){
 
@@ -2252,6 +2564,7 @@ document.addEventListener(
       );
 
       return;
+
     }
 
 
@@ -2259,6 +2572,7 @@ document.addEventListener(
       e.target.closest(
         "[data-lesson]"
       );
+
 
     if(lesson){
 
@@ -2275,11 +2589,15 @@ document.addEventListener(
       );
 
       return;
+
     }
 
 
     const tab =
-      e.target.closest(".tab");
+      e.target.closest(
+        ".tab"
+      );
+
 
     if(tab){
 
@@ -2365,17 +2683,21 @@ function pick(id){
 
   PG_RUNNING = false;
 
+
   const special =
     PLAY ||
     id === "home" ||
     id === "complete";
 
+
   document
     .querySelector(".tabs")
     .hidden = special;
 
+
   $("#filter").hidden =
     special;
+
 
   if(PLAY)
     renderPG();
@@ -2388,6 +2710,7 @@ function pick(id){
 
   else
     load(id);
+
 }
 
 
@@ -2439,6 +2762,7 @@ async function load(id){
   $("#ver").textContent =
     APP_VERSION;
 
+
   try{
 
     INDEX =
@@ -2459,35 +2783,40 @@ async function load(id){
       </div>`;
 
     return;
+
   }
+
 
   const sel =
     $("#lesson");
 
-  sel.innerHTML =
-    `
-      <option value="home">
-        ⌂ Home
-      </option>
 
-      <option value="playground">
-        ▶ Playground
-      </option>
+  sel.innerHTML = `
 
-      ${
-        INDEX
-          .map(
-            x =>
-              `<option value="${x.id}">
-                ${x.level} · Day ${x.day}
-                (${x.counts[0]}語
-                 ${x.counts[1]}字
-                 ${x.counts[2]}文法)
-              </option>`
-          )
-          .join("")
-      }
-    `;
+    <option value="home">
+      ⌂ Home
+    </option>
+
+    <option value="playground">
+      ▶ Playground
+    </option>
+
+    ${
+      INDEX
+        .map(
+          x =>
+            `<option value="${x.id}">
+              ${x.level} · Day ${x.day}
+              (${x.counts[0]}語
+               ${x.counts[1]}字
+               ${x.counts[2]}文法)
+            </option>`
+        )
+        .join("")
+    }
+
+  `;
+
 
   const saved =
     store.get(
@@ -2495,33 +2824,44 @@ async function load(id){
       null
     );
 
+
   sel.value =
     (
       saved === "home" ||
       saved === "playground" ||
       INDEX.some(
-        x => x.id === saved
+        x =>
+          x.id === saved
       )
     )
+
       ? saved
+
       : "home";
+
 
   if(
     new URLSearchParams(
       location.search
     ).has("play")
-  )
+  ){
+
     sel.value =
       "playground";
+
+  }
+
 
   pick(
     sel.value
   );
 
+
   if(
     new URLSearchParams(
       location.search
-    ).get("play") === "new"
+    ).get("play") ===
+    "new"
   ){
 
     setTimeout(
@@ -2544,7 +2884,9 @@ if(
 
   navigator.serviceWorker
     .register("sw.js")
-    .catch(() => {});
+    .catch(
+      () => {}
+    );
 
 }
 
