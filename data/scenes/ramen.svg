@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Inside a ramen shop, at the counter">
+<rect width="400" height="320" fill="#F2E6D6"/>
+<rect x="0.0" y="0.0" width="400.0" height="150.0" rx="0" fill="#E8D8C2"  />
+<g class="spot" data-id="noren">
+<rect x="10.0" y="0.0" width="38.0" height="46.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="50.0" y="0.0" width="38.0" height="46.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="90.0" y="0.0" width="38.0" height="46.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="130.0" y="0.0" width="38.0" height="46.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="170.0" y="0.0" width="38.0" height="46.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+<text x="110" y="30" font-size="16" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-weight="700">ら ー め ん</text>
+</g>
+<g class="spot" data-id="menu">
+<rect x="220.0" y="10.0" width="170.0" height="70.0" rx="3" fill="#F7F1E4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<text x="232" y="30" font-size="10" text-anchor="start" fill="#3B3246" font-family="sans-serif" font-weight="700">醤油らーめん</text>
+<text x="380" y="30" font-size="10" text-anchor="end" fill="#C63A2F" font-family="sans-serif" font-weight="700">800円</text>
+<text x="232" y="48" font-size="10" text-anchor="start" fill="#3B3246" font-family="sans-serif" font-weight="700">味噌らーめん</text>
+<text x="380" y="48" font-size="10" text-anchor="end" fill="#C63A2F" font-family="sans-serif" font-weight="700">850円</text>
+<text x="232" y="66" font-size="10" text-anchor="start" fill="#3B3246" font-family="sans-serif" font-weight="700">替え玉</text>
+<text x="380" y="66" font-size="10" text-anchor="end" fill="#C63A2F" font-family="sans-serif" font-weight="700">150円</text>
+</g>
+<g class="spot" data-id="ticketmachine">
+<rect x="14.0" y="70.0" width="74.0" height="150.0" rx="5" fill="#E8E4DE" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<text x="51" y="84" font-size="9" text-anchor="middle" fill="#3B3246" font-family="sans-serif" font-weight="700">食券</text>
+<rect x="20.0" y="90.0" width="30.0" height="14.0" rx="2" fill="#F4C04E" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="53.0" y="90.0" width="30.0" height="14.0" rx="2" fill="#F4C04E" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="20.0" y="108.0" width="30.0" height="14.0" rx="2" fill="#F08A4B" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="53.0" y="108.0" width="30.0" height="14.0" rx="2" fill="#F08A4B" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="20.0" y="126.0" width="30.0" height="14.0" rx="2" fill="#62B77A" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="53.0" y="126.0" width="30.0" height="14.0" rx="2" fill="#62B77A" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="20.0" y="144.0" width="30.0" height="14.0" rx="2" fill="#4C8FD6" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="53.0" y="144.0" width="30.0" height="14.0" rx="2" fill="#4C8FD6" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="24.0" y="166.0" width="50.0" height="8.0" rx="2" fill="#2B2B33" stroke="#3B3246" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="24.0" y="184.0" width="50.0" height="16.0" rx="3" fill="#46424E" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="chef">
+<path d="M250 150 q0 -30 30 -32 q30 2 30 32 z" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="280.0" cy="100.0" rx="17.0" ry="18.0" fill="#FBE3D1" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M262 92 q0 -22 18 -22 q18 0 18 22 z" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="262.0" y="86.0" width="36.0" height="8.0" rx="0" fill="#2F3E6B" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="274.0" cy="102.0" r="1.8" fill="#3B3246"  />
+<circle cx="286.0" cy="102.0" r="1.8" fill="#3B3246"  />
+<path d="M275 110 q5 3 10 0" fill="none" stroke="#3B3246" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<rect x="0.0" y="150.0" width="400.0" height="20.0" rx="0" fill="#B07A4A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="0.0" y="170.0" width="400.0" height="150.0" rx="0" fill="#8A5A34"  />
+<line x1="0" y1="170" x2="400" y2="170" stroke="#3B3246" stroke-width="1.3" stroke-linecap="round"/>
+<rect x="0.0" y="168.0" width="400.0" height="152.0" rx="0" fill="#E9DCC8"  />
+<rect x="0.0" y="150.0" width="400.0" height="18.0" rx="0" fill="#B07A4A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<g transform="translate(200 250) scale(1.45) translate(-200 -214)">
+<g class="spot" data-id="bowl">
+<path d="M140 200 q60 70 120 0 z" fill="#E05A4F" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M150 208 q50 40 100 0" fill="none" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" stroke="#FFFFFF"/>
+<ellipse cx="200.0" cy="200.0" rx="60.0" ry="12.0" fill="#F1E3C3" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="noodles">
+<path d="M160 200 q8 -6 16 0 q8 6 16 0 q8 -6 16 0 q8 6 16 0" fill="none" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke="#F4D35E"/>
+</g>
+<g class="spot" data-id="chashu">
+<ellipse cx="178.0" cy="196.0" rx="13.0" ry="8.0" fill="#C98B5A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="178.0" cy="196.0" rx="7.0" ry="4.0" fill="#E8B98C" stroke="#3B3246" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="egg">
+<ellipse cx="212.0" cy="194.0" rx="10.0" ry="8.0" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="212.0" cy="194.0" r="4.5" fill="#F4A340" stroke="#3B3246" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="nori">
+<rect x="228.0" y="176.0" width="14.0" height="26.0" rx="1" fill="#1F2D2A" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+</g>
+<g class="spot" data-id="ticket">
+<g transform="rotate(-8 70 250)">
+<rect x="40.0" y="236.0" width="60.0" height="30.0" rx="2" fill="#FFF8E6" stroke="#3B3246" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" />
+<text x="70" y="250" font-size="7" text-anchor="middle" fill="#3B3246" font-family="sans-serif" font-weight="700">醤油らーめん</text>
+<text x="70" y="261" font-size="6" text-anchor="middle" fill="#C63A2F" font-family="sans-serif" font-weight="700">食券</text>
+</g>
+</g>
+<g class="spot" data-id="renge">
+<path d="M300 268 q22 -5 32 8 q-12 10 -32 5 l-32 8 l0 -5 z" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="chopsticks">
+<line x1="40" y1="292" x2="150" y2="306" stroke="#3B3246" stroke-width="4" stroke-linecap="round"/>
+<line x1="40" y1="300" x2="150" y2="313" stroke="#3B3246" stroke-width="4" stroke-linecap="round"/>
+<line x1="40" y1="292" x2="150" y2="306" stroke="#D9B27C" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="40" y1="300" x2="150" y2="313" stroke="#D9B27C" stroke-width="2.2" stroke-linecap="round"/>
+</g>
+<g class="spot" data-id="pepper">
+<rect x="310.0" y="118.0" width="16.0" height="32.0" rx="3" fill="#F7F1E4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="310.0" y="114.0" width="16.0" height="6.0" rx="2" fill="#B8BCC4" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<text x="318" y="138" font-size="8" text-anchor="middle" fill="#3B3246" font-family="sans-serif" font-weight="700">胡</text>
+</g>
+<g class="spot" data-id="ginger">
+<rect x="334.0" y="124.0" width="26.0" height="26.0" rx="4" fill="#F7F1E4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="347.0" cy="124.0" rx="13.0" ry="3.0" fill="#E8697C" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<text x="347" y="142" font-size="8" text-anchor="middle" fill="#C63A2F" font-family="sans-serif" font-weight="700">紅</text>
+</g>
+<g class="spot" data-id="water">
+<path d="M340 214 l5 58 h26 l5 -58 z" fill="#DFF1FA" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="343.0" y="230.0" width="30.0" height="40.0" rx="0" fill="#BFE0F0"  opacity=".7"/>
+</g>
+</svg>

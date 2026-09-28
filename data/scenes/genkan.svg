@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="The entrance (genkan) of a Japanese home">
+<rect width="400" height="320" fill="#F1EADF"/>
+<g class="spot" data-id="door">
+<rect x="10.0" y="20.0" width="110.0" height="230.0" rx="2" fill="#8A6A45" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="20.0" y="30.0" width="90.0" height="120.0" rx="2" fill="#A07E56" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="key">
+<rect x="96.0" y="150.0" width="10.0" height="24.0" rx="2" fill="#D9DDE2" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="101.0" cy="158.0" r="2.5" fill="#46424E"  />
+</g>
+<g class="spot" data-id="intercom">
+<rect x="136.0" y="70.0" width="30.0" height="44.0" rx="4" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="141.0" y="76.0" width="20.0" height="14.0" rx="2" fill="#46424E" stroke="#3B3246" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="151.0" cy="102.0" r="5.0" fill="#E6E9EB" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<rect x="130.0" y="160.0" width="270.0" height="62.0" rx="0" fill="#E9DCC8"  />
+<g class="spot" data-id="getabako">
+<rect x="270.0" y="70.0" width="120.0" height="152.0" rx="3" fill="#C9A77C" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="330" y1="70" x2="330" y2="222" stroke="#3B3246" stroke-width="1.2" stroke-linecap="round"/>
+<rect x="322.0" y="140.0" width="4.0" height="16.0" rx="0" fill="#8A6A45" stroke="#3B3246" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="334.0" y="140.0" width="4.0" height="16.0" rx="0" fill="#8A6A45" stroke="#3B3246" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="flower">
+<rect x="300.0" y="52.0" width="20.0" height="18.0" rx="3" fill="#4A6A8A" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="304.0" cy="44.0" r="5.0" fill="#E88BB5" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<circle cx="316.0" cy="42.0" r="5.0" fill="#F4C04E" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="tataki">
+<polygon points="0.0,250.0 400.0,250.0 400.0,320.0 0.0,320.0" fill="#9A938A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="0" y1="250" x2="60.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="50" y1="250" x2="95.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="100" y1="250" x2="130.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="150" y1="250" x2="165.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="200" y1="250" x2="200.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="250" y1="250" x2="235.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="300" y1="250" x2="270.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="350" y1="250" x2="305.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="400" y1="250" x2="340.0" y2="320" stroke="#7E776E" stroke-width="0.5" stroke-linecap="round"/>
+</g>
+<g class="spot" data-id="agarikamachi">
+<rect x="130.0" y="222.0" width="270.0" height="14.0" rx="0" fill="#B07A4A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="130.0" y="236.0" width="270.0" height="14.0" rx="0" fill="#8A5A34" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="shoes">
+<path d="M40 282 q0 -12 20 -12 h24 q10 0 10 12 z" fill="#2B2B33" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M100 290 q0 -12 20 -12 h24 q10 0 10 12 z" fill="#2B2B33" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="sneakers">
+<path d="M180 294 q0 -14 16 -14 h22 q14 0 14 14 z" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="190" y1="286" x2="210" y2="286" stroke="#4C8FD6" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="spot" data-id="umbrella">
+<rect x="20.0" y="200.0" width="30.0" height="50.0" rx="3" fill="#B8BCC4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="28" y1="200" x2="24" y2="140" stroke="#3B3246" stroke-width="2" stroke-linecap="round"/>
+<line x1="40" y1="200" x2="46" y2="150" stroke="#3B3246" stroke-width="2" stroke-linecap="round"/>
+<path d="M24 140 q-6 -6 -2 -10" fill="none" stroke="#3B3246" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="slippers">
+<ellipse cx="200.0" cy="214.0" rx="16.0" ry="6.0" fill="#E88BB5" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="240.0" cy="214.0" rx="16.0" ry="6.0" fill="#E88BB5" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M190 212 q10 -8 20 0 M230 212 q10 -8 20 0" fill="#F4B6CF" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="mat">
+<polygon points="160.0,252.0 300.0,252.0 312.0,270.0 148.0,270.0" fill="#6F8F7A" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+</svg>

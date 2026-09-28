@@ -1,0 +1,72 @@
+{
+ "id": "station",
+ "title": "駅の改札",
+ "titleEn": "Station ticket gate",
+ "svg": "station.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "board": {
+   "jp": "発車標",
+   "reading": "はっしゃひょう",
+   "en": "departure board",
+   "phrase": "発車標で次の電車の時間を確かめた。",
+   "phraseEn": "I checked the next train's time on the departure board."
+  },
+  "faremap": {
+   "jp": "運賃表",
+   "reading": "うんちんひょう",
+   "en": "fare chart",
+   "phrase": "運賃表を見て、切符の値段を調べる。",
+   "phraseEn": "Look at the fare chart to find the ticket price."
+  },
+  "ticketmachine": {
+   "jp": "券売機",
+   "reading": "けんばいき",
+   "en": "ticket machine",
+   "phrase": "券売機でICカードにチャージできる。",
+   "phraseEn": "You can top up your IC card at the ticket machine."
+  },
+  "ticket": {
+   "jp": "切符",
+   "reading": "きっぷ",
+   "en": "ticket",
+   "phrase": "切符をなくさないようにしてください。",
+   "phraseEn": "Please don't lose your ticket."
+  },
+  "window": {
+   "jp": "みどりの窓口",
+   "reading": "みどりのまどぐち",
+   "en": "JR ticket office",
+   "phrase": "新幹線の切符はみどりの窓口で買った。",
+   "phraseEn": "I bought my shinkansen ticket at the JR ticket office."
+  },
+  "icreader": {
+   "jp": "ICカードのタッチ部分",
+   "reading": "ICカードのタッチぶぶん",
+   "en": "IC card reader",
+   "phrase": "ICカードをタッチして改札を通る。",
+   "phraseEn": "Touch your IC card and go through the gate."
+  },
+  "ticketslot": {
+   "jp": "切符の投入口",
+   "reading": "きっぷのとうにゅうぐち",
+   "en": "ticket slot",
+   "phrase": "切符は投入口に入れて、出口で取ってください。",
+   "phraseEn": "Put the ticket in the slot and take it at the other end."
+  },
+  "gateflap": {
+   "jp": "扉",
+   "reading": "とびら",
+   "en": "gate flap",
+   "phrase": "残高が足りないと、扉が閉まる。",
+   "phraseEn": "If your balance is too low, the flap closes."
+  },
+  "gate": {
+   "jp": "改札",
+   "reading": "かいさつ",
+   "en": "ticket gate",
+   "phrase": "改札を出たところで待っています。",
+   "phraseEn": "I'll wait just outside the ticket gate."
+  }
+ }
+}

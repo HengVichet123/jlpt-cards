@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Inside a commuter train">
+<rect width="400" height="320" fill="#EEF0EC"/>
+<rect x="0.0" y="0.0" width="400.0" height="40.0" rx="0" fill="#F7F7F4"  />
+<g class="spot" data-id="nakazuri">
+<rect x="150.0" y="8.0" width="100.0" height="40.0" rx="1" fill="#FFFFFF" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="150.0" y="8.0" width="100.0" height="10.0" rx="0" fill="#E05A6A" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<text x="200" y="16" font-size="7" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-weight="700">週刊ニュース</text>
+<text x="200" y="32" font-size="8" text-anchor="middle" fill="#3B3246" font-family="sans-serif" font-weight="700">特集：春の旅</text>
+<text x="200" y="43" font-size="6" text-anchor="middle" fill="#C63A2F" font-family="sans-serif" font-weight="700">本日発売</text>
+<line x1="160" y1="0" x2="160" y2="8" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<line x1="240" y1="0" x2="240" y2="8" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="spot" data-id="amidana">
+<polygon points="0.0,54.0 130.0,62.0 130.0,72.0 0.0,66.0" fill="#B8BCC4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<polygon points="400.0,54.0 270.0,62.0 270.0,72.0 400.0,66.0" fill="#B8BCC4" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="8" y1="55.48" x2="8" y2="66.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="18" y1="56.08" x2="18" y2="66.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="28" y1="56.68" x2="28" y2="67.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="38" y1="57.28" x2="38" y2="67.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="48" y1="57.88" x2="48" y2="68.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="58" y1="58.48" x2="58" y2="68.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="68" y1="59.08" x2="68" y2="69.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="78" y1="59.68" x2="78" y2="69.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="88" y1="60.28" x2="88" y2="70.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="98" y1="60.88" x2="98" y2="70.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="108" y1="61.48" x2="108" y2="71.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="118" y1="62.08" x2="118" y2="71.9" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="128" y1="62.68" x2="128" y2="72.4" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="278" y1="61.52" x2="278" y2="71.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="288" y1="60.92" x2="288" y2="71.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="298" y1="60.32" x2="298" y2="70.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="308" y1="59.72" x2="308" y2="70.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="318" y1="59.12" x2="318" y2="69.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="328" y1="58.52" x2="328" y2="69.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="338" y1="57.92" x2="338" y2="68.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="348" y1="57.32" x2="348" y2="68.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="358" y1="56.72" x2="358" y2="67.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="368" y1="56.12" x2="368" y2="67.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="378" y1="55.52" x2="378" y2="66.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="388" y1="54.92" x2="388" y2="66.1" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+<line x1="398" y1="54.32" x2="398" y2="65.6" stroke="#3B3246" stroke-width="0.8" stroke-linecap="round"/>
+</g>
+<rect x="0.0" y="74.0" width="130.0" height="90.0" rx="0" fill="#9FD4F2" stroke="#3B3246" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="270.0" y="74.0" width="130.0" height="90.0" rx="0" fill="#9FD4F2" stroke="#3B3246" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M0 140 q30 -20 60 -6 q40 16 70 -4 v34 h-130 z" fill="#8FC08A"  />
+<path d="M270 142 q40 -24 80 -4 q30 10 50 -6 v32 h-130 z" fill="#8FC08A"  />
+<g class="spot" data-id="window">
+<path d="M10 78 l22 0 l-13.2 60 l-8.8 0 z" fill="#FFFFFF" opacity=".45"/>
+<path d="M280 78 l22 0 l-13.2 60 l-8.8 0 z" fill="#FFFFFF" opacity=".45"/>
+<rect x="0" y="74" width="130" height="90" fill="none"/>
+</g>
+<g class="spot" data-id="door">
+<rect x="140.0" y="60.0" width="120.0" height="220.0" rx="3" fill="#C9D0D6" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="200" y1="60" x2="200" y2="280" stroke="#3B3246" stroke-width="1.5" stroke-linecap="round"/>
+<rect x="150.0" y="80.0" width="44.0" height="90.0" rx="4" fill="#BFE0F0" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="206.0" y="80.0" width="44.0" height="90.0" rx="4" fill="#BFE0F0" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="display">
+<rect x="160.0" y="52.0" width="80.0" height="16.0" rx="2" fill="#1E2A22" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<text x="200" y="64" font-size="8" text-anchor="middle" fill="#F4A340" font-family="sans-serif" font-weight="700">次は 豊橋</text>
+</g>
+<g class="spot" data-id="tsurikawa">
+<line x1="30" y1="40" x2="30" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="30" y1="40" x2="30" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M23 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M23 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+<line x1="70" y1="40" x2="70" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="70" y1="40" x2="70" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M63 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M63 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+<line x1="110" y1="40" x2="110" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="110" y1="40" x2="110" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M103 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M103 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+<line x1="290" y1="40" x2="290" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="290" y1="40" x2="290" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M283 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M283 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+<line x1="330" y1="40" x2="330" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="330" y1="40" x2="330" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M323 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M323 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+<line x1="370" y1="40" x2="370" y2="76" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="370" y1="40" x2="370" y2="76" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<path d="M363 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke="#3B3246" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M363 78 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0" fill="none" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" stroke="#F4C04E"/>
+</g>
+<line x1="0" y1="40" x2="130" y2="40" stroke="#3B3246" stroke-width="3" stroke-linecap="round"/>
+<line x1="270" y1="40" x2="400" y2="40" stroke="#3B3246" stroke-width="3" stroke-linecap="round"/>
+<g class="spot" data-id="seat">
+<rect x="0.0" y="200.0" width="130.0" height="34.0" rx="6" fill="#3E6FB0" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="0.0" y="232.0" width="130.0" height="20.0" rx="4" fill="#2F5783" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+</g>
+<g class="spot" data-id="priority">
+<rect x="270.0" y="200.0" width="130.0" height="34.0" rx="6" fill="#8A7AC8" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="270.0" y="232.0" width="130.0" height="20.0" rx="4" fill="#6C5BAE" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<rect x="300.0" y="176.0" width="70.0" height="18.0" rx="3" fill="#FFFFFF" stroke="#3B3246" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" />
+<text x="335" y="189" font-size="9" text-anchor="middle" fill="#6C5BAE" font-family="sans-serif" font-weight="700">優先席</text>
+</g>
+<g class="spot" data-id="handrail">
+<line x1="134" y1="160" x2="134" y2="280" stroke="#3B3246" stroke-width="4" stroke-linecap="round"/>
+<line x1="134" y1="160" x2="134" y2="280" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+<line x1="266" y1="160" x2="266" y2="280" stroke="#3B3246" stroke-width="4" stroke-linecap="round"/>
+<line x1="266" y1="160" x2="266" y2="280" stroke="#DDE3EA" stroke-width="2" stroke-linecap="round"/>
+</g>
+<rect x="0.0" y="252.0" width="400.0" height="68.0" rx="0" fill="#B9B2A8"  />
+<line x1="0" y1="252" x2="400" y2="252" stroke="#3B3246" stroke-width="1" stroke-linecap="round"/>
+<g class="spot" data-id="floor_sign">
+<rect x="160.0" y="286.0" width="80.0" height="22.0" rx="3" fill="#F4C04E" stroke="#3B3246" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" />
+<text x="200" y="301" font-size="9" text-anchor="middle" fill="#3B3246" font-family="sans-serif" font-weight="700">足元注意</text>
+</g>
+</svg>

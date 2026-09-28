@@ -1,0 +1,93 @@
+{
+ "id": "vending",
+ "title": "自動販売機",
+ "titleEn": "Vending machine",
+ "svg": "vending.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "sample": {
+   "jp": "見本",
+   "reading": "みほん",
+   "en": "sample, display model",
+   "phrase": "見本を見て、飲みたいものを選ぶ。",
+   "phraseEn": "Look at the samples and choose what you want to drink."
+  },
+  "hotcold": {
+   "jp": "あたたか〜い／つめた〜い",
+   "reading": "あたたかい／つめたい",
+   "en": "hot / cold (drink labels)",
+   "phrase": "冬は「あたたか〜い」の缶コーヒーが人気だ。",
+   "phraseEn": "In winter, \"hot\" canned coffee is popular."
+  },
+  "button": {
+   "jp": "ボタン",
+   "reading": "ボタン",
+   "en": "button",
+   "phrase": "お金を入れてから、ボタンを押してください。",
+   "phraseEn": "Put the money in, then press the button."
+  },
+  "soldout": {
+   "jp": "売り切れ",
+   "reading": "うりきれ",
+   "en": "sold out",
+   "phrase": "お茶は売り切れだった。",
+   "phraseEn": "The tea was sold out."
+  },
+  "coinslot": {
+   "jp": "硬貨投入口",
+   "reading": "こうかとうにゅうぐち",
+   "en": "coin slot",
+   "phrase": "百円玉を硬貨投入口に入れた。",
+   "phraseEn": "I put a 100-yen coin in the coin slot."
+  },
+  "billslot": {
+   "jp": "紙幣投入口",
+   "reading": "しへいとうにゅうぐち",
+   "en": "bill slot",
+   "phrase": "千円札しか使えません。",
+   "phraseEn": "Only 1000-yen bills can be used."
+  },
+  "icreader": {
+   "jp": "電子マネー",
+   "reading": "でんしマネー",
+   "en": "e-money (IC card) reader",
+   "phrase": "Suicaなどの電子マネーでも買える。",
+   "phraseEn": "You can also pay with e-money like Suica."
+  },
+  "display": {
+   "jp": "金額表示",
+   "reading": "きんがくひょうじ",
+   "en": "amount display",
+   "phrase": "入れた金額が金額表示に出る。",
+   "phraseEn": "The amount you put in appears on the display."
+  },
+  "returnlever": {
+   "jp": "返却レバー",
+   "reading": "へんきゃくレバー",
+   "en": "coin return lever",
+   "phrase": "間違えたら返却レバーを回してください。",
+   "phraseEn": "If you make a mistake, turn the return lever."
+  },
+  "change": {
+   "jp": "おつり",
+   "reading": "おつり",
+   "en": "change (money back)",
+   "phrase": "おつりを取り忘れないように。",
+   "phraseEn": "Don't forget to take your change."
+  },
+  "outlet": {
+   "jp": "取り出し口",
+   "reading": "とりだしぐち",
+   "en": "pickup slot",
+   "phrase": "商品は下の取り出し口から出てくる。",
+   "phraseEn": "The drink comes out of the slot at the bottom."
+  },
+  "recyclebox": {
+   "jp": "リサイクルボックス",
+   "reading": "リサイクルボックス",
+   "en": "recycling bin (cans/bottles)",
+   "phrase": "空き缶はリサイクルボックスに捨ててください。",
+   "phraseEn": "Please put empty cans in the recycling bin."
+  }
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "id": "genkan",
+ "title": "玄関",
+ "titleEn": "Entrance of a home",
+ "svg": "genkan.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "door": {
+   "jp": "ドア",
+   "reading": "ドア",
+   "en": "door",
+   "phrase": "ドアを開けると玄関がある。",
+   "phraseEn": "Open the door and there's the entrance."
+  },
+  "key": {
+   "jp": "鍵",
+   "reading": "かぎ",
+   "en": "key, lock",
+   "phrase": "出かけるときは鍵をかけてね。",
+   "phraseEn": "Lock the door when you go out."
+  },
+  "intercom": {
+   "jp": "インターホン",
+   "reading": "インターホン",
+   "en": "intercom",
+   "phrase": "インターホンが鳴ったので出た。",
+   "phraseEn": "The intercom rang, so I answered it."
+  },
+  "getabako": {
+   "jp": "靴箱",
+   "reading": "くつばこ",
+   "en": "shoe cabinet",
+   "phrase": "靴は靴箱にしまってください。",
+   "phraseEn": "Please put your shoes in the shoe cabinet."
+  },
+  "flower": {
+   "jp": "花",
+   "reading": "はな",
+   "en": "flowers",
+   "phrase": "玄関に花を飾ると明るくなる。",
+   "phraseEn": "Flowers make the entrance brighter."
+  },
+  "tataki": {
+   "jp": "たたき",
+   "reading": "たたき",
+   "en": "entry floor (where shoes go)",
+   "phrase": "靴はたたきで脱いでください。",
+   "phraseEn": "Please take off your shoes on the entry floor."
+  },
+  "agarikamachi": {
+   "jp": "上がり框",
+   "reading": "あがりかまち",
+   "en": "step up into the house",
+   "phrase": "上がり框から先は靴を脱いで上がる。",
+   "phraseEn": "Past the step, you go up without shoes."
+  },
+  "shoes": {
+   "jp": "靴",
+   "reading": "くつ",
+   "en": "shoes",
+   "phrase": "脱いだ靴はそろえておきましょう。",
+   "phraseEn": "Line up the shoes you took off."
+  },
+  "sneakers": {
+   "jp": "スニーカー",
+   "reading": "スニーカー",
+   "en": "sneakers",
+   "phrase": "子どものスニーカーが泥だらけだ。",
+   "phraseEn": "The kid's sneakers are all muddy."
+  },
+  "umbrella": {
+   "jp": "傘立て",
+   "reading": "かさたて",
+   "en": "umbrella stand",
+   "phrase": "ぬれた傘は傘立てに入れてください。",
+   "phraseEn": "Put wet umbrellas in the umbrella stand."
+  },
+  "slippers": {
+   "jp": "スリッパ",
+   "reading": "スリッパ",
+   "en": "slippers",
+   "phrase": "どうぞ、スリッパをお使いください。",
+   "phraseEn": "Please, use the slippers."
+  },
+  "mat": {
+   "jp": "玄関マット",
+   "reading": "げんかんマット",
+   "en": "doormat",
+   "phrase": "玄関マットで足をふいた。",
+   "phraseEn": "I wiped my feet on the doormat."
+  }
+ }
+}

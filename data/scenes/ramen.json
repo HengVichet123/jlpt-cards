@@ -1,0 +1,114 @@
+{
+ "id": "ramen",
+ "title": "ラーメン屋",
+ "titleEn": "Ramen shop",
+ "svg": "ramen.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "noren": {
+   "jp": "のれん",
+   "reading": "のれん",
+   "en": "shop curtain (noren)",
+   "phrase": "のれんが出ていたら営業中だ。",
+   "phraseEn": "If the noren is hung out, the shop is open."
+  },
+  "menu": {
+   "jp": "メニュー",
+   "reading": "メニュー",
+   "en": "menu",
+   "phrase": "壁のメニューを見て決めた。",
+   "phraseEn": "I decided by looking at the menu on the wall."
+  },
+  "ticketmachine": {
+   "jp": "券売機",
+   "reading": "けんばいき",
+   "en": "meal ticket machine",
+   "phrase": "先に券売機で食券を買ってください。",
+   "phraseEn": "Please buy a meal ticket at the machine first."
+  },
+  "ticket": {
+   "jp": "食券",
+   "reading": "しょっけん",
+   "en": "meal ticket",
+   "phrase": "食券をカウンターに置いてください。",
+   "phraseEn": "Please put your meal ticket on the counter."
+  },
+  "chef": {
+   "jp": "店主",
+   "reading": "てんしゅ",
+   "en": "shop owner (chef)",
+   "phrase": "店主が「麺の固さは？」と聞いた。",
+   "phraseEn": "The owner asked, \"How firm do you want your noodles?\""
+  },
+  "bowl": {
+   "jp": "どんぶり",
+   "reading": "どんぶり",
+   "en": "bowl",
+   "phrase": "どんぶりが熱いので気をつけてください。",
+   "phraseEn": "The bowl is hot, so be careful."
+  },
+  "noodles": {
+   "jp": "麺",
+   "reading": "めん",
+   "en": "noodles",
+   "phrase": "麺は固めでお願いします。",
+   "phraseEn": "Firm noodles, please."
+  },
+  "chashu": {
+   "jp": "チャーシュー",
+   "reading": "チャーシュー",
+   "en": "chashu (sliced pork)",
+   "phrase": "チャーシューを追加した。",
+   "phraseEn": "I added extra chashu."
+  },
+  "egg": {
+   "jp": "煮卵",
+   "reading": "にたまご",
+   "en": "soft-boiled marinated egg",
+   "phrase": "煮卵の黄身がとろとろだ。",
+   "phraseEn": "The egg yolk is soft and runny."
+  },
+  "nori": {
+   "jp": "のり",
+   "reading": "のり",
+   "en": "seaweed sheet",
+   "phrase": "のりをスープにひたして食べる。",
+   "phraseEn": "Dip the seaweed in the soup and eat it."
+  },
+  "renge": {
+   "jp": "レンゲ",
+   "reading": "レンゲ",
+   "en": "ramen spoon",
+   "phrase": "レンゲでスープを飲む。",
+   "phraseEn": "Drink the soup with the spoon."
+  },
+  "chopsticks": {
+   "jp": "割り箸",
+   "reading": "わりばし",
+   "en": "disposable chopsticks",
+   "phrase": "割り箸を割ってから食べ始めた。",
+   "phraseEn": "I split the chopsticks and started eating."
+  },
+  "pepper": {
+   "jp": "こしょう",
+   "reading": "こしょう",
+   "en": "pepper",
+   "phrase": "こしょうを少しかけるとおいしい。",
+   "phraseEn": "It's tasty with a little pepper."
+  },
+  "ginger": {
+   "jp": "紅しょうが",
+   "reading": "べにしょうが",
+   "en": "red pickled ginger",
+   "phrase": "紅しょうがはご自由にどうぞ。",
+   "phraseEn": "Help yourself to the red pickled ginger."
+  },
+  "water": {
+   "jp": "お冷",
+   "reading": "おひや",
+   "en": "cold water (served free)",
+   "phrase": "お冷はセルフサービスです。",
+   "phraseEn": "Water is self-service."
+  }
+ }
+}

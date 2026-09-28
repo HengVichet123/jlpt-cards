@@ -1,11 +1,5 @@
 [
  {
-  "id": "hotsnack",
-  "title": "ホットスナック",
-  "titleEn": "Hot snack case · photo",
-  "count": 8
- },
- {
   "id": "konbini",
   "title": "コンビニ",
   "titleEn": "Convenience store",
@@ -16,5 +10,53 @@
   "title": "コンビニの冷蔵ケース",
   "titleEn": "Konbini drinks case",
   "count": 15
+ },
+ {
+  "id": "vending",
+  "title": "自動販売機",
+  "titleEn": "Vending machine",
+  "count": 12
+ },
+ {
+  "id": "station",
+  "title": "駅の改札",
+  "titleEn": "Station ticket gate",
+  "count": 9
+ },
+ {
+  "id": "train",
+  "title": "電車の中",
+  "titleEn": "Inside the train",
+  "count": 10
+ },
+ {
+  "id": "ramen",
+  "title": "ラーメン屋",
+  "titleEn": "Ramen shop",
+  "count": 15
+ },
+ {
+  "id": "super",
+  "title": "スーパーの野菜売り場",
+  "titleEn": "Supermarket: vegetables",
+  "count": 12
+ },
+ {
+  "id": "toilet",
+  "title": "トイレ",
+  "titleEn": "Toilet",
+  "count": 13
+ },
+ {
+  "id": "genkan",
+  "title": "玄関",
+  "titleEn": "Entrance of a home",
+  "count": 12
+ },
+ {
+  "id": "washitsu",
+  "title": "和室",
+  "titleEn": "Japanese-style room",
+  "count": 11
  }
 ]

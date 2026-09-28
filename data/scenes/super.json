@@ -1,0 +1,93 @@
+{
+ "id": "super",
+ "title": "スーパーの野菜売り場",
+ "titleEn": "Supermarket: vegetables",
+ "svg": "super.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "cabbage": {
+   "jp": "キャベツ",
+   "reading": "キャベツ",
+   "en": "cabbage",
+   "phrase": "キャベツを半分だけ買った。",
+   "phraseEn": "I bought just half a cabbage."
+  },
+  "tomato": {
+   "jp": "トマト",
+   "reading": "トマト",
+   "en": "tomato",
+   "phrase": "トマトが安くなっている。",
+   "phraseEn": "Tomatoes are cheaper today."
+  },
+  "negi": {
+   "jp": "ねぎ",
+   "reading": "ねぎ",
+   "en": "green onion (negi)",
+   "phrase": "みそ汁にねぎを入れる。",
+   "phraseEn": "Put green onion in the miso soup."
+  },
+  "daikon": {
+   "jp": "大根",
+   "reading": "だいこん",
+   "en": "daikon radish",
+   "phrase": "冬の大根は甘くておいしい。",
+   "phraseEn": "Winter daikon is sweet and tasty."
+  },
+  "carrot": {
+   "jp": "にんじん",
+   "reading": "にんじん",
+   "en": "carrot",
+   "phrase": "カレーににんじんを入れる。",
+   "phraseEn": "Put carrots in the curry."
+  },
+  "onion": {
+   "jp": "玉ねぎ",
+   "reading": "たまねぎ",
+   "en": "onion",
+   "phrase": "玉ねぎを切ると涙が出る。",
+   "phraseEn": "Cutting onions makes me cry."
+  },
+  "mushroom": {
+   "jp": "しいたけ",
+   "reading": "しいたけ",
+   "en": "shiitake mushroom",
+   "phrase": "しいたけを焼いて食べた。",
+   "phraseEn": "I grilled and ate shiitake."
+  },
+  "pack": {
+   "jp": "パック",
+   "reading": "パック",
+   "en": "pack (packaged item)",
+   "phrase": "ピーマンは一パック百円だ。",
+   "phraseEn": "Green peppers are 100 yen a pack."
+  },
+  "hangaku": {
+   "jp": "半額シール",
+   "reading": "はんがくシール",
+   "en": "half-price sticker",
+   "phrase": "夜になると半額シールが貼られる。",
+   "phraseEn": "In the evening, half-price stickers get put on."
+  },
+  "pricetag": {
+   "jp": "値札",
+   "reading": "ねふだ",
+   "en": "price tag",
+   "phrase": "値札は税抜きの値段だった。",
+   "phraseEn": "The price tag showed the price before tax."
+  },
+  "basket": {
+   "jp": "買い物かご",
+   "reading": "かいものかご",
+   "en": "shopping basket",
+   "phrase": "入口で買い物かごを取る。",
+   "phraseEn": "Grab a shopping basket at the entrance."
+  },
+  "cart": {
+   "jp": "カート",
+   "reading": "カート",
+   "en": "shopping cart",
+   "phrase": "重いものはカートに入れよう。",
+   "phraseEn": "Let's put heavy things in the cart."
+  }
+ }
+}

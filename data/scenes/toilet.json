@@ -1,0 +1,100 @@
+{
+ "id": "toilet",
+ "title": "トイレ",
+ "titleEn": "Toilet",
+ "svg": "toilet.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "tank": {
+   "jp": "タンク",
+   "reading": "タンク",
+   "en": "water tank",
+   "phrase": "タンクの水が止まらない。",
+   "phraseEn": "The tank water won't stop running."
+  },
+  "flushlever": {
+   "jp": "レバー（大・小）",
+   "reading": "レバー（だい・しょう）",
+   "en": "flush lever (big / small flush)",
+   "phrase": "使用後はレバーを「大」か「小」に回して流す。",
+   "phraseEn": "After use, turn the lever to \"big\" or \"small\" to flush."
+  },
+  "lid": {
+   "jp": "ふた",
+   "reading": "ふた",
+   "en": "lid",
+   "phrase": "使い終わったら、ふたを閉めてください。",
+   "phraseEn": "Please close the lid when you're done."
+  },
+  "seat": {
+   "jp": "便座",
+   "reading": "べんざ",
+   "en": "toilet seat",
+   "phrase": "冬は便座が温かくてうれしい。",
+   "phraseEn": "In winter the heated seat is nice."
+  },
+  "bowl": {
+   "jp": "便器",
+   "reading": "べんき",
+   "en": "toilet bowl",
+   "phrase": "便器にトイレットペーパー以外を流さないでください。",
+   "phraseEn": "Don't flush anything but toilet paper."
+  },
+  "nozzle": {
+   "jp": "ノズル",
+   "reading": "ノズル",
+   "en": "nozzle (for the wash)",
+   "phrase": "ボタンを押すとノズルが出てくる。",
+   "phraseEn": "Press the button and the nozzle comes out."
+  },
+  "paper": {
+   "jp": "トイレットペーパー",
+   "reading": "トイレットペーパー",
+   "en": "toilet paper",
+   "phrase": "トイレットペーパーが切れています。",
+   "phraseEn": "We're out of toilet paper."
+  },
+  "stop": {
+   "jp": "止",
+   "reading": "とめ",
+   "en": "stop",
+   "phrase": "水が止まらないときは「止」を押す。",
+   "phraseEn": "If the water won't stop, press 止 (stop)."
+  },
+  "oshiri": {
+   "jp": "おしり",
+   "reading": "おしり",
+   "en": "rear wash",
+   "phrase": "「おしり」ボタンで温水が出る。",
+   "phraseEn": "The rear-wash button sprays warm water."
+  },
+  "bidet": {
+   "jp": "ビデ",
+   "reading": "ビデ",
+   "en": "bidet (front wash)",
+   "phrase": "ビデは女性用の洗浄だ。",
+   "phraseEn": "The bidet is the front wash for women."
+  },
+  "dry": {
+   "jp": "乾燥",
+   "reading": "かんそう",
+   "en": "dryer (warm air)",
+   "phrase": "洗浄のあとに乾燥ボタンを押す。",
+   "phraseEn": "After washing, press the dry button."
+  },
+  "pressure": {
+   "jp": "水勢",
+   "reading": "すいせい",
+   "en": "water pressure",
+   "phrase": "水勢が強すぎたら弱くしてください。",
+   "phraseEn": "If the water pressure is too strong, turn it down."
+  },
+  "handwash": {
+   "jp": "手洗い",
+   "reading": "てあらい",
+   "en": "hand-washing basin",
+   "phrase": "タンクの上に手洗いがついている。",
+   "phraseEn": "There's a hand-washing basin on top of the tank."
+  }
+ }
+}

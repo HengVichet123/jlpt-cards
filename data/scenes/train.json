@@ -1,0 +1,79 @@
+{
+ "id": "train",
+ "title": "電車の中",
+ "titleEn": "Inside the train",
+ "svg": "train.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "nakazuri": {
+   "jp": "中吊り広告",
+   "reading": "なかづりこうこく",
+   "en": "hanging ad in a train",
+   "phrase": "中吊り広告で新しい雑誌を知った。",
+   "phraseEn": "I found out about a new magazine from a hanging train ad."
+  },
+  "amidana": {
+   "jp": "網棚",
+   "reading": "あみだな",
+   "en": "overhead luggage rack",
+   "phrase": "大きな荷物は網棚に上げてください。",
+   "phraseEn": "Please put big bags on the overhead rack."
+  },
+  "window": {
+   "jp": "窓",
+   "reading": "まど",
+   "en": "window",
+   "phrase": "窓から富士山が見えた。",
+   "phraseEn": "I could see Mt. Fuji from the window."
+  },
+  "door": {
+   "jp": "ドア",
+   "reading": "ドア",
+   "en": "door",
+   "phrase": "ドアが閉まります。ご注意ください。",
+   "phraseEn": "The doors are closing. Please be careful."
+  },
+  "display": {
+   "jp": "車内表示",
+   "reading": "しゃないひょうじ",
+   "en": "in-train display",
+   "phrase": "車内表示に「次は豊橋」と出ている。",
+   "phraseEn": "The display says \"Next is Toyohashi.\""
+  },
+  "tsurikawa": {
+   "jp": "つり革",
+   "reading": "つりかわ",
+   "en": "hanging strap",
+   "phrase": "揺れるので、つり革におつかまりください。",
+   "phraseEn": "It shakes, so please hold on to a strap."
+  },
+  "seat": {
+   "jp": "座席",
+   "reading": "ざせき",
+   "en": "seat",
+   "phrase": "座席を詰めて座ってください。",
+   "phraseEn": "Please sit close together so others can sit."
+  },
+  "priority": {
+   "jp": "優先席",
+   "reading": "ゆうせんせき",
+   "en": "priority seat",
+   "phrase": "優先席付近では携帯電話の電源をお切りください。",
+   "phraseEn": "Please turn off your phone near the priority seats."
+  },
+  "handrail": {
+   "jp": "手すり",
+   "reading": "てすり",
+   "en": "handrail",
+   "phrase": "手すりにつかまって立った。",
+   "phraseEn": "I stood holding the handrail."
+  },
+  "floor_sign": {
+   "jp": "足元注意",
+   "reading": "あしもとちゅうい",
+   "en": "watch your step",
+   "phrase": "電車とホームの間が広いので、足元にご注意ください。",
+   "phraseEn": "The gap is wide, so please watch your step."
+  }
+ }
+}
