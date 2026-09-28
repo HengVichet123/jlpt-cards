@@ -949,7 +949,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 /* Home */
 .home{padding:calc(env(safe-area-inset-top,0px) + 28px) 0 24px;display:flex;flex-direction:column;gap:14px}
 .home h1{font:800 40px/1.1 var(--display);margin:0;letter-spacing:.02em}
-.home h1::after{content:"記憶の宮殿";display:block;font-size:15px;font-weight:600;color:var(--shu);letter-spacing:.3em;margin-top:6px}
+.home h1::after{content:"Japanese Mind Palace";display:block;font-size:15px;font-weight:600;color:var(--shu);letter-spacing:.3em;margin-top:6px}
 .home p{margin:0 0 6px;color:var(--soft)}
 .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .home-card{position:relative;text-align:left;padding:18px 16px 16px 30px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
@@ -1293,8 +1293,8 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .tk.on{background:color-mix(in srgb, var(--shu) 16%, transparent)}
 .tip-bubble{position:absolute;z-index:20;max-width:260px;padding:7px 11px;border-radius:8px;background:var(--ink);color:var(--paper);
   font:600 13.5px/1.4 var(--body);box-shadow:0 6px 18px rgba(0,0,0,.22);pointer-events:none}
-.cover b{font-size:22px}
 .pt-en{display:block;font:500 10.5px var(--body);color:var(--faint);letter-spacing:.04em;margin-top:1px}
+.home h1::after{letter-spacing:.08em;font-size:14px}
 </style>
 </head>
 
@@ -1342,7 +1342,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v63";
+const APP_VERSION = "v64";
 
 
 /* =========================================================
@@ -2637,7 +2637,7 @@ function renderHome(){
     <section class="home">
 
       <h1>
-        Japanese Mind Palace
+        記憶の宮殿
       </h1>
 
 
@@ -2650,12 +2650,12 @@ function renderHome(){
 
       <h2 class="home-h">Study</h2>
       <div class="core">
-        <button class="cover cover-play" data-home="playground"><i>練</i><b>練習</b><span>Playground · review one card at a time</span></button>
-        <button class="cover cover-list" data-home="complete"><i>覧</i><b>一覧</b><span>Complete list · ${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
-        <button class="cover cover-read" data-home="reading"><i>読</i><b>読解</b><span>Reading · learn, then read</span></button>
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>Review cards one at a time</span></button>
+        <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
+        <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
       </div>
 
-      <button class="sec-bar" data-home="sections"><i>節</i><b>分野別</b><span>Sections · words grouped by topic</span><em>›</em></button>
+      <button class="sec-bar" data-home="sections"><i>節</i><b>Sections</b><span>Words grouped by topic</span><em>›</em></button>
 
       <h2 class="home-h">Later <small>side projects</small></h2>
       <div class="side">
@@ -3034,7 +3034,7 @@ async function renderSections(){
   document.body.classList.remove("playing");
   const S = await loadSections();
   const LVL = store.get("jc:slevel", "N1") === "N2" ? "N2" : "N1";
-  $("#pageTitle").innerHTML = `分野別<small class="pt-en">Sections</small>`;
+  $("#pageTitle").textContent = "Sections";
   const part = s => /^[1-5]/.test(s.code) ? s.code[0] : "x";
   const parts = {}; S[LVL].forEach((s, i) => (parts[part(s)] = parts[part(s)] || []).push([s, i + 1]));
   const PN = ["一","二","三","四","五","六"];
@@ -3139,7 +3139,7 @@ async function renderPrelearn(id){
     <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a></p>
   </section>`;
   $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
-  $("#preBack").onclick = () => { $("#pageTitle").innerHTML = `読解<small class="pt-en">Reading</small>`; renderReading(); };
+  $("#preBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
     cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
 
@@ -3202,7 +3202,7 @@ async function renderStory(id){
     <div class="story-meta">${st.level} · ${esc(st.source)}</div>
     ${st.sentences.map(x => `<div class="ex story-line">${sayBtn(x.jp)}<span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
   </section>`;
-  $("#storyBack").onclick = () => { $("#pageTitle").innerHTML = `読解<small class="pt-en">Reading</small>`; renderReading(); };
+  $("#storyBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
 }
 
 function famBar(lvl, t, no){
@@ -3733,7 +3733,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {home:"", playground:T2("練習","Playground"), complete:T2("一覧","Complete list"), reading:T2("読解","Reading"), novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:T2("分野別","Sections")};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
