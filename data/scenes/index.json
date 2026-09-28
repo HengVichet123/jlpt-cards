@@ -1,11 +1,5 @@
 [
  {
-  "id": "vending_anime",
-  "title": "自動販売機（アニメ風）",
-  "titleEn": "Vending machine · AI-painted test",
-  "count": 12
- },
- {
   "id": "konbini",
   "title": "コンビニ",
   "titleEn": "Convenience store",
