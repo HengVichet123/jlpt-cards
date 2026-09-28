@@ -1163,6 +1163,7 @@ body.showfam .fam{opacity:.85;transform:none}
 /* v47: Complete list level switch */
 .seg.seg-2{grid-template-columns:repeat(2,1fr);width:132px;flex:none}
 .complete-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.complete-more{height:1px}
 </style>
 </head>
 
@@ -1210,7 +1211,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v48";
+const APP_VERSION = "v49";
 
 
 /* =========================================================
@@ -2497,6 +2498,7 @@ async function renderComplete(){
   };
 
 
+  const PAGE = 60;   // draw cards in pages; the rest load as you scroll (thousands of cards)
   const section =
     (t,label) =>
       `
@@ -2507,11 +2509,12 @@ async function renderComplete(){
             ${label}
           </h2>
 
-          ${
-            pool[t]
+          <div class="complete-cards">${
+            pool[t].slice(0, PAGE)
               .map(c => { CARD_LVL = c.level; return make[t](c); })
               .join("")
-          }
+          }</div>
+          <div class="complete-more" aria-hidden="true"></div>
 
         </section>
 
@@ -2559,6 +2562,19 @@ async function renderComplete(){
 
   document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
   document.querySelectorAll("[data-clevel]").forEach(el => el.onclick = () => { store.set("jc:clevel", el.dataset.clevel); renderComplete(); });
+  let shown = PAGE;
+  const more = document.querySelector(".complete-more");
+  if(more && pool[TAB].length > PAGE){
+    const grow = () => {
+      if(!more.isConnected || shown >= pool[TAB].length) return;
+      if(more.getBoundingClientRect().top > innerHeight + 800) return;
+      const next = pool[TAB].slice(shown, shown + PAGE); shown += next.length;
+      document.querySelector(".complete-cards").insertAdjacentHTML("beforeend",
+        next.map(c => { CARD_LVL = c.level; return make[TAB](c); }).join(""));
+    };
+    new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)) grow(); }, {rootMargin:"800px"}).observe(more);
+    addEventListener("scroll", grow, {passive:true});
+  }
   if(false) $("#completeHome").onclick =
     () => {
 
