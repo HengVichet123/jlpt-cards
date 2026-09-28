@@ -1,0 +1,116 @@
+{
+ "id": "konbini",
+ "title": "コンビニ",
+ "titleEn": "Convenience store",
+ "svg": "../scenes/konbini_anime.svg",
+ "source": "Illustration and labels by Claude",
+ "items": {
+  "fridge": {
+   "jp": "冷蔵ケース",
+   "reading": "れいぞうケース",
+   "en": "refrigerated case (drinks)",
+   "phrase": "冷たい飲み物はこちらです。",
+   "phraseEn": "Cold drinks are over here.",
+   "zoom": "konbini_drinks"
+  },
+  "onigiri": {
+   "jp": "おにぎり",
+   "reading": "おにぎり",
+   "en": "rice ball",
+   "phrase": "おにぎり、温めますか？（普通は温めない）",
+   "phraseEn": "Shall I heat the rice ball? (usually not)"
+  },
+  "bento": {
+   "jp": "弁当",
+   "reading": "べんとう",
+   "en": "boxed meal",
+   "phrase": "お弁当、温めますか？",
+   "phraseEn": "Shall I heat your bento?"
+  },
+  "snacks": {
+   "jp": "お菓子",
+   "reading": "おかし",
+   "en": "snacks, sweets",
+   "phrase": "お菓子売り場",
+   "phraseEn": "the snack section"
+  },
+  "coffee": {
+   "jp": "コーヒーマシン",
+   "reading": "コーヒーマシン",
+   "en": "coffee machine",
+   "phrase": "カップをお取りください。",
+   "phraseEn": "Please take a cup."
+  },
+  "microwave": {
+   "jp": "電子レンジ",
+   "reading": "でんしレンジ",
+   "en": "microwave",
+   "phrase": "温めますか？",
+   "phraseEn": "Shall I heat it up?"
+  },
+  "clerk": {
+   "jp": "店員",
+   "reading": "てんいん",
+   "en": "store clerk",
+   "phrase": "いらっしゃいませ！",
+   "phraseEn": "Welcome!"
+  },
+  "register": {
+   "jp": "レジ",
+   "reading": "レジ",
+   "en": "cash register",
+   "phrase": "お会計は850円です。",
+   "phraseEn": "That comes to 850 yen."
+  },
+  "hotsnack": {
+   "jp": "ホットスナック",
+   "reading": "ホットスナック",
+   "en": "hot snacks (fried chicken etc.)",
+   "phrase": "からあげクンを一つください。",
+   "phraseEn": "One Karaage-kun, please."
+  },
+  "bag": {
+   "jp": "レジ袋",
+   "reading": "レジぶくろ",
+   "en": "plastic shopping bag",
+   "phrase": "袋はご利用ですか？",
+   "phraseEn": "Would you like a bag?"
+  },
+  "atm": {
+   "jp": "ATM",
+   "reading": "エーティーエム",
+   "en": "cash machine",
+   "phrase": "ATMはあちらです。",
+   "phraseEn": "The ATM is over there."
+  },
+  "copier": {
+   "jp": "コピー機",
+   "reading": "コピーき",
+   "en": "copy machine (also prints and scans)",
+   "phrase": "コピー機を使いたいんですが。",
+   "phraseEn": "I'd like to use the copier."
+  },
+  "magazines": {
+   "jp": "雑誌",
+   "reading": "ざっし",
+   "en": "magazines",
+   "phrase": "立ち読み禁止",
+   "phraseEn": "No reading without buying"
+  },
+  "basket": {
+   "jp": "買い物かご",
+   "reading": "かいものかご",
+   "en": "shopping basket",
+   "phrase": "かごをどうぞ。",
+   "phraseEn": "Here's a basket."
+  },
+  "trash": {
+   "jp": "ゴミ箱",
+   "reading": "ゴミばこ",
+   "en": "trash bin",
+   "phrase": "燃えるゴミ・ペットボトル",
+   "phraseEn": "burnable trash / plastic bottles"
+  }
+ },
+ "three": false
+}

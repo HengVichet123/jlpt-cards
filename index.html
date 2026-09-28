@@ -1166,7 +1166,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v37";
+const APP_VERSION = "v38";
 
 
 /* =========================================================
@@ -2406,6 +2406,7 @@ function renderHome(){
         <button class="home-card" data-home="reading"><b>読 Reading</b><span>Short stories to read</span></button>
         <button class="home-card" data-home="novels"><b>本 Novels</b><span>Famous books in short Japanese</span></button>
         <button class="home-card" data-home="scenes"><b>絵 Scenes</b><span>Learn through pictures</span></button>
+        <button class="home-card" data-home="explore"><b>探 Explorer</b><span>Zoom into life in Japan</span></button>
         <button class="home-card soon" disabled><b>商 Business</b><span>Coming soon</span></button>
       </div>
 
@@ -2623,6 +2624,7 @@ const loadScript = src => new Promise((ok, bad) => {
   const el = document.createElement("script"); el.src = src; el.dataset.src = src; el.onload = ok; el.onerror = bad;
   document.head.appendChild(el);
 });
+let SCENE_DIR = "scenes";   // Scenes = flat pictures; Explorer = zoomable places (data/explore)
 async function renderScenes(){
   document.body.classList.remove("playing");
   let list; try{ list = await (await fetch("data/scenes/index.json", {cache:"no-cache"})).json(); }
@@ -2636,16 +2638,16 @@ async function renderScenes(){
 async function renderScene(id, arrive){
   let sc, svg;
   try{
-    sc = await (await fetch(`data/scenes/${id}.json`, {cache:"no-cache"})).json();
-    svg = await (await fetch(`data/scenes/${sc.svg}`, {cache:"no-cache"})).text();
+    sc = await (await fetch(`data/${SCENE_DIR}/${id}.json`, {cache:"no-cache"})).json();
+    svg = await (await fetch(`data/${SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
   }catch(e){ return; }
   $("#pageTitle").textContent = sc.title;
-  if(sc.parent){ try{ const par = await (await fetch(`data/scenes/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
+  if(sc.parent){ try{ const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
   const open = store.get("jc:scenewords", true);
   $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack">${sc.parent ? "Zoom out" : "Back"}</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
+    <div class="story-top"><button class="nav-btn" id="sceneBack">${sc.parent ? "Zoom out" : SCENE_DIR === "explore" ? "Home" : "Back"}</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
     ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
-    <div class="scene-info" id="sceneInfo"><div class="scene-hint">Tap anything in the picture.</div></div>
+    <div class="scene-info" id="sceneInfo"><div class="scene-hint">${SCENE_DIR === "explore" ? "Tap anything to learn its name. 🔍 = you can zoom in." : "Tap anything in the picture."}</div></div>
     <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
       <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
         <b>${esc(v.jp)}</b><span class="rd">${esc(v.reading)}</span><span class="en">${esc(v.en)}</span></button>`).join("")}</div>
@@ -2748,10 +2750,11 @@ async function renderScene(id, arrive){
   if(sc.parent) $("#sceneBack").onclick = async () => {
     if(canvas && !still && canvas.animate){ canvas.style.transformOrigin = "50% 50%";
       await play([{transform:"scale(1)", opacity:1}, {transform:"scale(.7)", opacity:0}], {duration:320, easing:"ease-in", fill:"forwards"}); }
-    const par = await (await fetch(`data/scenes/${sc.parent}.json`, {cache:"no-cache"})).json();
+    const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json();
     renderScene(sc.parent, {dir:"out", spot: Object.keys(par.items).find(x => par.items[x].zoom === id)});
   };
-  else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; } renderScenes(); };
+  else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; }
+    if(SCENE_DIR === "explore") pick("home"); else renderScenes(); };
 }
 
 /* ---------- Reading ---------- */
@@ -3301,7 +3304,7 @@ function pick(id){
   PG_RUNNING = false;
   CURRENT = id;
 
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes"};
+  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", explore:"Explorer"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").textContent = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -3329,8 +3332,12 @@ function pick(id){
   else if(id === "novels")
     renderNovels();
 
-  else if(id === "scenes")
-    renderScenes();
+  else if(id === "scenes"){
+    SCENE_DIR = "scenes"; renderScenes(); }
+
+  else if(id === "explore"){
+    SCENE_DIR = "explore";
+    fetch("data/explore/index.json", {cache:"no-cache"}).then(r => r.json()).then(x => renderScene(x.start)).catch(() => {}); }
 
   else
     load(id);
