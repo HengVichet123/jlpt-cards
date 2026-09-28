@@ -1128,6 +1128,11 @@ body.showfam .fam{opacity:.85;transform:none}
 /* v42: Show all on photos outlines every tap area so each label is tied to its object */
 .photo-scene.all .hit{fill:rgba(255,255,255,.08);stroke:#FFFFFF;stroke-width:3;stroke-dasharray:10 6}
 .photo-scene.all .spot.on .hit{stroke:#C63A2F;stroke-dasharray:none}
+/* v43: AI-painted scenes: image underneath, drawing's shapes invisible but still tappable, text kept crisp */
+.scene-canvas svg.styled :is(rect,path,circle,ellipse,line,polygon){opacity:0}
+.scene-canvas svg.styled .spot.on :is(rect,path,circle,ellipse,polygon){opacity:.35;fill:#C63A2F}
+.scene-canvas svg.styled .tag rect{opacity:1}
+.scene-canvas svg.styled > g > text, .scene-canvas svg.styled > text{paint-order:stroke;stroke:rgba(20,16,24,.6);stroke-width:1.4px}
 </style>
 </head>
 
@@ -1175,7 +1180,7 @@ body.showfam .fam{opacity:.85;transform:none}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v42";
+const APP_VERSION = "v43";
 
 
 /* =========================================================
