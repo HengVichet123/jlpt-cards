@@ -1244,6 +1244,9 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
 .mini-ex{font-size:14px;color:var(--soft);padding-left:54px;line-height:1.6}
 .mini-ex .rei{color:var(--faint);font-size:12px}
 .complete-cards > .card.open{margin-bottom:6px}
+/* v58: section titles in English */
+.toc-name small{display:block;font:500 11.5px var(--body);color:var(--faint);margin-top:1px}
+.sec-title em{display:block;font:600 14px var(--body);font-style:normal;color:var(--soft);margin-top:2px}
 </style>
 </head>
 
@@ -1291,7 +1294,7 @@ ol.toc li button:hover .toc-name{color:var(--shu)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v57";
+const APP_VERSION = "v58";
 
 
 /* =========================================================
@@ -2211,7 +2214,7 @@ async function renderPG(){
       const lvls = st.level === "ALL" ? ["N1","N2"] : [st.level];
       if(!st.section || !lvls.includes(st.section.split("-")[0])){ st.section = (S[lvls[0]][0] || {}).id; store.set("jc:pg", st); }
       secOptions = lvls.map(lv => `<optgroup label="${lv}">${S[lv].map((s, i) =>
-        `<option value="${s.id}"${s.id === st.section ? " selected" : ""}>${i + 1}. ${esc(s.name)} · ${secSeen(lv, s)}/${s.words.length}</option>`).join("")}</optgroup>`).join("");
+        `<option value="${s.id}"${s.id === st.section ? " selected" : ""}>${i + 1}. ${esc(s.name)}${s.en ? ` (${esc(s.en)})` : ""} · ${secSeen(lv, s)}/${s.words.length}</option>`).join("")}</optgroup>`).join("");
     }
     const total = inSec ? st.n.words : st.n.words + st.n.kanji + st.n.grammar;
 
@@ -2965,7 +2968,7 @@ async function renderSections(){
     ${Object.keys(SEC_PARTS).filter(k => parts[k]).map((k, pi) => `
       <h3 class="toc-part"><span>第${PN[pi]}部</span>${SEC_PARTS[k][0]}<small>${SEC_PARTS[k][1]}</small></h3>
       <ol class="toc">${parts[k].map(([s, n]) => { const seen = secSeen(LVL, s);
-        return `<li><button data-sec="${s.id}"><span class="toc-no">${n}</span><span class="toc-name">${esc(s.name)}</span><span class="toc-dots"></span>
+        return `<li><button data-sec="${s.id}"><span class="toc-no">${n}</span><span class="toc-name">${esc(s.name)}${s.en ? `<small>${esc(s.en)}</small>` : ""}</span><span class="toc-dots"></span>
           <span class="toc-n${seen ? " on" : ""}">${seen ? `${seen}/` : ""}${s.words.length}語</span></button></li>`; }).join("")}</ol>`).join("")}
     <p class="story-meta">${esc(S.source || "")}</p></section>`;
   document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
@@ -2989,7 +2992,7 @@ async function renderSection(id){
   $("#pageTitle").textContent = s.name;
   $("#list").innerHTML = `<section class="complete">
     <div class="story-top"><button class="nav-btn" id="secBack">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
-    <h2 class="sec-title">${esc(s.name)}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
+    <h2 class="sec-title">${esc(s.name)}${s.en ? `<em>${esc(s.en)}</em>` : ""}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
     <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
   // tap a mini card -> the full card, opened, in its place
   document.querySelectorAll(".mini").forEach(m => m.onclick = () => {
