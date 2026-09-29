@@ -1785,11 +1785,42 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th-tip .tip-en{font:500 14px/1.4 var(--body)}
 .pv-cap{display:block;margin-top:6px;font:600 16px/1.5 var(--body);color:var(--ink)}
 .pv-cap em{font-style:normal;color:var(--shu);border-bottom:2px solid var(--shu)}
-.pv-rei{display:block;margin-top:8px;font:500 15px/1.5 var(--body);color:var(--soft)}
+.pv-rei{display:block;margin-top:10px;font:500 13px/1.5 var(--body);color:var(--soft)}
 .pv-rei em{font-style:normal;color:var(--ink);font-weight:700}
 /* v127: film subtitles: no highlight at all, any word can be tapped for its meaning */
 .th-tk,.th-tk.card,.th-tk:hover,.th-tk.on{background:none!important;border:0!important;color:inherit}
 .th-sub,.th-tk{-webkit-tap-highlight-color:transparent}
+.pv-rei-en{display:block;margin-top:1px;font:500 11.5px/1.4 var(--body);color:var(--faint)}
+.pv.no-en .pv-rei-en{display:none}
+.pv-entg{min-width:44px;min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:none;color:var(--faint);font:700 12px var(--body);cursor:pointer}
+.pv-entg[aria-pressed="true"]{color:var(--ink);border-color:var(--soft)}
+/* v128: session table = one outline, header set apart, no inner lines */
+.deck-table{background:none!important;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.deck-table.editing{border-color:var(--line)}
+.deck-table .deck-head{padding:12px 0 10px 16px;background:var(--chip);border-bottom:1px solid var(--line)}
+.deck-table .deck-head .dh-name{text-align:left;font:700 13px var(--body);color:var(--soft)}
+.deck-table .deck-list > li{border-bottom:0}
+.deck-table .deck{padding-left:16px}
+.deck-table .deck-edit{padding-left:16px}
+/* v128: Practice run: Exit back at the top-left */
+body.playing .pg-bottom .pg-exit{top:calc(env(safe-area-inset-top,0px) + 8px);bottom:auto;left:10px;transform:none;min-height:44px;padding:0 14px;font:700 16px var(--body);color:var(--soft)}
+body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important}
+/* v128: New session as a side sheet over the Practice list */
+.pg-scrim{position:fixed;inset:0;z-index:40;background:rgba(10,12,16,.38);opacity:0;transition:opacity .3s ease}
+.pg-sheet{position:fixed;top:0;right:0;bottom:0;z-index:41;width:min(440px,88vw);display:flex;flex-direction:column;background:var(--paper);
+  box-shadow:-18px 0 40px -18px rgba(0,0,0,.45);border-radius:18px 0 0 18px;transform:translateX(104%);transition:transform .32s cubic-bezier(.2,.8,.2,1);
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.sheet-open .pg-scrim{opacity:1}
+.sheet-open .pg-sheet{transform:none}
+#list,.pg-dock{transition:transform .32s cubic-bezier(.2,.8,.2,1),filter .32s ease}
+.sheet-open #list,.sheet-open .pg-dock{transform:translateX(-6%) scale(.97)}
+.pg-sheet-head{display:flex;align-items:center;gap:6px;padding:12px 12px 4px}
+.pg-sheet-head b{font:700 19px var(--display)}
+.pg-sheet-x{min-width:44px;min-height:44px;border:0;border-radius:10px;background:none;color:var(--ink);font:500 26px/1 var(--body);cursor:pointer}
+.pg-sheet-x:hover{background:var(--chip)}
+.pg-sheet-body.play-setup{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 18px 24px;max-width:none;margin:0}
+.pg-sheet-body .pg-new{display:flex;flex-direction:column;gap:10px}
+@media (prefers-reduced-motion: reduce){ .pg-sheet,.pg-scrim,#list,.pg-dock{transition:none} }
 </style>
 </head>
 
@@ -1838,7 +1869,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v127";
+const APP_VERSION = "v128";
 
 
 /* =========================================================
@@ -2609,14 +2640,37 @@ function sessCounts(se){   // Anki-style: New = never reviewed, Learn = seen but
     const p = pgProfile(lvl, t, no); if(!p.reviews) n++; else if((p.dueAt || 0) > now) l++; else d++; }
   return {n, l, d};
 }
+function pgSheet(html){   // New session = a card sliding in from the right; the Practice list is nudged aside behind it
+  let sh = $("#pgSheet");
+  if(!html){ pgSheetClose(); return; }
+  if(!sh){
+    document.body.insertAdjacentHTML("beforeend", `<div id="pgScrim" class="pg-scrim"></div><aside id="pgSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="New session">
+      <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="pgSheetX" aria-label="Close">‹</button><b>${isJa() ? "新しいセッション" : "New session"}</b></div>
+      <div class="pg-sheet-body play-setup"></div></aside>`);
+    sh = $("#pgSheet");
+    const close = () => { PG_NEW = false; pgSheetClose(); };
+    $("#pgScrim").onclick = close; $("#pgSheetX").onclick = close;
+    let x0 = null;   // swipe right closes it
+    sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+    sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
+    requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+  }
+  sh.querySelector(".pg-sheet-body").innerHTML = html;
+}
+function pgSheetClose(instant){
+  const sh = $("#pgSheet"), sc = $("#pgScrim"); if(!sh) return;
+  document.body.classList.remove("sheet-open");
+  const gone = () => { sh.remove(); sc && sc.remove(); };
+  if(instant || calmMotion()) gone(); else setTimeout(gone, 320);
+}
 function pgDockLift(){   // move the bottom dock out of #list (page transitions transform #list, which drags fixed children along)
   document.querySelectorAll("body > .pg-dock").forEach(d => d.remove());
   const d = $("#list .pg-dock"); if(d) document.body.appendChild(d);
 }
-function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); }
+function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); if(PG_RUNNING || CURRENT !== "playground") pgSheetClose(true); }
 function pgHome(){
   const has = sessOpen().length > 0;
-  const ghost = `<div class="deck-table"><div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
+  const ghost = `<div class="deck-table"><div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
     [1, 2, 3].map(i => `<li><button type="button" class="deck ghost" data-act="new" aria-label="Empty. Start a new session"><span class="deck-name">${isJa() ? "空のセッション" : "Empty session"}</span><span class="deck-n">0</span><span class="deck-n">0</span><span class="deck-n">0</span></button></li>`).join("")}</ul></div>`;
   return `${has || SESS_UNDO ? sessLedger() : ghost}
     <div class="pg-dock"><div class="pg-dock-in">
@@ -2634,7 +2688,7 @@ function sessLedger(){
     const c = sessCounts(se);
     return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button></li>`; });
   if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div>`}
+  return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div>`}
     <ul class="deck-list">${rows.join("")}</ul></div>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
 }
 function sessRedraw(){ NAV_SAME = true; return renderPG(); }
@@ -2859,9 +2913,9 @@ async function renderPG(){
 
     const setup = `
 
-      <section class="play-setup${PG_NEW ? "" : " pg-home"}">${PG_NEW ? `<button class="nav-btn" id="pgNewBack" data-back="Practice">Back</button>` : PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
-        ${PG_NEW ? "" : pgHome()}
-        ${PG_NEW ? `<div class="pg-new">
+      <section class="play-setup pg-home">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
+        ${pgHome()}</section>`;
+    const form = !PG_NEW ? "" : `<div class="pg-new">
 
 
 
@@ -2887,14 +2941,12 @@ async function renderPG(){
 
         <div class="set-label"><label for="pgName">Name</label></div>
         <input id="pgName" class="pg-name" maxlength="40" autocomplete="off" placeholder="${esc(sessAutoName(inRead ? rdInfo.title : null))}">
-        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>` : ""}
-      </section>
-
-    `;
+        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>`;
 
 
     $("#list").innerHTML =
       setup;
+    pgSheet(form);
 
 
     $("#count").textContent =
@@ -2919,12 +2971,12 @@ async function renderPG(){
     });
     if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); NAV_SAME = true; renderPG(); };
     if($("#pgGo")) $("#pgGo").onclick = pgNew;
-    $("#pageTitle").textContent = PG_NEW ? "New session" : "Practice";
+    $("#pageTitle").textContent = "Practice";
     pgDockLift();
-    if($("#pgNewBack")) $("#pgNewBack").onclick = () => { PG_NEW = false; NAV_DIR = "back"; renderPG(); };
+
     document.querySelectorAll(".pg-act, .deck.ghost").forEach(b => b.onclick = async () => {
       const a = b.dataset.act;
-      if(a === "new"){ PG_NEW = true; renderPG(); scrollTo(0, 0); return; }
+      if(a === "new"){ PG_NEW = true; NAV_SAME = true; renderPG(); return; }
       if(a === "edit"){ if(SESS_EDIT === "all") sessSaveNames(); SESS_EDIT = SESS_EDIT === "all" ? null : "all"; sessRedraw(); return; }
       if(a === "quick") pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`);
     });
@@ -3185,7 +3237,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
-  "Settings":"設定","Novels":"名作","Movies":"映画","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Settings":"設定","Novels":"名作","Movies":"映画","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
@@ -4218,13 +4270,13 @@ async function renderPicCat(key){
 function picView(C, W, clean){
   const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   $("#list").innerHTML = `<section class="pv">
-    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
+    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button>${C.key.startsWith("ira_") ? `<button class="pv-entg" id="pvEn" type="button" aria-pressed="${store.get("jc:illEn", true)}" aria-label="English example">EN</button>` : ""}<button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
       <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span>` : ""}</div></div>`; }).join("")}</div>
+      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span>${P[0].exEn ? `<span class="pv-rei-en">${esc(P[0].exEn)}</span>` : ""}` : ""}</div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
@@ -4256,6 +4308,8 @@ function picView(C, W, clean){
     if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
   addEventListener("keydown", keys);
   $("#pvBack").onclick = () => { (C.key.startsWith("ira_") ? renderIllust : renderPictures)(); scrollTo(0, 0); };
+  const pv = document.querySelector(".pv"); pv.classList.toggle("no-en", !store.get("jc:illEn", true));
+  if($("#pvEn")) $("#pvEn").onclick = () => { const on = !store.get("jc:illEn", true); store.set("jc:illEn", on); $("#pvEn").setAttribute("aria-pressed", on); pv.classList.toggle("no-en", !on); };
   mark(0);
 }
 
@@ -4963,7 +5017,7 @@ $("#lesson").onchange =
    ========================================================= */
 
 function pick(id){
-  pgDockDrop(); document.body.classList.remove("cinema");
+  pgDockDrop(); pgSheetClose(true); document.body.classList.remove("cinema");
   if(id !== "playground") PG_RETURN = null;
   PG_NEW = false; SESS_EDIT = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();
