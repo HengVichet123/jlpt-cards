@@ -1785,6 +1785,11 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th-tip .tip-en{font:500 14px/1.4 var(--body)}
 .pv-cap{display:block;margin-top:6px;font:600 16px/1.5 var(--body);color:var(--ink)}
 .pv-cap em{font-style:normal;color:var(--shu);border-bottom:2px solid var(--shu)}
+.pv-rei{display:block;margin-top:8px;font:500 15px/1.5 var(--body);color:var(--soft)}
+.pv-rei em{font-style:normal;color:var(--ink);font-weight:700}
+/* v127: film subtitles: no highlight at all, any word can be tapped for its meaning */
+.th-tk,.th-tk.card,.th-tk:hover,.th-tk.on{background:none!important;border:0!important;color:inherit}
+.th-sub,.th-tk{-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 
@@ -1833,7 +1838,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v126";
+const APP_VERSION = "v127";
 
 
 /* =========================================================
@@ -3618,7 +3623,7 @@ function renderTheatre(st){
       <span class="th-count"></span>
     </div></div></div>`;
   const subHTML = x => { if(!x.tk) return esc(x.jp); let h = "", at = 0;
-    for(const [a, b, g, r, c] of x.tk){ if(a < at) continue; h += esc(x.jp.slice(at, a)) + `<span class="th-tk${c ? " card" : ""}" data-g="${esc(g)}" data-r="${esc(r)}">${esc(x.jp.slice(a, b))}</span>`; at = b; }
+    for(const [a, b, g, r, c, base] of x.tk){ if(a < at) continue; h += esc(x.jp.slice(at, a)) + `<span class="th-tk" data-g="${esc(g)}" data-r="${esc(r)}" data-b="${esc(base || "")}">${esc(x.jp.slice(a, b))}</span>`; at = b; }
     return h + esc(x.jp.slice(at)); };
   const imgs = [...document.querySelectorAll(".th-img")], card = $(".th-card"), big = $(".th-big"), playB = $(".th-play");
   let front = 0, shown = -1, timer = 0;
@@ -3657,7 +3662,7 @@ function renderTheatre(st){
     if(!w){ tip.hidden = true; return; }
     if(STORY.cont) stopStory();   // look it up without losing the line
     w.classList.add("on");
-    tip.innerHTML = `<b>${esc(w.textContent)}</b>${w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : ""}${w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : ""}`;
+    tip.innerHTML = `<b>${esc(w.dataset.b || w.textContent)}</b>${w.dataset.r && !w.dataset.b ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : ""}${w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : ""}`;
     tip.hidden = false;
     const r = w.getBoundingClientRect(), br = $(".th-sub").getBoundingClientRect();
     tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
@@ -4219,7 +4224,7 @@ function picView(C, W, clean){
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
       <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}${P[0].cap ? `<span class="pv-cap">${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span><span class="pv-en">${esc(P[0].capEn || "")}</span>` : `<span class="pv-en">${esc(clean(w.en))}</span>`}${/irasutoya/.test(P[0].page || "") ? `<a class="pv-src" href="${esc(P[0].page)}" target="_blank" rel="noopener">いらすとや</a>` : ""}</div></div>`; }).join("")}</div>
+      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span>` : ""}</div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;

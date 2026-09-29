@@ -19,21 +19,24 @@
      6,
      "war",
      "せんそう",
-     0
+     0,
+     ""
     ],
     [
      7,
      10,
      "to end; to come to an end; to finish",
      "おわっ",
-     0
+     0,
+     "終わる"
     ],
     [
      14,
      16,
      "to pass (of time); to elapse",
      "",
-     0
+     0,
+     "たつ"
     ]
    ]
   },
@@ -46,49 +49,56 @@
      2,
      "war",
      "せんそう",
-     0
+     0,
+     ""
     ],
     [
      3,
      5,
      "to win; to gain victory",
      "かっ",
-     0
+     0,
+     "勝つ"
     ],
     [
      6,
      10,
      "Greece",
      "ぎりしゃ",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "hero; heroine; great person",
      "えいゆう",
-     1
+     1,
+     ""
     ],
     [
      17,
      19,
      "everyone; everybody; all",
      "",
-     0
+     0,
+     ""
     ],
     [
      19,
      21,
      "hometown; birthplace; native place; one's old home",
      "こきょう",
-     1
+     1,
+     ""
     ],
     [
      22,
      24,
      "to return; to come home; to go home",
      "かえっ",
-     0
+     0,
+     "帰る"
     ]
    ]
   },
@@ -101,28 +111,32 @@
      8,
      "wise man",
      "ちえしゃ",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "to know; to be aware (of); to be conscious (of)",
      "しら",
-     0
+     0,
+     "知る"
     ],
     [
      26,
      28,
      "still; as yet; only",
      "",
-     0
+     0,
+     ""
     ],
     [
      28,
      30,
      "to return; to come home; to go home",
      "かえれ",
-     0
+     0,
+     "帰れる"
     ]
    ]
   },
@@ -135,28 +149,32 @@
      3,
      "sea; ocean; waters",
      "うみ",
-     0
+     0,
+     ""
     ],
     [
      4,
      6,
      "goddess",
      "めがみ",
-     0
+     0,
+     ""
     ],
     [
      12,
      13,
      "island",
      "しま",
-     1
+     1,
+     ""
     ],
     [
      14,
      18,
      "to lock up; to shut up; to imprison",
      "とじこめ",
-     0
+     0,
+     "閉じ込める"
     ]
    ]
   },
@@ -169,35 +187,40 @@
      10,
      "to love",
      "あいし",
-     0
+     0,
+     "愛す"
     ],
     [
      15,
      17,
      "to shoot (arrow, bolt, dart)",
      "",
-     0
+     0,
+     "いる"
     ],
     [
      19,
      21,
      "eternity; perpetuity; permanence",
      "えいえん",
-     0
+     0,
+     ""
     ],
     [
      22,
      24,
      "to live; to exist",
      "いき",
-     0
+     0,
+     "生きる"
     ],
     [
      29,
      31,
      "to say; to utter; to declare",
      "いっ",
-     0
+     0,
+     "言う"
     ]
    ]
   },
@@ -210,42 +233,48 @@
      13,
      "every day; daily",
      "まいにち",
-     0
+     0,
+     ""
     ],
     [
      13,
      15,
      "seashore; coast; seaside",
      "かいがん",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to sit (down); to have a seat; to be seated",
      "すわり",
-     0
+     0,
+     "座る"
     ],
     [
      19,
      21,
      "hometown; birthplace; native place; one's old home",
      "こきょう",
-     1
+     1,
+     ""
     ],
     [
      27,
      29,
      "to think; to consider; to believe",
      "おもっ",
-     0
+     0,
+     "思う"
     ],
     [
      30,
      32,
      "to cry; to shed tears; to weep",
      "ない",
-     0
+     0,
+     "泣く"
     ]
    ]
   },
@@ -258,28 +287,32 @@
      10,
      "wife",
      "つま",
-     0
+     0,
+     ""
     ],
     [
      16,
      17,
      "husband",
      "おっと",
-     0
+     0,
+     ""
     ],
     [
      18,
      20,
      "return; coming back",
      "かえり",
-     0
+     0,
+     ""
     ],
     [
      21,
      23,
      "to wait",
      "まち",
-     0
+     0,
+     "待つ"
     ]
    ]
   },
@@ -292,56 +325,64 @@
      1,
      "house; residence; dwelling; home",
      "いえ",
-     1
+     1,
+     ""
     ],
     [
      8,
      10,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      12,
      16,
      "to go uninvited; to call on without an invitation; to barge in on",
      "おしかけ",
-     0
+     0,
+     "押しかける"
     ],
     [
      18,
      20,
      "fast; quick; rapid",
      "はやく",
-     0
+     0,
+     "早い"
     ],
     [
      20,
      23,
      "new; novel; fresh",
      "あたらしい",
-     0
+     0,
+     ""
     ],
     [
      23,
      24,
      "husband",
      "おっと",
-     0
+     0,
+     ""
     ],
     [
      25,
      27,
      "to choose; to select; to pick (out)",
      "えらべ",
-     0
+     0,
+     "選ぶ"
     ],
     [
      29,
      31,
      "to approach; to draw near; to be imminent",
      "せまっ",
-     1
+     1,
+     "迫る"
     ]
    ]
   },
@@ -354,35 +395,40 @@
      5,
      "every day; daily",
      "まいにち",
-     0
+     0,
+     ""
     ],
     [
      5,
      7,
      "party; banquet; reception; feast; dinner",
      "えんかい",
-     1
+     1,
+     ""
     ],
     [
      8,
      10,
      "to open; to undo; to unseal",
      "ひらき",
-     0
+     0,
+     "開く"
     ],
     [
      19,
      21,
      "property; fortune; assets",
      "ざいさん",
-     0
+     0,
+     ""
     ],
     [
      22,
      27,
      "to eat oneself out of house and home; to eat up completely",
      "くいつぶし",
-     0
+     0,
+     "食いつぶす"
     ]
    ]
   },
@@ -395,56 +441,64 @@
      2,
      "goddess",
      "めがみ",
-     0
+     0,
+     ""
     ],
     [
      2,
      5,
      "Athena (goddess); Athene",
      "あてな",
-     0
+     0,
+     ""
     ],
     [
      14,
      16,
      "pity; sorrow; grief",
      "あわれ",
-     0
+     0,
+     ""
     ],
     [
      17,
      19,
      "to think; to consider; to believe",
      "おもい",
-     0
+     0,
+     "思う"
     ],
     [
      20,
      21,
      "god; deity; divinity",
      "かみ",
-     0
+     0,
+     ""
     ],
     [
      23,
      24,
      "king; ruler; sovereign",
      "おう",
-     0
+     0,
+     ""
     ],
     [
      24,
      27,
      "Zeus (god)",
      "ぜうす",
-     0
+     0,
+     ""
     ],
     [
      28,
      30,
      "to request; to beg; to ask",
      "たのん",
-     0
+     0,
+     "頼む"
     ]
    ]
   },
@@ -457,28 +511,32 @@
      8,
      "finally; in the end; at last",
      "",
-     0
+     0,
+     ""
     ],
     [
      16,
      17,
      "island",
      "しま",
-     1
+     1,
+     ""
     ],
     [
      18,
      20,
      "to leave; to exit; to go out",
      "でる",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "to permit; to allow; to approve",
      "ゆるさ",
-     0
+     0,
+     "許す"
     ]
    ]
   },
@@ -495,63 +553,72 @@
      3,
      "raft",
      "",
-     0
+     0,
+     ""
     ],
     [
      4,
      5,
      "sea; ocean; waters",
      "うみ",
-     0
+     0,
+     ""
     ],
     [
      6,
      7,
      "to leave; to exit; to go out",
      "で",
-     0
+     0,
+     "出る"
     ],
     [
      17,
      18,
      "storm; tempest",
      "あらし",
-     0
+     0,
+     ""
     ],
     [
      19,
      21,
      "to be; to exist; to live",
      "",
-     0
+     0,
+     "ある"
     ],
     [
      23,
      25,
      "to be; to exist; to live",
      "",
-     0
+     0,
+     ""
     ],
     [
      25,
      26,
      "country; state",
      "くに",
-     1
+     1,
+     ""
     ],
     [
      27,
      29,
      "seashore; coast; seaside",
      "かいがん",
-     0
+     0,
+     ""
     ],
     [
      30,
      34,
      "to drift (to); to be washed ashore",
      "ながれつい",
-     0
+     0,
+     "流れ着く"
     ]
    ]
   },
@@ -564,49 +631,56 @@
      2,
      "that; the",
      "",
-     0
+     0,
+     ""
     ],
     [
      2,
      3,
      "country; state",
      "くに",
-     1
+     1,
+     ""
     ],
     [
      4,
      5,
      "king; ruler; sovereign",
      "おう",
-     0
+     0,
+     ""
     ],
     [
      6,
      8,
      "to go out to meet; to receive; to welcome",
      "むかえ",
-     0
+     0,
+     "迎える"
     ],
     [
      18,
      19,
      "travel; trip; journey",
      "たび",
-     0
+     0,
+     ""
     ],
     [
      20,
      21,
      "talk; speech; chat",
      "はなし",
-     0
+     0,
+     ""
     ],
     [
      22,
      24,
      "to talk about; to speak of; to tell",
      "かたり",
-     0
+     0,
+     "語る"
     ]
    ]
   },
@@ -619,56 +693,64 @@
      6,
      "to leave; to exit; to go out",
      "で",
-     0
+     0,
+     "出る"
     ],
     [
      7,
      9,
      "immediately; at once; right away",
      "",
-     0
+     0,
+     ""
     ],
     [
      12,
      14,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      17,
      19,
      "to be; to exist; to live",
      "",
-     0
+     0,
+     ""
     ],
     [
      19,
      20,
      "island",
      "しま",
-     1
+     1,
+     ""
     ],
     [
      21,
      24,
      "big; large; great",
      "おおきな",
-     0
+     0,
+     ""
     ],
     [
      24,
      26,
      "cave; cavern; grotto",
      "どうくつ",
-     0
+     0,
+     ""
     ],
     [
      27,
      30,
      "to find; to discover; to come across",
      "みつけ",
-     0
+     0,
+     "見つける"
     ]
    ]
   },
@@ -681,28 +763,32 @@
      5,
      "one",
      "ひとつ",
-     0
+     0,
+     ""
     ],
     [
      7,
      9,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      9,
      15,
      "Cyclops",
      "",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to live (of humans); to reside; to inhabit",
      "すみ",
-     0
+     0,
+     "住む"
     ]
    ]
   },
@@ -715,49 +801,56 @@
      2,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      3,
      5,
      "entrance; entry; gate",
      "いりぐち",
-     0
+     0,
+     ""
     ],
     [
      6,
      9,
      "big; large; great",
      "おおきな",
-     0
+     0,
+     ""
     ],
     [
      9,
      10,
      "rock; boulder",
      "いわ",
-     0
+     0,
+     ""
     ],
     [
      11,
      14,
      "to stop up; to close up; to block (up)",
      "",
-     0
+     0,
+     "ふさぐ"
     ],
     [
      15,
      17,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      22,
      24,
      "to eat",
      "たべ",
-     0
+     0,
+     "食べる"
     ]
    ]
   },
@@ -770,49 +863,56 @@
      10,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "strong; potent; competent",
      "つよい",
-     0
+     0,
+     ""
     ],
     [
      13,
      14,
      "alcohol; sake",
      "さけ",
-     1
+     1,
+     ""
     ],
     [
      15,
      17,
      "to drink; to swallow; to take (medicine)",
      "のま",
-     0
+     0,
+     "飲む"
     ],
     [
      22,
      24,
      "name",
      "なまえ",
-     0
+     0,
+     ""
     ],
     [
      30,
      32,
      "nonexistent; not being (there)",
      "",
-     0
+     0,
+     ""
     ],
     [
      36,
      38,
      "to say; to utter; to declare",
      "いっ",
-     0
+     0,
+     "言う"
     ]
    ]
   },
@@ -825,56 +925,64 @@
      2,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      3,
      5,
      "to sleep",
      "ねむる",
-     0
+     0,
+     ""
     ],
     [
      10,
      12,
      "to burn",
      "やい",
-     0
+     0,
+     "焼く"
     ],
     [
      13,
      14,
      "tree; shrub; bush",
      "き",
-     0
+     0,
+     ""
     ],
     [
      15,
      16,
      "pole; rod; stick",
      "ぼう",
-     0
+     0,
+     ""
     ],
     [
      17,
      19,
      "that; the",
      "",
-     0
+     0,
+     ""
     ],
     [
      19,
      21,
      "one",
      "ひとつ",
-     0
+     0,
+     ""
     ],
     [
      23,
      27,
      "to stab; to stick; to pierce",
      "つきさし",
-     0
+     0,
+     "突き刺す"
     ]
    ]
   },
@@ -887,56 +995,64 @@
      2,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      8,
      10,
      "nonexistent; not being (there)",
      "",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "to do; to undertake; to perform",
      "",
-     0
+     0,
+     "やる"
     ],
     [
      18,
      20,
      "to shout; to cry (out); to scream",
      "さけん",
-     0
+     0,
+     "叫ぶ"
     ],
     [
      24,
      26,
      "companion; fellow; friend",
      "なかま",
-     0
+     0,
+     ""
     ],
     [
      27,
      29,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      30,
      32,
      "assistance; help; aid; support; reinforcement",
      "たすけ",
-     1
+     1,
+     ""
     ],
     [
      33,
      34,
      "to come (spatially or temporally); to approach; to arrive",
      "こ",
-     1
+     1,
+     "来る"
     ]
    ]
   },
@@ -949,49 +1065,56 @@
      2,
      "next morning",
      "よくあさ",
-     0
+     0,
+     ""
     ],
     [
      6,
      7,
      "sheep (Ovis aries)",
      "ひつじ",
-     0
+     0,
+     ""
     ],
     [
      8,
      9,
      "abdomen; belly; stomach",
      "はら",
-     0
+     0,
+     ""
     ],
     [
      10,
      11,
      "below; down; under; younger (e.g. daughter)",
      "した",
-     1
+     1,
+     ""
     ],
     [
      12,
      17,
      "to cling",
      "",
-     0
+     0,
+     "しがみつく"
     ],
     [
      19,
      21,
      "cave; cavern; grotto",
      "どうくつ",
-     0
+     0,
+     ""
     ],
     [
      23,
      27,
      "to run away; to flee; to make off; to take to one's heels; to escape",
      "にげだし",
-     1
+     1,
+     "逃げ出す"
     ]
    ]
   },
@@ -1004,42 +1127,48 @@
      5,
      "nine; 9",
      "",
-     0
+     0,
+     ""
     ],
     [
      5,
      7,
      "giant; great man",
      "きょじん",
-     0
+     0,
+     ""
     ],
     [
      9,
      10,
      "sea; ocean; waters",
      "うみ",
-     0
+     0,
+     ""
     ],
     [
      11,
      12,
      "god; deity; divinity",
      "かみ",
-     0
+     0,
+     ""
     ],
     [
      12,
      17,
      "Poseidon (god)",
      "",
-     0
+     0,
+     ""
     ],
     [
      18,
      20,
      "son",
      "むすこ",
-     0
+     0,
+     ""
     ]
    ]
   },
@@ -1052,49 +1181,56 @@
      2,
      "to get angry; to get mad; to lose one's temper",
      "おこっ",
-     0
+     0,
+     "怒る"
     ],
     [
      3,
      8,
      "Poseidon (god)",
      "",
-     0
+     0,
+     ""
     ],
     [
      18,
      21,
      "never again",
      "にどと",
-     0
+     0,
+     ""
     ],
     [
      21,
      23,
      "hometown; birthplace; native place; one's old home",
      "こきょう",
-     1
+     1,
+     ""
     ],
     [
      24,
      26,
      "to return; to come home; to go home",
      "かえれ",
-     0
+     0,
+     "帰れる"
     ],
     [
      31,
      33,
      "to do; to carry out; to perform",
      "",
-     1
+     1,
+     "する"
     ],
     [
      35,
      37,
      "to decide; to choose; to determine",
      "きめ",
-     0
+     0,
+     "決める"
     ]
    ]
   },
@@ -1111,35 +1247,40 @@
      4,
      "to arrive at; to reach",
      "つい",
-     0
+     0,
+     "着く"
     ],
     [
      5,
      6,
      "island",
      "しま",
-     1
+     1,
+     ""
     ],
     [
      9,
      11,
      "witch",
      "まじょ",
-     0
+     0,
+     ""
     ],
     [
      11,
      15,
      "Circe (Greek goddess)",
      "",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to live (of humans); to reside; to inhabit",
      "すん",
-     0
+     0,
+     "住む"
     ]
    ]
   },
@@ -1152,49 +1293,56 @@
      4,
      "Circe (Greek goddess)",
      "",
-     0
+     0,
+     ""
     ],
     [
      5,
      7,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      10,
      12,
      "magic; witchcraft; sorcery",
      "まほう",
-     0
+     0,
+     ""
     ],
     [
      13,
      15,
      "cooking; cookery; cuisine",
      "りょうり",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to eat",
      "たべ",
-     0
+     0,
+     "食べる"
     ],
     [
      21,
      22,
      "pig (Sus scrofa domesticus)",
      "ぶた",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "to change; to alter; to transform",
      "かえ",
-     0
+     0,
+     "変える"
     ]
    ]
   },
@@ -1207,42 +1355,48 @@
      9,
      "god; deity; divinity",
      "かみ",
-     0
+     0,
+     ""
     ],
     [
      11,
      14,
      "to receive; to take; to accept",
      "",
-     0
+     0,
+     "もらう"
     ],
     [
      15,
      17,
      "medicinal herb",
      "やくそう",
-     0
+     0,
+     ""
     ],
     [
      18,
      21,
      "grace (of God); benevolence (of Buddha); blessing",
      "",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "magic; witchcraft; sorcery",
      "まほう",
-     0
+     0,
+     ""
     ],
     [
      26,
      29,
      "to take (a resource, e.g. time or money)",
      "",
-     0
+     0,
+     "かかる"
     ]
    ]
   },
@@ -1255,49 +1409,56 @@
      4,
      "Circe (Greek goddess)",
      "",
-     0
+     0,
+     ""
     ],
     [
      7,
      8,
      "strong; potent; competent",
      "つよ",
-     0
+     0,
+     "強い"
     ],
     [
      10,
      12,
      "to be surprised; to be taken aback; to be amazed",
      "おどろき",
-     0
+     0,
+     "驚く"
     ],
     [
      13,
      15,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      18,
      20,
      "human being; human; person",
      "にんげん",
-     0
+     0,
+     ""
     ],
     [
      21,
      22,
      "figure; form; shape",
      "すがた",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "to put back; to return; to give back",
      "もどし",
-     0
+     0,
+     "戻す"
     ]
    ]
   },
@@ -1310,49 +1471,56 @@
      3,
      "after that; afterwards; thereafter",
      "そのご",
-     0
+     0,
+     ""
     ],
     [
      4,
      5,
      "ship; boat; watercraft; vessel; seaplane",
      "ふね",
-     1
+     1,
+     ""
     ],
     [
      6,
      8,
      "saying; speaking",
      "せい",
-     0
+     0,
+     ""
     ],
     [
      8,
      11,
      "lane (of a road)",
      "れーん",
-     0
+     0,
+     ""
     ],
     [
      12,
      13,
      "sea; ocean; waters",
      "うみ",
-     0
+     0,
+     ""
     ],
     [
      14,
      16,
      "to go by; to go past; to go along",
      "とおる",
-     0
+     0,
+     ""
     ],
     [
      19,
      21,
      "to become; to get; to grow",
      "",
-     0
+     0,
+     "なる"
     ]
    ]
   },
@@ -1365,77 +1533,88 @@
      2,
      "saying; speaking",
      "せい",
-     0
+     0,
+     ""
     ],
     [
      2,
      5,
      "lane (of a road)",
      "れーん",
-     0
+     0,
+     ""
     ],
     [
      6,
      9,
      "beautiful; pretty; lovely",
      "うつくしい",
-     0
+     0,
+     ""
     ],
     [
      9,
      10,
      "song; singing",
      "うた",
-     1
+     1,
+     ""
     ],
     [
      11,
      13,
      "to hear",
      "きい",
-     0
+     0,
+     "聞く"
     ],
     [
      14,
      17,
      "sailor; seaman; mariner",
      "ふなのり",
-     0
+     0,
+     ""
     ],
     [
      19,
      21,
      "everyone; everybody; all",
      "",
-     0
+     0,
+     ""
     ],
     [
      21,
      22,
      "sea; ocean; waters",
      "うみ",
-     0
+     0,
+     ""
     ],
     [
      23,
      27,
      "to jump in; to leap in; to plunge into; to dive",
      "とびこん",
-     1
+     1,
+     "飛び込む"
     ],
     [
      28,
      30,
      "to die; to pass away",
      "しん",
-     0
+     0,
+     "死ぬ"
     ],
     [
      35,
      37,
      "to do up (hair); to dress; to arrange",
      "",
-     0
+     0,
+     ""
     ]
    ]
   },
@@ -1448,56 +1627,64 @@
      10,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      13,
      14,
      "ear",
      "みみ",
-     0
+     0,
+     ""
     ],
     [
      15,
      17,
      "labor; labour; toil",
      "",
-     0
+     0,
+     ""
     ],
     [
      18,
      21,
      "to stop up; to close up; to block (up)",
      "",
-     0
+     0,
+     "ふさぐ"
     ],
     [
      22,
      24,
      "myself; yourself; oneself",
      "じぶん",
-     0
+     0,
+     ""
     ],
     [
      25,
      26,
      "body",
      "からだ",
-     0
+     0,
+     ""
     ],
     [
      27,
      29,
      "mast",
      "ほばしら",
-     0
+     0,
+     ""
     ],
     [
      30,
      33,
      "to tie; to bind; to fasten",
      "",
-     0
+     0,
+     "しばる"
     ]
    ]
   },
@@ -1510,49 +1697,56 @@
      5,
      "how; how much; to what extent",
      "",
-     0
+     0,
+     ""
     ],
     [
      5,
      7,
      "to request; to beg; to ask",
      "たのん",
-     0
+     0,
+     "頼む"
     ],
     [
      10,
      13,
      "to undo; to untie; to unfasten",
      "",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to order; to command",
      "めいじ",
-     0
+     0,
+     "命じる"
     ],
     [
      26,
      28,
      "that; the",
      "",
-     0
+     0,
+     ""
     ],
     [
      28,
      29,
      "song; singing",
      "うた",
-     1
+     1,
+     ""
     ],
     [
      30,
      32,
      "to hear",
      "きい",
-     0
+     0,
+     "聞く"
     ]
    ]
   },
@@ -1565,56 +1759,64 @@
      4,
      "travel; trip; journey",
      "たび",
-     0
+     0,
+     ""
     ],
     [
      5,
      8,
      "furthermore; again; after all",
      "",
-     0
+     0,
+     ""
     ],
     [
      8,
      11,
      "severe; strict; rigid",
      "きびしく",
-     0
+     0,
+     "厳しい"
     ],
     [
      11,
      13,
      "to become; to get; to grow",
      "",
-     0
+     0,
+     "なる"
     ],
     [
      14,
      16,
      "subordinate person",
      "ぶか",
-     1
+     1,
+     ""
     ],
     [
      19,
      21,
      "in succession; one by one",
      "つぎつぎ",
-     0
+     0,
+     ""
     ],
     [
      22,
      23,
      "life; life force",
      "いのち",
-     0
+     0,
+     ""
     ],
     [
      24,
      27,
      "to drop; to lose; to let fall",
      "おとし",
-     0
+     0,
+     "落とす"
     ]
    ]
   },
@@ -1627,14 +1829,16 @@
      2,
      "end; conclusion",
      "さいご",
-     0
+     0,
+     ""
     ],
     [
      3,
      5,
      "to remain; to be left",
      "のこっ",
-     0
+     0,
+     "残る"
     ]
    ]
   },
@@ -1651,49 +1855,56 @@
      1,
      "talk; speech; chat",
      "はなし",
-     0
+     0,
+     ""
     ],
     [
      2,
      4,
      "to hear",
      "きい",
-     0
+     0,
+     "聞く"
     ],
     [
      5,
      6,
      "king; ruler; sovereign",
      "おう",
-     0
+     0,
+     ""
     ],
     [
      7,
      9,
      "being deeply moved emotionally; excitement; passion",
      "かんどう",
-     0
+     0,
+     ""
     ],
     [
      11,
      12,
      "ship; boat; watercraft; vessel; seaplane",
      "ふね",
-     1
+     1,
+     ""
     ],
     [
      13,
      15,
      "to take out; to get out",
      "だし",
-     0
+     0,
+     "出す"
     ],
     [
      24,
      28,
      "to send (a person or thing) to; to deliver; to escort",
      "おくりとどけ",
-     0
+     0,
+     "送り届ける"
     ]
    ]
   },
@@ -1706,7 +1917,8 @@
      8,
      "hometown; birthplace; native place; one's old home",
      "こきょう",
-     1
+     1,
+     ""
     ]
    ]
   },
@@ -1719,63 +1931,72 @@
      3,
      "Athena (goddess); Athene",
      "あてな",
-     0
+     0,
+     ""
     ],
     [
      6,
      9,
      "to grow old",
      "としおい",
-     0
+     0,
+     "年老いる"
     ],
     [
      10,
      12,
      "beggar",
      "こじき",
-     0
+     0,
+     ""
     ],
     [
      13,
      14,
      "figure; form; shape",
      "すがた",
-     0
+     0,
+     ""
     ],
     [
      15,
      17,
      "to change; to alter; to transform",
      "かえ",
-     0
+     0,
+     "変える"
     ],
     [
      19,
      21,
      "still; as yet; only",
      "",
-     0
+     0,
+     ""
     ],
     [
      21,
      23,
      "true character; true form; true colors",
      "しょうたい",
-     0
+     0,
+     ""
     ],
     [
      24,
      27,
      "to pass (the night); to spend",
      "あかし",
-     1
+     1,
+     "明かす"
     ],
     [
      35,
      37,
      "to say; to utter; to declare",
      "いっ",
-     0
+     0,
+     "言う"
     ]
    ]
   },
@@ -1788,56 +2009,64 @@
      4,
      "first (of all); firstly; to begin with",
      "",
-     0
+     0,
+     ""
     ],
     [
      5,
      7,
      "splendid; fine; handsome",
      "りっぱ",
-     0
+     0,
+     ""
     ],
     [
      8,
      10,
      "youth; young man",
      "せいねん",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "growth; development; growing up",
      "せいちょう",
-     0
+     0,
+     ""
     ],
     [
      15,
      17,
      "son",
      "むすこ",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "to meet; to encounter; to see",
      "あい",
-     0
+     0,
+     "会う"
     ],
     [
      26,
      29,
      "everything; all; the whole",
      "",
-     0
+     0,
+     ""
     ],
     [
      30,
      34,
      "to confide; to reveal; to disclose; to lay bare; to speak frankly; to open (one's heart)",
      "うちあけ",
-     1
+     1,
+     "打ち明ける"
     ]
    ]
   },
@@ -1850,28 +2079,32 @@
      5,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      9,
      11,
      "to throw down; to bring down; to blow down",
      "たおす",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "plan; project; schedule",
      "けいかく",
-     0
+     0,
+     ""
     ],
     [
      14,
      16,
      "to stand (something) up; to put upright; to set up",
      "たて",
-     0
+     0,
+     "立てる"
     ]
    ]
   },
@@ -1884,70 +2117,80 @@
      2,
      "residence; estate; grounds; premises; mansion",
      "やしき",
-     1
+     1,
+     ""
     ],
     [
      3,
      5,
      "to enter; to go in; to get in",
      "はいる",
-     0
+     0,
+     ""
     ],
     [
      7,
      10,
      "to grow old",
      "としおい",
-     0
+     0,
+     "年老いる"
     ],
     [
      11,
      14,
      "pet dog",
      "かいいぬ",
-     0
+     0,
+     ""
     ],
     [
      17,
      19,
      "head (of a household); proprietor (of a store); proprietress; landlord; landlady",
      "しゅじん",
-     1
+     1,
+     ""
     ],
     [
      20,
      23,
      "to notice; to realize; to realise",
      "きづき",
-     0
+     0,
+     "気づく"
     ],
     [
      24,
      27,
      "tail (of an animal)",
      "",
-     1
+     1,
+     ""
     ],
     [
      28,
      30,
      "to wave; to shake; to swing",
      "ふっ",
-     0
+     0,
+     "振る"
     ],
     [
      31,
      32,
      "breath; breathing",
      "いき",
-     0
+     0,
+     ""
     ],
     [
      33,
      37,
      "to take into one's possession; to receive; to accept",
      "ひきとっ",
-     0
+     0,
+     "引き取る"
     ]
    ]
   },
@@ -1960,35 +2203,40 @@
      2,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      6,
      8,
      "beggar",
      "こじき",
-     0
+     0,
+     ""
     ],
     [
      9,
      11,
      "idiot; moron; fool",
      "",
-     0
+     0,
+     ""
     ],
     [
      14,
      15,
      "thing; object; article",
      "もの",
-     0
+     0,
+     ""
     ],
     [
      16,
      20,
      "to throw at; to fling at; to hurl at",
      "なげつけ",
-     0
+     0,
+     "投げつける"
     ]
    ]
   },
@@ -2001,35 +2249,40 @@
      10,
      "anger; rage; fury",
      "いかり",
-     0
+     0,
+     ""
     ],
     [
      11,
      14,
      "to pin down; to hold down; to press down",
      "",
-     0
+     0,
+     "おさえる"
     ],
     [
      15,
      18,
      "motionlessly (e.g. stand, wait); (be) still",
      "",
-     0
+     0,
+     ""
     ],
     [
      18,
      20,
      "chance; opportunity; occasion",
      "きかい",
-     0
+     0,
+     ""
     ],
     [
      21,
      23,
      "to wait",
      "まっ",
-     0
+     0,
+     "待つ"
     ]
    ]
   },
@@ -2046,77 +2299,88 @@
      7,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      11,
      13,
      "to say; to utter; to declare",
      "いっ",
-     0
+     0,
+     "言う"
     ],
     [
      16,
      17,
      "husband",
      "おっと",
-     0
+     0,
+     ""
     ],
     [
      18,
      19,
      "bow (weapon)",
      "ゆみ",
-     1
+     1,
+     ""
     ],
     [
      20,
      22,
      "to pull; to tug; to lead (e.g. a horse)",
      "ひき",
-     0
+     0,
+     "引く"
     ],
     [
      26,
      27,
      "axe; ax; hatchet",
      "おの",
-     0
+     0,
+     ""
     ],
     [
      28,
      29,
      "hole; opening; orifice",
      "あな",
-     0
+     0,
+     ""
     ],
     [
      30,
      31,
      "arrow",
      "や",
-     1
+     1,
+     ""
     ],
     [
      32,
      34,
      "to let pass; to allow through; to let through",
      "とおし",
-     0
+     0,
+     "通す"
     ],
     [
      35,
      36,
      "-ian (e.g. Italian); -ite (e.g. Tokyoite)",
      "ひと",
-     0
+     0,
+     ""
     ],
     [
      37,
      39,
      "marriage",
      "けっこん",
-     0
+     0,
+     ""
     ]
    ]
   },
@@ -2129,42 +2393,48 @@
      2,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      6,
      8,
      "in succession; one by one",
      "つぎつぎ",
-     0
+     0,
+     ""
     ],
     [
      9,
      11,
      "challenge; defiance; dare",
      "ちょうせん",
-     0
+     0,
+     ""
     ],
     [
      18,
      19,
      "bow (weapon)",
      "ゆみ",
-     1
+     1,
+     ""
     ],
     [
      20,
      22,
      "to pull; to tug; to lead (e.g. a horse)",
      "ひく",
-     0
+     0,
+     ""
     ],
     [
      26,
      28,
      "to be able to do; to be possible; to be permitted (to do)",
      "",
-     0
+     0,
+     "できる"
     ]
    ]
   },
@@ -2177,70 +2447,80 @@
      2,
      "end; conclusion",
      "さいご",
-     0
+     0,
+     ""
     ],
     [
      3,
      5,
      "beggar",
      "こじき",
-     0
+     0,
+     ""
     ],
     [
      6,
      7,
      "bow (weapon)",
      "ゆみ",
-     1
+     1,
+     ""
     ],
     [
      8,
      9,
      "hand; arm",
      "て",
-     1
+     1,
+     ""
     ],
     [
      10,
      12,
      "to take; to pick up; to grab",
      "とる",
-     0
+     0,
+     ""
     ],
     [
      14,
      17,
      "",
      "かるがると",
-     0
+     0,
+     ""
     ],
     [
      17,
      19,
      "to pull; to tug; to lead (e.g. a horse)",
      "ひい",
-     0
+     0,
+     "引く"
     ],
     [
      21,
      22,
      "arrow",
      "や",
-     1
+     1,
+     ""
     ],
     [
      26,
      27,
      "hole; opening; orifice",
      "あな",
-     0
+     0,
+     ""
     ],
     [
      28,
      30,
      "to let pass; to allow through; to let through",
      "とおし",
-     0
+     0,
+     "通す"
     ]
    ]
   },
@@ -2253,42 +2533,48 @@
      5,
      "true character; true form; true colors",
      "しょうたい",
-     0
+     0,
+     ""
     ],
     [
      6,
      9,
      "to pass (the night); to spend",
      "あかし",
-     1
+     1,
+     "明かす"
     ],
     [
      10,
      12,
      "son",
      "むすこ",
-     0
+     0,
+     ""
     ],
     [
      15,
      17,
      "marriage proposal; courtship",
      "きゅうこん",
-     0
+     0,
+     ""
     ],
     [
      23,
      25,
      "to remain; to be left",
      "のこら",
-     0
+     0,
+     "残る"
     ],
     [
      26,
      28,
      "to throw down; to bring down; to blow down",
      "たおし",
-     0
+     0,
+     "倒す"
     ]
    ]
   },
@@ -2301,14 +2587,16 @@
      12,
      "immediately; at once; right away",
      "",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "to believe; to believe in; to place trust in",
      "しんじ",
-     0
+     0,
+     "信じる"
     ]
    ]
   },
@@ -2321,56 +2609,64 @@
      6,
      "bed; couch",
      "しんだい",
-     1
+     1,
+     ""
     ],
     [
      7,
      9,
      "room; chamber",
      "へや",
-     0
+     0,
+     ""
     ],
     [
      10,
      11,
      "outside; exterior",
      "そと",
-     1
+     1,
+     ""
     ],
     [
      12,
      15,
      "to move; to shift; to stir",
      "うごかし",
-     0
+     0,
+     "動かす"
     ],
     [
      18,
      21,
      "servant; menial",
      "めしつかい",
-     0
+     0,
+     ""
     ],
     [
      22,
      24,
      "to order; to command",
      "めいじ",
-     0
+     0,
+     "命じる"
     ],
     [
      25,
      26,
      "husband",
      "おっと",
-     0
+     0,
+     ""
     ],
     [
      27,
      29,
      "to try (out); to have a try (at); to test",
      "ためし",
-     0
+     0,
+     "試す"
     ]
    ]
   },
@@ -2383,56 +2679,64 @@
      14,
      "unreasonable; unnatural; unjustifiable",
      "むり",
-     0
+     0,
+     ""
     ],
     [
      16,
      18,
      "that; those; the",
      "",
-     0
+     0,
+     ""
     ],
     [
      18,
      20,
      "bed; couch",
      "しんだい",
-     1
+     1,
+     ""
     ],
     [
      24,
      28,
      "olive",
      "おりーぶ",
-     0
+     0,
+     ""
     ],
     [
      29,
      30,
      "tree; shrub; bush",
      "き",
-     0
+     0,
+     ""
     ],
     [
      31,
      33,
      "root; source; origin",
      "ねもと",
-     0
+     0,
+     ""
     ],
     [
      35,
      37,
      "to make; to produce; to manufacture",
      "つくっ",
-     0
+     0,
+     "作る"
     ],
     [
      43,
      45,
      "to answer; to reply",
      "こたえ",
-     0
+     0,
+     "答える"
     ]
    ]
   },
@@ -2445,14 +2749,16 @@
      9,
      "to know; to be aware (of); to be conscious (of)",
      "しら",
-     0
+     0,
+     "知る"
     ],
     [
      11,
      13,
      "secret; secrecy; confidentiality",
      "ひみつ",
-     0
+     0,
+     ""
     ]
    ]
   },
@@ -2465,21 +2771,24 @@
      7,
      "to cry; to shed tears; to weep",
      "なき",
-     0
+     0,
+     "泣く"
     ],
     [
      10,
      11,
      "husband",
      "おっと",
-     0
+     0,
+     ""
     ],
     [
      12,
      16,
      "to hug (someone) tight; to embrace; to give (someone) a tight hug",
      "だきしめ",
-     0
+     0,
+     "抱きしめる"
     ]
    ]
   },
@@ -2492,35 +2801,40 @@
      2,
      "long (distance, length)",
      "ながい",
-     0
+     0,
+     ""
     ],
     [
      2,
      4,
      "long (distance, length)",
      "ながい",
-     0
+     0,
+     ""
     ],
     [
      4,
      5,
      "travel; trip; journey",
      "たび",
-     0
+     0,
+     ""
     ],
     [
      11,
      15,
      "finally; at last",
      "",
-     0
+     0,
+     ""
     ],
     [
      15,
      18,
      "to end; to come to an end; to finish",
      "おわっ",
-     0
+     0,
+     "終わる"
     ]
    ]
   }
