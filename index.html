@@ -1822,12 +1822,14 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pg-sheet-body .pg-new{display:flex;flex-direction:column;gap:10px}
 @media (prefers-reduced-motion: reduce){ .pg-sheet,.pg-scrim,#list,.pg-dock{transition:none} }
 /* v129: Practice buttons float above the bottom edge (no footer bar) */
-.pg-dock{background:none!important;border-top:0!important;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 22px)!important;pointer-events:none}
+.pg-dock{background:none!important;border-top:0!important;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 46px)!important;pointer-events:none}
 .pg-dock-in{pointer-events:auto}
 .pg-dock button{box-shadow:0 6px 18px -8px rgba(20,16,12,.35)}
-.play-setup.pg-home{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.play-setup.pg-home{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 .tabs.tabs-in{margin:6px 0 18px;padding:4px}
 .tabs.tabs-in .tab{padding:10px 0;font-size:15px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px}
+.app-sheet-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 18px 28px}
+.app-sheet-body .settings{padding:0;max-width:none;margin:0}
 </style>
 </head>
 
@@ -1876,7 +1878,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v130";
+const APP_VERSION = "v131";
 
 
 /* =========================================================
@@ -2663,6 +2665,7 @@ function pgSheet(html){   // New session = a card sliding in from the right; the
     requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
   }
   sh.querySelector(".pg-sheet-body").innerHTML = html;
+  if(isJa()) jaWalk(sh);
 }
 function pgSheetClose(instant){
   const sh = $("#pgSheet"), sc = $("#pgScrim"); if(!sh) return;
@@ -3286,12 +3289,32 @@ function bestVoice(){   // the saved choice, else the most natural-sounding Japa
     vs.find(v => /natural|neural|online|enhanced|premium|siri/i.test(v.name)) ||
     vs.find(v => /google/i.test(v.name)) || vs.find(v => /kyoko|o-ren|nanami|haruka/i.test(v.name)) || vs[0] || null;
 }
-function renderSettings(){
+let KEEP_SETTINGS = false;   // true while the page under the Settings sheet is redrawn (language switch)
+function openSettingsSheet(){   // Settings = a card sliding in from the right, Home nudged aside behind it
+  if($("#appSheet")) return;
+  document.body.insertAdjacentHTML("beforeend", `<div id="appScrim" class="pg-scrim"></div><aside id="appSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="appSheetX" aria-label="Close">‹</button><b>${isJa() ? "設定" : "Settings"}</b></div>
+    <div class="pg-sheet-body app-sheet-body"></div></aside>`);
+  const sh = $("#appSheet"), close = () => closeSettingsSheet();
+  $("#appScrim").onclick = close; $("#appSheetX").onclick = close;
+  let x0 = null;
+  sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+  sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
+  renderSettings(sh.querySelector(".app-sheet-body"));
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+}
+function closeSettingsSheet(instant){
+  const sh = $("#appSheet"), sc = $("#appScrim"); if(!sh) return;
+  document.body.classList.remove("sheet-open");
+  const gone = () => { sh.remove(); sc && sc.remove(); };
+  if(instant || calmMotion()) gone(); else setTimeout(gone, 320);
+}
+function renderSettings(target){
   document.body.classList.remove("playing");
   const theme = store.get("jc:theme", "auto"), rate = store.get("jc:rate", 0.9), fam = store.get("jc:showfam", false);
   const draw = () => {
     const vs = jaVoices(), cur = bestVoice();
-    $("#list").innerHTML = `<section class="settings">
+    (target || $("#list")).innerHTML = `<section class="settings">
       <div class="set-group"><h2 class="set-h">Appearance</h2>
         <div class="seg" role="radiogroup" id="setTheme">${[["auto","Auto"],["light","Light"],["dark","Dark"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === theme ? "on" : ""}" aria-checked="${k === theme}">${l}</button>`).join("")}</div></div>
@@ -3307,13 +3330,16 @@ function renderSettings(){
       <p class="set-ver">${APP_VERSION}</p>
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
-    $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
+    $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v);
+      if(target){ NAV_SAME = true; KEEP_SETTINGS = true; pick(CURRENT); KEEP_SETTINGS = false; applyLang(); draw(); const t = $("#appSheet .pg-sheet-head b"); if(t) t.textContent = isJa() ? "設定" : "Settings"; return; }
+      if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
     $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
     $("#setAnswer").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:answer", b.dataset.v); draw(); });
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
+    if(target && isJa()) jaWalk(target);
   };
   draw();
-  try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings") draw(); }; }catch(e){}
+  try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings" || (target && target.isConnected)) draw(); }; }catch(e){}
 }
 function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
   let due = 0, later = 0; const now = Date.now();
@@ -4813,6 +4839,7 @@ document.addEventListener(
       e.target.closest(
         "[data-home]"
       );
+    if(home && home.dataset.home === "settings"){ openSettingsSheet(); return; }
 
 
     if(home){
@@ -5029,7 +5056,7 @@ $("#lesson").onchange =
    ========================================================= */
 
 function pick(id){
-  pgDockDrop(); pgSheetClose(true); document.body.classList.remove("cinema");
+  pgDockDrop(); pgSheetClose(true); if(!KEEP_SETTINGS) closeSettingsSheet(true); document.body.classList.remove("cinema");
   if(id !== "playground") PG_RETURN = null;
   PG_NEW = false; SESS_EDIT = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();
