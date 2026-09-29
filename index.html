@@ -1626,7 +1626,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v99";
+const APP_VERSION = "v100";
 
 
 /* =========================================================
@@ -3179,6 +3179,11 @@ let CARD_LVL = null;
 
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
 let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
+const PLAYER = new Audio(); PLAYER.preload = "auto";
+// iPhone: an audio element may only play after a user gesture has "unlocked" it once
+addEventListener("touchend", function unlock(){ PLAYER.muted = true;
+  PLAYER.play().catch(() => {}).finally(() => { PLAYER.pause(); PLAYER.muted = false; });
+  removeEventListener("touchend", unlock); }, {passive: true});
 fetch("data/audio/map.json").then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
 const speaker = () => "nanami";   // one voice for everything (keeps the app small as content grows)
 function speak(text){
@@ -3186,7 +3191,7 @@ function speak(text){
   const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
   if(key){
     try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
-    const a = new Audio(`data/audio/${sp}/${key}.mp3`); a.preservesPitch = true;
+    const a = PLAYER; a.src = `data/audio/${sp}/${key}.mp3`;
     AUDIO_NOW = a;
     a.play().catch(() => speakDevice(text)); return;
   }
