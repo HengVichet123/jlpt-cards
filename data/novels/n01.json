@@ -12,47 +12,475 @@
   },
   {
    "jp": "トロイア戦争が終わって十年がたった。",
-   "en": "Ten years have passed since the Trojan War ended."
+   "en": "Ten years have passed since the Trojan War ended.",
+   "tk": [
+    [
+     4,
+     6,
+     "war",
+     "せんそう",
+     0
+    ],
+    [
+     7,
+     10,
+     "to end; to come to an end; to finish",
+     "おわっ",
+     0
+    ],
+    [
+     14,
+     16,
+     "to pass (of time); to elapse",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "戦争に勝ったギリシャの英雄たちは、みな故郷へ帰っていった。",
-   "en": "The Greek heroes who won the war have all gone home."
+   "en": "The Greek heroes who won the war have all gone home.",
+   "tk": [
+    [
+     0,
+     2,
+     "war",
+     "せんそう",
+     0
+    ],
+    [
+     3,
+     5,
+     "to win; to gain victory",
+     "かっ",
+     0
+    ],
+    [
+     6,
+     10,
+     "Greece",
+     "ぎりしゃ",
+     0
+    ],
+    [
+     11,
+     13,
+     "hero; heroine; great person",
+     "えいゆう",
+     1
+    ],
+    [
+     17,
+     19,
+     "everyone; everybody; all",
+     "",
+     0
+    ],
+    [
+     19,
+     21,
+     "hometown; birthplace; native place; one's old home",
+     "こきょう",
+     1
+    ],
+    [
+     22,
+     24,
+     "to return; to come home; to go home",
+     "かえっ",
+     0
+    ]
+   ]
   },
   {
    "jp": "ただ一人、知恵者として知られるオデュッセウスだけが、まだ帰れずにいた。",
-   "en": "Only one, Odysseus, famous for his cleverness, still has not made it back."
+   "en": "Only one, Odysseus, famous for his cleverness, still has not made it back.",
+   "tk": [
+    [
+     5,
+     8,
+     "wise man",
+     "ちえしゃ",
+     0
+    ],
+    [
+     11,
+     13,
+     "to know; to be aware (of); to be conscious (of)",
+     "しら",
+     0
+    ],
+    [
+     26,
+     28,
+     "still; as yet; only",
+     "",
+     0
+    ],
+    [
+     28,
+     30,
+     "to return; to come home; to go home",
+     "かえれ",
+     0
+    ]
+   ]
   },
   {
    "jp": "彼は海の女神カリュプソの島に閉じ込められていたのだ。",
-   "en": "He has been held captive on the island of the sea nymph Calypso."
+   "en": "He has been held captive on the island of the sea nymph Calypso.",
+   "tk": [
+    [
+     2,
+     3,
+     "sea; ocean; waters",
+     "うみ",
+     0
+    ],
+    [
+     4,
+     6,
+     "goddess",
+     "めがみ",
+     0
+    ],
+    [
+     12,
+     13,
+     "island",
+     "しま",
+     1
+    ],
+    [
+     14,
+     18,
+     "to lock up; to shut up; to imprison",
+     "とじこめ",
+     0
+    ]
+   ]
   },
   {
    "jp": "カリュプソは彼を愛し、「ここにいれば、永遠に生きられる」と言った。",
-   "en": "Calypso loves him and says, \"If you stay here, you can live forever.\""
+   "en": "Calypso loves him and says, \"If you stay here, you can live forever.\"",
+   "tk": [
+    [
+     8,
+     10,
+     "to love",
+     "あいし",
+     0
+    ],
+    [
+     15,
+     17,
+     "to shoot (arrow, bolt, dart)",
+     "",
+     0
+    ],
+    [
+     19,
+     21,
+     "eternity; perpetuity; permanence",
+     "えいえん",
+     0
+    ],
+    [
+     22,
+     24,
+     "to live; to exist",
+     "いき",
+     0
+    ],
+    [
+     29,
+     31,
+     "to say; to utter; to declare",
+     "いっ",
+     0
+    ]
+   ]
   },
   {
    "jp": "しかしオデュッセウスは毎日海岸に座り、故郷のイタケーを思って泣いていた。",
-   "en": "But every day Odysseus sits on the shore and weeps, thinking of his home, Ithaca."
+   "en": "But every day Odysseus sits on the shore and weeps, thinking of his home, Ithaca.",
+   "tk": [
+    [
+     11,
+     13,
+     "every day; daily",
+     "まいにち",
+     0
+    ],
+    [
+     13,
+     15,
+     "seashore; coast; seaside",
+     "かいがん",
+     0
+    ],
+    [
+     16,
+     18,
+     "to sit (down); to have a seat; to be seated",
+     "すわり",
+     0
+    ],
+    [
+     19,
+     21,
+     "hometown; birthplace; native place; one's old home",
+     "こきょう",
+     1
+    ],
+    [
+     27,
+     29,
+     "to think; to consider; to believe",
+     "おもっ",
+     0
+    ],
+    [
+     30,
+     32,
+     "to cry; to shed tears; to weep",
+     "ない",
+     0
+    ]
+   ]
   },
   {
    "jp": "一方イタケーでは、妻のペネロペが夫の帰りを待ち続けていた。",
-   "en": "Meanwhile in Ithaca, his wife Penelope keeps waiting for her husband's return."
+   "en": "Meanwhile in Ithaca, his wife Penelope keeps waiting for her husband's return.",
+   "tk": [
+    [
+     9,
+     10,
+     "wife",
+     "つま",
+     0
+    ],
+    [
+     16,
+     17,
+     "husband",
+     "おっと",
+     0
+    ],
+    [
+     18,
+     20,
+     "return; coming back",
+     "かえり",
+     0
+    ],
+    [
+     21,
+     23,
+     "to wait",
+     "まち",
+     0
+    ]
+   ]
   },
   {
    "jp": "家には百人以上の求婚者が押しかけ、「早く新しい夫を選べ」と迫っていた。",
-   "en": "Over a hundred suitors have crowded into the house, pressing her: \"Choose a new husband now.\""
+   "en": "Over a hundred suitors have crowded into the house, pressing her: \"Choose a new husband now.\"",
+   "tk": [
+    [
+     0,
+     1,
+     "house; residence; dwelling; home",
+     "いえ",
+     1
+    ],
+    [
+     8,
+     10,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     12,
+     16,
+     "to go uninvited; to call on without an invitation; to barge in on",
+     "おしかけ",
+     0
+    ],
+    [
+     18,
+     20,
+     "fast; quick; rapid",
+     "はやく",
+     0
+    ],
+    [
+     20,
+     23,
+     "new; novel; fresh",
+     "あたらしい",
+     0
+    ],
+    [
+     23,
+     24,
+     "husband",
+     "おっと",
+     0
+    ],
+    [
+     25,
+     27,
+     "to choose; to select; to pick (out)",
+     "えらべ",
+     0
+    ],
+    [
+     29,
+     31,
+     "to approach; to draw near; to be imminent",
+     "せまっ",
+     1
+    ]
+   ]
   },
   {
    "jp": "彼らは毎日宴会を開き、オデュッセウスの財産を食いつぶしていた。",
-   "en": "They feast every day, eating through Odysseus's wealth."
+   "en": "They feast every day, eating through Odysseus's wealth.",
+   "tk": [
+    [
+     3,
+     5,
+     "every day; daily",
+     "まいにち",
+     0
+    ],
+    [
+     5,
+     7,
+     "party; banquet; reception; feast; dinner",
+     "えんかい",
+     1
+    ],
+    [
+     8,
+     10,
+     "to open; to undo; to unseal",
+     "ひらき",
+     0
+    ],
+    [
+     19,
+     21,
+     "property; fortune; assets",
+     "ざいさん",
+     0
+    ],
+    [
+     22,
+     27,
+     "to eat oneself out of house and home; to eat up completely",
+     "くいつぶし",
+     0
+    ]
+   ]
   },
   {
    "jp": "女神アテナはオデュッセウスを哀れに思い、神々の王ゼウスに頼んだ。",
-   "en": "The goddess Athena pities Odysseus and appeals to Zeus, king of the gods."
+   "en": "The goddess Athena pities Odysseus and appeals to Zeus, king of the gods.",
+   "tk": [
+    [
+     0,
+     2,
+     "goddess",
+     "めがみ",
+     0
+    ],
+    [
+     2,
+     5,
+     "Athena (goddess); Athene",
+     "あてな",
+     0
+    ],
+    [
+     14,
+     16,
+     "pity; sorrow; grief",
+     "あわれ",
+     0
+    ],
+    [
+     17,
+     19,
+     "to think; to consider; to believe",
+     "おもい",
+     0
+    ],
+    [
+     20,
+     21,
+     "god; deity; divinity",
+     "かみ",
+     0
+    ],
+    [
+     23,
+     24,
+     "king; ruler; sovereign",
+     "おう",
+     0
+    ],
+    [
+     24,
+     27,
+     "Zeus (god)",
+     "ぜうす",
+     0
+    ],
+    [
+     28,
+     30,
+     "to request; to beg; to ask",
+     "たのん",
+     0
+    ]
+   ]
   },
   {
    "jp": "こうして、ついにオデュッセウスは島を出ることを許された。",
-   "en": "And so, at last, Odysseus is allowed to leave the island."
+   "en": "And so, at last, Odysseus is allowed to leave the island.",
+   "tk": [
+    [
+     5,
+     8,
+     "finally; in the end; at last",
+     "",
+     0
+    ],
+    [
+     16,
+     17,
+     "island",
+     "しま",
+     1
+    ],
+    [
+     18,
+     20,
+     "to leave; to exit; to go out",
+     "でる",
+     0
+    ],
+    [
+     23,
+     25,
+     "to permit; to allow; to approve",
+     "ゆるさ",
+     0
+    ]
+   ]
   },
   {
    "h": "第二章　一つ目の巨人",
@@ -60,47 +488,615 @@
   },
   {
    "jp": "いかだで海に出たオデュッセウスは、嵐にあって、ある国の海岸に流れ着いた。",
-   "en": "Setting out on a raft, Odysseus is caught in a storm and washes up on the shore of a kingdom."
+   "en": "Setting out on a raft, Odysseus is caught in a storm and washes up on the shore of a kingdom.",
+   "tk": [
+    [
+     0,
+     3,
+     "raft",
+     "",
+     0
+    ],
+    [
+     4,
+     5,
+     "sea; ocean; waters",
+     "うみ",
+     0
+    ],
+    [
+     6,
+     7,
+     "to leave; to exit; to go out",
+     "で",
+     0
+    ],
+    [
+     17,
+     18,
+     "storm; tempest",
+     "あらし",
+     0
+    ],
+    [
+     19,
+     21,
+     "to be; to exist; to live",
+     "",
+     0
+    ],
+    [
+     23,
+     25,
+     "to be; to exist; to live",
+     "",
+     0
+    ],
+    [
+     25,
+     26,
+     "country; state",
+     "くに",
+     1
+    ],
+    [
+     27,
+     29,
+     "seashore; coast; seaside",
+     "かいがん",
+     0
+    ],
+    [
+     30,
+     34,
+     "to drift (to); to be washed ashore",
+     "ながれつい",
+     0
+    ]
+   ]
   },
   {
    "jp": "その国の王に迎えられ、彼はこれまでの旅の話を語り始めた。",
-   "en": "Welcomed by the king, he begins to tell the story of his journey so far."
+   "en": "Welcomed by the king, he begins to tell the story of his journey so far.",
+   "tk": [
+    [
+     0,
+     2,
+     "that; the",
+     "",
+     0
+    ],
+    [
+     2,
+     3,
+     "country; state",
+     "くに",
+     1
+    ],
+    [
+     4,
+     5,
+     "king; ruler; sovereign",
+     "おう",
+     0
+    ],
+    [
+     6,
+     8,
+     "to go out to meet; to receive; to welcome",
+     "むかえ",
+     0
+    ],
+    [
+     18,
+     19,
+     "travel; trip; journey",
+     "たび",
+     0
+    ],
+    [
+     20,
+     21,
+     "talk; speech; chat",
+     "はなし",
+     0
+    ],
+    [
+     22,
+     24,
+     "to talk about; to speak of; to tell",
+     "かたり",
+     0
+    ]
+   ]
   },
   {
    "jp": "トロイアを出てすぐ、彼と部下たちはある島で大きな洞窟を見つけた。",
-   "en": "Soon after leaving Troy, he and his men found a huge cave on an island."
+   "en": "Soon after leaving Troy, he and his men found a huge cave on an island.",
+   "tk": [
+    [
+     5,
+     6,
+     "to leave; to exit; to go out",
+     "で",
+     0
+    ],
+    [
+     7,
+     9,
+     "immediately; at once; right away",
+     "",
+     0
+    ],
+    [
+     12,
+     14,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     17,
+     19,
+     "to be; to exist; to live",
+     "",
+     0
+    ],
+    [
+     19,
+     20,
+     "island",
+     "しま",
+     1
+    ],
+    [
+     21,
+     24,
+     "big; large; great",
+     "おおきな",
+     0
+    ],
+    [
+     24,
+     26,
+     "cave; cavern; grotto",
+     "どうくつ",
+     0
+    ],
+    [
+     27,
+     30,
+     "to find; to discover; to come across",
+     "みつけ",
+     0
+    ]
+   ]
   },
   {
    "jp": "そこは一つ目の巨人キュクロプスの住みかだった。",
-   "en": "It was the home of the Cyclops, a one-eyed giant."
+   "en": "It was the home of the Cyclops, a one-eyed giant.",
+   "tk": [
+    [
+     3,
+     5,
+     "one",
+     "ひとつ",
+     0
+    ],
+    [
+     7,
+     9,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     9,
+     15,
+     "Cyclops",
+     "",
+     0
+    ],
+    [
+     16,
+     18,
+     "to live (of humans); to reside; to inhabit",
+     "すみ",
+     0
+    ]
+   ]
   },
   {
    "jp": "巨人は入口を大きな岩でふさぎ、部下を一人ずつ食べてしまった。",
-   "en": "The giant blocked the entrance with a huge rock and ate his men one by one."
+   "en": "The giant blocked the entrance with a huge rock and ate his men one by one.",
+   "tk": [
+    [
+     0,
+     2,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     3,
+     5,
+     "entrance; entry; gate",
+     "いりぐち",
+     0
+    ],
+    [
+     6,
+     9,
+     "big; large; great",
+     "おおきな",
+     0
+    ],
+    [
+     9,
+     10,
+     "rock; boulder",
+     "いわ",
+     0
+    ],
+    [
+     11,
+     14,
+     "to stop up; to close up; to block (up)",
+     "",
+     0
+    ],
+    [
+     15,
+     17,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     22,
+     24,
+     "to eat",
+     "たべ",
+     0
+    ]
+   ]
   },
   {
    "jp": "オデュッセウスは巨人に強い酒を飲ませ、「私の名前は『だれでもない』だ」と言った。",
-   "en": "Odysseus gave the giant strong wine and said, \"My name is Nobody.\""
+   "en": "Odysseus gave the giant strong wine and said, \"My name is Nobody.\"",
+   "tk": [
+    [
+     8,
+     10,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     11,
+     13,
+     "strong; potent; competent",
+     "つよい",
+     0
+    ],
+    [
+     13,
+     14,
+     "alcohol; sake",
+     "さけ",
+     1
+    ],
+    [
+     15,
+     17,
+     "to drink; to swallow; to take (medicine)",
+     "のま",
+     0
+    ],
+    [
+     22,
+     24,
+     "name",
+     "なまえ",
+     0
+    ],
+    [
+     30,
+     32,
+     "nonexistent; not being (there)",
+     "",
+     0
+    ],
+    [
+     36,
+     38,
+     "to say; to utter; to declare",
+     "いっ",
+     0
+    ]
+   ]
   },
   {
    "jp": "巨人が眠ると、彼らは焼いた木の棒でその一つ目を突き刺した。",
-   "en": "When the giant fell asleep, they drove a burning stake into his one eye."
+   "en": "When the giant fell asleep, they drove a burning stake into his one eye.",
+   "tk": [
+    [
+     0,
+     2,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     3,
+     5,
+     "to sleep",
+     "ねむる",
+     0
+    ],
+    [
+     10,
+     12,
+     "to burn",
+     "やい",
+     0
+    ],
+    [
+     13,
+     14,
+     "tree; shrub; bush",
+     "き",
+     0
+    ],
+    [
+     15,
+     16,
+     "pole; rod; stick",
+     "ぼう",
+     0
+    ],
+    [
+     17,
+     19,
+     "that; the",
+     "",
+     0
+    ],
+    [
+     19,
+     21,
+     "one",
+     "ひとつ",
+     0
+    ],
+    [
+     23,
+     27,
+     "to stab; to stick; to pierce",
+     "つきさし",
+     0
+    ]
+   ]
   },
   {
    "jp": "巨人は「だれでもないにやられた！」と叫んだので、仲間の巨人は助けに来なかった。",
-   "en": "The giant screamed, \"Nobody has hurt me!\", so the other giants did not come to help."
+   "en": "The giant screamed, \"Nobody has hurt me!\", so the other giants did not come to help.",
+   "tk": [
+    [
+     0,
+     2,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     8,
+     10,
+     "nonexistent; not being (there)",
+     "",
+     0
+    ],
+    [
+     11,
+     13,
+     "to do; to undertake; to perform",
+     "",
+     0
+    ],
+    [
+     18,
+     20,
+     "to shout; to cry (out); to scream",
+     "さけん",
+     0
+    ],
+    [
+     24,
+     26,
+     "companion; fellow; friend",
+     "なかま",
+     0
+    ],
+    [
+     27,
+     29,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     30,
+     32,
+     "assistance; help; aid; support; reinforcement",
+     "たすけ",
+     1
+    ],
+    [
+     33,
+     34,
+     "to come (spatially or temporally); to approach; to arrive",
+     "こ",
+     1
+    ]
+   ]
   },
   {
    "jp": "翌朝、彼らは羊の腹の下にしがみついて、洞窟から逃げ出した。",
-   "en": "The next morning they escaped from the cave clinging to the bellies of the sheep."
+   "en": "The next morning they escaped from the cave clinging to the bellies of the sheep.",
+   "tk": [
+    [
+     0,
+     2,
+     "next morning",
+     "よくあさ",
+     0
+    ],
+    [
+     6,
+     7,
+     "sheep (Ovis aries)",
+     "ひつじ",
+     0
+    ],
+    [
+     8,
+     9,
+     "abdomen; belly; stomach",
+     "はら",
+     0
+    ],
+    [
+     10,
+     11,
+     "below; down; under; younger (e.g. daughter)",
+     "した",
+     1
+    ],
+    [
+     12,
+     17,
+     "to cling",
+     "",
+     0
+    ],
+    [
+     19,
+     21,
+     "cave; cavern; grotto",
+     "どうくつ",
+     0
+    ],
+    [
+     23,
+     27,
+     "to run away; to flee; to make off; to take to one's heels; to escape",
+     "にげだし",
+     1
+    ]
+   ]
   },
   {
    "jp": "しかしこの巨人は、海の神ポセイドンの息子だった。",
-   "en": "But this giant was the son of Poseidon, god of the sea."
+   "en": "But this giant was the son of Poseidon, god of the sea.",
+   "tk": [
+    [
+     3,
+     5,
+     "nine; 9",
+     "",
+     0
+    ],
+    [
+     5,
+     7,
+     "giant; great man",
+     "きょじん",
+     0
+    ],
+    [
+     9,
+     10,
+     "sea; ocean; waters",
+     "うみ",
+     0
+    ],
+    [
+     11,
+     12,
+     "god; deity; divinity",
+     "かみ",
+     0
+    ],
+    [
+     12,
+     17,
+     "Poseidon (god)",
+     "",
+     0
+    ],
+    [
+     18,
+     20,
+     "son",
+     "むすこ",
+     0
+    ]
+   ]
   },
   {
    "jp": "怒ったポセイドンは、オデュッセウスが二度と故郷に帰れないようにしようと決めた。",
-   "en": "Enraged, Poseidon resolved that Odysseus would never reach home."
+   "en": "Enraged, Poseidon resolved that Odysseus would never reach home.",
+   "tk": [
+    [
+     0,
+     2,
+     "to get angry; to get mad; to lose one's temper",
+     "おこっ",
+     0
+    ],
+    [
+     3,
+     8,
+     "Poseidon (god)",
+     "",
+     0
+    ],
+    [
+     18,
+     21,
+     "never again",
+     "にどと",
+     0
+    ],
+    [
+     21,
+     23,
+     "hometown; birthplace; native place; one's old home",
+     "こきょう",
+     1
+    ],
+    [
+     24,
+     26,
+     "to return; to come home; to go home",
+     "かえれ",
+     0
+    ],
+    [
+     31,
+     33,
+     "to do; to carry out; to perform",
+     "",
+     1
+    ],
+    [
+     35,
+     37,
+     "to decide; to choose; to determine",
+     "きめ",
+     0
+    ]
+   ]
   },
   {
    "h": "第三章　魔女と歌声",
@@ -108,43 +1104,539 @@
   },
   {
    "jp": "次に着いた島には、魔女キルケーが住んでいた。",
-   "en": "On the next island lived the witch Circe."
+   "en": "On the next island lived the witch Circe.",
+   "tk": [
+    [
+     2,
+     4,
+     "to arrive at; to reach",
+     "つい",
+     0
+    ],
+    [
+     5,
+     6,
+     "island",
+     "しま",
+     1
+    ],
+    [
+     9,
+     11,
+     "witch",
+     "まじょ",
+     0
+    ],
+    [
+     11,
+     15,
+     "Circe (Greek goddess)",
+     "",
+     0
+    ],
+    [
+     16,
+     18,
+     "to live (of humans); to reside; to inhabit",
+     "すん",
+     0
+    ]
+   ]
   },
   {
    "jp": "キルケーは部下たちに魔法の料理を食べさせ、豚に変えてしまった。",
-   "en": "Circe fed his men a magic meal and turned them into pigs."
+   "en": "Circe fed his men a magic meal and turned them into pigs.",
+   "tk": [
+    [
+     0,
+     4,
+     "Circe (Greek goddess)",
+     "",
+     0
+    ],
+    [
+     5,
+     7,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     10,
+     12,
+     "magic; witchcraft; sorcery",
+     "まほう",
+     0
+    ],
+    [
+     13,
+     15,
+     "cooking; cookery; cuisine",
+     "りょうり",
+     0
+    ],
+    [
+     16,
+     18,
+     "to eat",
+     "たべ",
+     0
+    ],
+    [
+     21,
+     22,
+     "pig (Sus scrofa domesticus)",
+     "ぶた",
+     0
+    ],
+    [
+     23,
+     25,
+     "to change; to alter; to transform",
+     "かえ",
+     0
+    ]
+   ]
   },
   {
    "jp": "オデュッセウスは神からもらった薬草のおかげで、魔法にかからなかった。",
-   "en": "Thanks to an herb given to him by a god, Odysseus was not affected by the spell."
+   "en": "Thanks to an herb given to him by a god, Odysseus was not affected by the spell.",
+   "tk": [
+    [
+     8,
+     9,
+     "god; deity; divinity",
+     "かみ",
+     0
+    ],
+    [
+     11,
+     14,
+     "to receive; to take; to accept",
+     "",
+     0
+    ],
+    [
+     15,
+     17,
+     "medicinal herb",
+     "やくそう",
+     0
+    ],
+    [
+     18,
+     21,
+     "grace (of God); benevolence (of Buddha); blessing",
+     "",
+     0
+    ],
+    [
+     23,
+     25,
+     "magic; witchcraft; sorcery",
+     "まほう",
+     0
+    ],
+    [
+     26,
+     29,
+     "to take (a resource, e.g. time or money)",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "キルケーは彼の強さに驚き、部下たちを人間の姿に戻した。",
-   "en": "Circe, amazed at his strength, turned his men back into humans."
+   "en": "Circe, amazed at his strength, turned his men back into humans.",
+   "tk": [
+    [
+     0,
+     4,
+     "Circe (Greek goddess)",
+     "",
+     0
+    ],
+    [
+     7,
+     8,
+     "strong; potent; competent",
+     "つよ",
+     0
+    ],
+    [
+     10,
+     12,
+     "to be surprised; to be taken aback; to be amazed",
+     "おどろき",
+     0
+    ],
+    [
+     13,
+     15,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     18,
+     20,
+     "human being; human; person",
+     "にんげん",
+     0
+    ],
+    [
+     21,
+     22,
+     "figure; form; shape",
+     "すがた",
+     0
+    ],
+    [
+     23,
+     25,
+     "to put back; to return; to give back",
+     "もどし",
+     0
+    ]
+   ]
   },
   {
    "jp": "その後、船はセイレーンの海を通ることになった。",
-   "en": "Afterward, the ship had to pass through the sea of the Sirens."
+   "en": "Afterward, the ship had to pass through the sea of the Sirens.",
+   "tk": [
+    [
+     0,
+     3,
+     "after that; afterwards; thereafter",
+     "そのご",
+     0
+    ],
+    [
+     4,
+     5,
+     "ship; boat; watercraft; vessel; seaplane",
+     "ふね",
+     1
+    ],
+    [
+     6,
+     8,
+     "saying; speaking",
+     "せい",
+     0
+    ],
+    [
+     8,
+     11,
+     "lane (of a road)",
+     "れーん",
+     0
+    ],
+    [
+     12,
+     13,
+     "sea; ocean; waters",
+     "うみ",
+     0
+    ],
+    [
+     14,
+     16,
+     "to go by; to go past; to go along",
+     "とおる",
+     0
+    ],
+    [
+     19,
+     21,
+     "to become; to get; to grow",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "セイレーンの美しい歌を聞いた船乗りは、みな海に飛び込んで死んでしまうという。",
-   "en": "It is said that every sailor who hears the Sirens' beautiful song leaps into the sea and dies."
+   "en": "It is said that every sailor who hears the Sirens' beautiful song leaps into the sea and dies.",
+   "tk": [
+    [
+     0,
+     2,
+     "saying; speaking",
+     "せい",
+     0
+    ],
+    [
+     2,
+     5,
+     "lane (of a road)",
+     "れーん",
+     0
+    ],
+    [
+     6,
+     9,
+     "beautiful; pretty; lovely",
+     "うつくしい",
+     0
+    ],
+    [
+     9,
+     10,
+     "song; singing",
+     "うた",
+     1
+    ],
+    [
+     11,
+     13,
+     "to hear",
+     "きい",
+     0
+    ],
+    [
+     14,
+     17,
+     "sailor; seaman; mariner",
+     "ふなのり",
+     0
+    ],
+    [
+     19,
+     21,
+     "everyone; everybody; all",
+     "",
+     0
+    ],
+    [
+     21,
+     22,
+     "sea; ocean; waters",
+     "うみ",
+     0
+    ],
+    [
+     23,
+     27,
+     "to jump in; to leap in; to plunge into; to dive",
+     "とびこん",
+     1
+    ],
+    [
+     28,
+     30,
+     "to die; to pass away",
+     "しん",
+     0
+    ],
+    [
+     35,
+     37,
+     "to do up (hair); to dress; to arrange",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "オデュッセウスは部下たちの耳をろうでふさぎ、自分の体を帆柱にしばらせた。",
-   "en": "Odysseus plugged his men's ears with wax and had himself tied to the mast."
+   "en": "Odysseus plugged his men's ears with wax and had himself tied to the mast.",
+   "tk": [
+    [
+     8,
+     10,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     13,
+     14,
+     "ear",
+     "みみ",
+     0
+    ],
+    [
+     15,
+     17,
+     "labor; labour; toil",
+     "",
+     0
+    ],
+    [
+     18,
+     21,
+     "to stop up; to close up; to block (up)",
+     "",
+     0
+    ],
+    [
+     22,
+     24,
+     "myself; yourself; oneself",
+     "じぶん",
+     0
+    ],
+    [
+     25,
+     26,
+     "body",
+     "からだ",
+     0
+    ],
+    [
+     27,
+     29,
+     "mast",
+     "ほばしら",
+     0
+    ],
+    [
+     30,
+     33,
+     "to tie; to bind; to fasten",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "「どんなに頼んでも、ほどくな」と命じて、彼は一人だけその歌を聞いた。",
-   "en": "Ordering \"Don't untie me, no matter how I beg,\" he alone listened to the song."
+   "en": "Ordering \"Don't untie me, no matter how I beg,\" he alone listened to the song.",
+   "tk": [
+    [
+     1,
+     5,
+     "how; how much; to what extent",
+     "",
+     0
+    ],
+    [
+     5,
+     7,
+     "to request; to beg; to ask",
+     "たのん",
+     0
+    ],
+    [
+     10,
+     13,
+     "to undo; to untie; to unfasten",
+     "",
+     0
+    ],
+    [
+     16,
+     18,
+     "to order; to command",
+     "めいじ",
+     0
+    ],
+    [
+     26,
+     28,
+     "that; the",
+     "",
+     0
+    ],
+    [
+     28,
+     29,
+     "song; singing",
+     "うた",
+     1
+    ],
+    [
+     30,
+     32,
+     "to hear",
+     "きい",
+     0
+    ]
+   ]
   },
   {
    "jp": "しかし旅はさらに厳しくなり、部下たちは次々と命を落とした。",
-   "en": "But the journey grew harder still, and his men lost their lives one after another."
+   "en": "But the journey grew harder still, and his men lost their lives one after another.",
+   "tk": [
+    [
+     3,
+     4,
+     "travel; trip; journey",
+     "たび",
+     0
+    ],
+    [
+     5,
+     8,
+     "furthermore; again; after all",
+     "",
+     0
+    ],
+    [
+     8,
+     11,
+     "severe; strict; rigid",
+     "きびしく",
+     0
+    ],
+    [
+     11,
+     13,
+     "to become; to get; to grow",
+     "",
+     0
+    ],
+    [
+     14,
+     16,
+     "subordinate person",
+     "ぶか",
+     1
+    ],
+    [
+     19,
+     21,
+     "in succession; one by one",
+     "つぎつぎ",
+     0
+    ],
+    [
+     22,
+     23,
+     "life; life force",
+     "いのち",
+     0
+    ],
+    [
+     24,
+     27,
+     "to drop; to lose; to let fall",
+     "おとし",
+     0
+    ]
+   ]
   },
   {
    "jp": "最後に残ったのは、オデュッセウス一人だけだった。",
-   "en": "In the end, only Odysseus himself was left."
+   "en": "In the end, only Odysseus himself was left.",
+   "tk": [
+    [
+     0,
+     2,
+     "end; conclusion",
+     "さいご",
+     0
+    ],
+    [
+     3,
+     5,
+     "to remain; to be left",
+     "のこっ",
+     0
+    ]
+   ]
   },
   {
    "h": "第四章　乞食の姿で",
@@ -152,35 +1644,394 @@
   },
   {
    "jp": "話を聞いた王は感動し、船を出して彼をイタケーまで送り届けた。",
-   "en": "Moved by his story, the king sent a ship to carry him home to Ithaca."
+   "en": "Moved by his story, the king sent a ship to carry him home to Ithaca.",
+   "tk": [
+    [
+     0,
+     1,
+     "talk; speech; chat",
+     "はなし",
+     0
+    ],
+    [
+     2,
+     4,
+     "to hear",
+     "きい",
+     0
+    ],
+    [
+     5,
+     6,
+     "king; ruler; sovereign",
+     "おう",
+     0
+    ],
+    [
+     7,
+     9,
+     "being deeply moved emotionally; excitement; passion",
+     "かんどう",
+     0
+    ],
+    [
+     11,
+     12,
+     "ship; boat; watercraft; vessel; seaplane",
+     "ふね",
+     1
+    ],
+    [
+     13,
+     15,
+     "to take out; to get out",
+     "だし",
+     0
+    ],
+    [
+     24,
+     28,
+     "to send (a person or thing) to; to deliver; to escort",
+     "おくりとどけ",
+     0
+    ]
+   ]
   },
   {
    "jp": "二十年ぶりの故郷だった。",
-   "en": "It was his first time home in twenty years."
+   "en": "It was his first time home in twenty years.",
+   "tk": [
+    [
+     6,
+     8,
+     "hometown; birthplace; native place; one's old home",
+     "こきょう",
+     1
+    ]
+   ]
   },
   {
    "jp": "アテナは彼を年老いた乞食の姿に変え、「まだ正体を明かしてはいけない」と言った。",
-   "en": "Athena disguised him as an old beggar and said, \"Don't reveal who you are yet.\""
+   "en": "Athena disguised him as an old beggar and said, \"Don't reveal who you are yet.\"",
+   "tk": [
+    [
+     0,
+     3,
+     "Athena (goddess); Athene",
+     "あてな",
+     0
+    ],
+    [
+     6,
+     9,
+     "to grow old",
+     "としおい",
+     0
+    ],
+    [
+     10,
+     12,
+     "beggar",
+     "こじき",
+     0
+    ],
+    [
+     13,
+     14,
+     "figure; form; shape",
+     "すがた",
+     0
+    ],
+    [
+     15,
+     17,
+     "to change; to alter; to transform",
+     "かえ",
+     0
+    ],
+    [
+     19,
+     21,
+     "still; as yet; only",
+     "",
+     0
+    ],
+    [
+     21,
+     23,
+     "true character; true form; true colors",
+     "しょうたい",
+     0
+    ],
+    [
+     24,
+     27,
+     "to pass (the night); to spend",
+     "あかし",
+     1
+    ],
+    [
+     35,
+     37,
+     "to say; to utter; to declare",
+     "いっ",
+     0
+    ]
+   ]
   },
   {
    "jp": "彼はまず、立派な青年に成長した息子テレマコスに会い、すべてを打ち明けた。",
-   "en": "First he met his son Telemachus, now a fine young man, and told him everything."
+   "en": "First he met his son Telemachus, now a fine young man, and told him everything.",
+   "tk": [
+    [
+     2,
+     4,
+     "first (of all); firstly; to begin with",
+     "",
+     0
+    ],
+    [
+     5,
+     7,
+     "splendid; fine; handsome",
+     "りっぱ",
+     0
+    ],
+    [
+     8,
+     10,
+     "youth; young man",
+     "せいねん",
+     0
+    ],
+    [
+     11,
+     13,
+     "growth; development; growing up",
+     "せいちょう",
+     0
+    ],
+    [
+     15,
+     17,
+     "son",
+     "むすこ",
+     0
+    ],
+    [
+     23,
+     25,
+     "to meet; to encounter; to see",
+     "あい",
+     0
+    ],
+    [
+     26,
+     29,
+     "everything; all; the whole",
+     "",
+     0
+    ],
+    [
+     30,
+     34,
+     "to confide; to reveal; to disclose; to lay bare; to speak frankly; to open (one's heart)",
+     "うちあけ",
+     1
+    ]
+   ]
   },
   {
    "jp": "二人は求婚者たちを倒す計画を立てた。",
-   "en": "Together they made a plan to defeat the suitors."
+   "en": "Together they made a plan to defeat the suitors.",
+   "tk": [
+    [
+     3,
+     5,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     9,
+     11,
+     "to throw down; to bring down; to blow down",
+     "たおす",
+     0
+    ],
+    [
+     11,
+     13,
+     "plan; project; schedule",
+     "けいかく",
+     0
+    ],
+    [
+     14,
+     16,
+     "to stand (something) up; to put upright; to set up",
+     "たて",
+     0
+    ]
+   ]
   },
   {
    "jp": "屋敷に入ると、年老いた飼い犬だけが主人に気づき、しっぽを振って息を引き取った。",
-   "en": "When he entered the house, only his old dog recognized its master, wagged its tail, and died."
+   "en": "When he entered the house, only his old dog recognized its master, wagged its tail, and died.",
+   "tk": [
+    [
+     0,
+     2,
+     "residence; estate; grounds; premises; mansion",
+     "やしき",
+     1
+    ],
+    [
+     3,
+     5,
+     "to enter; to go in; to get in",
+     "はいる",
+     0
+    ],
+    [
+     7,
+     10,
+     "to grow old",
+     "としおい",
+     0
+    ],
+    [
+     11,
+     14,
+     "pet dog",
+     "かいいぬ",
+     0
+    ],
+    [
+     17,
+     19,
+     "head (of a household); proprietor (of a store); proprietress; landlord; landlady",
+     "しゅじん",
+     1
+    ],
+    [
+     20,
+     23,
+     "to notice; to realize; to realise",
+     "きづき",
+     0
+    ],
+    [
+     24,
+     27,
+     "tail (of an animal)",
+     "",
+     1
+    ],
+    [
+     28,
+     30,
+     "to wave; to shake; to swing",
+     "ふっ",
+     0
+    ],
+    [
+     31,
+     32,
+     "breath; breathing",
+     "いき",
+     0
+    ],
+    [
+     33,
+     37,
+     "to take into one's possession; to receive; to accept",
+     "ひきとっ",
+     0
+    ]
+   ]
   },
   {
    "jp": "求婚者たちは乞食をばかにし、物を投げつけた。",
-   "en": "The suitors mocked the beggar and threw things at him."
+   "en": "The suitors mocked the beggar and threw things at him.",
+   "tk": [
+    [
+     0,
+     2,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     6,
+     8,
+     "beggar",
+     "こじき",
+     0
+    ],
+    [
+     9,
+     11,
+     "idiot; moron; fool",
+     "",
+     0
+    ],
+    [
+     14,
+     15,
+     "thing; object; article",
+     "もの",
+     0
+    ],
+    [
+     16,
+     20,
+     "to throw at; to fling at; to hurl at",
+     "なげつけ",
+     0
+    ]
+   ]
   },
   {
    "jp": "オデュッセウスは怒りをおさえ、じっと機会を待った。",
-   "en": "Odysseus held back his anger and patiently waited for his chance."
+   "en": "Odysseus held back his anger and patiently waited for his chance.",
+   "tk": [
+    [
+     8,
+     10,
+     "anger; rage; fury",
+     "いかり",
+     0
+    ],
+    [
+     11,
+     14,
+     "to pin down; to hold down; to press down",
+     "",
+     0
+    ],
+    [
+     15,
+     18,
+     "motionlessly (e.g. stand, wait); (be) still",
+     "",
+     0
+    ],
+    [
+     18,
+     20,
+     "chance; opportunity; occasion",
+     "きかい",
+     0
+    ],
+    [
+     21,
+     23,
+     "to wait",
+     "まっ",
+     0
+    ]
+   ]
   },
   {
    "h": "第五章　弓の試練",
@@ -188,43 +2039,490 @@
   },
   {
    "jp": "ペネロペは求婚者たちに言った。「夫の弓を引き、十二の斧の穴に矢を通した人と結婚します」",
-   "en": "Penelope told the suitors: \"I will marry the man who can string my husband's bow and shoot an arrow through twelve axe heads.\""
+   "en": "Penelope told the suitors: \"I will marry the man who can string my husband's bow and shoot an arrow through twelve axe heads.\"",
+   "tk": [
+    [
+     5,
+     7,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     11,
+     13,
+     "to say; to utter; to declare",
+     "いっ",
+     0
+    ],
+    [
+     16,
+     17,
+     "husband",
+     "おっと",
+     0
+    ],
+    [
+     18,
+     19,
+     "bow (weapon)",
+     "ゆみ",
+     1
+    ],
+    [
+     20,
+     22,
+     "to pull; to tug; to lead (e.g. a horse)",
+     "ひき",
+     0
+    ],
+    [
+     26,
+     27,
+     "axe; ax; hatchet",
+     "おの",
+     0
+    ],
+    [
+     28,
+     29,
+     "hole; opening; orifice",
+     "あな",
+     0
+    ],
+    [
+     30,
+     31,
+     "arrow",
+     "や",
+     1
+    ],
+    [
+     32,
+     34,
+     "to let pass; to allow through; to let through",
+     "とおし",
+     0
+    ],
+    [
+     35,
+     36,
+     "-ian (e.g. Italian); -ite (e.g. Tokyoite)",
+     "ひと",
+     0
+    ],
+    [
+     37,
+     39,
+     "marriage",
+     "けっこん",
+     0
+    ]
+   ]
   },
   {
    "jp": "求婚者たちは次々に挑戦したが、だれも弓を引くことさえできなかった。",
-   "en": "The suitors tried one after another, but none could even string the bow."
+   "en": "The suitors tried one after another, but none could even string the bow.",
+   "tk": [
+    [
+     0,
+     2,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     6,
+     8,
+     "in succession; one by one",
+     "つぎつぎ",
+     0
+    ],
+    [
+     9,
+     11,
+     "challenge; defiance; dare",
+     "ちょうせん",
+     0
+    ],
+    [
+     18,
+     19,
+     "bow (weapon)",
+     "ゆみ",
+     1
+    ],
+    [
+     20,
+     22,
+     "to pull; to tug; to lead (e.g. a horse)",
+     "ひく",
+     0
+    ],
+    [
+     26,
+     28,
+     "to be able to do; to be possible; to be permitted (to do)",
+     "",
+     0
+    ]
+   ]
   },
   {
    "jp": "最後に乞食が弓を手に取ると、軽々と引いて、矢を十二の穴に通した。",
-   "en": "At last the beggar took the bow, strung it with ease, and shot the arrow through all twelve holes."
+   "en": "At last the beggar took the bow, strung it with ease, and shot the arrow through all twelve holes.",
+   "tk": [
+    [
+     0,
+     2,
+     "end; conclusion",
+     "さいご",
+     0
+    ],
+    [
+     3,
+     5,
+     "beggar",
+     "こじき",
+     0
+    ],
+    [
+     6,
+     7,
+     "bow (weapon)",
+     "ゆみ",
+     1
+    ],
+    [
+     8,
+     9,
+     "hand; arm",
+     "て",
+     1
+    ],
+    [
+     10,
+     12,
+     "to take; to pick up; to grab",
+     "とる",
+     0
+    ],
+    [
+     14,
+     17,
+     "",
+     "かるがると",
+     0
+    ],
+    [
+     17,
+     19,
+     "to pull; to tug; to lead (e.g. a horse)",
+     "ひい",
+     0
+    ],
+    [
+     21,
+     22,
+     "arrow",
+     "や",
+     1
+    ],
+    [
+     26,
+     27,
+     "hole; opening; orifice",
+     "あな",
+     0
+    ],
+    [
+     28,
+     30,
+     "to let pass; to allow through; to let through",
+     "とおし",
+     0
+    ]
+   ]
   },
   {
    "jp": "そして正体を明かし、息子と共に求婚者たちを一人残らず倒した。",
-   "en": "Then he revealed himself and, with his son, struck down every last one of the suitors."
+   "en": "Then he revealed himself and, with his son, struck down every last one of the suitors.",
+   "tk": [
+    [
+     3,
+     5,
+     "true character; true form; true colors",
+     "しょうたい",
+     0
+    ],
+    [
+     6,
+     9,
+     "to pass (the night); to spend",
+     "あかし",
+     1
+    ],
+    [
+     10,
+     12,
+     "son",
+     "むすこ",
+     0
+    ],
+    [
+     15,
+     17,
+     "marriage proposal; courtship",
+     "きゅうこん",
+     0
+    ],
+    [
+     23,
+     25,
+     "to remain; to be left",
+     "のこら",
+     0
+    ],
+    [
+     26,
+     28,
+     "to throw down; to bring down; to blow down",
+     "たおし",
+     0
+    ]
+   ]
   },
   {
    "jp": "それでもペネロペは、すぐには彼を信じなかった。",
-   "en": "Even so, Penelope did not believe him right away."
+   "en": "Even so, Penelope did not believe him right away.",
+   "tk": [
+    [
+     10,
+     12,
+     "immediately; at once; right away",
+     "",
+     0
+    ],
+    [
+     16,
+     18,
+     "to believe; to believe in; to place trust in",
+     "しんじ",
+     0
+    ]
+   ]
   },
   {
    "jp": "彼女は「寝台を部屋の外に動かして」と召使いに命じ、夫を試した。",
-   "en": "She tested him by telling a servant, \"Move the bed out of the room.\""
+   "en": "She tested him by telling a servant, \"Move the bed out of the room.\"",
+   "tk": [
+    [
+     4,
+     6,
+     "bed; couch",
+     "しんだい",
+     1
+    ],
+    [
+     7,
+     9,
+     "room; chamber",
+     "へや",
+     0
+    ],
+    [
+     10,
+     11,
+     "outside; exterior",
+     "そと",
+     1
+    ],
+    [
+     12,
+     15,
+     "to move; to shift; to stir",
+     "うごかし",
+     0
+    ],
+    [
+     18,
+     21,
+     "servant; menial",
+     "めしつかい",
+     0
+    ],
+    [
+     22,
+     24,
+     "to order; to command",
+     "めいじ",
+     0
+    ],
+    [
+     25,
+     26,
+     "husband",
+     "おっと",
+     0
+    ],
+    [
+     27,
+     29,
+     "to try (out); to have a try (at); to test",
+     "ためし",
+     0
+    ]
+   ]
   },
   {
    "jp": "オデュッセウスは「それは無理だ。あの寝台は、私がオリーブの木の根元から作ったものだ」と答えた。",
-   "en": "Odysseus answered, \"That's impossible. I built that bed myself from the trunk of a rooted olive tree.\""
+   "en": "Odysseus answered, \"That's impossible. I built that bed myself from the trunk of a rooted olive tree.\"",
+   "tk": [
+    [
+     12,
+     14,
+     "unreasonable; unnatural; unjustifiable",
+     "むり",
+     0
+    ],
+    [
+     16,
+     18,
+     "that; those; the",
+     "",
+     0
+    ],
+    [
+     18,
+     20,
+     "bed; couch",
+     "しんだい",
+     1
+    ],
+    [
+     24,
+     28,
+     "olive",
+     "おりーぶ",
+     0
+    ],
+    [
+     29,
+     30,
+     "tree; shrub; bush",
+     "き",
+     0
+    ],
+    [
+     31,
+     33,
+     "root; source; origin",
+     "ねもと",
+     0
+    ],
+    [
+     35,
+     37,
+     "to make; to produce; to manufacture",
+     "つくっ",
+     0
+    ],
+    [
+     43,
+     45,
+     "to answer; to reply",
+     "こたえ",
+     0
+    ]
+   ]
   },
   {
    "jp": "それは二人しか知らない秘密だった。",
-   "en": "It was a secret only the two of them knew."
+   "en": "It was a secret only the two of them knew.",
+   "tk": [
+    [
+     7,
+     9,
+     "to know; to be aware (of); to be conscious (of)",
+     "しら",
+     0
+    ],
+    [
+     11,
+     13,
+     "secret; secrecy; confidentiality",
+     "ひみつ",
+     0
+    ]
+   ]
   },
   {
    "jp": "ペネロペは泣きながら夫を抱きしめた。",
-   "en": "Weeping, Penelope embraced her husband."
+   "en": "Weeping, Penelope embraced her husband.",
+   "tk": [
+    [
+     5,
+     7,
+     "to cry; to shed tears; to weep",
+     "なき",
+     0
+    ],
+    [
+     10,
+     11,
+     "husband",
+     "おっと",
+     0
+    ],
+    [
+     12,
+     16,
+     "to hug (someone) tight; to embrace; to give (someone) a tight hug",
+     "だきしめ",
+     0
+    ]
+   ]
   },
   {
    "jp": "長い長い旅は、こうしてようやく終わったのである。",
-   "en": "And so, at long last, the long, long journey came to an end."
+   "en": "And so, at long last, the long, long journey came to an end.",
+   "tk": [
+    [
+     0,
+     2,
+     "long (distance, length)",
+     "ながい",
+     0
+    ],
+    [
+     2,
+     4,
+     "long (distance, length)",
+     "ながい",
+     0
+    ],
+    [
+     4,
+     5,
+     "travel; trip; journey",
+     "たび",
+     0
+    ],
+    [
+     11,
+     15,
+     "finally; at last",
+     "",
+     0
+    ],
+    [
+     15,
+     18,
+     "to end; to come to an end; to finish",
+     "おわっ",
+     0
+    ]
+   ]
   }
  ],
  "scenes": [

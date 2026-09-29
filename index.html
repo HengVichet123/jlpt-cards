@@ -1763,6 +1763,26 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .pv-photo.illust .pv-bg{display:none}
 .pv-photo.illust .pv-fg{padding:6%;box-sizing:border-box}
 .pv-src{display:inline-block;margin-top:4px;font-size:12px}
+/* v125: Movies: Exit/CC/EN on top, one bottom HUD layer (fades as a whole), tappable subtitle words */
+.th-top{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 0;transition:opacity .35s ease;will-change:opacity}
+.th-top .th-exit{min-height:48px;padding:0 16px;font:700 17px var(--body);color:#D9D3C9}
+.th-tg{display:flex;gap:6px}
+.th-tg button{min-width:48px;min-height:40px;padding:0 10px;border:1px solid #3A3F48;border-radius:8px;background:none;color:#8C867C;font:700 13px var(--body);cursor:pointer}
+.th-tg button[aria-pressed="true"]{color:#EEE9E0;border-color:#8C867C;background:#1E222A}
+.th-hud{transition:opacity .35s ease;will-change:opacity}
+.th-seek,.th-ctl{transition:none}
+.th.idle .th-seek,.th.idle .th-ctl{opacity:1;pointer-events:auto}
+.th.idle .th-hud,.th.idle .th-top{opacity:0;pointer-events:none}
+.th.no-cc .th-sub{visibility:hidden}
+.th.no-en .th-en{display:none}
+.th-sub{position:relative}
+.th-tk{cursor:pointer;border-radius:3px;transition:background .15s}
+.th-tk.card{border-bottom:1.5px solid rgba(240,112,92,.55)}
+.th-tk:hover,.th-tk.on{background:#2A2F38}
+.th-tip{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;max-width:min(320px,90%);padding:8px 12px;border-radius:10px;background:#EEE9E0;color:#15171A;box-shadow:0 8px 24px rgba(0,0,0,.4);text-align:center}
+.th-tip b{font:700 18px var(--body)}
+.th-tip .tip-rd{font:500 13px var(--body);color:#6F6B64}
+.th-tip .tip-en{font:500 14px/1.4 var(--body)}
 </style>
 </head>
 
@@ -1811,7 +1831,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v124";
+const APP_VERSION = "v125";
 
 
 /* =========================================================
@@ -3158,7 +3178,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
-  "Settings":"設定","Novels":"名作","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Settings":"設定","Novels":"名作","Movies":"映画","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
@@ -3272,7 +3292,7 @@ function renderHome(){
 
       <h2 class="home-h">Side projects</h2>
       <div class="side">
-        <button class="side-tile" data-home="novels"><i>本</i><b>Novels</b></button>
+        <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
         <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
         <button class="side-tile" data-home="sections"><i>節</i><b>Sections</b></button>
@@ -3541,7 +3561,7 @@ async function renderNovel(id){
   if(st.scenes && st.scenes.length) return renderTheatre(st);
   $("#pageTitle").textContent = st.title;
   $("#list").innerHTML = `<section class="reading story">
-    <div class="story-top"><button class="nav-btn" id="novelBack" data-back="Novels">Back</button>
+    <div class="story-top"><button class="nav-btn" id="novelBack" data-back="Movies">Back</button>
       <button class="listen-btn" id="novelListen" type="button" aria-pressed="false"><span class="lb-ico">${PLAY_ICO}</span><span class="lb-t">Listen</span></button></div>
     <img class="novel-art" src="data/novels/${st.id}.svg" alt="">
     <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
@@ -3549,7 +3569,7 @@ async function renderNovel(id){
     ${st.sentences.map(x => x.h ? `<h3 class="novel-ch">${esc(x.h)}<small>${esc(x.en || "")}</small></h3>`
       : `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
   </section>`;
-  $("#novelBack").onclick = () => { stopStory(); $("#pageTitle").textContent = "Novels"; renderNovels(); };
+  $("#novelBack").onclick = () => { stopStory(); $("#pageTitle").textContent = "Movies"; renderNovels(); };
   // listening: tap a sentence to hear it; Listen plays the story sentence by sentence (highlighted, kept in view)
   const lines = [...document.querySelectorAll(".story .story-line")], btn = $("#novelListen");
   const setBtn = on => { btn.setAttribute("aria-pressed", on); btn.querySelector(".lb-ico").innerHTML = on ? PAUSE_ICO : PLAY_ICO;
@@ -3573,23 +3593,31 @@ const STORY = {i: 0, cont: false, play: null, stopUI: null};
 function renderTheatre(st){
   const L = st.sentences, sceneAt = i => { let k = 0; st.scenes.forEach((sc, j) => { if(sc.from <= i) k = j; }); return k; };
   document.body.classList.add("cinema"); NAV_SAME = true;
-  $("#list").innerHTML = `<div class="th" role="region" aria-label="${esc(st.title)}">
+  const cc = () => store.get("jc:cc", true), enOn = () => store.get("jc:thEn", true);
+  $("#list").innerHTML = `<div class="th${cc() ? "" : " no-cc"}${enOn() ? "" : " no-en"}" role="region" aria-label="${esc(st.title)}">
+    <div class="th-top">
+      <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
+      <div class="th-tg"><button class="th-cc" type="button" aria-pressed="${cc()}" aria-label="Subtitles">CC</button><button class="th-entg" type="button" aria-pressed="${enOn()}" aria-label="English line">EN</button></div>
+    </div>
     <div class="th-stage"><div class="th-frame">
       <img class="th-img" alt=""><img class="th-img" alt="">
       <div class="th-card" hidden><b></b><small></small></div>
       <button class="th-big" type="button" aria-label="Play">${PLAY_ICO}</button>
     </div>
-    <div class="th-sub" aria-live="polite"><p class="th-jp"></p><p class="th-en"></p></div></div>
-    <div class="th-seek"><input class="th-range" type="range" min="0" max="${L.length - 1}" step="1" value="0" aria-label="Line"><div class="th-bar" aria-hidden="true"><i></i></div></div>
+    <div class="th-sub" aria-live="polite"><div class="th-tip" hidden></div><p class="th-jp"></p><p class="th-en"></p></div></div>
+    <div class="th-hud"><div class="th-seek"><input class="th-range" type="range" min="0" max="${L.length - 1}" step="1" value="0" aria-label="Line"><div class="th-bar" aria-hidden="true"><i></i></div></div>
     <div class="th-ctl">
-      <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
+      <span></span>
       <div class="th-mid">
         <button class="th-btn th-prev" type="button" aria-label="Previous line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
         <button class="th-btn th-play" type="button" aria-label="Play">${PLAY_ICO}</button>
         <button class="th-btn th-next" type="button" aria-label="Next line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
       </div>
       <span class="th-count"></span>
-    </div></div>`;
+    </div></div></div>`;
+  const subHTML = x => { if(!x.tk) return esc(x.jp); let h = "", at = 0;
+    for(const [a, b, g, r, c] of x.tk){ if(a < at) continue; h += esc(x.jp.slice(at, a)) + `<span class="th-tk${c ? " card" : ""}" data-g="${esc(g)}" data-r="${esc(r)}">${esc(x.jp.slice(a, b))}</span>`; at = b; }
+    return h + esc(x.jp.slice(at)); };
   const imgs = [...document.querySelectorAll(".th-img")], card = $(".th-card"), big = $(".th-big"), playB = $(".th-play");
   let front = 0, shown = -1, timer = 0;
   const showScene = (k, instant) => {
@@ -3601,11 +3629,11 @@ function renderTheatre(st){
   const setLine = i => {
     const x = L[i]; STORY.i = i; showScene(sceneAt(i), i === 0);
     card.hidden = !x.h; if(x.h){ card.querySelector("b").textContent = x.h; card.querySelector("small").textContent = x.en || ""; }
-    $(".th-jp").textContent = x.h ? "" : x.jp; $(".th-en").textContent = x.h ? "" : (x.en || "");
+    $(".th-jp").innerHTML = x.h ? "" : subHTML(x); $(".th-en").textContent = x.h ? "" : (x.en || ""); $(".th-tip").hidden = true;
     $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`; $(".th-range").value = i;
   };
   const setPlaying = on => { STORY.cont = on; big.hidden = on; playB.innerHTML = on ? PAUSE_ICO : PLAY_ICO; playB.setAttribute("aria-label", on ? "Pause" : "Play");
-    document.querySelector(".th").classList.toggle("paused", !on); if(STORY.onPlaying) STORY.onPlaying(on); };
+    document.querySelector(".th").classList.toggle("paused", !on); if(on){ const t = $(".th-tip"); if(t) t.hidden = true; } if(STORY.onPlaying) STORY.onPlaying(on); };
   STORY.play = (i, cont) => {
     clearTimeout(timer);
     if(i >= L.length){ stopStory(); setLine(L.length - 1); return; }
@@ -3621,6 +3649,20 @@ function renderTheatre(st){
   big.onclick = playB.onclick = toggle;
   $(".th-frame").addEventListener("click", e => { if(!e.target.closest(".th-big")) toggle(); });
   $(".th-prev").onclick = () => go(-1); $(".th-next").onclick = () => go(1);
+  $(".th-sub").addEventListener("click", e => {
+    const w = e.target.closest(".th-tk"), tip = $(".th-tip");
+    document.querySelectorAll(".th-tk.on").forEach(x => x.classList.remove("on"));
+    if(!w){ tip.hidden = true; return; }
+    if(STORY.cont) stopStory();   // look it up without losing the line
+    w.classList.add("on");
+    tip.innerHTML = `<b>${esc(w.textContent)}</b>${w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : ""}${w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : ""}`;
+    tip.hidden = false;
+    const r = w.getBoundingClientRect(), br = $(".th-sub").getBoundingClientRect();
+    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
+  });
+  $(".th-cc").onclick = () => { const on = !cc(); store.set("jc:cc", on); $(".th-cc").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-cc", !on); };
+  $(".th-entg").onclick = () => { const on = !enOn(); store.set("jc:thEn", on); $(".th-entg").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-en", !on); };
   const rg = $(".th-range");   // drag = preview picture + line, release = play from there
   rg.oninput = () => { clearTimeout(timer); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} setLine(+rg.value); };
   rg.onchange = () => STORY.play(+rg.value, STORY.cont || th.dataset.was === "1");
@@ -3634,7 +3676,7 @@ function renderTheatre(st){
   addEventListener("keydown", wake);
   let wasOn = false;
   STORY.onPlaying = on => { if(on === wasOn) return; wasOn = on; if(on) wake(); else { clearTimeout(idleT); th.classList.remove("idle"); } };
-  $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Novels"; NAV_DIR = "back"; renderNovels(); };
+  $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; NAV_DIR = "back"; renderNovels(); };
   STORY.i = 0; STORY.cont = false; setLine(0); setPlaying(false); card.hidden = true;   // poster: picture + title only
   $(".th-jp").textContent = st.title; $(".th-en").textContent = `${st.titleEn} · ${st.author}`;
 }
@@ -4926,7 +4968,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
