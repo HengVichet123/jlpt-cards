@@ -1958,6 +1958,25 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn-opts.lsn-nums{grid-template-columns:repeat(auto-fit,minmax(64px,1fr))}
 .lsn-nums .lsn-opt{justify-content:center;min-height:64px}
 .lsn-nums .lsn-n{width:36px;height:36px;font-size:17px;color:var(--ink)}
+/* v142: Home has four study tiles: Practice wide on top, Reading / Listening / Complete list in a row */
+.core.core-4{grid-template-columns:repeat(3,1fr);gap:8px}
+.core-4 .cover-play{grid-column:1 / -1}
+.core-4 .cover:not(.cover-play){min-height:118px;padding:12px}
+.core-4 .cover:not(.cover-play) b{font-size:16px;line-height:1.2}
+.core-4 .cover:not(.cover-play) span{font-size:11.5px}
+.core-4 .cover:not(.cover-play) i{font-size:84px;top:-12px}
+.cover-all{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.cover-all span{color:var(--soft)}
+.cover-all i{color:var(--ink);opacity:.045}
+.ja .core-4 .cover:not(.cover-play) b{font-size:17px}
+@media (min-width: 900px){
+  .core.core-4{grid-template-columns:2fr 1fr 1fr 1fr;gap:14px}
+  .core-4 .cover-play{grid-column:auto}
+  .core-4 .cover:not(.cover-play){min-height:230px;padding:22px}
+  .core-4 .cover:not(.cover-play) b{font-size:22px}
+  .core-4 .cover:not(.cover-play) span{font-size:14px}
+  .core-4 .cover:not(.cover-play) i{font-size:130px}
+}
 </style>
 </head>
 
@@ -2006,7 +2025,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v141";
+const APP_VERSION = "v142";
 
 
 /* =========================================================
@@ -3540,15 +3559,15 @@ function renderHome(){
 
 
       <h2 class="home-h">Study</h2>
-      <div class="core">
+      <div class="core core-4">
         <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
         <button class="cover cover-list" data-home="listening"><i>聴</i><b>Listening</b><span>Tests with audio</span></button>
+        <button class="cover cover-all" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0).toLocaleString()} cards</span></button>
       </div>
 
       <h2 class="home-h">Library</h2>
       <div class="side">
-        <button class="side-tile" data-home="complete"><i>覧</i><b>Complete list</b></button>
         <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
         <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
@@ -4458,7 +4477,11 @@ async function renderListening(){
   $("#pageTitle").textContent = "Listening";
   $("#list").innerHTML = `<section class="lsn-list">${L.map(t => { const r = store.get("jc:lsn:" + t.id, null);
     return `<button type="button" class="lsn-test" data-lsn="${t.id}"><span class="lsn-lv">${esc(t.level)}</span><span class="lsn-t"><b>${esc(t.title)}</b><small>${esc(t.titleEn)} · ${t.count} questions</small></span>${r ? `<span class="lsn-best">${r.best}/${t.count}</span>` : ""}</button>`; }).join("")}
-    <p class="lsn-note">Original questions in the JLPT listening formats, not official test material.</p></section>`;
+    <p class="lsn-note">Original questions in the JLPT listening formats, not official test material.</p><p class="lsn-note" id="lsnCredit"></p></section>`;
+  Promise.all(L.map(t => fetch(`data/listening/${t.id}.json`).then(r => r.json()).catch(() => ({})))).then(T => {
+    const v = [...new Set(T.flatMap(t => t.voices || []))].sort();
+    if(v.length && $("#lsnCredit")) $("#lsnCredit").textContent = "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)";
+  });
   document.querySelectorAll("[data-lsn]").forEach(b => b.onclick = () => { renderListenTest(b.dataset.lsn); scrollTo(0, 0); });
 }
 async function renderListenTest(id){
