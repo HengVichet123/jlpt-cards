@@ -34,6 +34,7 @@
   --ai:#2E4C80;
   --murasaki:#6A4C98;
   --yamabuki:#B8791A;
+  --matsu:#3C7A4B;
   --hole:#EAE6DD;
 
   --display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -58,6 +59,7 @@
     --ai:#8FB0EE;
     --murasaki:#C2A6F0;
     --yamabuki:#E6B25A;
+    --matsu:#7CC48E;
     --hole:#15171A;
 
     color-scheme:dark;
@@ -77,6 +79,7 @@
   --ai:#8FB0EE;
   --murasaki:#C2A6F0;
   --yamabuki:#E6B25A;
+  --matsu:#7CC48E;
   --hole:#15171A;
 
   color-scheme:dark;
@@ -1547,43 +1550,41 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .back-short .mini-ex{font-size:17px;line-height:1.8}
 .back-short .mini-ex .rei{font-size:13px}
 .complete .card .img{display:none}
-/* v112: Practice home (Continue + Start groups, iOS-style grouped lists) and a separate New session page */
+/* v114: Practice home = deck list (Anki-style New / Learn / Due) + bottom dock: Quick 10 | New session | Edit */
 .play-setup{width:100%;box-sizing:border-box}
-.pg-h{margin:0 0 8px 4px;font:700 15px var(--body);color:var(--soft)}
-.pg-group{list-style:none;margin:0 0 28px;padding:0;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--lift);overflow:hidden}
-.pg-group > li{position:relative;display:flex;align-items:center;gap:4px;min-height:60px;padding:0 6px 0 16px}
-.pg-group > li + li::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:1px solid var(--line)}
-.sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;padding:10px 0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
-.sess-go:active,.pg-act:active{opacity:.6}
-.sess-name{font:700 16px/1.35 var(--body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sess-meta{font-size:13px;color:var(--soft)}
-.sess-edit,.sess-done,.sess-del,.sess-undo-btn{flex:none;min-width:44px;min-height:44px;padding:0 10px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
-.sess-done{color:var(--ink);font-weight:700}
-.sess-del,.sess-undo-btn{color:var(--shu);font-weight:700}
-.sess.editing .sess-input{flex:1;min-width:0;height:36px;margin:12px 0;padding:0;border:0;border-bottom:2px solid var(--shu);border-radius:0;background:none;color:var(--ink);font:700 16px var(--body)}
-.sess.editing .sess-input:focus{outline:none}
-.sess-undo{justify-content:space-between;color:var(--soft);font-size:14px}
-.pg-act{width:100%;display:flex;align-items:center;gap:12px;min-height:56px;padding:0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:600 16px var(--body)}
-.pg-act span{flex:1}
-.pg-act small{font:500 14px var(--body);color:var(--soft)}
-.pg-act .chev{color:var(--faint);font-size:20px;line-height:1;padding-right:10px}
-.pg-act.main{color:var(--shu);font-weight:700}
+.play-setup.pg-home{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.deck-head,.deck{display:grid;grid-template-columns:minmax(0,1fr) 44px 44px 44px;align-items:center;column-gap:4px}
+.deck-head{padding:0 12px 6px;font:600 12px var(--body);color:var(--faint);text-align:right}
+.deck-list{list-style:none;margin:0;padding:0}
+.deck{width:100%;min-height:52px;padding:0 12px;border:0;border-radius:10px;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:background .15s ease}
+.deck:hover{background:var(--chip)}
+.deck:active{background:var(--line)}
+.deck:focus-visible{outline:2px solid var(--shu);outline-offset:-2px}
+.deck-name{font:600 16px/1.3 var(--body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.deck-n{text-align:right;font:700 15px var(--body);font-variant-numeric:tabular-nums}
+.deck-n.new{color:var(--ai)} .deck-n.learn{color:var(--shu)} .deck-n.due{color:var(--matsu)}
+.deck-n.zero{color:var(--faint);font-weight:500}
+.deck-edit{display:flex;align-items:center;gap:6px;min-height:52px;padding:0 4px 0 12px}
+.deck-edit input{flex:1;min-width:0;height:34px;padding:0;border:0;border-bottom:2px solid var(--line);border-radius:0;background:none;color:var(--ink);font:600 16px var(--body)}
+.deck-edit input:focus{outline:none;border-bottom-color:var(--shu)}
+.deck-del,.sess-undo-btn{flex:none;min-width:44px;min-height:44px;padding:0 10px;border:0;background:none;color:var(--shu);font:700 14px var(--body);cursor:pointer}
+.sess-undo{display:flex;align-items:center;justify-content:space-between;min-height:52px;padding:0 4px 0 12px;color:var(--soft);font-size:14px}
+.deck-empty{padding:40px 12px;color:var(--faint);font-size:15px;text-align:center}
+.sess-more{display:block;min-height:44px;margin:4px 0 0;padding:0 12px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer;text-align:left}
+.sess-more:hover{color:var(--ink)}
+.pg-dock{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line)}
+.pg-dock-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:10px}
+.pg-dock button{min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:700 15px var(--body);cursor:pointer;transition:background .15s ease,transform .1s ease}
+.pg-dock button:hover{background:var(--chip)}
+.pg-dock button:active{transform:scale(.97)}
+.pg-dock button.main{background:var(--shu);border-color:var(--shu);color:var(--paper)}
+.pg-dock button.main:hover{filter:brightness(1.06)}
+.pg-dock button[aria-pressed="true"]{border-color:var(--ink)}
+.pg-dock button:disabled{opacity:.4;cursor:default}
+.pg-dock button:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 .pg-name{width:100%;min-height:46px;margin-bottom:22px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 16px var(--body)}
 .pg-name:focus{outline:2px solid var(--shu);outline-offset:1px}
 .pg-name::placeholder{color:var(--faint)}
-/* v113: Continue = plain one-line text rows, 3 shown, Show all for the rest */
-.pg-back{min-width:44px;font-size:26px;line-height:1;padding:6px 12px 10px 0}
-.sess-list{list-style:none;margin:0 0 6px;padding:0;background:none;border:0;border-radius:0;box-shadow:none;overflow:visible}
-.sess-list > li{display:flex;align-items:center;gap:4px;min-height:44px;padding:0 0 0 4px}
-.sess-list > li + li::before{display:none}
-.sess-list .sess-go{flex-direction:row;align-items:baseline;gap:10px;padding:10px 0}
-.sess-list .sess-name{flex:0 1 auto;font:600 15px/1.3 var(--body)}
-.sess-list .sess-meta{flex:none;font-size:13px}
-.sess-list .sess-edit{min-height:40px;font-size:13px;color:var(--faint)}
-.sess-list .sess-edit:hover{color:var(--ink)}
-.sess.editing .sess-input{height:32px;margin:6px 0;font:600 15px var(--body)}
-.sess-more{display:block;text-align:left;min-height:40px;margin:0 0 22px;padding:0 4px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
-.sess-more:hover{color:var(--ink)}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .hdr-act:active{transform:scale(.97)}
@@ -1704,7 +1705,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v113";
+const APP_VERSION = "v114";
 
 
 /* =========================================================
@@ -2469,49 +2470,49 @@ function pgStartWith(ids, label){
   sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
   store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
+function sessCounts(se){   // Anki-style: New = never reviewed, Learn = seen but coming back soon, Due = review time has come
+  const done = new Set(se.done || []), now = Date.now(); let n = 0, l = 0, d = 0;
+  for(const [lvl, t, no] of se.ids){ if(done.has(`${lvl}:${t}:${no}`)) continue;
+    const p = pgProfile(lvl, t, no); if(!p.reviews) n++; else if((p.dueAt || 0) > now) l++; else d++; }
+  return {n, l, d};
+}
 function pgHome(){
-  const open = sessOpen(), due = pgDueIds().length;
-  return `${open.length || SESS_UNDO ? `<div class="pg-h">Continue</div>${sessLedger()}` : ""}
-    <div class="pg-h">Start</div>
-    <ul class="pg-group">
-      <li><button type="button" class="pg-act main" data-act="new"><span>New session</span><i class="chev" aria-hidden="true">›</i></button></li>
-      ${due ? `<li><button type="button" class="pg-act" data-act="due"><span>Review due</span><small>${due}</small><i class="chev" aria-hidden="true"></i></button></li>` : ""}
-      <li><button type="button" class="pg-act" data-act="quick"><span>Quick 10</span><small>${isJa() ? "新しい言葉" : "new words"}</small><i class="chev" aria-hidden="true"></i></button></li>
-    </ul>`;
+  const has = sessOpen().length > 0;
+  return `${has || SESS_UNDO ? sessLedger() : `<p class="deck-empty">${isJa() ? "セッションはまだありません" : "No sessions yet"}</p>`}
+    <div class="pg-dock"><div class="pg-dock-in">
+      <button type="button" class="pg-act" data-act="quick">${isJa() ? "クイック10" : "Quick 10"}</button>
+      <button type="button" class="pg-act main" data-act="new">${isJa() ? "新規" : "New session"}</button>
+      <button type="button" class="pg-act" data-act="edit" aria-pressed="${SESS_EDIT === "all"}" ${has ? "" : "disabled"}>${SESS_EDIT === "all" ? (isJa() ? "完了" : "Done") : (isJa() ? "編集" : "Edit")}</button>
+    </div></div>`;
 }
 function sessLedger(){
-  const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 3, hidden = Math.max(0, all.length - SHOW);
-  const vis = SESS_ALL ? all : all.filter((se, i) => i < SHOW || se.id === SESS_EDIT);
+  const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 6, hidden = Math.max(0, all.length - SHOW);
+  const editing = SESS_EDIT === "all", vis = SESS_ALL || editing ? all : all.slice(0, SHOW);
+  const num = (v, c) => `<span class="deck-n ${c}${v ? "" : " zero"}">${v}</span>`;
   const rows = vis.map(se => {
-    const n = se.ids.length, left = sessLeft(se), d = new Date(se.start);
-    if(se.id === SESS_EDIT) return `<li class="sess editing" data-sid="${se.id}">
-      <input class="sess-input" maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}">
-      <button type="button" class="sess-del">Delete</button><button type="button" class="sess-done">Done</button></li>`;
-    return `<li class="sess" data-sid="${se.id}">
-      <button type="button" class="sess-go"><span class="sess-name">${esc(sessName(se))}</span><span class="sess-meta">${left}/${n}</span></button>
-      <button type="button" class="sess-edit" aria-label="Edit ${esc(sessName(se))}">Edit</button></li>`; });
+    if(editing) return `<li class="deck-edit" data-sid="${se.id}"><input maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}"><button type="button" class="deck-del">${isJa() ? "削除" : "Delete"}</button></li>`;
+    const c = sessCounts(se);
+    return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button></li>`; });
   if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `<ul class="sess-list">${rows.join("")}</ul>${hidden ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : `<div style="height:16px"></div>`}`;
+  return `${editing ? "" : `<div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div>`}
+    <ul class="deck-list">${rows.join("")}</ul>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
 }
 function sessRedraw(){ NAV_SAME = true; return renderPG(); }
+function sessSaveNames(){ document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
+  const se = sessList().find(x => x.id === li.dataset.sid); if(!se) return; const v = li.querySelector("input").value.trim();
+  const nm = !v || v === se.label ? "" : v; if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }); }
 function sessWire(){
-  document.querySelectorAll(".sess[data-sid]").forEach(li => {
-    const id = li.dataset.sid, q = c => li.querySelector(c);
-    if(q(".sess-go")) q(".sess-go").onclick = () => sessResume(id);
-    if(q(".sess-edit")) q(".sess-edit").onclick = () => { SESS_EDIT = id; sessRedraw().then(() => { const i = $(".sess-input"); if(i){ i.focus(); i.select(); } }); };
-    const inp = q(".sess-input"); if(!inp) return;
-    let closing = false;
-    const save = () => { if(closing) return; closing = true; const se = sessList().find(x => x.id === id);
-      if(se){ const v = inp.value.trim(); se.name = !v || v === se.label ? "" : v; sessSave(se); } SESS_EDIT = null; sessRedraw(); };
-    q(".sess-done").onclick = save;
-    inp.onkeydown = e => { if(e.key === "Enter") save(); if(e.key === "Escape"){ closing = true; SESS_EDIT = null; sessRedraw(); } };
-    q(".sess-del").onpointerdown = () => { closing = true; };   // keep blur-save from firing first
-    q(".sess-del").onclick = () => {
+  document.querySelectorAll(".deck[data-sid]").forEach(b => b.onclick = () => sessResume(b.dataset.sid));
+  document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
+    const id = li.dataset.sid;
+    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") e.target.blur(); };
+    li.querySelector("input").onchange = () => sessSaveNames();
+    li.querySelector(".deck-del").onclick = () => {
+      sessSaveNames();
       const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
-      SESS_UNDO = {se, at: all.indexOf(se)}; SESS_EDIT = null; sessDrop(id); sessRedraw();
+      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); if(!sessOpen().length) SESS_EDIT = null; sessRedraw();
       clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
     };
-    q(".sess-done").onpointerdown = () => {};
   });
   if($(".sess-more")) $(".sess-more").onclick = () => { SESS_ALL = !SESS_ALL; sessRedraw(); };
   const u = $(".sess-undo-btn");
@@ -2717,7 +2718,7 @@ async function renderPG(){
 
     const setup = `
 
-      <section class="play-setup">${PG_NEW ? `<button class="nav-btn" id="pgNewBack" data-back="Practice">Back</button>` : PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
+      <section class="play-setup${PG_NEW ? "" : " pg-home"}">${PG_NEW ? `<button class="nav-btn" id="pgNewBack" data-back="Practice">Back</button>` : PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
         ${PG_NEW ? "" : pgHome()}
         ${PG_NEW ? `<div class="pg-new">
 
@@ -2782,7 +2783,7 @@ async function renderPG(){
     document.querySelectorAll(".pg-act").forEach(b => b.onclick = async () => {
       const a = b.dataset.act;
       if(a === "new"){ PG_NEW = true; renderPG(); scrollTo(0, 0); return; }
-      if(a === "due") pgStartWith(pgDueIds(), `${isJa() ? "復習" : "Review"} ${sessDay()}`);
+      if(a === "edit"){ if(SESS_EDIT === "all") sessSaveNames(); SESS_EDIT = SESS_EDIT === "all" ? null : "all"; sessRedraw(); return; }
       if(a === "quick") pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`);
     });
     sessWire();
