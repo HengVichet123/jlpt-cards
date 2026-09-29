@@ -1,6 +1,6 @@
 // network-first: always try fresh lessons, fall back to cache offline
 
-const CACHE = "jc-v121";
+const CACHE = "jc-v122";
 const AUDIO_CACHE = "jc-audio-1";   // word recordings: kept across app versions
 
 self.addEventListener("install", e => self.skipWaiting());
