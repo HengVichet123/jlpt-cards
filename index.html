@@ -944,6 +944,7 @@ header#top{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px}
 .bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
 .nav-home{font:700 13px var(--body);color:var(--soft);background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer}
 .page-title{font:800 18px var(--display);text-align:center;text-wrap:balance}
+.loading-note{text-align:center;color:var(--soft);font:500 14px var(--body);padding:48px 0}
 /* v86: one back link per page (no Home + Back pairs) */
 .back-link{font:600 15px var(--body);color:var(--ink);background:none;border:0;padding:10px 8px 10px 0;min-height:44px;cursor:pointer;
   max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
@@ -1490,7 +1491,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v86";
+const APP_VERSION = "v87";
 
 
 /* =========================================================
@@ -2134,10 +2135,12 @@ function pgProfile(lvl,t,no){
 }
 
 
-async function pgPool(level){
-
-  if(PG.pool[level])
-    return PG.pool[level];
+const PG_LOADING = {};
+function pgPool(level){   // one load per level, shared by everyone asking while it runs
+  if(PG.pool[level]) return Promise.resolve(PG.pool[level]);
+  return PG_LOADING[level] || (PG_LOADING[level] = pgPoolLoad(level).finally(() => delete PG_LOADING[level]));
+}
+async function pgPoolLoad(level){
 
   if(level === "ALL"){   // build from the per-level pools (loaded once each)
     const a = await pgPool("N1"), b = await pgPool("N2"), m = {};
@@ -2153,45 +2156,16 @@ async function pgPool(level){
   };
 
 
-  for(
-    const x of INDEX.filter(
-      i =>
-        level === "ALL" ||
-        i.level === level
-    )
-  ){
-
-    try{
-
-      const d =
-        await (
-          await fetch(
-            `data/${x.id}.json`, {cache:"no-cache"}   // revalidate: card updates show up right away
-          )
-        ).json();
-
-
-      for(
-        const t of [
-          "words",
-          "kanji",
-          "grammar"
-        ]
-      ){
-
-        pool[t].push(
-          ...d[t].map(
-            c => ({
-              ...c,
-              level:x.level
-            })
-          )
-        );
-
-      }
-
-    }catch(e){}
-
+  // all lesson files of the level in parallel (was one-by-one: ~30 round trips in a row on a phone)
+  const files = INDEX.filter(i => i.level === level);
+  const got = await Promise.all(files.map(x =>
+    fetch(`data/${x.id}.json`, {cache:"no-cache"})   // revalidate: card updates show up right away
+      .then(r => r.json()).then(d => [x, d]).catch(() => null)));
+  for(const g of got){
+    if(!g) continue;
+    const [x, d] = g;
+    for(const t of ["words","kanji","grammar"])
+      pool[t].push(...(d[t] || []).map(c => ({...c, level:x.level})));
   }
 
 
@@ -2766,7 +2740,13 @@ function pgExit(){
    HOME
    ========================================================= */
 
+function prefetchPools(){   // warm the Complete list / Playground pool while the user looks at Home
+  const lv = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";
+  const go = () => pgPool(lv);
+  "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
+}
 function renderHome(){
+  prefetchPools();
 
   document.body.classList.remove(
     "playing"
@@ -2834,8 +2814,10 @@ async function renderComplete(){
 
 
   const LVL = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";   // one level at a time
+  if(!PG.pool[LVL]) $("#list").innerHTML = `<p class="loading-note">Loading ${LVL} cards…</p>`;   // never look frozen
   const pool =
     await pgPool(LVL);
+  if(CURRENT !== "complete") return;   // user left while it was loading
 
 
   const make = {
