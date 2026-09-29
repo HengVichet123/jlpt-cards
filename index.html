@@ -1687,6 +1687,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .deck-table .deck{min-height:52px;border-radius:0}
 .deck-table .deck-n{text-align:center;padding:0}
 .deck-table .deck-name{padding-right:12px}
+/* v117: Practice run = no top bar; count sits above Again/Hard/Easy, a quiet "‹ Exit" below them */
+body.playing .play-bar.pg-bottom{position:fixed;inset:auto 0 0 0;display:block;padding:0;background:none;border:0;pointer-events:none;z-index:11}
+.pg-bottom .play-top{position:fixed;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 122px);display:flex;justify-content:center;pointer-events:none}
+.pg-bottom .play-queue{font-size:14px!important;opacity:1!important}
+.pg-bottom .pg-exit{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 4px);min-height:44px;padding:0 18px;font:600 14px var(--body);color:var(--faint);pointer-events:auto;border-radius:8px}
+.pg-bottom .pg-exit:hover{color:var(--ink);background:var(--chip)}
+body.playing .play-ratings{bottom:calc(env(safe-area-inset-bottom,0px) + 52px)!important}
+body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 16px)!important;bottom:calc(env(safe-area-inset-bottom,0px) + 156px)!important}
+.kbd-hint{display:none!important}
 </style>
 </head>
 
@@ -1735,7 +1744,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v116";
+const APP_VERSION = "v117";
 
 
 /* =========================================================
@@ -3015,9 +3024,9 @@ async function renderPG(){
 
     <div class="play-screen">
 
-      <div class="play-bar">
-        <button class="back-link pg-back" id="pgBack" type="button" aria-label="Back to Practice">‹</button>
+      <div class="play-bar pg-bottom">
         <div class="play-top">${queue}</div>
+        <button class="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
       </div>
 
 
