@@ -1546,6 +1546,17 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .play-stage .card.open .back-short{flex:0 0 auto}
 .back-short .mini-ex{font-size:17px;line-height:1.8}
 .back-short .mini-ex .rei{font-size:13px}
+.complete .card .img{display:none}
+/* v109: saved Practice sessions */
+.pg-resume{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
+.pg-sess{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:10px;background:var(--card);box-shadow:var(--lift)}
+.pg-sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;text-align:left;padding:13px 16px;border:0;background:none;color:var(--ink);cursor:pointer;font:inherit}
+.pg-sess-go b{font:700 16px var(--body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg-sess-go small{font-size:13px;color:var(--soft)}
+.pg-sess-go small em{font-style:normal;color:var(--shu);font-weight:700}
+.pg-sess-x{flex:none;width:48px;border:0;border-left:1px solid var(--line);background:none;color:var(--faint);font-size:20px;cursor:pointer;border-radius:0 10px 10px 0}
+.pg-sess-x:hover{color:var(--shu)}
+.pg-sess-go:focus-visible,.pg-sess-x:focus-visible{outline:2px solid var(--shu);outline-offset:-2px}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .hdr-act:active{transform:scale(.97)}
@@ -1666,7 +1677,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v108";
+const APP_VERSION = "v109";
 
 
 /* =========================================================
@@ -2394,6 +2405,23 @@ function pgState(){
    NEW PLAYGROUND SESSION
    ========================================================= */
 
+/* Saved sessions (this device): every started Practice is kept until all its cards are done, so it can be continued */
+const SESS_MAX = 30;
+const sessList = () => store.get("jc:sessions", []);
+const sessTodo = se => se.ids.filter(([lvl, t, no]) => !(se.done || []).includes(`${lvl}:${t}:${no}`));   // Easy = done for this session
+const sessLeft = se => sessTodo(se).length;
+function sessDone(lvl, t, no){ const st = pgState(), se = st.sid && sessList().find(x => x.id === st.sid);
+  if(se){ se.done = [...new Set([...(se.done || []), `${lvl}:${t}:${no}`])]; se.at = Date.now(); sessSave(se); } }
+function sessOpen(){ return sessList().filter(se => sessLeft(se) > 0); }
+function sessSave(se){ const all = sessList().filter(x => x.id !== se.id); all.unshift(se); store.set("jc:sessions", all.slice(0, SESS_MAX)); }
+function sessDrop(id){ store.set("jc:sessions", sessList().filter(x => x.id !== id)); }
+function sessResume(id){
+  const se = sessList().find(x => x.id === id); if(!se) return;
+  const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id});
+  store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
+  PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+}
+function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
 async function pgNew(){
 
   const st =
@@ -2508,12 +2536,12 @@ async function pgNew(){
   }
 
 
-  store.set(
-    "jc:pg",
-    st
-  );
-
-
+  let label = isJa() ? "全カード" : "All cards";
+  if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
+  if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
+  st.sid = "s" + Date.now();
+  if(st.ids.length) sessSave({id: st.sid, start: Date.now(), at: Date.now(), label, level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
+  store.set("jc:pg", st);
   PG_RUNNING = true;
 
   renderPG();
@@ -2593,6 +2621,8 @@ async function renderPG(){
     const setup = `
 
       <section class="play-setup">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
+        ${(() => { const open = sessOpen(); return open.length ? `<div class="set-label">Continue</div><div class="pg-resume">${open.map(se => `
+          <div class="pg-sess"><button type="button" class="pg-sess-go" data-sid="${se.id}"><b>${esc(se.label)}</b><small><em>${sessLeft(se)}</em> of ${se.ids.length} left · ${se.level} · ${sessWhen(se.start)}</small></button><button type="button" class="pg-sess-x" data-sx="${se.id}" aria-label="Remove this session">×</button></div>`).join("")}</div>` : ""; })()}
 
 
 
@@ -2650,6 +2680,8 @@ async function renderPG(){
     if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); renderPG(); };
     $("#pgGo").onclick =
       pgNew;
+    document.querySelectorAll(".pg-sess-go").forEach(b => b.onclick = () => sessResume(b.dataset.sid));
+    document.querySelectorAll(".pg-sess-x").forEach(b => b.onclick = () => { sessDrop(b.dataset.sx); renderPG(); });
     if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
 
 
@@ -2908,7 +2940,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -4227,6 +4259,7 @@ document.addEventListener(
         ),
         p.dueAt
       );
+      if(m === 1440) sessDone(lvl, type, no);
 
 
       renderPG();
