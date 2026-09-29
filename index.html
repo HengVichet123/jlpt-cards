@@ -1571,6 +1571,19 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .pg-name{width:100%;min-height:46px;margin-bottom:22px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 16px var(--body)}
 .pg-name:focus{outline:2px solid var(--shu);outline-offset:1px}
 .pg-name::placeholder{color:var(--faint)}
+/* v113: Continue = plain one-line text rows, 3 shown, Show all for the rest */
+.pg-back{min-width:44px;font-size:26px;line-height:1;padding:6px 12px 10px 0}
+.sess-list{list-style:none;margin:0 0 6px;padding:0;background:none;border:0;border-radius:0;box-shadow:none;overflow:visible}
+.sess-list > li{display:flex;align-items:center;gap:4px;min-height:44px;padding:0 0 0 4px}
+.sess-list > li + li::before{display:none}
+.sess-list .sess-go{flex-direction:row;align-items:baseline;gap:10px;padding:10px 0}
+.sess-list .sess-name{flex:0 1 auto;font:600 15px/1.3 var(--body)}
+.sess-list .sess-meta{flex:none;font-size:13px}
+.sess-list .sess-edit{min-height:40px;font-size:13px;color:var(--faint)}
+.sess-list .sess-edit:hover{color:var(--ink)}
+.sess.editing .sess-input{height:32px;margin:6px 0;font:600 15px var(--body)}
+.sess-more{display:block;text-align:left;min-height:40px;margin:0 0 22px;padding:0 4px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
+.sess-more:hover{color:var(--ink)}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .hdr-act:active{transform:scale(.97)}
@@ -1691,7 +1704,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v112";
+const APP_VERSION = "v113";
 
 
 /* =========================================================
@@ -2436,7 +2449,7 @@ function sessResume(id){
   store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
   PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
-let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null;   // on the New session page? which row is being renamed? last deleted (for Undo)
+let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null, SESS_ALL = false;   // SESS_ALL: Continue list expanded   // on the New session page? which row is being renamed? last deleted (for Undo)
 const sessName = se => se.name || se.label;
 const sessDay = () => { const d = new Date(); return `${d.getMonth() + 1}/${d.getDate()}`; };
 function sessAutoName(title){ const st = pgState();
@@ -2467,16 +2480,18 @@ function pgHome(){
     </ul>`;
 }
 function sessLedger(){
-  const rows = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)).map(se => {
+  const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 3, hidden = Math.max(0, all.length - SHOW);
+  const vis = SESS_ALL ? all : all.filter((se, i) => i < SHOW || se.id === SESS_EDIT);
+  const rows = vis.map(se => {
     const n = se.ids.length, left = sessLeft(se), d = new Date(se.start);
     if(se.id === SESS_EDIT) return `<li class="sess editing" data-sid="${se.id}">
       <input class="sess-input" maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}">
       <button type="button" class="sess-del">Delete</button><button type="button" class="sess-done">Done</button></li>`;
     return `<li class="sess" data-sid="${se.id}">
-      <button type="button" class="sess-go"><span class="sess-name">${esc(sessName(se))}</span><span class="sess-meta">${left} of ${n} left · ${d.getMonth() + 1}/${d.getDate()}</span></button>
+      <button type="button" class="sess-go"><span class="sess-name">${esc(sessName(se))}</span><span class="sess-meta">${left}/${n}</span></button>
       <button type="button" class="sess-edit" aria-label="Edit ${esc(sessName(se))}">Edit</button></li>`; });
   if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `<ul class="pg-group sess-list">${rows.join("")}</ul>`;
+  return `<ul class="sess-list">${rows.join("")}</ul>${hidden ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : `<div style="height:16px"></div>`}`;
 }
 function sessRedraw(){ NAV_SAME = true; return renderPG(); }
 function sessWire(){
@@ -2498,6 +2513,7 @@ function sessWire(){
     };
     q(".sess-done").onpointerdown = () => {};
   });
+  if($(".sess-more")) $(".sess-more").onclick = () => { SESS_ALL = !SESS_ALL; sessRedraw(); };
   const u = $(".sess-undo-btn");
   if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); sessRedraw(); } };
 }
@@ -2960,7 +2976,7 @@ async function renderPG(){
     <div class="play-screen">
 
       <div class="play-bar">
-        <button class="back-link" id="pgBack" type="button">‹ Settings</button>
+        <button class="back-link pg-back" id="pgBack" type="button" aria-label="Back to Practice">‹</button>
         <div class="play-top">${queue}</div>
       </div>
 
