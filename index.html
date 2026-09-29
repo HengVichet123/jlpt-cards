@@ -2006,6 +2006,15 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .rd-qt{margin:6px 0 0;font:600 16px/1.6 var(--body);display:flex;gap:10px}
 .rd-qn{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:700 13px var(--body);margin-top:2px}
 .rdt-row{margin-bottom:10px}
+/* v144: 文字・語彙 tests */
+.voc-instr{margin:0;font:500 14px/1.6 var(--body);color:var(--soft)}
+.voc-u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.lsn-opts.voc-grid{grid-template-columns:1fr 1fr}
+.voc .rd-qt{font:500 17px/1.7 var(--body)}
+.voc-bl{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--ink);margin:0 .2em;height:1.1em;vertical-align:baseline;text-align:center;font-size:.8em;line-height:1.1em}
+.voc-star{color:var(--shu)}
+.voc-full{margin:0;padding:8px 12px;border-left:3px solid var(--matsu);font:500 15px/1.7 var(--body)}
+.voc-text p{text-indent:0}
 </style>
 </head>
 
@@ -2054,7 +2063,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v143";
+const APP_VERSION = "v144";
 
 
 /* =========================================================
@@ -3459,7 +3468,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
-  "Settings":"設定","Novels":"名作","Movies":"映画","Library":"ライブラリ","Listening":"聴解","Tests with audio":"音声つきテスト","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Settings":"設定","Novels":"名作","Movies":"映画","Library":"ライブラリ","Listening":"聴解","Vocab & Grammar":"言語知識","言語知識 tests":"言語知識テスト","Tests with audio":"音声つきテスト","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
@@ -3592,11 +3601,12 @@ function renderHome(){
         <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
         <button class="cover cover-list" data-home="listening"><i>聴</i><b>Listening</b><span>Tests with audio</span></button>
-        <button class="cover cover-all" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0).toLocaleString()} cards</span></button>
+        <button class="cover cover-all" data-home="vocab"><i>語</i><b>Vocab &amp; Grammar</b><span>言語知識 tests</span></button>
       </div>
 
       <h2 class="home-h">Library</h2>
       <div class="side">
+        <button class="side-tile" data-home="complete"><i>覧</i><b>Complete list</b></button>
         <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
         <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
@@ -4581,6 +4591,48 @@ async function renderReadTest(id){
   };
   draw();
 }
+/* ---------- 文字・語彙 tests: one section per screen (its instruction + all its questions). ［word］ = underlined ---------- */
+async function renderVocabTests(){
+  let L = []; try{ L = await (await fetch("data/vocabtests/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  testList({kind: "voc", title: "Vocab & Grammar", idx: L, open: renderVocabTest});
+}
+const vocMark = t => esc(t).replace(/［(.+?)］/g, '<u class="voc-u">$1</u>').replace(/＿＿/g, '<span class="voc-bl"></span>').replace(/★/g, '<span class="voc-bl voc-star">★</span>');
+async function renderVocabTest(id){
+  const T = await (await fetch(`data/vocabtests/${id}.json`, {cache:"no-cache"})).json();
+  const P = T.parts, picked = P.map(p => new Array(p.items.length).fill(0)); let i = 0;
+  const nQ = P.reduce((n, p) => n + p.items.length, 0);
+  const draw = () => {
+    if(i >= P.length) return done();
+    const pt = P[i], A = picked[i], all = A.every(Boolean);
+    $("#pageTitle").textContent = T.level + " 言語知識";
+    $("#list").innerHTML = `<section class="rdt voc">
+      <button class="nav-btn" id="vcBack" data-back="Vocabulary">Back</button>
+      <div class="lsn-head"><b>${esc(pt.ja)}</b><span>${i + 1} / ${P.length}</span></div>
+      ${pt.instr ? `<p class="voc-instr">${esc(pt.instr)}</p>` : ""}
+      ${pt.text ? `<article class="rd-text voc-text">${pt.text.split("\n").filter(Boolean).map(l => `<p>${vocMark(l)}</p>`).join("")}</article>` : ""}
+      ${pt.items.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span><span>${vocMark(q.q)}</span></p>
+        <ol class="lsn-opts${pt.key !== "yoho" && q.options.every(o => o.length <= 9) ? " voc-grid" : ""}">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${A[k] ? (m + 1 === q.answer ? " right" : m + 1 === A[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${A[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${vocMark(o)}</span></button></li>`).join("")}</ol>
+        ${A[k] && q.full ? `<p class="voc-full">${esc(q.full)}</p>` : ""}${A[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
+      <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="vcNext">${i + 1 < P.length ? (all ? "Next" : "Skip") : "See result"}</button>
+    </section>`;
+    $("#list").querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; A[+b.dataset.k] = +b.dataset.m; NAV_SAME = true; draw(); scrollTo(0, y); });
+    $("#vcNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#vcBack").onclick = () => renderVocabTests();
+  };
+  const done = () => {
+    let right = 0; P.forEach((pt, k) => pt.items.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
+    const skipped = picked.flat().filter(x => !x).length, key = "jc:voc:" + id, r = store.get(key, {best: 0});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
+    $("#list").innerHTML = `<section class="lsn lsn-done">
+      <button class="nav-btn" id="vcBack" data-back="Vocabulary">Back</button>
+      <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
+      <ul class="lsn-parts">${P.map((pt, k) => `<li><span>${esc(pt.ja)}</span><b>${pt.items.filter((q, m) => picked[k][m] === q.answer).length} / ${pt.items.length}</b></li>`).join("")}</ul>
+      <button type="button" class="lsn-next" id="vcAgain">Try again</button></section>`;
+    $("#vcBack").onclick = () => renderVocabTests();
+    $("#vcAgain").onclick = () => { picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); };
+  };
+  draw();
+}
 async function renderListenTest(id){
   const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
   const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => q.sub ? q.sub.forEach((x, j) => Q.push({...q, ...x, part: pt, no: i + 1, subNo: j + 1})) : Q.push({...q, part: pt, no: i + 1})));
@@ -5437,7 +5489,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -5485,6 +5537,9 @@ function pick(id){
 
   else if(id === "listening")
     renderListening();
+
+  else if(id === "vocab")
+    renderVocabTests();
 
   else if(id === "photos"){
     SCENE_DIR = "photos"; renderScenes(); }
