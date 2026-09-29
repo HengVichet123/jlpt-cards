@@ -1752,11 +1752,10 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th.idle{cursor:none}
 @media (prefers-reduced-motion: reduce){ .th{animation:none} }
 /* v123: いらすとや group in Pictures (own heading + credit line); illustrations on white in the viewer */
-.pic-group{margin-top:34px;display:grid;gap:12px}
 .pic-gh{margin:0;font:700 20px var(--display);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .pic-gh small{font:500 13px var(--body);color:var(--soft)}
 .pic-soon{margin:0;padding:22px;border:1px dashed var(--line);border-radius:10px;color:var(--faint);text-align:center}
-.pic-by{margin:0;font-size:13px;color:var(--soft)}
+.pic-by{margin:18px 0 0;font-size:13px;color:var(--soft)}
 .pic-by a,.pv-src{color:var(--soft);text-decoration:underline;text-underline-offset:2px}
 .pic-cat.illust .pic-cover{background:#FFFFFF}
 .pic-cat.illust .pic-cover img{object-fit:contain;padding:8px;box-sizing:border-box}
@@ -1812,7 +1811,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v123";
+const APP_VERSION = "v124";
 
 
 /* =========================================================
@@ -3159,7 +3158,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
-  "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Settings":"設定","Novels":"名作","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
@@ -3275,6 +3274,7 @@ function renderHome(){
       <div class="side">
         <button class="side-tile" data-home="novels"><i>本</i><b>Novels</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
+        <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
         <button class="side-tile" data-home="sections"><i>節</i><b>Sections</b></button>
         <button class="side-tile" data-home="useit"><i>使</i><b>Use it</b></button>
         <button class="side-tile" data-home="scenes"><i>絵</i><b>Scenes</b></button>
@@ -4116,24 +4116,34 @@ async function renderPictures(){
   document.body.classList.remove("playing");
   let idx = []; try{ idx = await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json(); }catch(e){}
   $("#pageTitle").textContent = "Pictures";
-  const tile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
-      <span class="pic-cover"><img src="data/pictures/${x.cover}" alt="" loading="lazy"></span>
-      <b>${esc(x.ja)}</b><span>${esc(x.en.replace(" (いらすとや)", ""))} · ${x.count}</span></button>`;
-  const photos = idx.filter(x => x.group !== "illust"), ills = idx.filter(x => x.group === "illust");
+  idx = idx.filter(x => x.group !== "illust");
   $("#list").innerHTML = `<section class="pics">
-    <div class="pic-cats">${photos.map(tile).join("")}</div>
-    <div class="pic-group" id="picIllust">
-      <h2 class="pic-gh">いらすとや<small>Illustrations for actions, feelings and ideas</small></h2>
-      ${ills.length ? `<div class="pic-cats">${ills.map(tile).join("")}</div>` : `<p class="pic-soon">${isJa() ? "準備中" : "Coming soon"}</p>`}
-      <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p>
-    </div>
-    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo and illustration credits</summary><ol id="picCreditList"></ol></details></section>`;
+    <div class="pic-cats">${idx.map(picTile).join("")}</div>
+    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo credits</summary><ol id="picCreditList"></ol></details></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
   $("#picCredits").addEventListener("toggle", async () => {   // all categories' credits, fetched on first open
     const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
     const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
     ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => { const P = picsOf(w);
       return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`); })).join("");
+  });
+}
+const picTile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
+      <span class="pic-cover"><img src="data/pictures/${x.cover}" alt="" loading="lazy"></span>
+      <b>${esc(x.ja)}</b><span>${esc(x.en.replace(" (いらすとや)", ""))} · ${x.count}</span></button>`;
+async function renderIllust(){   // いらすとや illustrations: actions, feelings, ideas (same viewer as Pictures)
+  document.body.classList.remove("playing");
+  let idx = []; try{ idx = (await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json()).filter(x => x.group === "illust"); }catch(e){}
+  $("#pageTitle").textContent = "Illustrations";
+  $("#list").innerHTML = `<section class="pics">
+    ${idx.length ? `<div class="pic-cats">${idx.map(picTile).join("")}</div>` : `<p class="pic-soon">${isJa() ? "準備中" : "Coming soon"}</p>`}
+    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p>
+    <details class="ps-credits pic-credits" id="picCredits"><summary>Illustration credits</summary><ol id="picCreditList"></ol></details></section>`;
+  document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+  $("#picCredits").addEventListener("toggle", async () => {
+    const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
+    const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
+    ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => picsOf(w).map(p => `<li>${esc(w.word)} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`))).join("");
   });
 }
 const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
@@ -4159,7 +4169,7 @@ async function renderPicCat(key){
 function picView(C, W, clean){
   const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   $("#list").innerHTML = `<section class="pv">
-    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="Pictures">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
+    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
@@ -4196,7 +4206,7 @@ function picView(C, W, clean){
   const keys = e => { if(!document.body.contains(tr)){ removeEventListener("keydown", keys); return; }
     if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
   addEventListener("keydown", keys);
-  $("#pvBack").onclick = () => { renderPictures(); scrollTo(0, 0); };
+  $("#pvBack").onclick = () => { (C.key.startsWith("ira_") ? renderIllust : renderPictures)(); scrollTo(0, 0); };
   mark(0);
 }
 
@@ -4916,7 +4926,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -4958,6 +4968,9 @@ function pick(id){
 
   else if(id === "pictures")
     renderPictures();
+
+  else if(id === "illust")
+    renderIllust();
 
   else if(id === "photos"){
     SCENE_DIR = "photos"; renderScenes(); }
