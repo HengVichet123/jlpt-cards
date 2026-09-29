@@ -1538,6 +1538,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .sound-note{position:fixed;left:50%%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translateX(-50%%);z-index:50;max-width:88vw;
   padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--paper);font:500 13px var(--body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .say-i.playing{color:var(--shu)}
+/* v103 */
+.pv-top{display:flex;justify-content:space-between;align-items:center}
+.pv-sound{width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--shu);display:grid;place-items:center;cursor:pointer}
+.pv-sound[aria-pressed="false"]{color:var(--faint)}
+.pic-credits{margin-top:28px}
 /* v102: speaker only on the practice card; list cards speak when opened (Settings) */
 .say-i{display:none!important}
 .play-stage .say-i{display:inline-grid!important}
@@ -1570,7 +1575,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .pv-word b{font-size:34px}
 /* v95 Japanese-only mode: the UI reads as a Japanese study book, English-only blocks vanish */
 .ja .home h1::after{display:none}
-.ja .home > p{display:none}
+.home-goal{font:500 15px/1.5 var(--body);color:var(--soft);margin:4px 0 0;max-width:30em}
 .ja .pt-en, .ja .sec-row-t span, .ja .ps-title small, .ja .home-h small{display:none!important}   /* UI English only; learning content untouched */
 .ja .home-h, .ja .set-h, .ja .page-title, .ja .cover b, .ja .side-tile b{font-family:var(--display);letter-spacing:.04em}
 .ja .play-ratings button{font-family:var(--display)}
@@ -1636,7 +1641,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v102";
+const APP_VERSION = "v103";
 
 
 /* =========================================================
@@ -2598,7 +2603,7 @@ async function renderPG(){
 
 
     $("#count").textContent =
-      `Playground · ${st.level}`;
+      `Practice · ${st.level}`;
 
 
     document.querySelectorAll(".seg button").forEach(btn => btn.onclick = () => {
@@ -2829,7 +2834,7 @@ async function renderPG(){
 
 
   $("#count").textContent =
-    `Playground · ${st.level}`;
+    `Practice · ${st.level}`;
 
 
   $("#pgBack").onclick =
@@ -2874,10 +2879,10 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
   "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
-const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Complete list":"一覧","Reading":"読解",
+const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Speak when a card opens":"開いたら読み上げる","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -2927,13 +2932,13 @@ function renderSettings(){
         <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
       <div class="set-group"><h2 class="set-h">Cards</h2>
-        <label class="opt-row opt-switch" for="setSay"><span>Speak when a card opens</span><input type="checkbox" id="setSay" ${store.get("jc:tapsay", true) ? "checked" : ""}></label>
+        <label class="opt-row opt-switch" for="setSay"><span>Sound</span><input type="checkbox" id="setSay" ${soundOn() ? "checked" : ""}></label>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
       <p class="set-ver">${APP_VERSION}</p>
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
-    $("#setSay").onchange = e => store.set("jc:tapsay", e.target.checked);
+    $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -2969,16 +2974,13 @@ function renderHome(){
       </h1>
 
 
-      <p>
-        Build your Japanese memory
-        one review at a time.
-      </p>
+      <p class="home-goal">${isJa() ? "選んだことを、いろいろな方法で身につける場所。" : "What you choose to learn, learned every way."}</p>
       <button class="home-gear" type="button" data-home="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4Z"/></svg></button>
 
 
       <h2 class="home-h">Study</h2>
       <div class="core">
-        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>${dueLine()}</span></button>
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
         <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
       </div>
@@ -3198,6 +3200,7 @@ try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch
 function unlockAudio(){ removeEventListener("touchend", unlockAudio); removeEventListener("click", unlockAudio);
   if(PLAYER.src) return; PLAYER.src = SILENT; PLAYER.play().then(() => PLAYER.pause()).catch(() => {}); }
 addEventListener("touchend", unlockAudio, {passive: true}); addEventListener("click", unlockAudio);
+const soundOn = () => store.get("jc:sound", true);
 let SAY_ON = null;   // the speaker icon currently playing (shown in the accent color)
 const sayOff = () => { if(SAY_ON){ SAY_ON.classList.remove("playing"); SAY_ON = null; } };
 PLAYER.addEventListener("ended", sayOff); PLAYER.addEventListener("pause", sayOff);
@@ -3231,6 +3234,7 @@ function speakDevice(text){
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
 }
+const SPK_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 const SPK = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 const sayIcon = text => `<span class="say say-i" role="button" tabindex="0" data-say="${esc(text)}" aria-label="Play ${esc(text)}">${SPK}</span>`;
 const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
@@ -3477,13 +3481,16 @@ function fullFor(t, c, lv){
 // one handler for every mini list on any page (Playground never renders minis)
 document.addEventListener("click", e => {
   if(e.target.closest(".say")) return;   // speaker icon: play only
+  const word = e.target.closest(".card .big");   // the headword itself = hear it, the card stays as it is
+  if(word && soundOn()){ const cd = word.closest(".card"), c = cd && MINI.reg.get(miniKey(cd.dataset.mt, cd.dataset.mlv, cd.dataset.no));
+    const text = (c && c.word) || (cd && cd.dataset.type === "words" ? word.textContent.trim() : "");
+    if(text && AUDIO_MAP && AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
   const m = e.target.closest(".list-card[data-mt]:not(.open)");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
     if(c){ e.stopPropagation();
       const tmp = document.createElement("div"); tmp.innerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv).trim();
-      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back"));
-      if(m.dataset.mt === "words" && store.get("jc:tapsay", true)) speak(c.word); }
+      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); }
     return;
   }
   const f = e.target.closest(".list-card.open[data-mt] .front");
@@ -3717,8 +3724,15 @@ async function renderPictures(){
 
     <div class="pic-cats">${idx.map(x => `<button class="pic-cat" data-pcat="${x.key}">
       <span class="pic-cover"><img src="data/pictures/${x.cover}" alt="" loading="lazy"></span>
-      <b>${esc(x.ja)}</b><span>${esc(x.en)} · ${x.count}</span></button>`).join("")}</div></section>`;
+      <b>${esc(x.ja)}</b><span>${esc(x.en)} · ${x.count}</span></button>`).join("")}</div>
+    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo credits</summary><ol id="picCreditList"></ol></details></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+  $("#picCredits").addEventListener("toggle", async () => {   // all categories' credits, fetched on first open
+    const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
+    const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
+    ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => { const P = picsOf(w);
+      return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`); })).join("");
+  });
 }
 const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
 async function renderPicCat(key){
@@ -3726,6 +3740,7 @@ async function renderPicCat(key){
   const clean = s => (s || "").replace(/\s*\([^)]*[A-Z][a-z]+ [a-z]+[^)]*\)/g, "").trim();   // drop Latin species names
   const W = C.words;
   $("#pageTitle").textContent = C.ja;
+  return picView(C, W, clean);   // tapping a category opens the viewer directly
   // 1) start screen: cover, title, count, Start, and the photo credits (kept OUT of the session)
   $("#list").innerHTML = `<section class="pic-start">
     <div class="story-top"><button class="nav-btn" id="picBack" data-back="Pictures">Back</button></div>
@@ -3742,11 +3757,11 @@ async function renderPicCat(key){
 function picView(C, W, clean){
   const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   $("#list").innerHTML = `<section class="pv">
-    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${esc(C.ja)}">Back</button>
+    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="Pictures">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
-      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"><span class="pv-spk">${spk}</span></button>
+      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
       <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span></div></div>`; }).join("")}</div>
   </section>`;
@@ -3763,7 +3778,12 @@ function picView(C, W, clean){
       sl.querySelectorAll(".pv-photo img").forEach(im => im.src = "data/pictures/" + t.dataset.src);
       sl.querySelectorAll(".pv-thumb").forEach(x => x.classList.toggle("on", x === t)); return; }
     const b = e.target.closest(".pv-photo"); if(!b) return;
-    const n = +b.dataset.n; if(n === i) speak(W[n].word); else go(n); });
+    const n = +b.dataset.n;
+    if(n !== i){ go(n); return; }
+    b.animate([{transform:"scale(1)"},{transform:"scale(.97)"},{transform:"scale(1)"}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"});   // press feedback
+    if(soundOn()) speak(W[n].word); });
+  $("#pvSound").onclick = () => { const on = !soundOn(); store.set("jc:sound", on);
+    $("#pvSound").innerHTML = on ? SPK : SPK_OFF; $("#pvSound").setAttribute("aria-pressed", on); };
   tr.addEventListener("pointerdown", e => { if(e.pointerType !== "mouse") return; dragX = e.clientX; startLeft = tr.scrollLeft; dragged = false; });
   tr.addEventListener("pointermove", e => { if(dragX === null) return; const dx = e.clientX - dragX;
     if(!dragged && Math.abs(dx) > 6){ dragged = true; tr.style.scrollSnapType = "none"; tr.setPointerCapture(e.pointerId); }
@@ -3774,7 +3794,7 @@ function picView(C, W, clean){
   const keys = e => { if(!document.body.contains(tr)){ removeEventListener("keydown", keys); return; }
     if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
   addEventListener("keydown", keys);
-  $("#pvBack").onclick = () => renderPicCat(C.key);
+  $("#pvBack").onclick = () => { renderPictures(); scrollTo(0, 0); };
   mark(0);
 }
 
@@ -4375,6 +4395,14 @@ new MutationObserver(ms => { if(isJa()) for(const m of ms) m.addedNodes.forEach(
 new MutationObserver(() => { if(isJa()) jaWalk(document.querySelector("header")); })
   .observe(document.querySelector("header"), {childList: true, subtree: true, characterData: true});
 applyLang();
+(() => { let x0 = 0, y0 = 0, t0 = 0, ok = false;
+  addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
+    ok = e.touches.length === 1 && !e.target.closest(".pv-track,.home-rail,.play-screen,input,select,textarea,.sec-rows.sorting,.reader"); }, {passive: true});
+  addEventListener("touchend", e => { if(!ok) return; const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    if(dx > 80 && Math.abs(dy) < 60 && Date.now() - t0 < 600 && CURRENT !== "home" && !$("#top").hidden){
+      $("#list").animate([{transform:"translateX(24px)", opacity:.6},{transform:"none", opacity:1}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"});
+      $("#goHome").click(); } }, {passive: true});
+})();
 
 
 /* =========================================================
@@ -4448,14 +4476,14 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
   $("#top").hidden = id === "home";
   document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
   $("#filter").hidden = true;
-  $("#ver").hidden = id !== "playground" && id !== "home" ? true : false;
+  $("#ver").hidden = true;   // version lives in Settings only
   $("#famToggle").hidden = true;   // moved to Settings
   const showFam = store.get("jc:showfam", false);
   document.body.classList.toggle("showfam", showFam);
