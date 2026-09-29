@@ -1535,6 +1535,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .card .back{transform-origin:50% 0;backface-visibility:hidden}
 @media (prefers-reduced-motion: reduce){ .cover,.play-ratings button{transition:none} }
 
+/* v99 speaker icon on word cards and rows */
+.say-i{display:inline-grid;place-items:center;width:36px;height:36px;margin-left:6px;vertical-align:middle;border-radius:50%;color:var(--faint);opacity:1;cursor:pointer}
+.say-i:hover{color:var(--shu);background:var(--chip)} .say-i:active{transform:scale(.92)}
+.say-i:focus-visible{outline:2px solid var(--shu)}
+.mini-top .say-i{margin-left:auto;width:40px;height:40px}
 /* v98 */
 .ja .tab .jp{display:none}
 .prelearn .story-top{display:block}
@@ -1621,7 +1626,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v98";
+const APP_VERSION = "v99";
 
 
 /* =========================================================
@@ -1926,7 +1931,7 @@ function wordCard(c){
      </div>
 
      <div class="big">
-       ${esc(c.word)}
+       ${esc(c.word)}${sayIcon(c.word)}
      </div>`,
 
     back,
@@ -2911,21 +2916,12 @@ function renderSettings(){
       <div class="set-group"><h2 class="set-h">Language</h2>
         <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
-      <div class="set-group"><h2 class="set-h">Voice</h2>
-        <div class="voices" role="radiogroup" id="setVoices">${[...VOICES, {id:"device", name:"Device voice", sub:"Your phone's own voice"}].map(v =>
-          `<button type="button" role="radio" class="voice-row${v.id === speaker() ? " on" : ""}" aria-checked="${v.id === speaker()}" data-v="${v.id}">
-            <span class="vr-name">${esc(v.name)}</span><span class="vr-sub">${esc(v.sub)}</span></button>`).join("")}</div>
-</div>
       <div class="set-group"><h2 class="set-h">Complete list</h2>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
       <p class="set-ver">${APP_VERSION}</p>
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
-    $("#setVoices").querySelectorAll(".voice-row").forEach(b => b.onclick = () => {   // choosing a person = hearing them
-      store.set("jc:speaker", b.dataset.v);
-      $("#setVoices").querySelectorAll(".voice-row").forEach(x => { x.classList.toggle("on", x === b); x.setAttribute("aria-checked", x === b); });
-      speak("現像"); });
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -3130,6 +3126,8 @@ async function renderComplete(){
 /* Open/close with motion: the word glides to its new place (FLIP),
    the back drops down like a curtain. */
 /* Desktop keyboard in Playground: Space/Enter = flip, 1/2/3 = Again/Hard/Easy */
+addEventListener("keydown", e => { const sp = e.target.closest && e.target.closest(".say-i");   // speaker icons work from the keyboard
+  if(sp && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); speak(sp.dataset.say); return; } });
 addEventListener("keydown", e => {
   if(!document.body.classList.contains("playing") || e.metaKey || e.ctrlKey || e.altKey) return;
   if(/INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ""))) return;
@@ -3182,8 +3180,7 @@ let CARD_LVL = null;
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
 let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
 fetch("data/audio/map.json").then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
-fetch("data/audio/voices.json").then(r => r.ok ? r.json() : []).then(v => VOICES = v).catch(() => {});
-const speaker = () => store.get("jc:speaker", store.get("jc:recorded", true) === false ? "device" : "nanami");
+const speaker = () => "nanami";   // one voice for everything (keeps the app small as content grows)
 function speak(text){
   try{ if(AUDIO_NOW) AUDIO_NOW.pause(); }catch(e){}
   const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
@@ -3204,6 +3201,8 @@ function speakDevice(text){
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
 }
+const SPK = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const sayIcon = text => `<span class="say say-i" role="button" tabindex="0" data-say="${esc(text)}" aria-label="Play ${esc(text)}">${SPK}</span>`;
 const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
 
 /* ---------- Novels ---------- */
@@ -3411,7 +3410,7 @@ function miniFor(t, c, lv){
   const tag = {words:"W", kanji:"K", grammar:"G"}[t];
   let head = "", en = "", e = null, target = "";
   if(t === "words"){
-    head = `<b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span>`;
+    head = `<b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span>${sayIcon(c.word)}`;
     en = (c.en || "").split(" / ")[0]; e = (c.ex && c.ex[0]) || c.use; target = c.word;
   }else if(t === "kanji"){
     head = `<b class="mini-w">${esc(c.kanji)}</b><span class="mini-rd">${esc([(c.on || []).join("・"), (c.kun || []).join("・")].filter(Boolean).join(" ／ "))}</span>`;
@@ -3434,6 +3433,7 @@ function fullFor(t, c, lv){
 }
 // one handler for every mini list on any page (Playground never renders minis)
 document.addEventListener("click", e => {
+  if(e.target.closest(".say")) return;   // speaker icon: play only
   const m = e.target.closest(".mini[data-mt]");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
