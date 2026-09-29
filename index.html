@@ -1535,6 +1535,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .card .back{transform-origin:50% 0;backface-visibility:hidden}
 @media (prefers-reduced-motion: reduce){ .cover,.play-ratings button{transition:none} }
 
+/* v97 voice list: pick a person; tapping plays them */
+.voices{display:flex;flex-direction:column;gap:8px}
+.voice-row{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:56px;padding:10px 14px 10px 44px;position:relative;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);color:var(--ink);cursor:pointer;box-shadow:var(--lift);transition:border-color .15s}
+.voice-row::before{content:"";position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:2px solid var(--line)}
+.voice-row.on{border-color:var(--shu)}
+.voice-row.on::before{border-color:var(--shu);background:radial-gradient(circle,var(--shu) 0 5px,transparent 6px)}
+.vr-name{font:700 15px var(--body)} .vr-sub{font:400 12.5px var(--body);color:var(--faint)}
+.voice-row:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 /* v96 picture viewer: photo leaves room for the word */
 .pv-photo{max-height:min(46dvh,420px);aspect-ratio:auto;height:min(46dvh,420px)}
 .pv-word b{font-size:34px}
@@ -1606,7 +1615,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v96";
+const APP_VERSION = "v97";
 
 
 /* =========================================================
@@ -2847,7 +2856,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声",
+  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -2856,6 +2865,7 @@ const JA_RX = [
   [/^(\d+) cards$/, "$1枚"], [/^(\d+) books$/, "$1冊"], [/^(\d+) words$/, "$1語"], [/^(\d+) new left$/, "未学習 $1"],
   [/^Start · (\d+) cards$/, "始める・$1枚"], [/^(\d+) cards? ready to review$/, "復習 $1枚"], [/^Next review in (\d+) min$/, "次の復習まで $1分"],
   [/^Next review in (\d+) h$/, "次の復習まで $1時間"], [/^Next review in (\d+) d$/, "次の復習まで $1日"], [/^to go$/, "枚 残り"], [/^(\d+) coming back$/, "あとで $1枚"],
+  [/^Female · (.+)$/, "女性・$1"], [/^Male · (.+)$/, "男性・$1"],
   [/^(\d+) words · (\d+) kanji · (\d+) grammar$/, "単語 $1・漢字 $2・文法 $3"], [/^[A-Za-z &]+ · (\d+)$/, "$1語"], [/^‹ (.+)$/, m => "‹ " + (JA[m.slice(2)] || m.slice(2))]];
 const isJa = () => store.get("jc:lang", "en") === "ja";
 function jaText(t){ const k = t.trim(); if(!k) return null;
@@ -2896,7 +2906,9 @@ function renderSettings(){
         <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
       <div class="set-group"><h2 class="set-h">Voice</h2>
-        <label class="opt-row opt-switch" for="setRec"><span>Recorded voice</span><input type="checkbox" id="setRec" ${store.get("jc:recorded", true) ? "checked" : ""}></label>
+        <div class="voices" role="radiogroup" id="setVoices">${[...VOICES, {id:"device", name:"Device voice", sub:"Your phone's own voice"}].map(v =>
+          `<button type="button" role="radio" class="voice-row${v.id === speaker() ? " on" : ""}" aria-checked="${v.id === speaker()}" data-v="${v.id}">
+            <span class="vr-name">${esc(v.name)}</span><span class="vr-sub">${esc(v.sub)}</span></button>`).join("")}</div>
 </div>
       <div class="set-group"><h2 class="set-h">Complete list</h2>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
@@ -2904,7 +2916,10 @@ function renderSettings(){
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
-    $("#setRec").onchange = e => { store.set("jc:recorded", e.target.checked); speak("現像"); };
+    $("#setVoices").querySelectorAll(".voice-row").forEach(b => b.onclick = () => {   // choosing a person = hearing them
+      store.set("jc:speaker", b.dataset.v);
+      $("#setVoices").querySelectorAll(".voice-row").forEach(x => { x.classList.toggle("on", x === b); x.setAttribute("aria-checked", x === b); });
+      speak("現像"); });
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -3159,13 +3174,16 @@ function flipCard(card, open){
 let CARD_LVL = null;
 
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
-let AUDIO_MAP = null, AUDIO_NOW = null;
+let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
 fetch("data/audio/map.json").then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
+fetch("data/audio/voices.json").then(r => r.ok ? r.json() : []).then(v => VOICES = v).catch(() => {});
+const speaker = () => store.get("jc:speaker", store.get("jc:recorded", true) === false ? "device" : "nanami");
 function speak(text){
-  const key = store.get("jc:recorded", true) && AUDIO_MAP && AUDIO_MAP[text];
+  try{ if(AUDIO_NOW) AUDIO_NOW.pause(); }catch(e){}
+  const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
   if(key){
     try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
-    const a = new Audio(`data/audio/${key}.mp3`); a.preservesPitch = true;
+    const a = new Audio(`data/audio/${sp}/${key}.mp3`); a.preservesPitch = true;
     AUDIO_NOW = a;
     a.play().catch(() => speakDevice(text)); return;
   }
