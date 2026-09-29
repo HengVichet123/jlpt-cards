@@ -1339,6 +1339,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 /* v72: reading = sections first */
 .sec-rows{display:flex;flex-direction:column;gap:10px;margin-top:8px}
 .sec-row{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+@media (hover:hover) and (pointer:fine){ .sec-row{cursor:grab} .sec-rows.sorting, .sec-rows.sorting .sec-row{cursor:grabbing} }
 .sec-row img{-webkit-user-drag:none;pointer-events:none}
 .sec-row.lifted{z-index:5;box-shadow:0 12px 28px rgba(0,0,0,.22);transform-origin:center;cursor:grabbing;transition:box-shadow .15s}
 .sec-rows.sorting .sec-row:not(.lifted){opacity:.75}
@@ -1496,7 +1497,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v88";
+const APP_VERSION = "v89";
 
 
 /* =========================================================
@@ -3547,9 +3548,10 @@ async function renderReading(){
         <span class="sec-row-t"><b>${jp}</b><span>${en}</span><em>${items.length} books</em></span>
         <span class="fan">${fan.map((x, i) => `<img src="data/readings/${x.img}" alt="" style="--i:${i}" loading="lazy">`).join("")}</span>
         <span class="sec-row-go" aria-hidden="true">›</span></button>`; }).join("")}</div>
-    <p class="sec-hint">Press and hold a section to move it</p>
+    <p class="sec-hint" id="secHint">Press and hold a section to move it</p>
   </section>`;
   document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { if(SEC_DRAG.justDropped) return; renderShelf(b.dataset.shelf); scrollTo(0, 0); });
+  if(matchMedia("(hover: hover) and (pointer: fine)").matches) $("#secHint").textContent = "Drag a section to move it";
   secReorder($("#secRows"));
 }
 /* his order of the Reading sections (press-and-hold + drag); saved per device */
@@ -3561,7 +3563,9 @@ function shelfOrder(){
 const SEC_DRAG = {justDropped: false};
 function secReorder(box){
   if(!box) return;
-  let row = null, timer = null, startX = 0, startY = 0, grab = 0, on = false;
+  let row = null, timer = null, startX = 0, startY = 0, grab = 0, on = false, mouse = false;
+  const lift = () => { on = true; grab = startY - row.getBoundingClientRect().top;
+    row.classList.add("lifted"); box.classList.add("sorting"); if(!mouse && navigator.vibrate) navigator.vibrate(15); };
   const pt = e => e.touches ? e.touches[0] : e;
   const place = y => {   // move the lifted row to the slot under the finger, then pin it under the finger
     for(const sib of box.querySelectorAll(".sec-row")){
@@ -3575,14 +3579,18 @@ function secReorder(box){
   };
   const start = e => {
     const r = e.target.closest(".sec-row"); if(!r || (e.button && e.button !== 0)) return;
-    const p = pt(e); startX = p.clientX; startY = p.clientY; row = r;
-    timer = setTimeout(() => { on = true; grab = startY - row.getBoundingClientRect().top;
-      row.classList.add("lifted"); box.classList.add("sorting"); if(navigator.vibrate) navigator.vibrate(15); }, 420);
+    const p = pt(e); startX = p.clientX; startY = p.clientY; row = r; mouse = !e.touches;
+    if(mouse){ e.preventDefault(); return; }   // mouse: drag starts on movement (no hold); touch: hold first so swipes still scroll
+    timer = setTimeout(lift, 420);
   };
   const move = e => {
     if(!document.body.contains(box)){ removeEventListener("mousemove", move); removeEventListener("mouseup", end); return; }
     if(!row) return; const p = pt(e);
-    if(!on){ if(Math.hypot(p.clientX - startX, p.clientY - startY) > 8){ clearTimeout(timer); row = null; } return; }   // it's a scroll
+    if(!on){
+      if(Math.hypot(p.clientX - startX, p.clientY - startY) > 6){
+        if(mouse) lift(); else { clearTimeout(timer); row = null; return; }   // touch moved before the hold = a scroll
+      } else return;
+    }
     if(e.cancelable) e.preventDefault(); place(p.clientY);
   };
   const end = () => {
