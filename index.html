@@ -1505,6 +1505,22 @@ body{font-variant-numeric:tabular-nums}
 .play-ratings button{background:var(--card);border:1px solid var(--line);color:var(--ink)}
 .cover-list i,.cover-read i{opacity:.045}
 body.playing{background:var(--paper);color:var(--ink)}
+/* v93 */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text auto-inflation when layouts change */
+.seg button{font:700 15px var(--body)}
+.home-gear{position:absolute;top:calc(env(safe-area-inset-top,0px) + 18px);right:0;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--soft);cursor:pointer}
+.home-gear:hover{color:var(--ink);background:var(--chip)} .home-gear:focus-visible{outline:2px solid var(--shu)}
+.home{position:relative}
+.settings{display:flex;flex-direction:column;gap:26px;padding:12px 0 40px;max-width:560px;margin:0 auto;width:100%}
+.set-group{display:flex;flex-direction:column;gap:12px}
+.set-h{font:700 15px var(--body);color:var(--ink);margin:0}
+.opt-row{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:0 14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);font:500 15px var(--body);color:var(--ink)}
+.opt-row select{font:500 15px var(--body);color:var(--ink);background:var(--chip);border:1px solid var(--line);border-radius:6px;padding:8px;max-width:60%}
+.opt-switch input{width:22px;height:22px;accent-color:var(--shu)}
+.set-test{align-self:flex-start;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer}
+.set-note{margin:0;font:400 13px var(--body);color:var(--faint)}
+.set-ver{margin:0;text-align:center;font:500 12px var(--body);color:var(--faint)}
+#settings .seg-2,.settings .seg-2{width:auto}
 /* session counter: readable but quiet (his v24 wish: subtle) */
 .play-bar .play-queue{font:500 13px var(--body)!important;opacity:.8!important;gap:10px!important;align-items:baseline!important}
 .play-bar .play-queue span{display:inline;gap:0}
@@ -1565,7 +1581,7 @@ body.playing{background:var(--paper);color:var(--ink)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v92";
+const APP_VERSION = "v93";
 
 
 /* =========================================================
@@ -2493,7 +2509,7 @@ async function renderPG(){
 
       <section class="play-setup">
 
-        <p class="set-lead">Pick a level and how many new cards to study. Cards come back when you mark them Again or Hard.</p>
+
 
         <div class="set-label">Level</div>
         <div class="seg" role="radiogroup">
@@ -2802,6 +2818,48 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
   const go = () => pgPool(lv);
   "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
 }
+/* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
+function applyTheme(){
+  const t = store.get("jc:theme", "auto");
+  if(t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+}
+function jaVoices(){ try{ return speechSynthesis.getVoices().filter(v => /^ja/i.test(v.lang)); }catch(e){ return []; } }
+function bestVoice(){   // the saved choice, else the most natural-sounding Japanese voice on this device
+  const vs = jaVoices(), saved = store.get("jc:voice", "");
+  return vs.find(v => v.name === saved) ||
+    vs.find(v => /natural|neural|online|enhanced|premium|siri/i.test(v.name)) ||
+    vs.find(v => /google/i.test(v.name)) || vs.find(v => /kyoko|o-ren|nanami|haruka/i.test(v.name)) || vs[0] || null;
+}
+function renderSettings(){
+  document.body.classList.remove("playing");
+  const theme = store.get("jc:theme", "auto"), rate = store.get("jc:rate", 0.9), fam = store.get("jc:showfam", false);
+  const draw = () => {
+    const vs = jaVoices(), cur = bestVoice();
+    $("#list").innerHTML = `<section class="settings">
+      <div class="set-group"><h2 class="set-h">Appearance</h2>
+        <div class="seg" role="radiogroup" id="setTheme">${[["auto","Auto"],["light","Light"],["dark","Dark"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${k === theme ? "on" : ""}" aria-checked="${k === theme}">${l}</button>`).join("")}</div></div>
+      <div class="set-group"><h2 class="set-h">Voice</h2>
+        ${vs.length ? `<label class="opt-row" for="setVoice"><span>Japanese voice</span>
+          <select id="setVoice">${vs.map(v => `<option value="${esc(v.name)}" ${cur && v.name === cur.name ? "selected" : ""}>${esc(v.name.replace(/Microsoft |Google /, ""))}</option>`).join("")}</select></label>`
+          : `<p class="set-note">This device has no Japanese voice installed.</p>`}
+        <div class="seg seg-2" role="radiogroup" id="setRate">${[[0.8,"Slow"],[0.95,"Normal"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${Math.abs(k - rate) < .08 ? "on" : ""}">${l}</button>`).join("")}</div>
+        <button class="set-test" id="setTest" type="button">Play 現像</button>
+        <p class="set-note">Voices come from your phone. For more natural ones, install an enhanced Japanese voice in your phone's settings.</p></div>
+      <div class="set-group"><h2 class="set-h">Complete list</h2>
+        <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
+      <p class="set-ver">${APP_VERSION}</p>
+    </section>`;
+    $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
+    $("#setRate").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:rate", +b.dataset.v); draw(); });
+    if($("#setVoice")) $("#setVoice").onchange = e => { store.set("jc:voice", e.target.value); speak("現像"); };
+    $("#setTest").onclick = () => speak("現像");
+    $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
+  };
+  draw();
+  try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings") draw(); }; }catch(e){}
+}
 function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
   let due = 0, later = 0; const now = Date.now();
   try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
@@ -2836,7 +2894,7 @@ function renderHome(){
         Build your Japanese memory
         one review at a time.
       </p>
-      <div class="home-ver">${APP_VERSION}</div>
+      <button class="home-gear" type="button" data-home="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4Z"/></svg></button>
 
 
       <h2 class="home-h">Study</h2>
@@ -3016,6 +3074,21 @@ addEventListener("keydown", e => {
   if(btn){ e.preventDefault(); btn.click(); }
 });
 
+const calmMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function unfoldBack(back){   // paper unfold: the answer hangs from the fold under the headword and swings down flat
+  if(!back || calmMotion()) return;
+  back.animate([{transform:"perspective(900px) rotateX(-88deg)", opacity:.35},
+                {transform:"perspective(900px) rotateX(8deg)", opacity:1, offset:.72},
+                {transform:"perspective(900px) rotateX(0deg)", opacity:1}],
+               {duration:520, delay:60, easing:"cubic-bezier(.22,.9,.3,1)", fill:"backwards"});
+  back.animate([{boxShadow:"inset 0 60px 40px -30px rgba(0,0,0,.18)"},{boxShadow:"inset 0 0 0 0 rgba(0,0,0,0)"}],
+               {duration:560, delay:60, easing:"ease-out", fill:"backwards"});
+}
+function foldBack(back, done){   // fold the paper back up under the headword, then continue
+  if(!back || calmMotion()){ done(); return; }
+  back.animate([{transform:"perspective(900px) rotateX(0deg)", opacity:1},{transform:"perspective(900px) rotateX(-88deg)", opacity:.2}],
+               {duration:240, easing:"cubic-bezier(.5,0,.75,0)"}).onfinish = done;
+}
 function flipCard(card, open){
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const back = card.querySelector(".back");
@@ -3026,18 +3099,10 @@ function flipCard(card, open){
     const a = card.getBoundingClientRect();
     card.animate([{transform:`translateY(${b.top - a.top}px)`},{transform:"none"}],
                  {duration:340, easing:"cubic-bezier(.2,.8,.2,1)"});
-    if(open && back){   // paper unfold: the answer hangs from the fold under the headword and swings down flat
-      back.animate([{transform:"perspective(900px) rotateX(-88deg)", opacity:.35},
-                     {transform:"perspective(900px) rotateX(8deg)", opacity:1, offset:.72},
-                     {transform:"perspective(900px) rotateX(0deg)", opacity:1}],
-                   {duration:520, delay:60, easing:"cubic-bezier(.22,.9,.3,1)", fill:"backwards"});
-      back.animate([{boxShadow:"inset 0 60px 40px -30px rgba(0,0,0,.18)"},{boxShadow:"inset 0 0 0 0 rgba(0,0,0,0)"}],
-                   {duration:560, delay:60, easing:"ease-out", fill:"backwards"});   // light on the fold fades as it flattens
-    }
+    if(open) unfoldBack(back);
   };
-  if(!open && back && !reduce){   // fold the paper back up under the headword
-    back.animate([{transform:"perspective(900px) rotateX(0deg)", opacity:1},{transform:"perspective(900px) rotateX(-88deg)", opacity:.2}],
-                 {duration:240, easing:"cubic-bezier(.5,0,.75,0)"}).onfinish = move;
+  if(!open && back && !reduce){
+    foldBack(back, move);
   } else move();
 }
 
@@ -3047,8 +3112,8 @@ let CARD_LVL = null;
 function speak(text){
   try{
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ja-JP"; u.rate = .9;
-    const v = speechSynthesis.getVoices().find(x => /ja/i.test(x.lang));
+    u.lang = "ja-JP"; u.rate = store.get("jc:rate", 0.9);
+    const v = bestVoice();
     if(v) u.voice = v;
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
@@ -3062,7 +3127,7 @@ async function renderNovels(){
   try{ NOVELS = NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
   $("#list").innerHTML = `<section class="reading">
-    <p class="set-lead">Famous books, summarized in simple Japanese. Tap a sentence for English.</p>
+
     <div class="novel-grid">${NOVELS.map(x => `<button class="novel-tile" data-novel="${x.id}">
       <img src="data/novels/${x.id}.svg" alt="" loading="lazy"><b>${esc(x.title)}</b><span>${esc(x.titleEn)}</span></button>`).join("")}</div></section>`;
 }
@@ -3093,7 +3158,7 @@ async function renderScenes(){
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
   $("#pageTitle").textContent = SCENE_DIR === "photos" ? "Photos" : "Scenes";
   $("#list").innerHTML = `<section class="reading">
-    <p class="set-lead">Tap things in a picture to learn what they are called.</p>
+
     <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
       <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${x.count} words</span></button>`).join("")}</div></section>`;
 }
@@ -3286,13 +3351,15 @@ document.addEventListener("click", e => {
   const m = e.target.closest(".mini[data-mt]");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
-    if(c){ e.stopPropagation(); m.outerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv); }
+    if(c){ e.stopPropagation();
+      const tmp = document.createElement("div"); tmp.innerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv).trim();
+      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); }
     return;
   }
   const f = e.target.closest(".card[data-mt] .front");
   if(f){
     const card = f.closest(".card"), c = MINI.reg.get(miniKey(card.dataset.mt, card.dataset.mlv, card.dataset.no));
-    if(c){ e.stopPropagation(); card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }
+    if(c){ e.stopPropagation(); foldBack(card.querySelector(".back"), () => { card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }); }
   }
 }, true);
 
@@ -3518,7 +3585,7 @@ async function renderPictures(){
   let idx = []; try{ idx = await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json(); }catch(e){}
   $("#pageTitle").textContent = "Pictures";
   $("#list").innerHTML = `<section class="pics">
-    <p class="set-lead">${idx.reduce((n, x) => n + x.count, 0)} everyday words, each with a real photo. Tap a photo to hear the word.</p>
+
     <div class="pic-cats">${idx.map(x => `<button class="pic-cat" data-pcat="${x.key}">
       <span class="pic-cover"><img src="data/pictures/${x.cover}" alt="" loading="lazy"></span>
       <b>${esc(x.ja)}</b><span>${esc(x.en)} · ${x.count}</span></button>`).join("")}</div></section>`;
@@ -3617,10 +3684,8 @@ async function renderReading(){
         <span class="sec-row-t"><b>${jp}</b><span>${en}</span><em>${items.length} books</em></span>
         <span class="fan">${fan.map((x, i) => `<img src="data/readings/${x.img}" alt="" style="--i:${i}" loading="lazy">`).join("")}</span>
         <span class="sec-row-go" aria-hidden="true">›</span></button>`; }).join("")}</div>
-    <p class="sec-hint" id="secHint">Press and hold a section to move it</p>
   </section>`;
   document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { if(SEC_DRAG.justDropped) return; renderShelf(b.dataset.shelf); scrollTo(0, 0); });
-  if(matchMedia("(hover: hover) and (pointer: fine)").matches) $("#secHint").textContent = "Drag a section to move it";
   secReorder($("#secRows"));
 }
 /* his order of the Reading sections (press-and-hold + drag); saved per device */
@@ -4166,6 +4231,11 @@ $("#famToggle").onclick = () => {
 $("#goHome").onclick = () => { const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
 const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textContent = "‹ " + (b ? b.dataset.back : "Home"); };
 new MutationObserver(syncBack).observe($("#list"), {childList: true});
+new MutationObserver(ms => {   // soften page changes: when #list is replaced, the new page eases in
+  if(calmMotion() || !ms.some(m => m.removedNodes.length && m.addedNodes.length)) return;
+  $("#list").animate([{opacity:0, transform:"translateY(6px)"},{opacity:1, transform:"none"}], {duration:200, easing:"cubic-bezier(.2,.8,.2,1)"});
+}).observe($("#list"), {childList: true});
+applyTheme();
 
 
 /* =========================================================
@@ -4239,7 +4309,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures"};
+  const titles = {settings:"Settings", home:"", playground:"Playground", complete:"Complete list", reading:"Reading", novels:"Novels", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -4247,7 +4317,7 @@ function pick(id){
   document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
   $("#filter").hidden = true;
   $("#ver").hidden = id !== "playground" && id !== "home" ? true : false;
-  $("#famToggle").hidden = id !== "complete";
+  $("#famToggle").hidden = true;   // moved to Settings
   const showFam = store.get("jc:showfam", false);
   document.body.classList.toggle("showfam", showFam);
   $("#famToggle").setAttribute("aria-pressed", showFam);
@@ -4257,6 +4327,9 @@ function pick(id){
 
   else if(id === "home")
     renderHome();
+
+  else if(id === "settings")
+    renderSettings();
 
   else if(id === "complete")
     renderComplete();
