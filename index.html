@@ -1783,6 +1783,8 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th-tip b{font:700 18px var(--body)}
 .th-tip .tip-rd{font:500 13px var(--body);color:#6F6B64}
 .th-tip .tip-en{font:500 14px/1.4 var(--body)}
+.pv-cap{display:block;margin-top:6px;font:600 16px/1.5 var(--body);color:var(--ink)}
+.pv-cap em{font-style:normal;color:var(--shu);border-bottom:2px solid var(--shu)}
 </style>
 </head>
 
@@ -1831,7 +1833,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v125";
+const APP_VERSION = "v126";
 
 
 /* =========================================================
@@ -4217,7 +4219,7 @@ function picView(C, W, clean){
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
       <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span>${/irasutoya/.test(P[0].page || "") ? `<a class="pv-src" href="${esc(P[0].page)}" target="_blank" rel="noopener">いらすとや</a>` : ""}</div></div>`; }).join("")}</div>
+      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}${P[0].cap ? `<span class="pv-cap">${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span><span class="pv-en">${esc(P[0].capEn || "")}</span>` : `<span class="pv-en">${esc(clean(w.en))}</span>`}${/irasutoya/.test(P[0].page || "") ? `<a class="pv-src" href="${esc(P[0].page)}" target="_blank" rel="noopener">いらすとや</a>` : ""}</div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
