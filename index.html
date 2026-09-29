@@ -1947,6 +1947,13 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pv-rei.show .pv-rei-en{display:block}
 .ill-no{display:inline-grid;place-items:center;min-width:28px;height:28px;margin-right:2px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 14px var(--body);align-self:center}
 .ill-tile .ill-words{margin-top:6px;font:600 13px var(--body);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* v140: undo in practice run */
+.play-bar .play-top{align-items:center}
+.pg-undo{display:inline-grid;place-items:center;width:36px;height:36px;margin-left:6px;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
+.pg-undo:active{transform:scale(.92)}
+.pg-undo[disabled]{opacity:.3;cursor:default}
+.lsn-skip{align-self:center;min-height:44px;padding:0 22px;border:0;background:none;color:var(--soft);font:600 15px var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.lsn-skipped{margin:-10px 0 0;text-align:center;font-size:13px;color:var(--faint)}
 </style>
 </head>
 
@@ -1995,7 +2002,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v139";
+const APP_VERSION = "v140";
 
 
 /* =========================================================
@@ -2604,6 +2611,20 @@ const PG = {
 };
 
 
+/* Undo in a practice run: each rating saves what it changes (card profile, due time, session) so it can be put back */
+const PG_UNDO = [];
+function pgSnap(lvl, t, no){
+  const keys = [profileKey(lvl, t, no), pgKey(lvl, t, no), "jc:sessions"], snap = {sid: pgState().sid, v: {}};
+  try{ for(const k of keys) snap.v[k] = localStorage.getItem(k); }catch(e){ return; }
+  PG_UNDO.push(snap); if(PG_UNDO.length > 30) PG_UNDO.shift();
+}
+const pgCanUndo = () => PG_UNDO.length && PG_UNDO[PG_UNDO.length - 1].sid === pgState().sid;
+function pgUndo(){
+  if(!pgCanUndo()) return;
+  const snap = PG_UNDO.pop();
+  try{ for(const [k, v] of Object.entries(snap.v)) v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){}
+  NAV_SAME = true; renderPG();
+}
 const pgKey =
   (lvl,t,no) =>
     `jc:due:${lvl}:${t}:${no}`;
@@ -3304,7 +3325,7 @@ async function renderPG(){
           </button>
 
         </div>
-        <div class="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy</div>
+        <div class="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy · Z undo</div>
 
       `
 
@@ -3319,7 +3340,7 @@ async function renderPG(){
     <div class="play-screen">
 
       <div class="play-bar pg-bottom">
-        <div class="play-top">${queue}</div>
+        <div class="play-top">${queue}<button type="button" class="pg-undo" id="pgUndo" aria-label="Undo last answer" ${pgCanUndo() ? "" : "disabled"}><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
         <button class="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
       </div>
 
@@ -3342,6 +3363,7 @@ async function renderPG(){
     `Practice · ${st.level}`;
 
 
+  if($("#pgUndo")) $("#pgUndo").onclick = pgUndo;
   $("#pgBack").onclick =
     () => {
 
@@ -3683,8 +3705,9 @@ async function renderComplete(){
 addEventListener("keydown", e => { const sp = e.target.closest && e.target.closest(".say-i");   // speaker icons work from the keyboard
   if(sp && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); speak(sp.dataset.say); return; } });
 addEventListener("keydown", e => {
-  if(!document.body.classList.contains("playing") || e.metaKey || e.ctrlKey || e.altKey) return;
-  if(/INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ""))) return;
+  if(!document.body.classList.contains("playing") || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || "")) || e.target.isContentEditable) return;
+  if((e.key === "z" || e.key === "Z" || e.key === "Backspace") && !e.altKey && !e.shiftKey && document.querySelector(".play-screen")){ e.preventDefault(); pgUndo(); return; }
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
   const card = document.querySelector(".play-stage .card");
   if((e.key === " " || e.key === "Enter") && card){
     e.preventDefault();
@@ -4455,7 +4478,7 @@ async function renderListenTest(id){
         ${q.intro ? `<p class="lsn-nar">${esc(q.intro)}</p>` : ""}
         ${q.lines.map(([spk, t]) => `<p>${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}</p>`).join("")}
         ${q.question ? `<p class="lsn-nar">${esc(q.question)}</p>` : ""}</details>
-        <button type="button" class="lsn-next" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button>` : ""}
+        <button type="button" class="lsn-next" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button>` : `<button type="button" class="lsn-skip" id="lsnNext">${i + 1 < Q.length ? "Skip" : "See result"}</button>`}
     </section>`;
     const play = $("#lsnPlay"), bar = $("#lsnBar");
     const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
@@ -4475,7 +4498,7 @@ async function renderListenTest(id){
     store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
     $("#list").innerHTML = `<section class="lsn lsn-done">
       <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
-      <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>
+      <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>${picked.filter(x => !x).length ? `<p class="lsn-skipped">${picked.filter(x => !x).length} skipped</p>` : ""}
       <ul class="lsn-parts">${T.parts.map(pt => { const idx = Q.map((q, k) => [q, k]).filter(([q]) => q.part === pt);
         return `<li><span>${esc(pt.ja)}</span><b>${idx.filter(([q, k]) => picked[k] === q.answer).length} / ${idx.length}</b></li>`; }).join("")}</ul>
       <button type="button" class="lsn-next" id="lsnAgain">Try again</button></section>`;
@@ -4875,7 +4898,7 @@ document.addEventListener(
       const m =
         +pb.dataset.m;
 
-
+      pgSnap(lvl, type, no);
       p.reviews += 1;
 
 
