@@ -1547,39 +1547,31 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .back-short .mini-ex{font-size:17px;line-height:1.8}
 .back-short .mini-ex .rei{font-size:13px}
 .complete .card .img{display:none}
-/* v110: Practice page = New | Continue; sessions as a ledger with 原稿用紙 progress squares */
-.seg.seg-2.pg-mode{width:100%;margin:0 0 30px}
-.pg-mode button{display:inline-flex;align-items:center;justify-content:center}
-.pg-mode .pg-n{display:inline-block;min-width:20px;margin-left:6px;padding:0 6px;border-radius:999px;background:var(--line);color:var(--ink);font:700 12px/20px var(--body)}
-.pg-mode button.on .pg-n{background:var(--shu);color:var(--paper)}
-.sess-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.sess{border-bottom:1px solid var(--line)}
-.sess-row{display:flex;align-items:flex-start;gap:8px}
-.sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;padding:18px 4px 18px 0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
-.sess-go:active{transform:translateY(1px)}
-.sess-name{font:800 21px/1.3 var(--display);overflow-wrap:anywhere}
-.sess-grid{display:flex;flex-wrap:wrap;gap:3px;max-width:100%}
-.sess-grid i{width:11px;height:11px;border:1px solid var(--faint);border-radius:1px;opacity:.7}
-.sess-grid i.d{background:var(--ink);border-color:var(--ink);opacity:1}
-.sess-grid i.nx{border-color:var(--shu);opacity:1;box-shadow:inset 0 0 0 1px var(--shu)}
-.sess-meta{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--soft)}
-.sess-meta b{color:var(--ink);font-weight:700}
-.sess-edit{flex:none;min-width:56px;min-height:44px;margin-top:14px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--soft);font:600 14px var(--body);cursor:pointer}
-.sess-edit[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
-.sess-opts{display:grid;gap:14px;padding:4px 0 20px;transform-origin:top center}
-.sess-opts[hidden]{display:none}
-.sess-opts label{font-size:14px;font-weight:600;color:var(--soft)}
-.sess-rename{display:flex;gap:8px}
-.sess-rename input,.pg-name{flex:1;min-width:0;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 16px var(--body)}
-.sess-rename input:focus,.pg-name:focus{outline:2px solid var(--shu);outline-offset:1px}
-.sess-btn{min-height:46px;padding:0 18px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 15px var(--body);cursor:pointer}
-.sess-btn:active{transform:scale(.98)}
-.sess-btn[hidden],.sess-confirm[hidden]{display:none}
-.sess-del{justify-self:start;color:var(--shu);border-color:transparent;background:none;padding:0}
-.sess-confirm{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:15px}
-.sess-confirm span{flex:1 1 100%}
-.sess-confirm .sess-btn.danger{background:var(--shu);border-color:var(--shu);color:var(--paper)}
-.pg-name{width:100%;margin-bottom:22px}
+/* v111: Practice page = Continue list first (compact 2-line rows), then New session */
+.play-setup{width:100%;box-sizing:border-box}
+.sess-list{list-style:none;margin:0 0 18px;padding:0;border-top:1px solid var(--line)}
+.sess{display:flex;align-items:center;gap:8px;min-height:64px;border-bottom:1px solid var(--line)}
+.sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:10px 0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+.sess-go:active{opacity:.7}
+.sess-name{font:700 16px/1.35 var(--body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sess-meta{font-size:13px;color:var(--soft)}
+.sess-edit,.sess-cancel,.sess-del,.sess-undo button{flex:none;min-height:44px;padding:0 10px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
+.sess-edit:hover,.sess-cancel:hover{color:var(--ink)}
+.sess.editing{flex-direction:column;align-items:stretch;gap:2px;padding:10px 0 4px}
+.sess-editrow{display:flex;gap:8px}
+.sess-input{flex:1;min-width:0;min-height:44px;padding:0 12px;border:1px solid var(--ink);border-radius:8px;background:var(--card);color:var(--ink);font:700 16px var(--body)}
+.sess-input:focus{outline:2px solid var(--shu);outline-offset:1px}
+.sess-save{min-height:44px;padding:0 16px;border:0;border-radius:8px;background:var(--ink);color:var(--paper);font:700 14px var(--body);cursor:pointer}
+.sess-editfoot{display:flex;justify-content:space-between}
+.sess-del{padding-left:0;color:var(--shu)}
+.sess-undo{justify-content:space-between;color:var(--soft);font-size:14px}
+.sess-undo button{color:var(--shu);font-weight:700}
+.pg-newbtn{width:100%;min-height:48px;margin:0 0 26px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 15px var(--body);cursor:pointer;box-shadow:var(--lift)}
+.pg-newbtn[aria-expanded="true"]{border-color:var(--ink)}
+.pg-newbtn:active{transform:scale(.99)}
+.pg-new{transform-origin:top center}
+.pg-name{width:100%;min-height:46px;margin-bottom:22px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 16px var(--body)}
+.pg-name:focus{outline:2px solid var(--shu);outline-offset:1px}
 .pg-name::placeholder{color:var(--faint)}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
@@ -1701,7 +1693,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v110";
+const APP_VERSION = "v111";
 
 
 /* =========================================================
@@ -2446,48 +2438,41 @@ function sessResume(id){
   store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
   PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
-let PG_TAB = null;   // "new" | "cont"; default = Continue when a session is open
-const pgTab = () => sessOpen().length ? (PG_TAB || "cont") : "new";
+let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null;   // New form open? which row is being renamed? last deleted (for Undo)
+const pgShowNew = () => !sessOpen().length || PG_NEW;
 const sessName = se => se.name || se.label;
 function sessAutoName(title){ const st = pgState(), d = new Date();
   return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${d.getMonth() + 1}/${d.getDate()}`; }
 function sessLedger(){
-  const open = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0));
-  return `<ol class="sess-list">${open.map(se => {
-    const done = new Set(se.done || []), left = sessLeft(se), n = se.ids.length, k = Math.min(n, 60), per = n / k;
-    let first = true;
-    const sq = Array.from({length: k}, (_, i) => { const [lvl, t, no] = se.ids[Math.floor(i * per)], d = done.has(`${lvl}:${t}:${no}`);
-      const c = d ? "d" : first ? (first = false, "nx") : ""; return `<i class="${c}"></i>`; }).join("");
+  const rows = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)).map(se => {
+    const n = se.ids.length, left = sessLeft(se), d = new Date(se.start);
+    if(se.id === SESS_EDIT) return `<li class="sess editing" data-sid="${se.id}">
+      <div class="sess-editrow"><input class="sess-input" maxlength="40" autocomplete="off" aria-label="Session name" value="${esc(sessName(se))}"><button type="button" class="sess-save">Save</button></div>
+      <div class="sess-editfoot"><button type="button" class="sess-del">Delete session</button><button type="button" class="sess-cancel">Cancel</button></div></li>`;
     return `<li class="sess" data-sid="${se.id}">
-      <div class="sess-row">
-        <button type="button" class="sess-go" data-sid="${se.id}" aria-label="Continue ${esc(sessName(se))}, ${left} of ${n} left">
-          <span class="sess-name">${esc(sessName(se))}</span>
-          <span class="sess-grid" aria-hidden="true">${sq}</span>
-          <span class="sess-meta"><span><b>${left}</b> of ${n} left</span><span>${se.level} ${sessWhen(se.start)}</span></span>
-        </button>
-        <button type="button" class="sess-edit" aria-expanded="false" aria-controls="so_${se.id}">Edit</button>
-      </div>
-      <div class="sess-opts" id="so_${se.id}" hidden>
-        <label for="sn_${se.id}">Name</label>
-        <div class="sess-rename"><input id="sn_${se.id}" maxlength="40" autocomplete="off" value="${esc(se.name || "")}" placeholder="${esc(se.label)}"><button type="button" class="sess-btn sess-save">Save</button></div>
-        <button type="button" class="sess-btn sess-del">Delete session</button>
-        <div class="sess-confirm" hidden><span>Delete “${esc(sessName(se))}”? Its ${left} unfinished cards stay in your deck.</span>
-          <button type="button" class="sess-btn danger sess-yes">Delete</button><button type="button" class="sess-btn sess-no">Keep</button></div>
-      </div></li>`; }).join("")}</ol>`;
+      <button type="button" class="sess-go"><span class="sess-name">${esc(sessName(se))}</span><span class="sess-meta">${left} of ${n} left · ${d.getMonth() + 1}/${d.getDate()}</span></button>
+      <button type="button" class="sess-edit" aria-label="Edit ${esc(sessName(se))}">Edit</button></li>`; });
+  if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
+  return `<ul class="sess-list">${rows.join("")}</ul>`;
 }
 function sessWire(){
-  document.querySelectorAll(".sess").forEach(li => {
-    const id = li.dataset.sid, opts = li.querySelector(".sess-opts"), ed = li.querySelector(".sess-edit"), conf = li.querySelector(".sess-confirm"), del = li.querySelector(".sess-del");
-    li.querySelector(".sess-go").onclick = () => sessResume(id);
-    ed.onclick = () => { const open = opts.hidden; opts.hidden = !open; ed.setAttribute("aria-expanded", open); ed.textContent = open ? (isJa() ? "閉じる" : "Done") : (isJa() ? "編集" : "Edit");
-      conf.hidden = true; del.hidden = false; if(open) unfoldBack(opts); };
-    const save = () => { const se = sessList().find(x => x.id === id); if(!se) return; se.name = li.querySelector("input").value.trim(); sessSave(se); renderPG(); };
-    li.querySelector(".sess-save").onclick = save;
-    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") save(); };
-    del.onclick = () => { del.hidden = true; conf.hidden = false; conf.querySelector(".sess-no").focus(); };
-    li.querySelector(".sess-no").onclick = () => { conf.hidden = true; del.hidden = false; };
-    li.querySelector(".sess-yes").onclick = () => { sessDrop(id); renderPG(); };
+  document.querySelectorAll(".sess[data-sid]").forEach(li => {
+    const id = li.dataset.sid, q = c => li.querySelector(c);
+    if(q(".sess-go")) q(".sess-go").onclick = () => sessResume(id);
+    if(q(".sess-edit")) q(".sess-edit").onclick = () => { SESS_EDIT = id; renderPG().then(() => { const i = $(".sess-input"); if(i){ i.focus(); i.select(); } }); };
+    if(!q(".sess-input")) return;
+    const save = () => { const se = sessList().find(x => x.id === id); if(se){ const v = q(".sess-input").value.trim(); se.name = v === se.label ? "" : v; sessSave(se); } SESS_EDIT = null; renderPG(); };
+    q(".sess-save").onclick = save;
+    q(".sess-cancel").onclick = () => { SESS_EDIT = null; renderPG(); };
+    q(".sess-input").onkeydown = e => { if(e.key === "Enter") save(); if(e.key === "Escape"){ SESS_EDIT = null; renderPG(); } };
+    q(".sess-del").onclick = () => {
+      const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
+      SESS_UNDO = {se, at: all.indexOf(se)}; SESS_EDIT = null; sessDrop(id); renderPG();
+      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING) renderPG(); }, 7000);
+    };
   });
+  const u = $(".sess-undo-btn");
+  if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); renderPG(); } };
 }
 function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
 async function pgNew(){
@@ -2607,7 +2592,7 @@ async function pgNew(){
   let label = isJa() ? "全カード" : "All cards";
   if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
   if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
-  st.sid = "s" + Date.now(); PG_TAB = null;
+  st.sid = "s" + Date.now(); PG_NEW = false; SESS_EDIT = null;
   const nm = (($("#pgName") || {}).value || "").trim();
   if(st.ids.length) sessSave({id: st.sid, name: nm, start: Date.now(), at: Date.now(), label: sessAutoName(label === (isJa() ? "全カード" : "All cards") ? null : label), level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
   store.set("jc:pg", st);
@@ -2690,9 +2675,9 @@ async function renderPG(){
     const setup = `
 
       <section class="play-setup">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
-        ${sessOpen().length ? `<div class="seg seg-2 pg-mode" role="tablist">${[["new","New"],["cont","Continue"]].map(([k, l]) =>
-          `<button type="button" role="tab" data-tab="${k}" class="${k === pgTab() ? "on" : ""}" aria-selected="${k === pgTab()}">${l}${k === "cont" ? `<span class="pg-n">${sessOpen().length}</span>` : ""}</button>`).join("")}</div>` : ""}
-        ${pgTab() === "cont" ? sessLedger() : `<div class="pg-new">
+        ${sessOpen().length || SESS_UNDO ? `<div class="set-label">Continue</div>${sessLedger()}` : ""}
+        ${sessOpen().length ? `<button type="button" class="pg-newbtn" aria-expanded="${!!PG_NEW}">+ New session</button>` : ""}
+        ${pgShowNew() ? `<div class="pg-new">
 
 
 
@@ -2718,7 +2703,7 @@ async function renderPG(){
 
         <div class="set-label"><label for="pgName">Name</label></div>
         <input id="pgName" class="pg-name" maxlength="40" autocomplete="off" placeholder="${esc(sessAutoName(inRead ? rdInfo.title : null))}">
-        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>`}
+        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>` : ""}
       </section>
 
     `;
@@ -2750,7 +2735,7 @@ async function renderPG(){
     });
     if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); renderPG(); };
     if($("#pgGo")) $("#pgGo").onclick = pgNew;
-    document.querySelectorAll(".pg-mode button").forEach(b => b.onclick = () => { PG_TAB = b.dataset.tab; renderPG(); });
+    if($(".pg-newbtn")) $(".pg-newbtn").onclick = () => { PG_NEW = !PG_NEW; renderPG().then(() => { const f = $(".pg-new"); if(PG_NEW && f) unfoldBack(f); }); };
     sessWire();
     if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
 
@@ -3010,7 +2995,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New":"新規","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","+ New session":"＋ 新しいセッション","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -4671,7 +4656,7 @@ $("#lesson").onchange =
 
 function pick(id){
   if(id !== "playground") PG_RETURN = null;
-  PG_TAB = null;
+  PG_NEW = false; SESS_EDIT = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();
 
   PLAY =
