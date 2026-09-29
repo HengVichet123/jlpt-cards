@@ -1830,6 +1830,16 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .tabs.tabs-in .tab{padding:10px 0;font-size:15px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px}
 .app-sheet-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 18px 28px}
 .app-sheet-body .settings{padding:0;max-width:none;margin:0}
+/* v132: rename a session from its own ✎ icon; header/ghost rows keep the columns aligned */
+.deck-table .deck-list > li:not(.deck-edit):not(.sess-undo){display:flex;align-items:center}
+.deck-table .deck-list > li > .deck{flex:1;min-width:0}
+.deck-tool{flex:none;width:44px;height:44px;margin-right:4px;border:0;border-radius:8px;background:none;color:var(--faint);display:grid;place-items:center;cursor:pointer}
+.deck-tool:hover{color:var(--ink);background:var(--chip)}
+.deck-tool:focus-visible{outline:2px solid var(--shu);outline-offset:-2px}
+.deck-table .deck-head{padding-right:48px}
+.deck-table .deck.ghost{margin-right:48px}
+.deck-done{flex:none;min-width:52px;min-height:40px;padding:0 12px;border:0;border-radius:8px;background:var(--ink);color:var(--paper);font:700 14px var(--body);cursor:pointer}
+.deck-edit{gap:4px;padding-right:8px!important}
 </style>
 </head>
 
@@ -1878,7 +1888,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v131";
+const APP_VERSION = "v132";
 
 
 /* =========================================================
@@ -2686,17 +2696,18 @@ function pgHome(){
     <div class="pg-dock"><div class="pg-dock-in">
       <button type="button" class="pg-act" data-act="quick">${isJa() ? "クイック10" : "Quick 10"}</button>
       <button type="button" class="pg-act main" data-act="new">${isJa() ? "新規" : "New session"}</button>
-      <button type="button" class="pg-act" data-act="edit" aria-pressed="${SESS_EDIT === "all"}" ${has ? "" : "disabled"}>${SESS_EDIT === "all" ? (isJa() ? "完了" : "Done") : (isJa() ? "編集" : "Edit")}</button>
+      <button type="button" class="pg-act" data-act="random">${isJa() ? "ランダム" : "Random"}</button>
     </div></div>`;
 }
 function sessLedger(){
   const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 6, hidden = Math.max(0, all.length - SHOW);
-  const editing = SESS_EDIT === "all", vis = SESS_ALL || editing ? all : all.slice(0, SHOW);
+  const editing = false, vis = SESS_ALL ? all : all.filter((se, i) => i < SHOW || se.id === SESS_EDIT);
   const num = (v, c) => `<span class="deck-n ${c}${v ? "" : " zero"}">${v}</span>`;
-  const rows = vis.map(se => {
-    if(editing) return `<li class="deck-edit" data-sid="${se.id}"><input maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}"><button type="button" class="deck-del">${isJa() ? "削除" : "Delete"}</button></li>`;
+  const TOOL = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z M14 6l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  const rows = vis.map(se => {   // one row at a time is renamed, in place, from its own tool icon
+    if(se.id === SESS_EDIT) return `<li class="deck-edit" data-sid="${se.id}"><input maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}"><button type="button" class="deck-del">${isJa() ? "削除" : "Delete"}</button><button type="button" class="deck-done">${isJa() ? "完了" : "Done"}</button></li>`;
     const c = sessCounts(se);
-    return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button></li>`; });
+    return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button><button type="button" class="deck-tool" data-edit="${se.id}" aria-label="Rename ${esc(sessName(se))}">${TOOL}</button></li>`; });
   if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
   return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div>`}
     <ul class="deck-list">${rows.join("")}</ul></div>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
@@ -2707,14 +2718,16 @@ function sessSaveNames(){ document.querySelectorAll(".deck-edit[data-sid]").forE
   const nm = !v || v === se.label ? "" : v; if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }); }
 function sessWire(){
   document.querySelectorAll(".deck[data-sid]").forEach(b => b.onclick = () => sessResume(b.dataset.sid));
+  document.querySelectorAll(".deck-tool[data-edit]").forEach(b => b.onclick = () => { sessSaveNames(); SESS_EDIT = b.dataset.edit;
+    sessRedraw().then(() => { const i = $(".deck-edit input"); if(i){ i.focus(); i.select(); } }); });
   document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
-    const id = li.dataset.sid;
-    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") e.target.blur(); };
-    li.querySelector("input").onchange = () => sessSaveNames();
+    const id = li.dataset.sid, finish = () => { sessSaveNames(); SESS_EDIT = null; sessRedraw(); };
+    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") finish(); if(e.key === "Escape"){ SESS_EDIT = null; sessRedraw(); } };
+    li.querySelector(".deck-done").onclick = finish;
     li.querySelector(".deck-del").onclick = () => {
       sessSaveNames();
       const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
-      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); if(!sessOpen().length) SESS_EDIT = null; sessRedraw();
+      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); SESS_EDIT = null; sessRedraw();
       clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
     };
   });
