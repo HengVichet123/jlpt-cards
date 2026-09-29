@@ -1431,6 +1431,12 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .pv-photo .pv-bg{object-fit:cover;filter:blur(18px) saturate(1.1);transform:scale(1.15);opacity:.55}
 .pv-photo .pv-fg{object-fit:contain}
 .pv-spk{z-index:2}
+.pv-thumbs{display:flex;justify-content:center;gap:10px;margin-top:-2px}
+.pv-thumb{width:64px;height:64px;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:var(--chip);cursor:pointer;opacity:.6;transition:opacity .15s,border-color .15s}
+.pv-thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
+.pv-thumb.on{border-color:var(--shu);opacity:1}
+.pv-thumb:hover{opacity:1}
+.pv-thumb:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 </style>
 </head>
 
@@ -1478,7 +1484,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v83";
+const APP_VERSION = "v84";
 
 
 /* =========================================================
@@ -3462,6 +3468,7 @@ async function renderPictures(){
       <b>${esc(x.ja)}</b><span>${esc(x.en)} · ${x.count}</span></button>`).join("")}</div></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
 }
+const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
 async function renderPicCat(key){
   const C = await (await fetch(`data/pictures/${key}.json`, {cache:"no-cache"})).json();
   const clean = s => (s || "").replace(/\s*\([^)]*[A-Z][a-z]+ [a-z]+[^)]*\)/g, "").trim();   // drop Latin species names
@@ -3470,11 +3477,11 @@ async function renderPicCat(key){
   // 1) start screen: cover, title, count, Start, and the photo credits (kept OUT of the session)
   $("#list").innerHTML = `<section class="pic-start">
     <div class="story-top"><button class="nav-btn" id="picBack">Back</button></div>
-    <div class="ps-cover"><img src="data/pictures/${W[0].img}" alt=""></div>
+    <div class="ps-cover"><img src="data/pictures/${picsOf(W[0])[0].img}" alt=""></div>
     <h2 class="ps-title">${esc(C.ja)}<small>${esc(C.en)}</small></h2>
     <p class="ps-count">${W.length} words</p>
     <button class="ps-go" id="picGo" type="button">Start</button>
-    <details class="ps-credits"><summary>Photo credits</summary><ol>${W.map(w => `<li>${esc(w.word)} — <a href="${esc(w.page)}" target="_blank" rel="noopener">${esc(w.credit)}</a></li>`).join("")}</ol></details>
+    <details class="ps-credits"><summary>Photo credits</summary><ol>${W.map(w => { const P = picsOf(w); return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} — <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`).join(""); }).join("")}</ol></details>
   </section>`;
   $("#picBack").onclick = () => { renderPictures(); scrollTo(0, 0); };
   $("#picGo").onclick = () => picView(C, W, clean);
@@ -3486,9 +3493,10 @@ function picView(C, W, clean){
     <div class="pv-top"><button class="nav-btn" id="pvBack">Back</button><b>${esc(C.ja)}</b>
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
-    <div class="pv-track" id="pvTrack">${W.map((w, n) => `<div class="pv-slide" data-n="${n}">
-      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${w.img}" alt="" aria-hidden="true" loading="${n < 3 ? "eager" : "lazy"}"><img class="pv-fg" src="data/pictures/${w.img}" alt="${esc(w.word)}" loading="${n < 3 ? "eager" : "lazy"}"><span class="pv-spk">${spk}</span></button>
-      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span></div></div>`).join("")}</div>
+    <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
+      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"><span class="pv-spk">${spk}</span></button>
+      ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
+      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span></div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
@@ -3497,7 +3505,12 @@ function picView(C, W, clean){
     slides[n].scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", inline: "start", block: "nearest"}); mark(n); };
   const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) mark(+e.target.dataset.n); }), {root: tr, threshold: .6});
   slides.forEach(s => io.observe(s));
-  tr.addEventListener("click", e => { if(dragged){ dragged = false; return; } const b = e.target.closest(".pv-photo"); if(!b) return;
+  tr.addEventListener("click", e => { if(dragged){ dragged = false; return; }
+    const t = e.target.closest(".pv-thumb");
+    if(t){ const sl = t.closest(".pv-slide");   // switch this word's big photo
+      sl.querySelectorAll(".pv-photo img").forEach(im => im.src = "data/pictures/" + t.dataset.src);
+      sl.querySelectorAll(".pv-thumb").forEach(x => x.classList.toggle("on", x === t)); return; }
+    const b = e.target.closest(".pv-photo"); if(!b) return;
     const n = +b.dataset.n; if(n === i) speak(W[n].word); else go(n); });
   tr.addEventListener("pointerdown", e => { if(e.pointerType !== "mouse") return; dragX = e.clientX; startLeft = tr.scrollLeft; dragged = false; });
   tr.addEventListener("pointermove", e => { if(dragX === null) return; const dx = e.clientX - dragX;
