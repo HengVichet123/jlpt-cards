@@ -1547,29 +1547,27 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .back-short .mini-ex{font-size:17px;line-height:1.8}
 .back-short .mini-ex .rei{font-size:13px}
 .complete .card .img{display:none}
-/* v111: Practice page = Continue list first (compact 2-line rows), then New session */
+/* v112: Practice home (Continue + Start groups, iOS-style grouped lists) and a separate New session page */
 .play-setup{width:100%;box-sizing:border-box}
-.sess-list{list-style:none;margin:0 0 18px;padding:0;border-top:1px solid var(--line)}
-.sess{display:flex;align-items:center;gap:8px;min-height:64px;border-bottom:1px solid var(--line)}
-.sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:10px 0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
-.sess-go:active{opacity:.7}
+.pg-h{margin:0 0 8px 4px;font:700 15px var(--body);color:var(--soft)}
+.pg-group{list-style:none;margin:0 0 28px;padding:0;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--lift);overflow:hidden}
+.pg-group > li{position:relative;display:flex;align-items:center;gap:4px;min-height:60px;padding:0 6px 0 16px}
+.pg-group > li + li::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:1px solid var(--line)}
+.sess-go{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;padding:10px 0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+.sess-go:active,.pg-act:active{opacity:.6}
 .sess-name{font:700 16px/1.35 var(--body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sess-meta{font-size:13px;color:var(--soft)}
-.sess-edit,.sess-cancel,.sess-del,.sess-undo button{flex:none;min-height:44px;padding:0 10px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
-.sess-edit:hover,.sess-cancel:hover{color:var(--ink)}
-.sess.editing{flex-direction:column;align-items:stretch;gap:2px;padding:10px 0 4px}
-.sess-editrow{display:flex;gap:8px}
-.sess-input{flex:1;min-width:0;min-height:44px;padding:0 12px;border:1px solid var(--ink);border-radius:8px;background:var(--card);color:var(--ink);font:700 16px var(--body)}
-.sess-input:focus{outline:2px solid var(--shu);outline-offset:1px}
-.sess-save{min-height:44px;padding:0 16px;border:0;border-radius:8px;background:var(--ink);color:var(--paper);font:700 14px var(--body);cursor:pointer}
-.sess-editfoot{display:flex;justify-content:space-between}
-.sess-del{padding-left:0;color:var(--shu)}
+.sess-edit,.sess-done,.sess-del,.sess-undo-btn{flex:none;min-width:44px;min-height:44px;padding:0 10px;border:0;background:none;color:var(--soft);font:600 14px var(--body);cursor:pointer}
+.sess-done{color:var(--ink);font-weight:700}
+.sess-del,.sess-undo-btn{color:var(--shu);font-weight:700}
+.sess.editing .sess-input{flex:1;min-width:0;height:36px;margin:12px 0;padding:0;border:0;border-bottom:2px solid var(--shu);border-radius:0;background:none;color:var(--ink);font:700 16px var(--body)}
+.sess.editing .sess-input:focus{outline:none}
 .sess-undo{justify-content:space-between;color:var(--soft);font-size:14px}
-.sess-undo button{color:var(--shu);font-weight:700}
-.pg-newbtn{width:100%;min-height:48px;margin:0 0 26px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 15px var(--body);cursor:pointer;box-shadow:var(--lift)}
-.pg-newbtn[aria-expanded="true"]{border-color:var(--ink)}
-.pg-newbtn:active{transform:scale(.99)}
-.pg-new{transform-origin:top center}
+.pg-act{width:100%;display:flex;align-items:center;gap:12px;min-height:56px;padding:0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:600 16px var(--body)}
+.pg-act span{flex:1}
+.pg-act small{font:500 14px var(--body);color:var(--soft)}
+.pg-act .chev{color:var(--faint);font-size:20px;line-height:1;padding-right:10px}
+.pg-act.main{color:var(--shu);font-weight:700}
 .pg-name{width:100%;min-height:46px;margin-bottom:22px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 16px var(--body)}
 .pg-name:focus{outline:2px solid var(--shu);outline-offset:1px}
 .pg-name::placeholder{color:var(--faint)}
@@ -1693,7 +1691,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v111";
+const APP_VERSION = "v112";
 
 
 /* =========================================================
@@ -2438,41 +2436,70 @@ function sessResume(id){
   store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
   PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
-let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null;   // New form open? which row is being renamed? last deleted (for Undo)
-const pgShowNew = () => !sessOpen().length || PG_NEW;
+let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null;   // on the New session page? which row is being renamed? last deleted (for Undo)
 const sessName = se => se.name || se.label;
-function sessAutoName(title){ const st = pgState(), d = new Date();
-  return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${d.getMonth() + 1}/${d.getDate()}`; }
+const sessDay = () => { const d = new Date(); return `${d.getMonth() + 1}/${d.getDate()}`; };
+function sessAutoName(title){ const st = pgState();
+  return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${sessDay()}`; }
+function pgDueIds(){   // every card whose review time has come (jc:due:<lvl>:<type>:<no>)
+  const ids = [], now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:") && +localStorage.getItem(k) <= now){ const [, , lvl, t, no] = k.split(":"); ids.push([lvl, t, +no]); } } }catch(e){}
+  return ids.slice(0, 50);
+}
+async function pgQuickIds(n){ const pool = await pgPool("ALL"), ids = [];
+  for(const c of pool.words){ if(!pgProfile(c.level, "words", c.no).reviews){ ids.push([c.level, "words", c.no]); if(ids.length >= n) break; } }
+  return ids; }
+function pgStartWith(ids, label){
+  if(!ids.length) return;
+  const st = pgState(); Object.assign(st, {level: "ALL", from: "all", ids, sid: "s" + Date.now()});
+  sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
+  store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+}
+function pgHome(){
+  const open = sessOpen(), due = pgDueIds().length;
+  return `${open.length || SESS_UNDO ? `<div class="pg-h">Continue</div>${sessLedger()}` : ""}
+    <div class="pg-h">Start</div>
+    <ul class="pg-group">
+      <li><button type="button" class="pg-act main" data-act="new"><span>New session</span><i class="chev" aria-hidden="true">›</i></button></li>
+      ${due ? `<li><button type="button" class="pg-act" data-act="due"><span>Review due</span><small>${due}</small><i class="chev" aria-hidden="true"></i></button></li>` : ""}
+      <li><button type="button" class="pg-act" data-act="quick"><span>Quick 10</span><small>${isJa() ? "新しい言葉" : "new words"}</small><i class="chev" aria-hidden="true"></i></button></li>
+    </ul>`;
+}
 function sessLedger(){
   const rows = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)).map(se => {
     const n = se.ids.length, left = sessLeft(se), d = new Date(se.start);
     if(se.id === SESS_EDIT) return `<li class="sess editing" data-sid="${se.id}">
-      <div class="sess-editrow"><input class="sess-input" maxlength="40" autocomplete="off" aria-label="Session name" value="${esc(sessName(se))}"><button type="button" class="sess-save">Save</button></div>
-      <div class="sess-editfoot"><button type="button" class="sess-del">Delete session</button><button type="button" class="sess-cancel">Cancel</button></div></li>`;
+      <input class="sess-input" maxlength="40" autocomplete="off" enterkeyhint="done" aria-label="Session name" value="${esc(sessName(se))}">
+      <button type="button" class="sess-del">Delete</button><button type="button" class="sess-done">Done</button></li>`;
     return `<li class="sess" data-sid="${se.id}">
       <button type="button" class="sess-go"><span class="sess-name">${esc(sessName(se))}</span><span class="sess-meta">${left} of ${n} left · ${d.getMonth() + 1}/${d.getDate()}</span></button>
       <button type="button" class="sess-edit" aria-label="Edit ${esc(sessName(se))}">Edit</button></li>`; });
-  if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `<ul class="sess-list">${rows.join("")}</ul>`;
+  if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
+  return `<ul class="pg-group sess-list">${rows.join("")}</ul>`;
 }
+function sessRedraw(){ NAV_SAME = true; return renderPG(); }
 function sessWire(){
   document.querySelectorAll(".sess[data-sid]").forEach(li => {
     const id = li.dataset.sid, q = c => li.querySelector(c);
     if(q(".sess-go")) q(".sess-go").onclick = () => sessResume(id);
-    if(q(".sess-edit")) q(".sess-edit").onclick = () => { SESS_EDIT = id; renderPG().then(() => { const i = $(".sess-input"); if(i){ i.focus(); i.select(); } }); };
-    if(!q(".sess-input")) return;
-    const save = () => { const se = sessList().find(x => x.id === id); if(se){ const v = q(".sess-input").value.trim(); se.name = v === se.label ? "" : v; sessSave(se); } SESS_EDIT = null; renderPG(); };
-    q(".sess-save").onclick = save;
-    q(".sess-cancel").onclick = () => { SESS_EDIT = null; renderPG(); };
-    q(".sess-input").onkeydown = e => { if(e.key === "Enter") save(); if(e.key === "Escape"){ SESS_EDIT = null; renderPG(); } };
+    if(q(".sess-edit")) q(".sess-edit").onclick = () => { SESS_EDIT = id; sessRedraw().then(() => { const i = $(".sess-input"); if(i){ i.focus(); i.select(); } }); };
+    const inp = q(".sess-input"); if(!inp) return;
+    let closing = false;
+    const save = () => { if(closing) return; closing = true; const se = sessList().find(x => x.id === id);
+      if(se){ const v = inp.value.trim(); se.name = !v || v === se.label ? "" : v; sessSave(se); } SESS_EDIT = null; sessRedraw(); };
+    q(".sess-done").onclick = save;
+    inp.onkeydown = e => { if(e.key === "Enter") save(); if(e.key === "Escape"){ closing = true; SESS_EDIT = null; sessRedraw(); } };
+    q(".sess-del").onpointerdown = () => { closing = true; };   // keep blur-save from firing first
     q(".sess-del").onclick = () => {
       const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
-      SESS_UNDO = {se, at: all.indexOf(se)}; SESS_EDIT = null; sessDrop(id); renderPG();
-      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING) renderPG(); }, 7000);
+      SESS_UNDO = {se, at: all.indexOf(se)}; SESS_EDIT = null; sessDrop(id); sessRedraw();
+      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
     };
+    q(".sess-done").onpointerdown = () => {};
   });
   const u = $(".sess-undo-btn");
-  if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); renderPG(); } };
+  if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); sessRedraw(); } };
 }
 function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
 async function pgNew(){
@@ -2674,10 +2701,9 @@ async function renderPG(){
 
     const setup = `
 
-      <section class="play-setup">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
-        ${sessOpen().length || SESS_UNDO ? `<div class="set-label">Continue</div>${sessLedger()}` : ""}
-        ${sessOpen().length ? `<button type="button" class="pg-newbtn" aria-expanded="${!!PG_NEW}">+ New session</button>` : ""}
-        ${pgShowNew() ? `<div class="pg-new">
+      <section class="play-setup">${PG_NEW ? `<button class="nav-btn" id="pgNewBack" data-back="Practice">Back</button>` : PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
+        ${PG_NEW ? "" : pgHome()}
+        ${PG_NEW ? `<div class="pg-new">
 
 
 
@@ -2720,7 +2746,7 @@ async function renderPG(){
     document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(btn => btn.onclick = () => {
       document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(x => { x.classList.toggle("on", x === btn); x.setAttribute("aria-checked", x === btn); });
       $("#pgLevel").value = btn.dataset.l;
-      const cur = pgState(); cur.level = btn.dataset.l; store.set("jc:pg", cur); renderPG();
+      const cur = pgState(); cur.level = btn.dataset.l; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
     });
     document.querySelectorAll(".stepper button").forEach(btn => btn.onclick = () => {
       const t = btn.parentElement.dataset.t, inp = $(`#pg_${t}`);
@@ -2731,11 +2757,18 @@ async function renderPG(){
     });
 
     document.querySelectorAll("#pgFrom button").forEach(btn => btn.onclick = () => {
-      const cur = pgState(); cur.from = btn.dataset.from; store.set("jc:pg", cur); renderPG();
+      const cur = pgState(); cur.from = btn.dataset.from; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
     });
-    if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); renderPG(); };
+    if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); NAV_SAME = true; renderPG(); };
     if($("#pgGo")) $("#pgGo").onclick = pgNew;
-    if($(".pg-newbtn")) $(".pg-newbtn").onclick = () => { PG_NEW = !PG_NEW; renderPG().then(() => { const f = $(".pg-new"); if(PG_NEW && f) unfoldBack(f); }); };
+    $("#pageTitle").textContent = PG_NEW ? "New session" : "Practice";
+    if($("#pgNewBack")) $("#pgNewBack").onclick = () => { PG_NEW = false; NAV_DIR = "back"; renderPG(); };
+    document.querySelectorAll(".pg-act").forEach(b => b.onclick = async () => {
+      const a = b.dataset.act;
+      if(a === "new"){ PG_NEW = true; renderPG(); scrollTo(0, 0); return; }
+      if(a === "due") pgStartWith(pgDueIds(), `${isJa() ? "復習" : "Review"} ${sessDay()}`);
+      if(a === "quick") pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`);
+    });
     sessWire();
     if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
 
@@ -2995,7 +3028,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","+ New session":"＋ 新しいセッション","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -3663,7 +3696,7 @@ async function renderSection(id){
 
   $("#secBack").onclick = () => { renderSections(); };
   $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
-    const name = s.name; pick("playground"); PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); };
+    const name = s.name; pick("playground"); PG_NEW = true; PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); };
 }
 
 /* ---------- Pre-learn reading page ---------- */
@@ -3697,7 +3730,7 @@ async function renderPrelearn(id){
   $("#preBack").onclick = () => { renderReader(id); scrollTo(0, 0); };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
     cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
-    pick("playground"); PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); };
+    pick("playground"); PG_NEW = true; PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); };
 
 }
 
@@ -4542,13 +4575,13 @@ const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textCont
 new MutationObserver(() => { syncBack(); syncHeaderAction(); }).observe($("#list"), {childList: true});
 /* page swap: every full page change goes through #list.innerHTML; the old page eases out while the new one eases in.
    Forward = new page from the right; back (header back / swipe) = from the left. */
-let NAV_DIR = "fwd", SWIPE_FROM = 0;
+let NAV_DIR = "fwd", SWIPE_FROM = 0, NAV_SAME = false;   // NAV_SAME: same page redrawn in place, no page transition
 (() => {
   const LIST = $("#list"), d = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
   Object.defineProperty(LIST, "innerHTML", {get(){ return d.get.call(this); }, set(v){
-    const dir = NAV_DIR, from = SWIPE_FROM; NAV_DIR = "fwd"; SWIPE_FROM = 0;
+    const dir = NAV_DIR, from = SWIPE_FROM, same = NAV_SAME; NAV_DIR = "fwd"; SWIPE_FROM = 0; NAV_SAME = false;
     const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && had.classList.contains("play-screen"));
-    if(calmMotion() || !had || practice){ d.set.call(this, v); return; }
+    if(calmMotion() || !had || practice || same){ d.set.call(this, v); return; }
     const r = LIST.getBoundingClientRect(), ghost = LIST.cloneNode(true);
     ghost.removeAttribute("id"); ghost.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
     Object.assign(ghost.style, {position:"fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", margin:"0", pointerEvents:"none", zIndex:"0", transform:""});
