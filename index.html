@@ -9,7 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Mind Palace">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
 
 <title>Japanese Mind Palace</title>
 
@@ -1697,6 +1698,42 @@ body.playing .play-ratings{bottom:calc(env(safe-area-inset-bottom,0px) + 52px)!i
 body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 16px)!important;bottom:calc(env(safe-area-inset-bottom,0px) + 156px)!important}
 .kbd-hint{display:none!important}
 @media (min-width:700px){ .pg-bottom .pg-exit{left:24px;transform:none} }   /* v118: desktop Exit bottom-left; phone keeps it centred */
+/* v119: Theatre (novel as a film): dark in both themes, picture first, the spoken line as a subtitle */
+body.cinema{background:#0D0F13;overflow:hidden}
+body.cinema #top,body.cinema .tabs{display:none!important}
+.th{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;background:#0D0F13;color:#EEE9E0;
+  padding:env(safe-area-inset-top,0px) 0 calc(env(safe-area-inset-bottom,0px) + 6px)}
+.th-stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.th-frame{position:relative;width:min(100vw, calc((100dvh - 250px) * 16 / 9));aspect-ratio:16/9;overflow:hidden;background:#000;cursor:pointer}
+@media (min-width:700px){ .th-frame{border-radius:10px} }
+.th-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
+.th-img.on{opacity:1;animation:thDrift 16s ease-out forwards}
+@keyframes thDrift{from{transform:scale(1)} to{transform:scale(1.07) translate(-1.2%,-1%)}}
+.th.paused .th-img.on{animation-play-state:paused}
+.th-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(10,12,16,.62);text-align:center;padding:0 24px}
+.th-card[hidden]{display:none}
+.th-card b{font:800 clamp(24px,5.5vw,40px)/1.25 var(--display);color:#FFF7E8;letter-spacing:.04em}
+.th-card small{font:500 14px var(--body);color:#C9C2B6}
+.th-big{position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:#15171A;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.th-big svg{width:30px;height:30px;margin-left:3px}
+.th-big[hidden]{display:none}
+.th-sub{min-height:112px;padding:14px 20px 4px;text-align:center;max-width:760px;margin:0 auto;width:100%}
+.th-jp{margin:0;font:600 clamp(18px,4.6vw,24px)/1.6 var(--body);color:#F6F1E8}
+.th-en{margin:6px 0 0;font:500 14px/1.5 var(--body);color:#9C968C}
+.th-bar{height:3px;margin:6px 20px 0;background:#2A2E36;border-radius:2px;overflow:hidden}
+.th-bar i{display:block;height:100%;width:0;background:var(--shu);transition:width .4s ease}
+.th-ctl{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:8px 12px 0}
+.th-mid{display:flex;gap:10px}
+.th-btn{width:52px;height:52px;border:0;border-radius:50%;background:none;color:#EEE9E0;display:grid;place-items:center;cursor:pointer}
+.th-btn:hover{background:#1E222A}
+.th-play{background:#EEE9E0;color:#15171A}
+.th-play:hover{background:#FFFFFF}
+.th-play svg{width:24px;height:24px}
+.th-exit{justify-self:start;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:none;color:#8C867C;font:600 14px var(--body);cursor:pointer}
+.th-exit:hover{color:#EEE9E0;background:#1E222A}
+.th-count{justify-self:end;font:500 13px var(--body);color:#6E6960;padding-right:8px;font-variant-numeric:tabular-nums}
+.th button:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){ .th-img{transition:none} .th-img.on{animation:none} }
 </style>
 </head>
 
@@ -1745,7 +1782,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 16px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v118";
+const APP_VERSION = "v120";
 
 
 /* =========================================================
@@ -3471,6 +3508,7 @@ async function renderNovels(){
 }
 async function renderNovel(id){
   let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
+  if(st.scenes && st.scenes.length) return renderTheatre(st);
   $("#pageTitle").textContent = st.title;
   $("#list").innerHTML = `<section class="reading story">
     <div class="story-top"><button class="nav-btn" id="novelBack" data-back="Novels">Back</button>
@@ -3501,6 +3539,67 @@ async function renderNovel(id){
   STORY.i = 0; STORY.cont = false;
 }
 const STORY = {i: 0, cont: false, play: null, stopUI: null};
+/* ---------- Theatre: a novel as a film. One picture per scene, the spoken line as a subtitle ---------- */
+function renderTheatre(st){
+  const L = st.sentences, sceneAt = i => { let k = 0; st.scenes.forEach((sc, j) => { if(sc.from <= i) k = j; }); return k; };
+  document.body.classList.add("cinema");
+  $("#list").innerHTML = `<div class="th" role="region" aria-label="${esc(st.title)}">
+    <div class="th-stage"><div class="th-frame">
+      <img class="th-img" alt=""><img class="th-img" alt="">
+      <div class="th-card" hidden><b></b><small></small></div>
+      <button class="th-big" type="button" aria-label="Play">${PLAY_ICO}</button>
+    </div>
+    <div class="th-sub" aria-live="polite"><p class="th-jp"></p><p class="th-en"></p></div></div>
+    <div class="th-bar" aria-hidden="true"><i></i></div>
+    <div class="th-ctl">
+      <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
+      <div class="th-mid">
+        <button class="th-btn th-prev" type="button" aria-label="Previous line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
+        <button class="th-btn th-play" type="button" aria-label="Play">${PLAY_ICO}</button>
+        <button class="th-btn th-next" type="button" aria-label="Next line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
+      </div>
+      <span class="th-count"></span>
+    </div></div>`;
+  const imgs = [...document.querySelectorAll(".th-img")], card = $(".th-card"), big = $(".th-big"), playB = $(".th-play");
+  let front = 0, shown = -1, timer = 0;
+  const showScene = (k, instant) => {
+    if(k === shown) return; shown = k;
+    const nxt = imgs[1 - front]; nxt.src = `data/novels/${st.scenes[k].img}`;
+    const swap = () => { imgs[front].classList.remove("on"); nxt.classList.remove("on"); void nxt.offsetWidth; nxt.classList.add("on"); front = 1 - front; };
+    if(instant || nxt.complete) swap(); else nxt.onload = swap;
+  };
+  const setLine = i => {
+    const x = L[i]; STORY.i = i; showScene(sceneAt(i), i === 0);
+    card.hidden = !x.h; if(x.h){ card.querySelector("b").textContent = x.h; card.querySelector("small").textContent = x.en || ""; }
+    $(".th-jp").textContent = x.h ? "" : x.jp; $(".th-en").textContent = x.h ? "" : (x.en || "");
+    $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`;
+  };
+  const setPlaying = on => { STORY.cont = on; big.hidden = on; playB.innerHTML = on ? PAUSE_ICO : PLAY_ICO; playB.setAttribute("aria-label", on ? "Pause" : "Play");
+    document.querySelector(".th").classList.toggle("paused", !on); };
+  STORY.play = (i, cont) => {
+    clearTimeout(timer);
+    if(i >= L.length){ stopStory(); setLine(L.length - 1); return; }
+    setLine(i); setPlaying(cont); if(!cont) return;
+    const text = L[i].h || L[i].jp, key = AUDIO_MAP && AUDIO_MAP[text];
+    const next = () => { if(STORY.cont && STORY.i === i) timer = setTimeout(() => STORY.play(i + 1, true), L[i].h ? 900 : 350); };
+    if(key){ PLAYER.onended = next; PLAYER.src = `data/audio/nanami/${key}.mp3`; PLAYER.play().catch(() => { timer = setTimeout(next, text.length * 160); }); }
+    else timer = setTimeout(next, text.length * 160 + 800);
+  };
+  STORY.stopUI = () => { clearTimeout(timer); setPlaying(false); };
+  const toggle = () => { if(STORY.cont){ stopStory(); return; } if(PLAYER.src && PLAYER.paused && PLAYER.currentTime > 0 && !PLAYER.ended && PLAYER.onended){ setPlaying(true); PLAYER.play().catch(() => {}); return; } STORY.play(STORY.i, true); };
+  const go = d => { const i = Math.max(0, Math.min(L.length - 1, STORY.i + d)); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} STORY.play(i, STORY.cont); };
+  big.onclick = playB.onclick = toggle;
+  $(".th-frame").addEventListener("click", e => { if(!e.target.closest(".th-big")) toggle(); });
+  $(".th-prev").onclick = () => go(-1); $(".th-next").onclick = () => go(1);
+  $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Novels"; NAV_DIR = "back"; renderNovels(); };
+  STORY.i = 0; STORY.cont = false; setLine(0); setPlaying(false); card.hidden = true;   // poster: picture + title only
+  $(".th-jp").textContent = st.title; $(".th-en").textContent = `${st.titleEn} · ${st.author}`;
+}
+addEventListener("keydown", e => { if(!document.body.classList.contains("cinema") || e.target.closest("input,textarea")) return;
+  if(e.key === " "){ e.preventDefault(); $(".th-play") && $(".th-play").click(); }
+  else if(e.key === "ArrowRight") $(".th-next") && $(".th-next").click();
+  else if(e.key === "ArrowLeft") $(".th-prev") && $(".th-prev").click();
+  else if(e.key === "Escape") $(".th-exit") && $(".th-exit").click(); });
 function stopStory(){ STORY.cont = false; try{ PLAYER.pause(); PLAYER.onended = null; speechSynthesis.cancel(); }catch(e){} if(STORY.stopUI) STORY.stopUI(); }
 const PLAY_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>';
 const PAUSE_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
@@ -4756,7 +4855,7 @@ $("#lesson").onchange =
    ========================================================= */
 
 function pick(id){
-  pgDockDrop();
+  pgDockDrop(); document.body.classList.remove("cinema");
   if(id !== "playground") PG_RETURN = null;
   PG_NEW = false; SESS_EDIT = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();

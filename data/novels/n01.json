@@ -226,5 +226,91 @@
    "jp": "長い長い旅は、こうしてようやく終わったのである。",
    "en": "And so, at long last, the long, long journey came to an end."
   }
+ ],
+ "scenes": [
+  {
+   "from": 0,
+   "img": "n01/s01.svg"
+  },
+  {
+   "from": 3,
+   "img": "n01/s02.svg"
+  },
+  {
+   "from": 7,
+   "img": "n01/s03.svg"
+  },
+  {
+   "from": 10,
+   "img": "n01/s04.svg"
+  },
+  {
+   "from": 12,
+   "img": "n01/s05.svg"
+  },
+  {
+   "from": 14,
+   "img": "n01/s06.svg"
+  },
+  {
+   "from": 15,
+   "img": "n01/s07.svg"
+  },
+  {
+   "from": 18,
+   "img": "n01/s08.svg"
+  },
+  {
+   "from": 21,
+   "img": "n01/s09.svg"
+  },
+  {
+   "from": 22,
+   "img": "n01/s10.svg"
+  },
+  {
+   "from": 24,
+   "img": "n01/s11.svg"
+  },
+  {
+   "from": 29,
+   "img": "n01/s12.svg"
+  },
+  {
+   "from": 33,
+   "img": "n01/s13.svg"
+  },
+  {
+   "from": 35,
+   "img": "n01/s14.svg"
+  },
+  {
+   "from": 38,
+   "img": "n01/s15.svg"
+  },
+  {
+   "from": 41,
+   "img": "n01/s16.svg"
+  },
+  {
+   "from": 42,
+   "img": "n01/s17.svg"
+  },
+  {
+   "from": 44,
+   "img": "n01/s18.svg"
+  },
+  {
+   "from": 48,
+   "img": "n01/s19.svg"
+  },
+  {
+   "from": 49,
+   "img": "n01/s20.svg"
+  },
+  {
+   "from": 53,
+   "img": "n01/s21.svg"
+  }
  ]
 }

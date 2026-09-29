@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#16181d"/><text x="256" y="330" font-size="260" text-anchor="middle" fill="#ff6b5e" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-weight="700">語</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" fill="#16181d"/>
+<circle cx="256" cy="226" r="118" fill="#F3D9A4"/>
+<rect x="104" y="372" width="304" height="26" rx="4" fill="#8A7866"/>
+<rect x="132" y="352" width="248" height="24" rx="3" fill="#A89480"/>
+<rect x="150" y="250" width="212" height="106" fill="#FFF3DC"/>
+<rect x="164" y="262" width="14" height="90" fill="#E6D2AE"/><rect x="334" y="262" width="14" height="90" fill="#E6D2AE"/>
+<rect x="222" y="280" width="68" height="76" rx="3" fill="#F29B38"/>
+<rect x="253" y="280" width="6" height="76" fill="#D9792A"/>
+<path d="M76 262 Q256 132 436 262 Q404 252 380 262 H132 Q108 252 76 262Z" fill="#E8573F"/>
+<rect x="120" y="258" width="272" height="12" rx="3" fill="#B8412E"/>
+<rect x="222" y="190" width="68" height="14" rx="5" fill="#B8412E"/>
+</svg>
