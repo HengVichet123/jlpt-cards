@@ -1538,6 +1538,9 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .sound-note{position:fixed;left:50%%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translateX(-50%%);z-index:50;max-width:88vw;
   padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--paper);font:500 13px var(--body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .say-i.playing{color:var(--shu)}
+/* v106 */
+.prog-btns{display:flex;gap:10px}
+.prog-box{width:100%;font:400 12px var(--body);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:10px}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .hdr-act:active{transform:scale(.97)}
@@ -1659,7 +1662,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v105";
+const APP_VERSION = "v106";
 
 
 /* =========================================================
@@ -2898,7 +2901,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
   "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
-const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
+const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Progress":"学習記録","Copy":"コピー","Paste":"貼り付け","Load":"読み込む","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
@@ -2956,11 +2959,29 @@ function renderSettings(){
       <div class="set-group"><h2 class="set-h">Cards</h2>
         <label class="opt-row opt-switch" for="setSay"><span>Sound</span><input type="checkbox" id="setSay" ${soundOn() ? "checked" : ""}></label>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
+      <div class="set-group"><h2 class="set-h">Progress</h2>
+        <div class="prog-btns"><button class="set-test" id="progCopy" type="button">Copy</button><button class="set-test" id="progPaste" type="button">Paste</button></div>
+        <textarea id="progBox" class="prog-box" rows="4" hidden aria-label="Progress data"></textarea>
+        <button class="set-test" id="progLoad" type="button" hidden>Load</button></div>
       <p class="set-ver">${APP_VERSION}</p>
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
     $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
+    // move review marks + settings between addresses/devices: Copy on the old one, Paste on the new one
+    $("#progCopy").onclick = async () => {
+      const data = {}; for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(k.startsWith("jc:")) data[k] = localStorage.getItem(k); }
+      const txt = JSON.stringify(data), b = $("#progCopy");
+      try{ await navigator.clipboard.writeText(txt); b.textContent = isJa() ? "コピーしました" : "Copied"; }
+      catch(e){ const t = $("#progBox"); t.hidden = false; t.value = txt; t.select(); b.textContent = isJa() ? "選択してコピー" : "Select all and copy"; }
+    };
+    $("#progPaste").onclick = () => { const t = $("#progBox"); t.hidden = false; t.value = ""; $("#progLoad").hidden = false; t.focus(); };
+    $("#progLoad").onclick = () => {
+      try{ const d = JSON.parse($("#progBox").value); let n = 0;
+        for(const [k, v] of Object.entries(d)) if(k.startsWith("jc:")){ localStorage.setItem(k, v); n++; }
+        $("#progLoad").textContent = isJa() ? `${n}件を読み込みました` : `Loaded ${n} items`; applyTheme(); applyLang();
+      }catch(e){ $("#progLoad").textContent = isJa() ? "読み込めませんでした" : "That text is not progress data"; }
+    };
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
