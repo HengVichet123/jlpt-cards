@@ -1,6 +1,6 @@
 // network-first: always try fresh lessons, fall back to cache offline
 
-const CACHE = "jc-v142";
+const CACHE = "jc-v143";
 const AUDIO_CACHE = "jc-audio-1";   // word recordings: kept across app versions
 
 self.addEventListener("install", e => self.skipWaiting());
@@ -12,7 +12,7 @@ self.addEventListener("activate", e =>
 // Phones (iPhone Safari especially) ask for audio in byte ranges. Fetch the whole file once,
 // keep it for offline use, and answer each range request with the exact slice (206).
 async function audioResponse(request){
-  const url = new URL(request.url), key = url.origin + url.pathname;
+  const url = new URL(request.url), key = url.origin + url.pathname + url.search;   // ?v=<hash> on listening audio: a re-recording is a new file
   const cache = await caches.open(AUDIO_CACHE);
   let full = await cache.match(key);
   if(!full){

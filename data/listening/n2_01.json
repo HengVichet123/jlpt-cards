@@ -50,7 +50,11 @@
       "会議室を予約する"
      ],
      "answer": 2,
-     "audio": "n2_01/q01.mp3"
+     "tags": [
+      "会社・会議準備"
+     ],
+     "why": "The graph can wait and the room is booked; the boss is away tomorrow, so first get the content checked.",
+     "audio": "n2_01/q01.mp3?v=094b60c5"
     },
     {
      "intro": "大学で男の学生と女の学生が話しています。女の学生は明日何を持っていきますか。",
@@ -88,7 +92,11 @@
       "プロジェクターとUSBメモリ"
      ],
      "answer": 3,
-     "audio": "n2_01/q02.mp3"
+     "tags": [
+      "大学・ゼミ"
+     ],
+     "why": "Laptop and projector are in the lab; print the survey and bring a USB stick (the lab PC has no internet).",
+     "audio": "n2_01/q02.mp3?v=4786ba49"
     },
     {
      "intro": "市役所で男の人と係の人が話しています。男の人はこのあとまずどこへ行きますか。",
@@ -130,7 +138,11 @@
       "前に住んでいた町の市役所"
      ],
      "answer": 1,
-     "audio": "n2_01/q03.mp3"
+     "tags": [
+      "市役所・転入届"
+     ],
+     "why": "Fill in the form and hand it to window 2 first; insurance comes after, at window 5.",
+     "audio": "n2_01/q03.mp3?v=6c78cea3"
     }
    ],
    "spoken": false
@@ -172,7 +184,11 @@
       "走るのが好きになったから"
      ],
      "answer": 3,
-     "audio": "n2_01/q04.mp3"
+     "tags": [
+      "友人・ジム"
+     ],
+     "why": "Not work, not money: the gym was far from home.",
+     "audio": "n2_01/q04.mp3?v=fdd12ea4"
     },
     {
      "intro": "男の人と女の人が新しいレストランについて話しています。男の人はこのレストランの何がいちばんいいと言っていますか。",
@@ -206,7 +222,11 @@
       "窓からの景色がいいこと"
      ],
      "answer": 4,
-     "audio": "n2_01/q05.mp3"
+     "tags": [
+      "友人・レストラン"
+     ],
+     "why": "何よりいいのは、窓から川が見えること.",
+     "audio": "n2_01/q05.mp3?v=fb915c1e"
     },
     {
      "intro": "会社で女の人と男の人が話しています。会議の時間が変わったのはどうしてですか。",
@@ -240,7 +260,11 @@
       "新幹線が遅れたから"
      ],
      "answer": 3,
-     "audio": "n2_01/q06.mp3"
+     "tags": [
+      "会社・予定変更"
+     ],
+     "why": "A person from the Osaka branch joins and their train arrives at 9:30.",
+     "audio": "n2_01/q06.mp3?v=c2bdad42"
     }
    ],
    "spoken": false
@@ -266,7 +290,11 @@
       "目の病気の原因"
      ],
      "answer": 2,
-     "audio": "n2_01/q07.mp3"
+     "tags": [
+      "テレビ・医者"
+     ],
+     "why": "Advice on phones before bed and dim lights: how to sleep well.",
+     "audio": "n2_01/q07.mp3?v=2b7084df"
     },
     {
      "intro": "ラジオで女の人が話しています。",
@@ -284,7 +312,11 @@
       "新しい家具を安く買う方法"
      ],
      "answer": 3,
-     "audio": "n2_01/q08.mp3"
+     "tags": [
+      "ラジオ・地域活動"
+     ],
+     "why": "Exchanging things reduces rubbish and connects neighbours.",
+     "audio": "n2_01/q08.mp3?v=6b69e249"
     }
    ],
    "spoken": true
@@ -307,7 +339,11 @@
       "飲み会、楽しかったよ。"
      ],
      "answer": 2,
-     "audio": "n2_01/q09.mp3"
+     "tags": [
+      "同僚・飲み会"
+     ],
+     "why": "Asked if you can come: politely declining with ちょっと…",
+     "audio": "n2_01/q09.mp3?v=0d82c37a"
     },
     {
      "lines": [
@@ -322,7 +358,11 @@
       "明日はまとめませんでした。"
      ],
      "answer": 2,
-     "audio": "n2_01/q10.mp3"
+     "tags": [
+      "上司・依頼"
+     ],
+     "why": "〜てもらえないかな is a request; accept with やっておきます.",
+     "audio": "n2_01/q10.mp3?v=3ba83cb9"
     },
     {
      "lines": [
@@ -337,7 +377,11 @@
       "雨がやんでよかった。"
      ],
      "answer": 1,
-     "audio": "n2_01/q11.mp3"
+     "tags": [
+      "友人・天気"
+     ],
+     "why": "The rain won't stop, so suggest borrowing an umbrella.",
+     "audio": "n2_01/q11.mp3?v=28750d19"
     },
     {
      "lines": [
@@ -352,7 +396,11 @@
       "はい、お休みになりました。"
      ],
      "answer": 1,
-     "audio": "n2_01/q12.mp3"
+     "tags": [
+      "職場・お礼"
+     ],
+     "why": "Thanks for time off: ask if they could rest well.",
+     "audio": "n2_01/q12.mp3?v=d85c8111"
     },
     {
      "lines": [
@@ -367,7 +415,11 @@
       "残らないで帰ろう。"
      ],
      "answer": 1,
-     "audio": "n2_01/q13.mp3"
+     "tags": [
+      "職場・残業"
+     ],
+     "why": "Still here? Explain you want to finish this job.",
+     "audio": "n2_01/q13.mp3?v=82036c66"
     }
    ],
    "spoken": true

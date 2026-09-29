@@ -50,7 +50,11 @@
       "本を棚に戻す"
      ],
      "answer": 2,
-     "audio": "n2_02/q01.mp3"
+     "tags": [
+      "図書館"
+     ],
+     "why": "No student card: make a temporary card at the machine first.",
+     "audio": "n2_02/q01.mp3?v=d5ffd28a"
     },
     {
      "intro": "会社で部長と女の人が話しています。女の人は出張の前に何をしなければなりませんか。",
@@ -88,7 +92,11 @@
       "見積書にはんこをもらう"
      ],
      "answer": 4,
-     "audio": "n2_02/q02.mp3"
+     "tags": [
+      "会社・出張準備"
+     ],
+     "why": "Hotel and tickets are done, souvenirs on the day; get the manager's stamp before the trip.",
+     "audio": "n2_02/q02.mp3?v=6bb0d6fb"
     },
     {
      "intro": "料理教室で先生が話しています。生徒はまず何をしますか。",
@@ -106,7 +114,11 @@
       "玉ねぎを切る"
      ],
      "answer": 3,
-     "audio": "n2_02/q03.mp3"
+     "tags": [
+      "料理教室"
+     ],
+     "why": "Wash hands before anything else.",
+     "audio": "n2_02/q03.mp3?v=4c92f9e9"
     }
    ],
    "spoken": false
@@ -148,7 +160,11 @@
       "部屋が狭いから"
      ],
      "answer": 1,
-     "audio": "n2_02/q04.mp3"
+     "tags": [
+      "友人・引っ越し"
+     ],
+     "why": "Location and rent are fine; the neighbour plays music late.",
+     "audio": "n2_02/q04.mp3?v=3b71bc36"
     },
     {
      "intro": "女の人と男の人が映画について話しています。女の人はこの映画の何がよかったと言っていますか。",
@@ -182,7 +198,11 @@
       "最後のシーンの景色"
      ],
      "answer": 3,
-     "audio": "n2_02/q05.mp3"
+     "tags": [
+      "友人・映画"
+     ],
+     "why": "The music was wonderful; the acting was only so-so.",
+     "audio": "n2_02/q05.mp3?v=86495ee6"
     },
     {
      "intro": "大学で男の学生と女の学生が話しています。男の学生はどうしてアルバイトを変えましたか。",
@@ -216,7 +236,11 @@
       "夜遅い仕事で授業に遅れることがあったから"
      ],
      "answer": 4,
-     "audio": "n2_02/q06.mp3"
+     "tags": [
+      "大学・アルバイト"
+     ],
+     "why": "Night shifts made him late for class; the pay is about the same.",
+     "audio": "n2_02/q06.mp3?v=2146d989"
     }
    ],
    "spoken": false
@@ -242,7 +266,11 @@
       "運動不足の問題"
      ],
      "answer": 2,
-     "audio": "n2_02/q07.mp3"
+     "tags": [
+      "ラジオ・交通安全"
+     ],
+     "why": "Cyclists should follow the rules: ride on the left of the road, use lights.",
+     "audio": "n2_02/q07.mp3?v=5e255569"
     },
     {
      "intro": "講演会で女の人が話しています。",
@@ -260,7 +288,11 @@
       "料理を多く作るべきこと"
      ],
      "answer": 3,
-     "audio": "n2_02/q08.mp3"
+     "tags": [
+      "講演・食品ロス"
+     ],
+     "why": "Small efforts by each person can reduce food waste.",
+     "audio": "n2_02/q08.mp3?v=6417e30c"
     }
    ],
    "spoken": true
@@ -283,7 +315,11 @@
       "いいえ、見ませんでした。"
      ],
      "answer": 1,
-     "audio": "n2_02/q09.mp3"
+     "tags": [
+      "駅・頼みごと"
+     ],
+     "why": "Asked to watch luggage: はい、いいですよ.",
+     "audio": "n2_02/q09.mp3?v=af441065"
     },
     {
      "lines": [
@@ -298,7 +334,11 @@
       "失礼しました。"
      ],
      "answer": 2,
-     "audio": "n2_02/q10.mp3"
+     "tags": [
+      "職場・あいさつ"
+     ],
+     "why": "Reply to お先に失礼します is お疲れさまでした.",
+     "audio": "n2_02/q10.mp3?v=01bca232"
     },
     {
      "lines": [
@@ -313,7 +353,11 @@
       "ありがとう、使わせるよ。"
      ],
      "answer": 2,
-     "audio": "n2_02/q11.mp3"
+     "tags": [
+      "友人・貸し借り"
+     ],
+     "why": "使わせてもらってもいい？ asks permission: どうぞ.",
+     "audio": "n2_02/q11.mp3?v=9b017d2b"
     },
     {
      "lines": [
@@ -328,7 +372,11 @@
       "会議はもう始まらないよ。"
      ],
      "answer": 1,
-     "audio": "n2_02/q12.mp3"
+     "tags": [
+      "職場・うわさ"
+     ],
+     "why": "He forgot the meeting, so that's why he didn't come.",
+     "audio": "n2_02/q12.mp3?v=b7fdc5b1"
     },
     {
      "lines": [
@@ -343,7 +391,11 @@
       "じゃあ、もう少し遅く言うね。"
      ],
      "answer": 2,
-     "audio": "n2_02/q13.mp3"
+     "tags": [
+      "友人・不満"
+     ],
+     "why": "You should have told me sooner: apologise, you couldn't bring it up.",
+     "audio": "n2_02/q13.mp3?v=8719d0bd"
     }
    ],
    "spoken": true

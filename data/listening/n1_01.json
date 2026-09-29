@@ -50,7 +50,11 @@
       "経理に予算を確認してもらう"
      ],
      "answer": 1,
-     "audio": "n1_01/q01.mp3"
+     "tags": [
+      "会社・企画書"
+     ],
+     "why": "Only the survey data must be updated; design waits, budget already checked.",
+     "audio": "n1_01/q01.mp3?v=481cf444"
     },
     {
      "intro": "大学で女の学生が先生と話しています。女の学生は論文を提出する前に何をしなければなりませんか。",
@@ -88,7 +92,11 @@
       "アンケートをやり直す"
      ],
      "answer": 2,
-     "audio": "n1_01/q02.mp3"
+     "tags": [
+      "大学・卒論"
+     ],
+     "why": "Consent forms must all be collected before submission; the abstract can come later.",
+     "audio": "n1_01/q02.mp3?v=ecd110c9"
     },
     {
      "intro": "イベント会社で男の人と女の人が話しています。女の人はまず何をしますか。",
@@ -122,7 +130,11 @@
       "参加者の人数を数える"
      ],
      "answer": 3,
-     "audio": "n1_01/q03.mp3"
+     "tags": [
+      "会社・イベント準備"
+     ],
+     "why": "First ask the venue whether an estimate is OK.",
+     "audio": "n1_01/q03.mp3?v=84528dce"
     }
    ],
    "spoken": false
@@ -160,7 +172,11 @@
       "先に筋を決めておくこと"
      ],
      "answer": 1,
-     "audio": "n1_01/q04.mp3"
+     "tags": [
+      "インタビュー・作家"
+     ],
+     "why": "Thinking about what each character fears.",
+     "audio": "n1_01/q04.mp3?v=ff48066d"
     },
     {
      "intro": "男の人と女の人が話しています。女の人が転職を決めたいちばんの理由は何ですか。",
@@ -194,7 +210,11 @@
       "企画から関われる仕事がしたいから"
      ],
      "answer": 4,
-     "audio": "n1_01/q05.mp3"
+     "tags": [
+      "友人・転職"
+     ],
+     "why": "Being involved from the planning stage was the deciding factor.",
+     "audio": "n1_01/q05.mp3?v=efa4553d"
     },
     {
      "intro": "市の担当者が、新しい図書館について説明しています。新しい図書館のいちばんの特徴は何ですか。",
@@ -212,7 +232,11 @@
       "静かに読める部屋が多いこと"
      ],
      "answer": 3,
-     "audio": "n1_01/q06.mp3"
+     "tags": [
+      "市・図書館説明"
+     ],
+     "why": "The first floor becomes a space where people can talk.",
+     "audio": "n1_01/q06.mp3?v=2e93bead"
     }
    ],
    "spoken": false
@@ -238,7 +262,11 @@
       "商品の値段の決め方"
      ],
      "answer": 2,
-     "audio": "n1_01/q07.mp3"
+     "tags": [
+      "大学・講義"
+     ],
+     "why": "Too many choices make people stop deciding: effect on buying.",
+     "audio": "n1_01/q07.mp3?v=38373060"
     },
     {
      "intro": "ラジオで女の人が話しています。",
@@ -256,7 +284,11 @@
       "しっかり休むことが仕事のためにもなる"
      ],
      "answer": 4,
-     "audio": "n1_01/q08.mp3"
+     "tags": [
+      "ラジオ・働き方"
+     ],
+     "why": "Resting properly is part of work.",
+     "audio": "n1_01/q08.mp3?v=4efccf7c"
     }
    ],
    "spoken": true
@@ -279,7 +311,11 @@
       "課長に聞いてもらえてよかったね。"
      ],
      "answer": 2,
-     "audio": "n1_01/q09.mp3"
+     "tags": [
+      "職場・トラブル"
+     ],
+     "why": "ただじゃすまない: it will be serious, so report now.",
+     "audio": "n1_01/q09.mp3?v=300059ac"
     },
     {
      "lines": [
@@ -294,7 +330,11 @@
       "はい、伺っていただいて恐縮です。"
      ],
      "answer": 1,
-     "audio": "n1_01/q10.mp3"
+     "tags": [
+      "取引先・訪問"
+     ],
+     "why": "Visitor politely says they had business nearby anyway.",
+     "audio": "n1_01/q10.mp3?v=33ae05d4"
     },
     {
      "lines": [
@@ -309,7 +349,11 @@
       "やっぱり並ぶ価値があるんだね。"
      ],
      "answer": 2,
-     "audio": "n1_01/q11.mp3"
+     "tags": [
+      "友人・店の評判"
+     ],
+     "why": "並ぶほどのことはない = not worth queuing for.",
+     "audio": "n1_01/q11.mp3?v=e762f00f"
     },
     {
      "lines": [
@@ -324,7 +368,11 @@
       "新人なのに、よく話せたね。"
      ],
      "answer": 1,
-     "audio": "n1_01/q12.mp3"
+     "tags": [
+      "職場・言葉遣い"
+     ],
+     "why": "口のきき方がなってない = rude way of speaking.",
+     "audio": "n1_01/q12.mp3?v=36c46793"
     },
     {
      "lines": [
@@ -339,7 +387,11 @@
       "じゃあ、部長の判断次第ってことか。"
      ],
      "answer": 3,
-     "audio": "n1_01/q13.mp3"
+     "tags": [
+      "職場・決定"
+     ],
+     "why": "一存にかかっている = depends on one person's decision.",
+     "audio": "n1_01/q13.mp3?v=5155bd28"
     }
    ],
    "spoken": true
