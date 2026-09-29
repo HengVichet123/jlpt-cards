@@ -1535,11 +1535,13 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .card .back{transform-origin:50% 0;backface-visibility:hidden}
 @media (prefers-reduced-motion: reduce){ .cover,.play-ratings button{transition:none} }
 
+/* v96 picture viewer: photo leaves room for the word */
+.pv-photo{max-height:min(46dvh,420px);aspect-ratio:auto;height:min(46dvh,420px)}
+.pv-word b{font-size:34px}
 /* v95 Japanese-only mode: the UI reads as a Japanese study book, English-only blocks vanish */
 .ja .home h1::after{display:none}
 .ja .home > p{display:none}
-.ja .card h4:has(+ .en), .ja .card .en, .ja .mini-en, .ja .pv-en, .ja .pt-en, .ja .tip-en, .ja .ex .tr, .ja .sec-row-t span,
-.ja .ps-title small, .ja .scene-words .en, .ja .home-h small{display:none!important}
+.ja .pt-en, .ja .sec-row-t span, .ja .ps-title small, .ja .home-h small{display:none!important}   /* UI English only; learning content untouched */
 .ja .home-h, .ja .set-h, .ja .page-title, .ja .cover b, .ja .side-tile b{font-family:var(--display);letter-spacing:.04em}
 .ja .play-ratings button{font-family:var(--display)}
 .ja .cover b{font-size:22px}
@@ -1604,7 +1606,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v95";
+const APP_VERSION = "v96";
 
 
 /* =========================================================
@@ -2895,13 +2897,7 @@ function renderSettings(){
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
       <div class="set-group"><h2 class="set-h">Voice</h2>
         <label class="opt-row opt-switch" for="setRec"><span>Recorded voice</span><input type="checkbox" id="setRec" ${store.get("jc:recorded", true) ? "checked" : ""}></label>
-        ${vs.length ? `<label class="opt-row" for="setVoice"><span>Japanese voice</span>
-          <select id="setVoice">${vs.map(v => `<option value="${esc(v.name)}" ${cur && v.name === cur.name ? "selected" : ""}>${esc(v.name.replace(/Microsoft |Google /, ""))}</option>`).join("")}</select></label>`
-          : `<p class="set-note">This device has no Japanese voice installed.</p>`}
-        <div class="seg seg-2" role="radiogroup" id="setRate">${[[0.8,"Slow"],[0.95,"Normal"]].map(([k, l]) =>
-          `<button type="button" role="radio" data-v="${k}" class="${Math.abs(k - rate) < .08 ? "on" : ""}">${l}</button>`).join("")}</div>
-        <button class="set-test" id="setTest" type="button">Play 現像</button>
-        <p class="set-note">Recorded voice: Microsoft Nanami. Words without a recording use the device voice above.</p></div>
+</div>
       <div class="set-group"><h2 class="set-h">Complete list</h2>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
       <p class="set-ver">${APP_VERSION}</p>
@@ -2909,9 +2905,6 @@ function renderSettings(){
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
     $("#setRec").onchange = e => { store.set("jc:recorded", e.target.checked); speak("現像"); };
-    $("#setRate").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:rate", +b.dataset.v); draw(); });
-    if($("#setVoice")) $("#setVoice").onchange = e => { store.set("jc:voice", e.target.value); speak("現像"); };
-    $("#setTest").onclick = () => speak("現像");
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -3173,7 +3166,7 @@ function speak(text){
   if(key){
     try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
     const a = new Audio(`data/audio/${key}.mp3`); a.preservesPitch = true;
-    a.playbackRate = store.get("jc:rate", 0.95) < 0.9 ? 0.85 : 1; AUDIO_NOW = a;
+    AUDIO_NOW = a;
     a.play().catch(() => speakDevice(text)); return;
   }
   speakDevice(text);
