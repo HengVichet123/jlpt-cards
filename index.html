@@ -1453,6 +1453,73 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .pv-thumb.on{border-color:var(--shu);opacity:1}
 .pv-thumb:hover{opacity:1}
 .pv-thumb:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+
+/* =====================================================================
+   v91 REDESIGN "study desk": 原稿用紙 paper, 墨 ink, one 朱 accent (the 赤シート red)
+   Skills: frontend-design + ui-ux-pro-max (UX rules) + taste-skill (bans)
+   ===================================================================== */
+:root{
+  --paper:#F3F4EF; --card:#FCFCFA; --ink:#1B1F24; --soft:#565C63; --faint:#80868C;
+  --line:#DCDFD6; --chip:#E9EBE4; --shu:#CF3F2A; --hole:#E3E6DE;
+  --sheet:rgba(207,63,42,.9);
+  --mono:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;   /* no monospace micro-labels */
+  --cov-play:#1B1F24; --cov-list:#FCFCFA; --cov-read:#FCFCFA; --cov-text:#F3F4EF; --cov-sub:rgba(243,244,239,.72);
+  --r-s:8px; --r-m:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#121417; --card:#1A1D21; --ink:#E7E8E3; --soft:#A4A9A6; --faint:#737A7F;
+  --line:#2A2F35; --chip:#23272C; --shu:#F0705C; --hole:#121417; --sheet:rgba(214,72,52,.92);
+  --cov-play:#23272C; --cov-list:#1A1D21; --cov-read:#1A1D21; --cov-text:#E7E8E3; --cov-sub:rgba(231,232,227,.7);
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#121417; --card:#1A1D21; --ink:#E7E8E3; --soft:#A4A9A6; --faint:#737A7F;
+  --line:#2A2F35; --chip:#23272C; --shu:#F0705C; --hole:#121417; --sheet:rgba(214,72,52,.92);
+  --cov-play:#23272C; --cov-list:#1A1D21; --cov-read:#1A1D21; --cov-text:#E7E8E3; --cov-sub:rgba(231,232,227,.7);
+  color-scheme:dark }
+body{font-variant-numeric:tabular-nums}
+
+/* sentence-case section labels (no tracked-out ALL CAPS) */
+.home-h,.set-label,.pre-h,.scene-words summary,.home h2{text-transform:none;letter-spacing:0;font:700 15px var(--body);color:var(--ink)}
+.home-h small{font-weight:500;color:var(--faint)}
+.pre-h{color:var(--shu)}
+
+/* Home: one accent. Playground = ink block (the thing you do daily); list/reading = paper cards */
+.cover{border-radius:var(--r-m);transition:transform .15s ease}
+.cover:active{transform:scale(.98)}
+.cover-list,.cover-read{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.cover-list span,.cover-read span{color:var(--soft)}
+.cover-list i,.cover-read i{color:var(--ink);opacity:.06}
+.cover-play i{color:#fff;opacity:.07}
+.cover-play span{font-size:14px;color:var(--cov-sub)}
+.side-tile{border-radius:var(--r-s)}
+
+/* Playground session: readable counts, big card, thumb-sized ratings */
+.play-queue{font:500 14px var(--body);color:var(--soft);gap:12px;align-items:baseline}
+.play-queue b{font:800 20px var(--body);color:var(--ink);margin-right:3px}
+.play-queue .pq-later{font-size:13px;color:var(--faint)}
+.play-stage .play-card{border-radius:var(--r-m)}
+.play-stage .card .big{font-size:clamp(44px,12vw,60px);line-height:1.1}
+.play-stage .card.g .big{font-size:clamp(26px,7vw,34px)}
+/* hard-coded whites from early versions follow the theme now */
+.play-screen,.play-settings,.play-exit,.play-ratings button{background:var(--paper)}
+.play-ratings button{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.cover-list i,.cover-read i{opacity:.045}
+body.playing{background:var(--paper);color:var(--ink)}
+/* session counter: readable but quiet (his v24 wish: subtle) */
+.play-bar .play-queue{font:500 13px var(--body)!important;opacity:.8!important;gap:10px!important;align-items:baseline!important}
+.play-bar .play-queue span{display:inline;gap:0}
+.play-bar .play-queue b{font:800 17px var(--body)!important;color:var(--ink)!important;margin-right:4px}
+.play-ratings{gap:10px}
+.play-ratings button{min-height:58px;border-radius:var(--r-s);font:700 15px var(--body);transition:transform .12s ease, background .15s ease}
+.play-ratings button:active{transform:scale(.97)}
+.play-ratings button span{font:500 12px var(--body);color:var(--faint)}
+.play-ratings button[data-m="1440"]{border-color:var(--shu);color:var(--shu)}
+
+/* 赤シート reveal */
+.play-stage .play-card .back{position:relative}
+.red-sheet{position:absolute;inset:0;z-index:3;background:var(--sheet);border-radius:0 0 var(--r-m) var(--r-m);pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+@media (prefers-reduced-motion: reduce){ .red-sheet{display:none} .cover,.play-ratings button{transition:none} }
 </style>
 </head>
 
@@ -1500,7 +1567,7 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v90";
+const APP_VERSION = "v91";
 
 
 /* =========================================================
@@ -1679,7 +1746,7 @@ function exHTML(e,targets){
   const tr =
     e.en
       ? esc(e.en)
-      : "—";
+      : "-";
 
 
   const src =
@@ -1726,7 +1793,7 @@ function srcLine(label,url){
 
     <div class="src">
 
-      — ${esc(label)}
+      ${esc(label)}
 
       ${
         url
@@ -1840,7 +1907,7 @@ function kanjiCard(c){
                     )}
 
                     （${esc(w.r)}）
-                    — ${esc(w.m)}
+                    : ${esc(w.m)}
 
                     ${
                       w.ex
@@ -1866,7 +1933,7 @@ function kanjiCard(c){
        音
        <b>
          ${esc(
-           c.on.join("・") || "—"
+           c.on.join("・") || "-"
          )}
        </b>
 
@@ -1874,7 +1941,7 @@ function kanjiCard(c){
        訓
        <b>
          ${esc(
-           c.kun.join("・") || "—"
+           c.kun.join("・") || "-"
          )}
        </b>
 
@@ -2665,24 +2732,7 @@ async function renderPG(){
       : "";
 
 
-  const queue = `
-
-    <div class="play-queue">
-
-      ${
-        buckets
-          .map(
-            x =>
-              `<span>
-                <b>${x[1]}</b>${x[0]}
-              </span>`
-          )
-          .join("")
-      }
-
-    </div>
-
-  `;
+  const queue = `<div class="play-queue"><span><b>${live.length}</b> to go</span>${later.length ? `<span class="pq-later">${later.length} coming back</span>` : ""}</div>`;
 
 
   $("#list").innerHTML = `
@@ -2754,6 +2804,19 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
   const go = () => pgPool(lv);
   "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
 }
+function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
+  let due = 0, later = 0; const now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t <= now) due++; else later++; } } }catch(e){}
+  return due ? `${due} card${due === 1 ? "" : "s"} ready to review` : later ? `Next review ${nextDueIn()}` : "Start with new cards";
+}
+function nextDueIn(){
+  let min = Infinity; const now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t > now && t < min) min = t; } } }catch(e){}
+  const m = Math.round((min - now) / 60000);
+  return !isFinite(min) ? "soon" : m < 60 ? `in ${m} min` : m < 1440 ? `in ${Math.round(m / 60)} h` : `in ${Math.round(m / 1440)} d`;
+}
 function renderHome(){
   prefetchPools();
 
@@ -2780,12 +2843,12 @@ function renderHome(){
 
       <h2 class="home-h">Study</h2>
       <div class="core">
-        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>Review cards one at a time</span></button>
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>Playground</b><span>${dueLine()}</span></button>
         <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
       </div>
 
-      <h2 class="home-h">Later <small>side projects</small></h2>
+      <h2 class="home-h">Side projects</h2>
       <div class="side">
         <button class="side-tile" data-home="novels"><i>本</i><b>Novels</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
@@ -2965,9 +3028,12 @@ function flipCard(card, open){
     const a = card.getBoundingClientRect();
     card.animate([{transform:`translateY(${b.top - a.top}px)`},{transform:"none"}],
                  {duration:340, easing:"cubic-bezier(.2,.8,.2,1)"});
-    if(open && back)
-      back.animate([{clipPath:"inset(0 0 100% 0)", opacity:.4},{clipPath:"inset(0 0 0 0)", opacity:1}],
-                   {duration:460, delay:120, easing:"cubic-bezier(.2,.8,.2,1)", fill:"backwards"});
+    if(open && back){   // 赤シート: the answer starts under a red sheet that slides off, like pulling the real sheet
+      const sh = document.createElement("i"); sh.className = "red-sheet"; sh.setAttribute("aria-hidden", "true");
+      back.appendChild(sh);
+      sh.animate([{transform:"translateY(0)", opacity:1},{transform:"translateY(0)", opacity:1, offset:.25},{transform:"translateY(104%)", opacity:.9}],
+                 {duration:620, easing:"cubic-bezier(.65,0,.35,1)", fill:"forwards"}).onfinish = () => sh.remove();
+    }
   };
   if(!open && back && !reduce){
     back.animate([{clipPath:"inset(0 0 0 0)"},{clipPath:"inset(0 0 100% 0)"}],
@@ -3199,7 +3265,7 @@ function miniFor(t, c, lv){
   }else if(t === "kanji"){
     head = `<b class="mini-w">${esc(c.kanji)}</b><span class="mini-rd">${esc([(c.on || []).join("・"), (c.kun || []).join("・")].filter(Boolean).join(" ／ "))}</span>`;
     en = c.en || ""; const w = (c.words || [])[0];
-    e = w ? {jp: `${w.w}（${w.r}）${w.m ? " — " + w.m : ""}`} : null; target = c.kanji;
+    e = w ? {jp: `${w.w}（${w.r}）${w.m ? ": " + w.m : ""}`} : null; target = c.kanji;
   }else{
     head = `<b class="mini-w">${esc(c.pattern)}</b>`;
     en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern;
@@ -3360,14 +3426,14 @@ async function renderUseIt(){
   const chips = USE.words.map((c, i) => `<span class="use-chip" data-i="${i}"><b>${esc(c.word)}</b><small>${esc(c.reading)} · ${esc((c.en || "").split(" / ")[0].split(";")[0])}</small></span>`).join("");
   $("#list").innerHTML = `<section class="useit">
     <div class="use-task">
-      <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words — study some in Playground first)</small>"}</div>
+      <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words: study some in Playground first)</small>"}</div>
       <div class="use-chips">${chips}</div>
       <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">${key ? "Remove API key" : "Use an API key"}</button></div>
     </div>
     <div class="use-log" id="useLog">${USE.history.map(m => `<div class="use-msg ${m.role}">${esc(m.content)}</div>`).join("")}</div>
     <div class="use-input"><textarea id="useText" rows="3" placeholder="日本語で書いてみよう…"></textarea>
       <button class="go start" id="useSend" disabled>${key ? "Send" : "Ask Claude ↗"}</button></div>
-    ${key ? "" : `<p class="use-note">Opens Claude with your sentence ready — it uses your Claude plan, no API key.</p>`}
+    ${key ? "" : `<p class="use-note">Opens Claude with your sentence ready. It uses your Claude plan, no API key.</p>`}
   </section>`;
   const ta = $("#useText"), send = $("#useSend");
   const check = () => {
@@ -3471,7 +3537,7 @@ async function renderPicCat(key){
     <h2 class="ps-title">${esc(C.ja)}<small>${esc(C.en)}</small></h2>
     <p class="ps-count">${W.length} words</p>
     <button class="ps-go" id="picGo" type="button">Start</button>
-    <details class="ps-credits"><summary>Photo credits</summary><ol>${W.map(w => { const P = picsOf(w); return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} — <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`).join(""); }).join("")}</ol></details>
+    <details class="ps-credits"><summary>Photo credits</summary><ol>${W.map(w => { const P = picsOf(w); return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`).join(""); }).join("")}</ol></details>
   </section>`;
   $("#picBack").onclick = () => { renderPictures(); scrollTo(0, 0); };
   $("#picGo").onclick = () => picView(C, W, clean);
