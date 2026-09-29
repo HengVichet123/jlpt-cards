@@ -2063,7 +2063,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v144";
+const APP_VERSION = "v145";
 
 
 /* =========================================================
@@ -4606,7 +4606,7 @@ async function renderVocabTest(id){
     const pt = P[i], A = picked[i], all = A.every(Boolean);
     $("#pageTitle").textContent = T.level + " 言語知識";
     $("#list").innerHTML = `<section class="rdt voc">
-      <button class="nav-btn" id="vcBack" data-back="Vocabulary">Back</button>
+      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
       <div class="lsn-head"><b>${esc(pt.ja)}</b><span>${i + 1} / ${P.length}</span></div>
       ${pt.instr ? `<p class="voc-instr">${esc(pt.instr)}</p>` : ""}
       ${pt.text ? `<article class="rd-text voc-text">${pt.text.split("\n").filter(Boolean).map(l => `<p>${vocMark(l)}</p>`).join("")}</article>` : ""}
@@ -4624,7 +4624,7 @@ async function renderVocabTest(id){
     const skipped = picked.flat().filter(x => !x).length, key = "jc:voc:" + id, r = store.get(key, {best: 0});
     store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
     $("#list").innerHTML = `<section class="lsn lsn-done">
-      <button class="nav-btn" id="vcBack" data-back="Vocabulary">Back</button>
+      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
       <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
       <ul class="lsn-parts">${P.map((pt, k) => `<li><span>${esc(pt.ja)}</span><b>${pt.items.filter((q, m) => picked[k][m] === q.answer).length} / ${pt.items.length}</b></li>`).join("")}</ul>
       <button type="button" class="lsn-next" id="vcAgain">Try again</button></section>`;
