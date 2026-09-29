@@ -1535,6 +1535,16 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .card .back{transform-origin:50% 0;backface-visibility:hidden}
 @media (prefers-reduced-motion: reduce){ .cover,.play-ratings button{transition:none} }
 
+.sound-note{position:fixed;left:50%%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translateX(-50%%);z-index:50;max-width:88vw;
+  padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--paper);font:500 13px var(--body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.say-i.playing{color:var(--shu)}
+/* v102: speaker only on the practice card; list cards speak when opened (Settings) */
+.say-i{display:none!important}
+.play-stage .say-i{display:inline-grid!important}
+.list-card{cursor:pointer}
+.list-card .card-peek{display:flex;flex-direction:column;gap:4px;padding:0 18px 14px 34px;margin-top:-6px}
+.card-peek .mini-en,.card-peek .mini-ex{margin:0!important;padding:0!important;grid-column:auto!important}
+.list-card:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 /* v99 speaker icon on word cards and rows */
 .say-i{display:inline-grid;place-items:center;width:36px;height:36px;margin-left:6px;vertical-align:middle;border-radius:50%;color:var(--faint);opacity:1;cursor:pointer}
 .say-i:hover{color:var(--shu);background:var(--chip)} .say-i:active{transform:scale(.92)}
@@ -1626,7 +1636,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v100";
+const APP_VERSION = "v102";
 
 
 /* =========================================================
@@ -2867,7 +2877,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Speak when a card opens":"開いたら読み上げる","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -2916,12 +2926,14 @@ function renderSettings(){
       <div class="set-group"><h2 class="set-h">Language</h2>
         <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
-      <div class="set-group"><h2 class="set-h">Complete list</h2>
+      <div class="set-group"><h2 class="set-h">Cards</h2>
+        <label class="opt-row opt-switch" for="setSay"><span>Speak when a card opens</span><input type="checkbox" id="setSay" ${store.get("jc:tapsay", true) ? "checked" : ""}></label>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
       <p class="set-ver">${APP_VERSION}</p>
     </section>`;
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
+    $("#setSay").onchange = e => store.set("jc:tapsay", e.target.checked);
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -3179,11 +3191,20 @@ let CARD_LVL = null;
 
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
 let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
-const PLAYER = new Audio(); PLAYER.preload = "auto";
-// iPhone: an audio element may only play after a user gesture has "unlocked" it once
-addEventListener("touchend", function unlock(){ PLAYER.muted = true;
-  PLAYER.play().catch(() => {}).finally(() => { PLAYER.pause(); PLAYER.muted = false; });
-  removeEventListener("touchend", unlock); }, {passive: true});
+const PLAYER = new Audio(); PLAYER.preload = "auto"; PLAYER.setAttribute("playsinline", "");
+const SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//OEwAAAAAAAAAAAAEluZm8AAAAPAAAACQAABCAARUVFRUVFRUVFRUVdXV1dXV1dXV1dXXR0dHR0dHR0dHR0i4uLi4uLi4uLi4uioqKioqKioqKiorq6urq6urq6urq60dHR0dHR0dHR0dHo6Ojo6Ojo6Ojo6P//////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQD8AAAAAAAAAQgDea3ZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//NExAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExFMAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKYAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}   // iPhone: play even with the silent switch on
+// iPhone: an audio element may only play after a tap has "unlocked" it once with a real sound
+function unlockAudio(){ removeEventListener("touchend", unlockAudio); removeEventListener("click", unlockAudio);
+  if(PLAYER.src) return; PLAYER.src = SILENT; PLAYER.play().then(() => PLAYER.pause()).catch(() => {}); }
+addEventListener("touchend", unlockAudio, {passive: true}); addEventListener("click", unlockAudio);
+let SAY_ON = null;   // the speaker icon currently playing (shown in the accent color)
+const sayOff = () => { if(SAY_ON){ SAY_ON.classList.remove("playing"); SAY_ON = null; } };
+PLAYER.addEventListener("ended", sayOff); PLAYER.addEventListener("pause", sayOff);
+function soundNote(msg){   // only when every way of playing failed, so the cause can be reported
+  let n = $("#soundNote"); if(!n){ n = document.createElement("div"); n.id = "soundNote"; n.className = "sound-note"; document.body.appendChild(n); }
+  n.textContent = msg; n.hidden = false; clearTimeout(n._t); n._t = setTimeout(() => n.hidden = true, 6000);
+}
 fetch("data/audio/map.json").then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
 const speaker = () => "nanami";   // one voice for everything (keeps the app small as content grows)
 function speak(text){
@@ -3191,9 +3212,13 @@ function speak(text){
   const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
   if(key){
     try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
-    const a = PLAYER; a.src = `data/audio/${sp}/${key}.mp3`;
-    AUDIO_NOW = a;
-    a.play().catch(() => speakDevice(text)); return;
+    const url = `data/audio/${sp}/${key}.mp3`, a = PLAYER; AUDIO_NOW = a;
+    try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
+    a.src = url;
+    a.play().catch(err1 =>   // route 2: load the whole file into memory and play it from there
+      fetch(url).then(r => r.blob()).then(b => { a.src = URL.createObjectURL(b); return a.play(); })
+        .catch(err2 => { sayOff(); speakDevice(text); soundNote(`No sound (${(err2 || err1).name || "error"}). Tell Claude this message.`); }));
+    return;
   }
   speakDevice(text);
 }
@@ -3411,6 +3436,7 @@ const miniKey = (t, lv, no) => `${t}:${lv}:${no}`;
 function miniCard(c, lv){ return miniFor("words", c, lv); }
 function miniFor(t, c, lv){
   lv = lv || c.level;
+  return cardFront(t, c, lv);
   MINI.reg.set(miniKey(t, lv, c.no), c);
   const tag = {words:"W", kanji:"K", grammar:"G"}[t];
   let head = "", en = "", e = null, target = "";
@@ -3431,23 +3457,36 @@ function miniFor(t, c, lv){
     ${e ? `<span class="mini-ex">${t === "kanji" ? "" : `<span class="rei">例：</span>`}${t === "kanji" ? esc(e.jp) : hl(e.jp, target)}</span>` : ""}
   </button>`;
 }
+function peekFor(t, c){   // the short meaning + first example shown under a closed card in lists
+  let en = "", e = null, target = "";
+  if(t === "words"){ en = (c.en || "").split(" / ")[0]; e = (c.ex && c.ex[0]) || c.use; target = c.word; }
+  else if(t === "kanji"){ en = c.en || ""; const w = (c.words || [])[0]; e = w ? {jp: `${w.w}（${w.r}）${w.m ? ": " + w.m : ""}`} : null; target = c.kanji; }
+  else { en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern; }
+  return `<div class="card-peek">${en ? `<span class="mini-en">${esc(en)}</span>` : ""}${e ? `<span class="mini-ex">${t === "kanji" ? esc(e.jp) : `<span class="rei">例：</span>${hl(e.jp, target)}`}</span>` : ""}</div>`;
+}
+function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
+  MINI.reg.set(miniKey(t, lv, c.no), c); CARD_LVL = lv;
+  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
+  return html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>";
+}
 function fullFor(t, c, lv){
   CARD_LVL = lv;
-  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c);
-  return html.replace(/class="card (\w)"/, `class="card $1 open" data-mt="${t}" data-mlv="${lv}"`);
+  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
+  return (html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`);
 }
 // one handler for every mini list on any page (Playground never renders minis)
 document.addEventListener("click", e => {
   if(e.target.closest(".say")) return;   // speaker icon: play only
-  const m = e.target.closest(".mini[data-mt]");
+  const m = e.target.closest(".list-card[data-mt]:not(.open)");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
     if(c){ e.stopPropagation();
       const tmp = document.createElement("div"); tmp.innerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv).trim();
-      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); }
+      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back"));
+      if(m.dataset.mt === "words" && store.get("jc:tapsay", true)) speak(c.word); }
     return;
   }
-  const f = e.target.closest(".card[data-mt] .front");
+  const f = e.target.closest(".list-card.open[data-mt] .front");
   if(f){
     const card = f.closest(".card"), c = MINI.reg.get(miniKey(card.dataset.mt, card.dataset.mlv, card.dataset.no));
     if(c){ e.stopPropagation(); foldBack(card.querySelector(".back"), () => { card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }); }
@@ -3888,7 +3927,7 @@ let PG_RUNNING = false;
 setInterval(
   () => {
 
-    if(PLAY)
+    if(PLAY && document.querySelector("#list .play-empty"))   // only the "come back later" screen; never reset a card on screen
       renderPG();
 
   },
@@ -3991,7 +4030,7 @@ document.addEventListener(
   e => {
 
     const say = e.target.closest(".say");
-    if(say){ e.stopPropagation(); speak(say.dataset.say); return; }
+    if(say){ e.stopPropagation(); sayOff(); speak(say.dataset.say); if(say.classList.contains("say-i") && PLAYER.src && !PLAYER.src.startsWith("data:")){ SAY_ON = say; say.classList.add("playing"); } return; }
 
     const scene = e.target.closest("[data-scene]");
     if(scene){ renderScene(scene.dataset.scene); window.scrollTo(0,0); return; }
@@ -4325,6 +4364,9 @@ const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textCont
 new MutationObserver(syncBack).observe($("#list"), {childList: true});
 new MutationObserver(ms => {   // soften page changes: when #list is replaced, the new page eases in
   if(calmMotion() || !ms.some(m => m.removedNodes.length && m.addedNodes.length)) return;
+  const pc = $("#list .play-stage .play-card");
+  if(pc){ pc.animate([{opacity:0, transform:"scale(.96)"},{opacity:1, transform:"none"}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"}); return; }
+  if($("#list .play-screen")) return;
   $("#list").animate([{opacity:0, transform:"translateY(6px)"},{opacity:1, transform:"none"}], {duration:200, easing:"cubic-bezier(.2,.8,.2,1)"});
 }).observe($("#list"), {childList: true});
 applyTheme();
