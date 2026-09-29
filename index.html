@@ -1538,13 +1538,21 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .sound-note{position:fixed;left:50%%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translateX(-50%%);z-index:50;max-width:88vw;
   padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--paper);font:500 13px var(--body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .say-i.playing{color:var(--shu)}
+/* v107 */
+.play-stage .back-short{padding-top:6px}
+.back-short .card-peek{display:flex;flex-direction:column;gap:10px;padding:4px 0 8px}
+.back-short .mini-en{font-size:20px;line-height:1.45;font-weight:700;color:var(--ink)}
+.play-stage .card.open:has(.back-short){height:auto}
+.play-stage .card.open .back-short{flex:0 0 auto}
+.back-short .mini-ex{font-size:17px;line-height:1.8}
+.back-short .mini-ex .rei{font-size:13px}
 /* v105 */
 .hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .hdr-act:active{transform:scale(.97)}
 .bar .hdr-act:not([hidden]) ~ #ver{display:none}
-.pre-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.pre-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .pre-head .sec-title{margin:0;min-width:0}
-.pre-head .pre-study{flex:none;margin-top:4px}
+.pre-head .pre-study{flex:none;margin:0}
 .prelearn .story-top{display:none}
 #list{will-change:auto}
 /* v104 listening (Novels) */
@@ -1562,7 +1570,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .pic-credits{margin-top:28px}
 /* v102: speaker only on the practice card; list cards speak when opened (Settings) */
 .say-i{display:none!important}
-.play-stage .say-i{display:inline-grid!important}
 .list-card{cursor:pointer}
 .list-card .card-peek{display:flex;flex-direction:column;gap:4px;padding:0 18px 14px 34px;margin-top:-6px}
 .card-peek .mini-en,.card-peek .mini-ex{margin:0!important;padding:0!important;grid-column:auto!important}
@@ -1659,7 +1666,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v107";
+const APP_VERSION = "v108";
 
 
 /* =========================================================
@@ -2749,9 +2756,9 @@ async function renderPG(){
   const cardHTML =
     current
 
-      ? make[current[1]](
+      ? shortAnswer(current[1], current[2], make[current[1]](
           current[2]
-        ).replace(
+        )).replace(
           '<div class="card ',
           '<div class="card play-card '
         )
@@ -2901,7 +2908,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
   "Settings":"設定","Novels":"名作","Pictures":"図鑑","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
-  "Familiarity bars":"習熟度バー","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
   "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
   "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
@@ -2953,6 +2960,9 @@ function renderSettings(){
       <div class="set-group"><h2 class="set-h">Language</h2>
         <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
           `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
+      <div class="set-group"><h2 class="set-h">Practice answer</h2>
+        <div class="seg seg-2" role="radiogroup" id="setAnswer">${[["short","Short"],["full","Full"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:answer", "full") ? "on" : ""}" aria-checked="${k === store.get("jc:answer", "full")}">${l}</button>`).join("")}</div></div>
       <div class="set-group"><h2 class="set-h">Cards</h2>
         <label class="opt-row opt-switch" for="setSay"><span>Sound</span><input type="checkbox" id="setSay" ${soundOn() ? "checked" : ""}></label>
         <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
@@ -2961,6 +2971,7 @@ function renderSettings(){
     $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
     $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v); if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
     $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
+    $("#setAnswer").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:answer", b.dataset.v); draw(); });
     $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
   };
   draw();
@@ -3511,6 +3522,11 @@ function peekFor(t, c){   // the short meaning + first example shown under a clo
   else if(t === "kanji"){ en = c.en || ""; const w = (c.words || [])[0]; e = w ? {jp: `${w.w}（${w.r}）${w.m ? ": " + w.m : ""}`} : null; target = c.kanji; }
   else { en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern; }
   return `<div class="card-peek">${en ? `<span class="mini-en">${esc(en)}</span>` : ""}${e ? `<span class="mini-ex">${t === "kanji" ? esc(e.jp) : `<span class="rei">例：</span>${hl(e.jp, target)}`}</span>` : ""}</div>`;
+}
+function shortAnswer(t, c, html){   // Settings → Answer: Short = reveal only the meaning + one example (the mini card's content)
+  if(store.get("jc:answer", "full") !== "short") return html;
+  const i = html.indexOf('<div class="back">');
+  return html.slice(0, i) + `<div class="back back-short">${peekFor(t, c)}</div></div>`;
 }
 function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
   MINI.reg.set(miniKey(t, lv, c.no), c); CARD_LVL = lv;
