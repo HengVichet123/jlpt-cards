@@ -1876,7 +1876,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v129";
+const APP_VERSION = "v130";
 
 
 /* =========================================================
@@ -4946,9 +4946,10 @@ applyLang();
 (() => { let x0 = 0, y0 = 0, t0 = 0, ok = false, drag = false, dx = 0;
   const L = () => $("#list");
   const inRun = () => document.body.classList.contains("playing") && !!$("#pgBack");   // Practice run: swipe right = Exit
+  const inFilm = () => document.body.classList.contains("cinema") && !!$(".th-exit");      // Movies: swipe right = Exit to the Movies list
   addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); drag = false; dx = 0;
-    ok = e.touches.length === 1 && CURRENT !== "home" && (inRun() || (!$("#top").hidden && !e.target.closest(".play-screen"))) &&
-      !e.target.closest(".pv-track,.home-rail,input,select,textarea,.sec-rows.sorting,.reader,.seg"); }, {passive: true});
+    ok = e.touches.length === 1 && CURRENT !== "home" && (inRun() || inFilm() || (!$("#top").hidden && !document.body.classList.contains("cinema") && !e.target.closest(".play-screen"))) &&
+      !e.target.closest(".pv-track,.home-rail,input,select,textarea,.sec-rows.sorting,.reader,.seg,.th-seek,.pg-sheet"); }, {passive: true});
   addEventListener("touchmove", e => { if(!ok) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
     if(!drag){ if(Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)){ ok = false; return; } if(dx > 14 && dx > Math.abs(dy) * 1.4) drag = true; else return; }
     if(e.cancelable) e.preventDefault();
@@ -4958,6 +4959,7 @@ applyLang();
     const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .33 || (v > .5 && dx > 50);
     const l = L(); l.style.transform = ""; l.style.opacity = "";
     if(go && inRun()){ NAV_DIR = "back"; $("#pgBack").click(); return; }
+    if(go && inFilm()){ $(".th-exit").click(); return; }
     if(go){ NAV_DIR = "back"; SWIPE_FROM = dx; $("#goHome").click(); if(!l.firstElementChild) return; }
     else if(!calmMotion()) l.animate([{transform:`translateX(${dx}px)`},{transform:"none"}], {duration:280, easing:"cubic-bezier(.2,.8,.2,1)"});   // snap back
   }, {passive: true});
