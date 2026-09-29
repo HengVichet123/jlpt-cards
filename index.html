@@ -30,7 +30,7 @@
   --faint:#A9A49A;
   --line:#E7E3DA;
   --chip:#F2EFE8;
-  --shu:#2E4C80;
+  --shu:#C63A2F;
   --red:#B8352B;
   --on-accent:#FBFAF6;
   --ai:#2E4C80;
@@ -57,7 +57,7 @@
     --faint:#6E6A63;
     --line:#2C3036;
     --chip:#262A30;
-    --shu:#8FB0EE;
+    --shu:#FF6E5E;
     --red:#F0776A;
     --on-accent:#15171A;
     --ai:#8FB0EE;
@@ -79,7 +79,7 @@
   --faint:#6E6A63;
   --line:#2C3036;
   --chip:#262A30;
-  --shu:#8FB0EE;
+  --shu:#FF6E5E;
   --red:#F0776A;
   --on-accent:#15171A;
   --ai:#8FB0EE;
@@ -1464,12 +1464,12 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 .pv-thumb:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 
 /* =====================================================================
-   v91 REDESIGN "study desk": 原稿用紙 paper, 墨 ink, one accent (v115: 藍 indigo, was 朱)
+   v91 REDESIGN "study desk": 原稿用紙 paper, 墨 ink, one 朱 accent (buttons are white since v116)
    Skills: frontend-design + ui-ux-pro-max (UX rules) + taste-skill (bans)
    ===================================================================== */
 :root{
   --paper:#F3F4EF; --card:#FCFCFA; --ink:#1B1F24; --soft:#565C63; --faint:#80868C;
-  --line:#DCDFD6; --chip:#E9EBE4; --shu:#2D4A7A; --hole:#E3E6DE;
+  --line:#DCDFD6; --chip:#E9EBE4; --shu:#CF3F2A; --hole:#E3E6DE;
   --sheet:rgba(207,63,42,.9);
   --mono:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;   /* no monospace micro-labels */
   --cov-play:#1B1F24; --cov-list:#FCFCFA; --cov-read:#FCFCFA; --cov-text:#F3F4EF; --cov-sub:rgba(243,244,239,.72);
@@ -1477,12 +1477,12 @@ mark.pw-grammar{border-bottom-style:dashed;border-color:var(--murasaki)}
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --paper:#121417; --card:#1A1D21; --ink:#E7E8E3; --soft:#A4A9A6; --faint:#737A7F;
-  --line:#2A2F35; --chip:#23272C; --shu:#8EA9DE; --hole:#121417; --sheet:rgba(214,72,52,.92);
+  --line:#2A2F35; --chip:#23272C; --shu:#F0705C; --hole:#121417; --sheet:rgba(214,72,52,.92);
   --cov-play:#23272C; --cov-list:#1A1D21; --cov-read:#1A1D21; --cov-text:#E7E8E3; --cov-sub:rgba(231,232,227,.7);
   color-scheme:dark }}
 :root[data-theme="dark"]{
   --paper:#121417; --card:#1A1D21; --ink:#E7E8E3; --soft:#A4A9A6; --faint:#737A7F;
-  --line:#2A2F35; --chip:#23272C; --shu:#8EA9DE; --hole:#121417; --sheet:rgba(214,72,52,.92);
+  --line:#2A2F35; --chip:#23272C; --shu:#F0705C; --hole:#121417; --sheet:rgba(214,72,52,.92);
   --cov-play:#23272C; --cov-list:#1A1D21; --cov-read:#1A1D21; --cov-text:#E7E8E3; --cov-sub:rgba(231,232,227,.7);
   color-scheme:dark }
 body{font-variant-numeric:tabular-nums}
@@ -1560,11 +1560,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .play-setup{width:100%;box-sizing:border-box}
 .play-setup.pg-home{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 .deck-head,.deck{display:grid;grid-template-columns:minmax(0,1fr) 52px 52px 52px;align-items:center;column-gap:0}
-.deck-head span + span{min-height:24px}
+
 .deck-head{padding:0 12px 8px;border-bottom:1px solid var(--line);font:600 12px var(--body);color:var(--faint);text-align:right}
 .deck-list{list-style:none;margin:0;padding:0}
 .deck-list > li{border-bottom:1px solid var(--line)}
-.deck-head span + span,.deck .deck-n{border-left:1px solid var(--line);align-self:stretch;display:flex;align-items:center;justify-content:flex-end;padding-right:2px}
 .deck{border-radius:0}
 .deck.ghost{cursor:pointer}
 .deck.ghost .deck-name,.deck.ghost .deck-n{color:var(--faint);font-weight:500}
@@ -1658,17 +1657,36 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 /* v94 night desk: dark mode with depth (藍墨 ink blue-black, lamp-lit text, layered surfaces) */
 :root{--raised:#FFFFFF; --lift:0 1px 2px rgba(27,31,36,.06); --cov-play2:#2A3038}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --paper:#11151C; --card:#1A2029; --ink:#ECE7DD; --soft:#A7AEB8; --faint:#707986;
-  --line:#28303C; --chip:#1F2631; --shu:#8EA9DE; --hole:#11151C; --raised:#222A36;
+  --line:#28303C; --chip:#1F2631; --shu:#F28068; --hole:#11151C; --raised:#222A36;
   --cov-play:#26324A; --cov-play2:#1A2029; --cov-list:#1A2029; --cov-read:#1A2029; --cov-text:#ECE7DD; --cov-sub:rgba(236,231,221,.66);
   --lift:inset 0 1px 0 rgba(255,255,255,.045), 0 10px 28px -16px rgba(0,0,0,.7); color-scheme:dark } }
 :root[data-theme="dark"]{ --paper:#11151C; --card:#1A2029; --ink:#ECE7DD; --soft:#A7AEB8; --faint:#707986;
-  --line:#28303C; --chip:#1F2631; --shu:#8EA9DE; --hole:#11151C; --raised:#222A36;
+  --line:#28303C; --chip:#1F2631; --shu:#F28068; --hole:#11151C; --raised:#222A36;
   --cov-play:#26324A; --cov-play2:#1A2029; --cov-list:#1A2029; --cov-read:#1A2029; --cov-text:#ECE7DD; --cov-sub:rgba(236,231,221,.66);
   --lift:inset 0 1px 0 rgba(255,255,255,.045), 0 10px 28px -16px rgba(0,0,0,.7); color-scheme:dark }
 .card,.mini,.cover,.sec-row,.opt-row,.side-tile,.pic-cat,.play-ratings button{box-shadow:var(--lift)}
 .cover-play{background:linear-gradient(160deg,var(--cov-play),var(--cov-play2))}
 :root[data-theme="dark"] img{filter:brightness(.9) saturate(.95)}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) img{filter:brightness(.9) saturate(.95)} }
+/* v116: filled buttons are white (orange stays only as an accent: highlights, dots, progress) */
+.play-setup .go.start,.pre-actions .go.start,.use-input .go.start,.useit > .go.start,.ps-go,.pg-dock button.main,.listen-btn,.pre-study,.pg .go{
+  background:var(--raised)!important;color:var(--ink)!important;border:1px solid var(--line)!important;box-shadow:var(--lift)}
+.play-setup .go.start:hover,.pre-actions .go.start:hover,.use-input .go.start:hover,.useit > .go.start:hover,.ps-go:hover,.pg-dock button.main:hover,.listen-btn:hover,.pre-study:hover,.pg .go:hover{background:var(--chip)!important;filter:none}
+/* v116: deck table = one wrapper with continuous column rules; header and numbers centred per column */
+.deck-table{position:relative;margin:0;
+  background:
+    linear-gradient(var(--line),var(--line)) calc(100% - 56px) 0/1px 100% no-repeat,
+    linear-gradient(var(--line),var(--line)) calc(100% - 112px) 0/1px 100% no-repeat,
+    linear-gradient(var(--line),var(--line)) calc(100% - 168px) 0/1px 100% no-repeat}
+.deck-table.editing{background:none}
+.deck-table .deck-head,.deck-table .deck{grid-template-columns:minmax(0,1fr) 56px 56px 56px;padding:0 0 0 12px}
+.deck-table .deck-head{padding-top:4px;padding-bottom:10px;text-align:center;border-bottom:1px solid var(--line)}
+.deck-table .deck-head span{text-align:center}
+.deck-table .deck-list{margin:0!important;padding:0}
+.deck-table .deck-list > li{margin:0;border-bottom:1px solid var(--line)}
+.deck-table .deck{min-height:52px;border-radius:0}
+.deck-table .deck-n{text-align:center;padding:0}
+.deck-table .deck-name{padding-right:12px}
 </style>
 </head>
 
@@ -1717,7 +1735,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v115";
+const APP_VERSION = "v116";
 
 
 /* =========================================================
@@ -2495,8 +2513,8 @@ function pgDockLift(){   // move the bottom dock out of #list (page transitions 
 function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); }
 function pgHome(){
   const has = sessOpen().length > 0;
-  const ghost = `<div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
-    [1, 2, 3].map(i => `<li><button type="button" class="deck ghost" data-act="new" aria-label="Empty. Start a new session"><span class="deck-name">${isJa() ? "空のセッション" : "Empty session"}</span><span class="deck-n">0</span><span class="deck-n">0</span><span class="deck-n">0</span></button></li>`).join("")}</ul>`;
+  const ghost = `<div class="deck-table"><div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
+    [1, 2, 3].map(i => `<li><button type="button" class="deck ghost" data-act="new" aria-label="Empty. Start a new session"><span class="deck-name">${isJa() ? "空のセッション" : "Empty session"}</span><span class="deck-n">0</span><span class="deck-n">0</span><span class="deck-n">0</span></button></li>`).join("")}</ul></div>`;
   return `${has || SESS_UNDO ? sessLedger() : ghost}
     <div class="pg-dock"><div class="pg-dock-in">
       <button type="button" class="pg-act" data-act="quick">${isJa() ? "クイック10" : "Quick 10"}</button>
@@ -2513,8 +2531,8 @@ function sessLedger(){
     const c = sessCounts(se);
     return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button></li>`; });
   if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `${editing ? "" : `<div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div>`}
-    <ul class="deck-list">${rows.join("")}</ul>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
+  return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span></span><span>New</span><span>Learn</span><span>Due</span></div>`}
+    <ul class="deck-list">${rows.join("")}</ul></div>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
 }
 function sessRedraw(){ NAV_SAME = true; return renderPG(); }
 function sessSaveNames(){ document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
