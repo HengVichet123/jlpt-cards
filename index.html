@@ -1931,6 +1931,20 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn-parts{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .lsn-parts li{display:flex;justify-content:space-between;padding:12px 16px;background:var(--card)}
 .lsn-parts li + li{border-top:1px solid var(--line)}
+/* v138: Illustrations = rows per topic with sideways scrolling tiles; example translation on tap */
+.ill-rows{display:flex;flex-direction:column;gap:26px}
+.ill-h{margin:0 0 10px;font:700 20px var(--display);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ill-h small{font:500 13px var(--body);color:var(--soft)}
+.ill-scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;margin:0 -2px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.ill-tile{flex:0 0 132px;scroll-snap-align:start;display:flex;flex-direction:column;gap:3px;padding:0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer}
+.ill-cover{display:block;width:132px;height:132px;border-radius:12px;overflow:hidden;background:#FFFFFF;border:1px solid var(--line)}
+.ill-cover img{width:100%;height:100%;object-fit:contain;padding:10px;box-sizing:border-box}
+.ill-tile b{font:700 14px var(--body);margin-top:4px}
+.ill-tile span:last-child{font-size:12.5px;color:var(--soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ill-tile:hover .ill-cover{border-color:var(--soft)}
+.pv-rei{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pv-rei .pv-rei-en{display:none}
+.pv-rei.show .pv-rei-en{display:block}
 </style>
 </head>
 
@@ -1979,7 +1993,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v137";
+const APP_VERSION = "v138";
 
 
 /* =========================================================
@@ -4468,26 +4482,23 @@ async function renderListenTest(id){
   };
   draw();
 }
-async function renderIllust(){   // いらすとや illustrations: actions, feelings, ideas (same viewer as Pictures)
+async function renderIllust(){   // いらすとや: one row per topic, sessions scroll sideways (words with pictures)
   document.body.classList.remove("playing");
-  let idx = []; try{ idx = (await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json()).filter(x => x.group === "illust"); }catch(e){}
+  let idx = [], ext = [];
+  try{ idx = (await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json()).filter(x => x.group === "illust"); }catch(e){}
+  ext = await extraIdx();
+  for(const x of idx) if(!x.first) x.first = [];
+  const rows = new Map(), themeOf = x => x.theme || x.ja.replace(/ \d+$/, "");
+  for(const x of [...idx, ...ext]){ const t = themeOf(x); if(!rows.has(t)) rows.set(t, {en: (x.themeEn || x.en || "").replace(" (いらすとや)", ""), items: []}); rows.get(t).items.push(x); }
+  const order = [...rows.keys()].sort((a, b) => (a === "その他") - (b === "その他"));
   $("#pageTitle").textContent = "Illustrations";
-  $("#list").innerHTML = `<section class="pics">
-    ${idx.length ? `<div class="pic-cats">${idx.map(picTile).join("")}</div>` : `<p class="pic-soon">${isJa() ? "準備中" : "Coming soon"}</p>`}
-    <div class="pic-extra" id="picExtra"></div>
-    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p>
-    <details class="ps-credits pic-credits" id="picCredits"><summary>Illustration credits</summary><ol id="picCreditList"></ol></details></section>`;
-  extraThemes().then(T => { const box = $("#picExtra"); if(!box || !T.length) return;
-    box.innerHTML = `<h2 class="pic-gh">Extra<small>${T.reduce((n, t) => n + t.count, 0).toLocaleString()} more pictures · meanings are automatic</small></h2>
-      <div class="pic-cats">${T.map(t => `<button class="pic-cat illust" data-xtheme="${esc(t.theme)}"><span class="pic-cover"><img src="${picSrc(t.cover)}" alt="" loading="lazy"></span><b>${esc(t.theme)}</b><span>${esc(t.themeEn)} · ${t.count.toLocaleString()}</span></button>`).join("")}</div>`;
-    box.querySelectorAll("[data-xtheme]").forEach(b => b.onclick = () => { renderExtraTheme(b.dataset.xtheme); scrollTo(0, 0); });
-    if(isJa()) jaWalk(box); });
+  $("#list").innerHTML = `<section class="pics ill-rows">
+    ${order.map(t => { const R = rows.get(t), total = R.items.reduce((n, x) => n + x.count, 0);
+      return `<div class="ill-row"><h2 class="ill-h">${esc(t)}<small>${esc(R.en)} · ${total.toLocaleString()}</small></h2>
+        <div class="ill-scroll">${R.items.map((x, i) => `<button type="button" class="ill-tile" data-pcat="${x.key}"><span class="ill-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span><b>${i + 1}</b><span>${esc((x.first || []).slice(0, 2).join("・"))}</span></button>`).join("")}</div></div>`; }).join("")}
+    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
-  $("#picCredits").addEventListener("toggle", async () => {
-    const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
-    const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
-    ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => picsOf(w).map(p => `<li>${esc(w.word)} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`))).join("");
-  });
+  if(isJa()) jaWalk($("#list"));
 }
 const picSrc = f => /^https?:/.test(f) ? f : `data/pictures/${f}`;   // extras load from いらすとや directly
 const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
@@ -4513,13 +4524,13 @@ async function renderPicCat(key){
 function picView(C, W, clean){
   const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   $("#list").innerHTML = `<section class="pv">
-    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${/^x/.test(C.key) ? esc(C.ja.replace(/ \d+$/, "")) : C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>${C.key.startsWith("ira_") || /^x/.test(C.key) ? `<button class="pv-entg" id="pvEn" type="button" aria-pressed="${store.get("jc:illEn", true)}" aria-label="English example">EN</button>` : ""}
+    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${/^x/.test(C.key) || C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
       <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="${picSrc(P[0].img)}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="${picSrc(P[0].img)}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="${picSrc(p.img)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b class="${w.word.length > 5 ? (w.word.length > 9 ? "longer" : "long") : ""}">${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}</span>${P[0].exEn ? `<span class="pv-rei-en">${esc(P[0].exEn)}</span>` : ""}` : ""}</div></div>`; }).join("")}</div>
+      <div class="pv-word"><b class="${w.word.length > 5 ? (w.word.length > 9 ? "longer" : "long") : ""}">${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei" role="button" tabindex="0">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}${P[0].exEn ? `<span class="pv-rei-en">${esc(P[0].exEn)}</span>` : ""}</span>` : ""}</div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
@@ -4550,9 +4561,9 @@ function picView(C, W, clean){
   const keys = e => { if(!document.body.contains(tr)){ removeEventListener("keydown", keys); return; }
     if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
   addEventListener("keydown", keys);
-  $("#pvBack").onclick = () => { if(/^x/.test(C.key)) renderExtraTheme(C.ja.replace(/ \d+$/, "")); else (C.key.startsWith("ira_") ? renderIllust : renderPictures)(); scrollTo(0, 0); };
-  const pv = document.querySelector(".pv"); pv.classList.toggle("no-en", !store.get("jc:illEn", true)); pv.classList.toggle("extra", /^x/.test(C.key));
-  if($("#pvEn")) $("#pvEn").onclick = () => { const on = !store.get("jc:illEn", true); store.set("jc:illEn", on); $("#pvEn").setAttribute("aria-pressed", on); pv.classList.toggle("no-en", !on); };
+  $("#pvBack").onclick = () => { (C.key.startsWith("ira_") || /^x/.test(C.key) ? renderIllust : renderPictures)(); scrollTo(0, 0); };
+  const pv = document.querySelector(".pv"); pv.classList.toggle("extra", /^x/.test(C.key));
+  tr.addEventListener("click", e => { const r = e.target.closest(".pv-rei"); if(r){ e.stopPropagation(); r.classList.toggle("show"); } }, true);
   mark(0);
 }
 
