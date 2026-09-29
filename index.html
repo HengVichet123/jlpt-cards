@@ -1945,6 +1945,8 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pv-rei{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .pv-rei .pv-rei-en{display:none}
 .pv-rei.show .pv-rei-en{display:block}
+.ill-no{display:inline-grid;place-items:center;min-width:28px;height:28px;margin-right:2px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 14px var(--body);align-self:center}
+.ill-tile .ill-words{margin-top:6px;font:600 13px var(--body);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 
@@ -1993,7 +1995,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v138";
+const APP_VERSION = "v139";
 
 
 /* =========================================================
@@ -4493,9 +4495,9 @@ async function renderIllust(){   // いらすとや: one row per topic, sessions
   const order = [...rows.keys()].sort((a, b) => (a === "その他") - (b === "その他"));
   $("#pageTitle").textContent = "Illustrations";
   $("#list").innerHTML = `<section class="pics ill-rows">
-    ${order.map(t => { const R = rows.get(t), total = R.items.reduce((n, x) => n + x.count, 0);
-      return `<div class="ill-row"><h2 class="ill-h">${esc(t)}<small>${esc(R.en)} · ${total.toLocaleString()}</small></h2>
-        <div class="ill-scroll">${R.items.map((x, i) => `<button type="button" class="ill-tile" data-pcat="${x.key}"><span class="ill-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span><b>${i + 1}</b><span>${esc((x.first || []).slice(0, 2).join("・"))}</span></button>`).join("")}</div></div>`; }).join("")}
+    ${order.map((t, ti) => { const R = rows.get(t), total = R.items.reduce((n, x) => n + x.count, 0);
+      return `<div class="ill-row"><h2 class="ill-h"><span class="ill-no">${ti + 1}</span>${esc(t)}<small>${esc(R.en)} · ${total.toLocaleString()}</small></h2>
+        <div class="ill-scroll">${R.items.map((x, i) => `<button type="button" class="ill-tile" data-pcat="${x.key}"><span class="ill-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span><span class="ill-words">${esc((x.first || []).slice(0, 2).join("・"))}</span></button>`).join("")}</div></div>`; }).join("")}
     <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
   if(isJa()) jaWalk($("#list"));
