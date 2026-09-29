@@ -1821,6 +1821,13 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pg-sheet-body.play-setup{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 18px 24px;max-width:none;margin:0}
 .pg-sheet-body .pg-new{display:flex;flex-direction:column;gap:10px}
 @media (prefers-reduced-motion: reduce){ .pg-sheet,.pg-scrim,#list,.pg-dock{transition:none} }
+/* v129: Practice buttons float above the bottom edge (no footer bar) */
+.pg-dock{background:none!important;border-top:0!important;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 22px)!important;pointer-events:none}
+.pg-dock-in{pointer-events:auto}
+.pg-dock button{box-shadow:0 6px 18px -8px rgba(20,16,12,.35)}
+.play-setup.pg-home{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.tabs.tabs-in{margin:6px 0 18px;padding:4px}
+.tabs.tabs-in .tab{padding:10px 0;font-size:15px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px}
 </style>
 </head>
 
@@ -1869,7 +1876,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v128";
+const APP_VERSION = "v129";
 
 
 /* =========================================================
@@ -3452,6 +3459,9 @@ async function renderComplete(){
       </div>
 
 
+      <div class="tabs tabs-in" role="tablist">${[["words","語","Words"],["kanji","字","Kanji"],["grammar","文","Grammar"]].map(([t, j, l]) =>
+        `<div class="tab${t === TAB ? " on" : ""}" data-t="${t}" role="tab" tabindex="0" aria-selected="${t === TAB}"><span class="jp">${j}</span>${l}</div>`).join("")}</div>
+
       ${section(TAB, {words:"Words",kanji:"Kanji",grammar:"Grammar"}[TAB] + ` <span class="stat">${pool[TAB].length}</span>`)}
 
     </section>
@@ -4877,7 +4887,7 @@ document.addEventListener(
       );
 
 
-      if(CURRENT === "complete") renderComplete();
+      if(CURRENT === "complete"){ NAV_SAME = true; renderComplete(); }
       else render();
 
 
@@ -5034,7 +5044,7 @@ function pick(id){
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
   $("#top").hidden = id === "home";
-  document.querySelector(".tabs").hidden = !(id === "complete" || !(id in titles));
+  document.querySelector(".tabs").hidden = id in titles;   // Complete list has its own tabs in the page
   $("#filter").hidden = true;
   $("#ver").hidden = true;   // version lives in Settings only
   $("#famToggle").hidden = true;   // moved to Settings
