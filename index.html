@@ -1865,6 +1865,11 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
   .th-btn{width:44px;height:44px}
   .th-card b{font-size:clamp(20px,6vh,32px)}
 }
+/* v135: film word tip = Reading's quick look (small: reading + short meaning) */
+.th-tip{gap:0;max-width:220px;padding:5px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none}
+.th-tip .tip-rd{font:600 12px var(--body);color:var(--shu);margin:0}
+.th-tip .tip-en{font:500 12.5px/1.35 var(--body)}
+.th.peek .th-big{display:none}
 </style>
 </head>
 
@@ -1913,7 +1918,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v134";
+const APP_VERSION = "v135";
 
 
 /* =========================================================
@@ -3804,10 +3809,14 @@ function renderTheatre(st){
     const w = e.target.closest(".th-tk"), tip = $(".th-tip");
     document.querySelectorAll(".th-tk.on").forEach(x => x.classList.remove("on"));
     if(!w){ tip.hidden = true; return; }
-    if(STORY.cont) stopStory();   // look it up without losing the line
+    const wasOn = STORY.cont, line = STORY.i, thEl = $(".th"); if(wasOn){ thEl.classList.add("peek"); stopStory(); }
     w.classList.add("on");
-    tip.innerHTML = `<b>${esc(w.dataset.b || w.textContent)}</b>${w.dataset.r && !w.dataset.b ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : ""}${w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : ""}`;
+    const short = (w.dataset.g || "").split(/[;；/]/)[0].replace(/\s*\(.*?\)\s*/g, " ").trim();
+    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (short ? `<span class="tip-en">${esc(short)}</span>` : "");
     tip.hidden = false;
+    if(soundOn()) speak(w.textContent);   // hear it as written in the line
+    clearTimeout(tip._t);
+    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); thEl.classList.remove("peek"); if(wasOn && STORY.i === line && !STORY.cont) STORY.play(line, true); }, 2000);
     const r = w.getBoundingClientRect(), br = $(".th-sub").getBoundingClientRect();
     tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
     tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
@@ -5035,16 +5044,14 @@ applyLang();
       !e.target.closest(".pv-track,.home-rail,input,select,textarea,.sec-rows.sorting,.reader,.seg,.th-seek,.pg-sheet"); }, {passive: true});
   addEventListener("touchmove", e => { if(!ok) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
     if(!drag){ if(Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)){ ok = false; return; } if(dx > 14 && dx > Math.abs(dy) * 1.4) drag = true; else return; }
-    if(e.cancelable) e.preventDefault();
-    const x = Math.max(0, dx); L().style.transform = `translateX(${x}px)`; L().style.opacity = String(1 - Math.min(.35, x / innerWidth * .5));
+    if(e.cancelable) e.preventDefault();   // horizontal swipe: keep the page still (no scroll, no drag)
   }, {passive: false});
   addEventListener("touchend", () => { if(!ok || !drag){ ok = false; return; } ok = false;
-    const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .33 || (v > .5 && dx > 50);
-    const l = L(); l.style.transform = ""; l.style.opacity = "";
+    const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .25 || (v > .4 && dx > 50);
+    const l = L();
     if(go && inRun()){ NAV_DIR = "back"; $("#pgBack").click(); return; }
     if(go && inFilm()){ $(".th-exit").click(); return; }
-    if(go){ NAV_DIR = "back"; SWIPE_FROM = dx; $("#goHome").click(); if(!l.firstElementChild) return; }
-    else if(!calmMotion()) l.animate([{transform:`translateX(${dx}px)`},{transform:"none"}], {duration:280, easing:"cubic-bezier(.2,.8,.2,1)"});   // snap back
+    if(go){ NAV_DIR = "back"; $("#goHome").click(); }
   }, {passive: true});
 })();
 
