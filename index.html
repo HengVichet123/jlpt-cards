@@ -1734,6 +1734,23 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th-count{justify-self:end;font:500 13px var(--body);color:#6E6960;padding-right:8px;font-variant-numeric:tabular-nums}
 .th button:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){ .th-img{transition:none} .th-img.on{animation:none} }
+/* v121: theatre fades in (no page slide), controls auto-hide while playing, seekable progress */
+.th{animation:thIn .35s ease both}
+@keyframes thIn{from{opacity:0}to{opacity:1}}
+.th-seek{position:relative;margin:6px 20px 0;height:22px;display:flex;align-items:center}
+.th-seek .th-bar{position:absolute;left:0;right:0;top:50%;margin:-1.5px 0 0;height:3px}
+.th-range{position:relative;z-index:1;width:100%;height:22px;margin:0;background:none;-webkit-appearance:none;appearance:none;cursor:pointer}
+.th-range::-webkit-slider-runnable-track{height:22px;background:transparent}
+.th-range::-moz-range-track{height:22px;background:transparent}
+.th-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:4px;border-radius:50%;background:var(--shu);border:0;opacity:0;transition:opacity .15s}
+.th-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--shu);border:0;opacity:0}
+.th-seek:hover .th-range::-webkit-slider-thumb,.th-range:active::-webkit-slider-thumb,.th-range:focus-visible::-webkit-slider-thumb{opacity:1}
+.th-seek:hover .th-range::-moz-range-thumb,.th-range:active::-moz-range-thumb{opacity:1}
+.th-seek:hover .th-bar{height:5px;margin-top:-2.5px}
+.th-seek,.th-ctl{transition:opacity .35s ease}
+.th.idle .th-seek,.th.idle .th-ctl{opacity:0;pointer-events:none}
+.th.idle{cursor:none}
+@media (prefers-reduced-motion: reduce){ .th{animation:none} }
 </style>
 </head>
 
@@ -1782,7 +1799,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v120";
+const APP_VERSION = "v121";
 
 
 /* =========================================================
@@ -3542,7 +3559,7 @@ const STORY = {i: 0, cont: false, play: null, stopUI: null};
 /* ---------- Theatre: a novel as a film. One picture per scene, the spoken line as a subtitle ---------- */
 function renderTheatre(st){
   const L = st.sentences, sceneAt = i => { let k = 0; st.scenes.forEach((sc, j) => { if(sc.from <= i) k = j; }); return k; };
-  document.body.classList.add("cinema");
+  document.body.classList.add("cinema"); NAV_SAME = true;
   $("#list").innerHTML = `<div class="th" role="region" aria-label="${esc(st.title)}">
     <div class="th-stage"><div class="th-frame">
       <img class="th-img" alt=""><img class="th-img" alt="">
@@ -3550,7 +3567,7 @@ function renderTheatre(st){
       <button class="th-big" type="button" aria-label="Play">${PLAY_ICO}</button>
     </div>
     <div class="th-sub" aria-live="polite"><p class="th-jp"></p><p class="th-en"></p></div></div>
-    <div class="th-bar" aria-hidden="true"><i></i></div>
+    <div class="th-seek"><input class="th-range" type="range" min="0" max="${L.length - 1}" step="1" value="0" aria-label="Line"><div class="th-bar" aria-hidden="true"><i></i></div></div>
     <div class="th-ctl">
       <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
       <div class="th-mid">
@@ -3572,10 +3589,10 @@ function renderTheatre(st){
     const x = L[i]; STORY.i = i; showScene(sceneAt(i), i === 0);
     card.hidden = !x.h; if(x.h){ card.querySelector("b").textContent = x.h; card.querySelector("small").textContent = x.en || ""; }
     $(".th-jp").textContent = x.h ? "" : x.jp; $(".th-en").textContent = x.h ? "" : (x.en || "");
-    $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`;
+    $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`; $(".th-range").value = i;
   };
   const setPlaying = on => { STORY.cont = on; big.hidden = on; playB.innerHTML = on ? PAUSE_ICO : PLAY_ICO; playB.setAttribute("aria-label", on ? "Pause" : "Play");
-    document.querySelector(".th").classList.toggle("paused", !on); };
+    document.querySelector(".th").classList.toggle("paused", !on); if(STORY.onPlaying) STORY.onPlaying(on); };
   STORY.play = (i, cont) => {
     clearTimeout(timer);
     if(i >= L.length){ stopStory(); setLine(L.length - 1); return; }
@@ -3591,6 +3608,19 @@ function renderTheatre(st){
   big.onclick = playB.onclick = toggle;
   $(".th-frame").addEventListener("click", e => { if(!e.target.closest(".th-big")) toggle(); });
   $(".th-prev").onclick = () => go(-1); $(".th-next").onclick = () => go(1);
+  const rg = $(".th-range");   // drag = preview picture + line, release = play from there
+  rg.oninput = () => { clearTimeout(timer); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} setLine(+rg.value); };
+  rg.onchange = () => STORY.play(+rg.value, STORY.cont || th.dataset.was === "1");
+  rg.onpointerdown = () => { th.dataset.was = STORY.cont ? "1" : "0"; };
+  // 2. controls fade out while playing; any movement brings them back (first tap on a phone only reveals them)
+  const th = $(".th"); let idleT = 0;
+  const wake = () => { th.classList.remove("idle"); clearTimeout(idleT); idleT = setTimeout(() => { if(STORY.cont && document.body.classList.contains("cinema")) th.classList.add("idle"); }, 2600); };
+  th.addEventListener("pointermove", e => { if(e.pointerType === "mouse") wake(); });
+  th.addEventListener("pointerdown", e => { if(th.classList.contains("idle") && e.pointerType !== "mouse"){ e.preventDefault(); e.stopPropagation(); th.dataset.swallow = "1"; } wake(); }, true);
+  th.addEventListener("click", e => { if(th.dataset.swallow === "1"){ th.dataset.swallow = ""; e.stopPropagation(); e.preventDefault(); } }, true);
+  addEventListener("keydown", wake);
+  let wasOn = false;
+  STORY.onPlaying = on => { if(on === wasOn) return; wasOn = on; if(on) wake(); else { clearTimeout(idleT); th.classList.remove("idle"); } };
   $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Novels"; NAV_DIR = "back"; renderNovels(); };
   STORY.i = 0; STORY.cont = false; setLine(0); setPlaying(false); card.hidden = true;   // poster: picture + title only
   $(".th-jp").textContent = st.title; $(".th-en").textContent = `${st.titleEn} · ${st.author}`;
