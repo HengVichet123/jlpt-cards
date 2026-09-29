@@ -1538,6 +1538,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .sound-note{position:fixed;left:50%%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translateX(-50%%);z-index:50;max-width:88vw;
   padding:10px 16px;border-radius:10px;background:var(--ink);color:var(--paper);font:500 13px var(--body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .say-i.playing{color:var(--shu)}
+/* v105 */
+.hdr-act{justify-self:end;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:700 14px var(--body);cursor:pointer;box-shadow:var(--lift)}
+.hdr-act:active{transform:scale(.97)}
+.bar .hdr-act:not([hidden]) ~ #ver{display:none}
+.pre-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.pre-head .sec-title{margin:0;min-width:0}
+.pre-head .pre-study{flex:none;margin-top:4px}
+.prelearn .story-top{display:none}
+#list{will-change:auto}
 /* v104 listening (Novels) */
 .story .story-top{display:flex;justify-content:flex-end}
 .listen-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--shu);color:#fff;font:700 15px var(--body);cursor:pointer;box-shadow:var(--lift)}
@@ -1614,6 +1623,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
     <button class="back-link" id="goHome" type="button">‹ Home</button>
     <div class="page-title" id="pageTitle"></div>
     <span id="ver"></span>
+    <button class="hdr-act" id="hdrAct" type="button" hidden></button>
     <button class="nav-btn fam-toggle" id="famToggle" hidden aria-pressed="false" aria-label="Show familiarity">
       <svg viewBox="0 0 40 14" width="38" height="14" aria-hidden="true"><rect x="2" y="3" width="36" height="3" rx="1.5" fill="currentColor" opacity=".35"/><path d="M26 13 L30 7 L34 13 Z" fill="currentColor"/></svg>
     </button>
@@ -1649,7 +1659,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v104";
+const APP_VERSION = "v105";
 
 
 /* =========================================================
@@ -2575,7 +2585,7 @@ async function renderPG(){
 
     const setup = `
 
-      <section class="play-setup">
+      <section class="play-setup">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
 
 
 
@@ -2633,6 +2643,7 @@ async function renderPG(){
     if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); renderPG(); };
     $("#pgGo").onclick =
       pgNew;
+    if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
 
 
     return;
@@ -2916,6 +2927,9 @@ function applyLang(){
   const ja = isJa(); document.body.classList.toggle("ja", ja); document.documentElement.lang = ja ? "ja" : "en";
   jaWalk(document.querySelector("header")); jaWalk($("#list"));
 }
+/* one optional action on the right of the header, owned by the page that set it */
+function setHeaderAction(label, fn){ const b = $("#hdrAct"); b.textContent = label; b.onclick = fn; b.hidden = false; b._owner = $("#list").firstElementChild; jaWalk(b); }
+function syncHeaderAction(){ const b = $("#hdrAct"); if(b && !b.hidden && !(b._owner && document.body.contains(b._owner))) b.hidden = true; }
 function applyTheme(){
   const t = store.get("jc:theme", "auto");
   if(t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
@@ -3512,6 +3526,10 @@ function fullFor(t, c, lv){
 document.addEventListener("click", e => {
   if(e.target.closest(".say")) return;   // speaker icon: play only
   const word = e.target.closest(".card .big");   // the headword itself = hear it, the card stays as it is
+  if(word && word.closest(".play-stage")){   // Practice: a quick second tap on the word = reveal
+    const now = Date.now(), card = word.closest(".card");
+    if(now - (word._t || 0) < 350 && !card.classList.contains("open")){ e.stopPropagation(); word._t = 0; flipCard(card, true); return; }
+    word._t = now; }
   if(word && soundOn()){ const cd = word.closest(".card"), c = cd && MINI.reg.get(miniKey(cd.dataset.mt, cd.dataset.mlv, cd.dataset.no));
     const text = (c && c.word) || (cd && cd.dataset.type === "words" ? word.textContent.trim() : "");
     if(text && AUDIO_MAP && AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
@@ -3541,7 +3559,8 @@ async function renderSection(id){
     <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
 
   $("#secBack").onclick = () => { renderSections(); };
-  $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur); pick("playground"); };
+  $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
+    const name = s.name; pick("playground"); PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); };
 }
 
 /* ---------- Pre-learn reading page ---------- */
@@ -3562,8 +3581,9 @@ async function renderPrelearn(id){
   const list = (t, rows) => rows.map(([lv, no]) => { const c = get(t, lv, no); return c ? miniFor(t, c, lv) : ""; }).join("");
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reading prelearn">
-    <div class="story-top"><button class="nav-btn" id="preBack" data-back="本文">Back</button><span class="pre-btns"><button class="nav-btn pre-read" id="preReadBtn">Read 本文</button><button class="nav-btn pre-study" id="preStudy">Study these</button></span></div>
-    <h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
+    <div class="story-top"><button class="nav-btn" id="preBack" data-back="本文">Back</button><button class="nav-btn pre-read" id="preReadBtn" hidden>Read 本文</button></div>
+    <div class="pre-head"><h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
+      <button class="nav-btn pre-study" id="preStudy">Study these</button></div>
     <h3 class="pre-part">言葉 <small>${R.words.length} words</small></h3>
     <div class="complete-cards">${list("words", R.words)}</div>
     ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
@@ -3573,7 +3593,8 @@ async function renderPrelearn(id){
   $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
   $("#preBack").onclick = () => { renderReader(id); scrollTo(0, 0); };
   $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
-    cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur); pick("playground"); };
+    cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
+    pick("playground"); PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); };
 
 }
 
@@ -3590,7 +3611,7 @@ async function renderReader(id){
   html += esc(R.text.slice(at));
   $("#pageTitle").textContent = R.title;
   $("#list").innerHTML = `<section class="reader">
-    <div class="story-top"><span class="pre-btns"><button class="nav-btn" id="rdShelf" data-back="${esc(((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading")}">Back</button><button class="nav-btn" id="rdBack">Cards</button></span><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
+    <div class="story-top"><span class="pre-btns"><button class="nav-btn" id="rdShelf" data-back="${esc(((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading")}">Back</button><button class="nav-btn" id="rdBack" hidden>Cards</button></span><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
       <path class="wv" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
     <h1 class="reader-title">${esc(R.title)}</h1>
@@ -3599,6 +3620,7 @@ async function renderReader(id){
     <div class="tip-bubble" id="tipB" hidden></div>
   </section>`;
   $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  setHeaderAction("Cards", () => { renderPrelearn(id); scrollTo(0, 0); });
   $("#rdShelf").onclick = () => { renderShelf(R.shelf || "article"); scrollTo(0, 0); };
   $("#rdVoice").onclick = e => { e.stopPropagation(); const on = !store.get("jc:tapvoice", true); store.set("jc:tapvoice", on); $("#rdVoice").setAttribute("aria-pressed", on); };
   const tip = $("#tipB"), box = document.querySelector(".reader");
@@ -3972,6 +3994,9 @@ function dotsOrButtons(type,no){
 let PLAY = false, CURRENT = "home";
 
 let PG_RUNNING = false;
+let PG_RETURN = null;   // {label, go}: where Practice goes back to when it was opened from a reading or a section
+function leavePracticeTo(id, render){ PLAY = false; PG_RUNNING = false; CURRENT = id; document.body.classList.remove("playing");
+  document.querySelector(".tabs").hidden = true; const r = PG_RETURN; PG_RETURN = null; render(); }
 
 
 setInterval(
@@ -4281,11 +4306,10 @@ document.addEventListener(
 
     /* ---------- Playground card: tap anywhere to open, tap the top to close ---------- */
 
-    const stageCard = e.target.closest(".play-stage .card");
-    if(stageCard){
-      if(!stageCard.classList.contains("open")){ flipCard(stageCard, true); return; }
-      if(e.target.closest(".front")){ flipCard(stageCard, false); return; }
-      return;
+    const stageCard = e.target.closest(".play-stage .card") || (e.target.closest(".play-stage") && !e.target.closest("button") && $(".play-stage .card"));
+    if(stageCard){   // anywhere in the practice area flips; examples keep their own tap (English)
+      if(e.target.closest(".ex, a, .say")) return;
+      flipCard(stageCard, !stageCard.classList.contains("open")); return;
     }
 
 
@@ -4409,14 +4433,34 @@ $("#famToggle").onclick = () => {
   $("#famToggle").setAttribute("aria-pressed", on);
 };
 /* one back link in the header: goes to the page's parent (its hidden [data-back] button), else Home */
-$("#goHome").onclick = () => { const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
+$("#goHome").onclick = () => { NAV_DIR = "back"; const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
 const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textContent = "‹ " + (b ? b.dataset.back : "Home"); };
-new MutationObserver(syncBack).observe($("#list"), {childList: true});
-new MutationObserver(ms => {   // soften page changes: when #list is replaced, the new page eases in
+new MutationObserver(() => { syncBack(); syncHeaderAction(); }).observe($("#list"), {childList: true});
+/* page swap: every full page change goes through #list.innerHTML; the old page eases out while the new one eases in.
+   Forward = new page from the right; back (header back / swipe) = from the left. */
+let NAV_DIR = "fwd", SWIPE_FROM = 0;
+(() => {
+  const LIST = $("#list"), d = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
+  Object.defineProperty(LIST, "innerHTML", {get(){ return d.get.call(this); }, set(v){
+    const dir = NAV_DIR, from = SWIPE_FROM; NAV_DIR = "fwd"; SWIPE_FROM = 0;
+    const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && had.classList.contains("play-screen"));
+    if(calmMotion() || !had || practice){ d.set.call(this, v); return; }
+    const r = LIST.getBoundingClientRect(), ghost = LIST.cloneNode(true);
+    ghost.removeAttribute("id"); ghost.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
+    Object.assign(ghost.style, {position:"fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", margin:"0", pointerEvents:"none", zIndex:"0", transform:""});
+    document.body.appendChild(ghost);
+    d.set.call(this, v);
+    const w = Math.min(innerWidth, 900), out = dir === "back" ? w * .35 : -w * .18, inn = dir === "back" ? -w * .12 : w * .22;
+    ghost.animate([{transform:`translateX(${from}px)`, opacity:1},{transform:`translateX(${dir === "back" ? Math.max(from, out) : out}px)`, opacity:0}],
+      {duration:360, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}).onfinish = () => ghost.remove();
+    LIST.animate([{transform:`translateX(${inn}px)`, opacity:0},{transform:"none", opacity:1}], {duration:440, delay:40, easing:"cubic-bezier(.2,.8,.2,1)", fill:"backwards"});
+  }});
+})();
+new MutationObserver(ms => {   // Practice: a new card pops in and stays put
   if(calmMotion() || !ms.some(m => m.removedNodes.length && m.addedNodes.length)) return;
   const pc = $("#list .play-stage .play-card");
-  if(pc){ pc.animate([{opacity:0, transform:"scale(.96)"},{opacity:1, transform:"none"}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"}); return; }
-  if($("#list .play-screen")) return;
+  if(pc){ pc.animate([{opacity:0, transform:"scale(.96)"},{opacity:1, transform:"none"}], {duration:240, easing:"cubic-bezier(.2,.8,.2,1)"}); return; }
+  return;
   $("#list").animate([{opacity:0, transform:"translateY(6px)"},{opacity:1, transform:"none"}], {duration:200, easing:"cubic-bezier(.2,.8,.2,1)"});
 }).observe($("#list"), {childList: true});
 applyTheme();
@@ -4425,13 +4469,22 @@ new MutationObserver(ms => { if(isJa()) for(const m of ms) m.addedNodes.forEach(
 new MutationObserver(() => { if(isJa()) jaWalk(document.querySelector("header")); })
   .observe(document.querySelector("header"), {childList: true, subtree: true, characterData: true});
 applyLang();
-(() => { let x0 = 0, y0 = 0, t0 = 0, ok = false;
-  addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
-    ok = e.touches.length === 1 && !e.target.closest(".pv-track,.home-rail,.play-screen,input,select,textarea,.sec-rows.sorting,.reader"); }, {passive: true});
-  addEventListener("touchend", e => { if(!ok) return; const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
-    if(dx > 80 && Math.abs(dy) < 60 && Date.now() - t0 < 600 && CURRENT !== "home" && !$("#top").hidden){
-      $("#list").animate([{transform:"translateX(24px)", opacity:.6},{transform:"none", opacity:1}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"});
-      $("#goHome").click(); } }, {passive: true});
+(() => { let x0 = 0, y0 = 0, t0 = 0, ok = false, drag = false, dx = 0;
+  const L = () => $("#list");
+  addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); drag = false; dx = 0;
+    ok = e.touches.length === 1 && CURRENT !== "home" && !$("#top").hidden &&
+      !e.target.closest(".pv-track,.home-rail,.play-screen,input,select,textarea,.sec-rows.sorting,.reader,.seg"); }, {passive: true});
+  addEventListener("touchmove", e => { if(!ok) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
+    if(!drag){ if(Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)){ ok = false; return; } if(dx > 14 && dx > Math.abs(dy) * 1.4) drag = true; else return; }
+    if(e.cancelable) e.preventDefault();
+    const x = Math.max(0, dx); L().style.transform = `translateX(${x}px)`; L().style.opacity = String(1 - Math.min(.35, x / innerWidth * .5));
+  }, {passive: false});
+  addEventListener("touchend", () => { if(!ok || !drag){ ok = false; return; } ok = false;
+    const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .33 || (v > .5 && dx > 50);
+    const l = L(); l.style.transform = ""; l.style.opacity = "";
+    if(go){ NAV_DIR = "back"; SWIPE_FROM = dx; $("#goHome").click(); if(!l.firstElementChild) return; }
+    else if(!calmMotion()) l.animate([{transform:`translateX(${dx}px)`},{transform:"none"}], {duration:280, easing:"cubic-bezier(.2,.8,.2,1)"});   // snap back
+  }, {passive: true});
 })();
 
 
@@ -4498,6 +4551,7 @@ $("#lesson").onchange =
    ========================================================= */
 
 function pick(id){
+  if(id !== "playground") PG_RETURN = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();
 
   PLAY =
