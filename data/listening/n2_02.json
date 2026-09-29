@@ -108,7 +108,8 @@
      "answer": 3,
      "audio": "n2_02/q03.mp3"
     }
-   ]
+   ],
+   "spoken": false
   },
   {
    "key": "point",
@@ -217,7 +218,8 @@
      "answer": 4,
      "audio": "n2_02/q06.mp3"
     }
-   ]
+   ],
+   "spoken": false
   },
   {
    "key": "gaiyo",
@@ -260,7 +262,8 @@
      "answer": 3,
      "audio": "n2_02/q08.mp3"
     }
-   ]
+   ],
+   "spoken": true
   },
   {
    "key": "sokuji",
@@ -342,7 +345,8 @@
      "answer": 2,
      "audio": "n2_02/q13.mp3"
     }
-   ]
+   ],
+   "spoken": true
   }
  ]
 }

@@ -1954,6 +1954,10 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pg-undo[disabled]{opacity:.3;cursor:default}
 .lsn-skip{align-self:center;min-height:44px;padding:0 22px;border:0;background:none;color:var(--soft);font:600 15px var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .lsn-skipped{margin:-10px 0 0;text-align:center;font-size:13px;color:var(--faint)}
+.lsn-hear{margin:0;font-size:13px;color:var(--soft);text-align:center}
+.lsn-opts.lsn-nums{grid-template-columns:repeat(auto-fit,minmax(64px,1fr))}
+.lsn-nums .lsn-opt{justify-content:center;min-height:64px}
+.lsn-nums .lsn-n{width:36px;height:36px;font-size:17px;color:var(--ink)}
 </style>
 </head>
 
@@ -2002,7 +2006,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v140";
+const APP_VERSION = "v141";
 
 
 /* =========================================================
@@ -4473,7 +4477,8 @@ async function renderListenTest(id){
         <button type="button" class="lsn-play" id="lsnPlay" aria-label="Play">${PLAY_ICO}</button>
         <div class="lsn-bar"><i id="lsnBar"></i></div>
       </div>
-      <ol class="lsn-opts">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span><span>${esc(o)}</span></button></li>`).join("")}</ol>
+      ${q.part.spoken && !ans ? `<p class="lsn-hear">Answers are only heard. Pick a number.</p>` : ""}
+      <ol class="lsn-opts${q.part.spoken && !ans ? " lsn-nums" : ""}">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span>${q.part.spoken && !ans ? "" : `<span>${esc(o)}</span>`}</button></li>`).join("")}</ol>
       ${ans ? `<details class="lsn-script"><summary>Script</summary>
         ${q.intro ? `<p class="lsn-nar">${esc(q.intro)}</p>` : ""}
         ${q.lines.map(([spk, t]) => `<p>${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}</p>`).join("")}
