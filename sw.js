@@ -1,6 +1,6 @@
 // network-first: always try fresh lessons, fall back to cache offline
 
-const CACHE = "jc-v136";
+const CACHE = "jc-v137";
 const AUDIO_CACHE = "jc-audio-1";   // word recordings: kept across app versions
 
 self.addEventListener("install", e => self.skipWaiting());
@@ -40,7 +40,7 @@ self.addEventListener("fetch", e => {
     new URL(e.request.url).origin !== location.origin
   ) return;
 
-  if (new URL(e.request.url).pathname.includes("/data/audio/") && e.request.url.endsWith(".mp3")) {
+  if (/\/data\/(audio|listening)\//.test(new URL(e.request.url).pathname) && e.request.url.endsWith(".mp3")) {   // word audio + listening tests
     e.respondWith(audioResponse(e.request).catch(() => fetch(e.request)));
     return;
   }

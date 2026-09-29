@@ -1892,6 +1892,45 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pv-word b.long{font-size:28px}
 .pv-word b.longer{font-size:21px;line-height:1.35}
 .pv.extra .pv-en{font-size:14px;font-weight:600}
+/* v137: Listening */
+.lsn-list{display:grid;gap:10px}
+.lsn-test{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer;box-shadow:var(--lift)}
+.lsn-test:hover{background:var(--chip)}
+.lsn-lv{flex:none;font:700 13px var(--body);color:var(--shu);border:1px solid var(--shu);border-radius:6px;padding:2px 6px}
+.lsn-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.lsn-t b{font:700 17px var(--display)}
+.lsn-t small{font-size:13px;color:var(--soft)}
+.lsn-best{font:700 15px var(--body);color:var(--soft)}
+.lsn-note{font-size:12.5px;color:var(--faint);margin:6px 2px 0}
+.lsn{display:flex;flex-direction:column;gap:18px}
+.lsn-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.lsn-head b{font:700 18px var(--display)}
+.lsn-head span{font-size:13px;color:var(--soft)}
+.lsn-player{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.lsn-play{flex:none;width:56px;height:56px;border:0;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;cursor:pointer}
+.lsn-play svg{width:24px;height:24px}
+.lsn-bar{flex:1;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.lsn-bar i{display:block;height:100%;width:0;background:var(--shu);transition:width .25s linear}
+.lsn-opts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lsn-opt{width:100%;display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);text-align:left;font:500 16px/1.45 var(--body);cursor:pointer}
+.lsn-opt:hover:not([disabled]){background:var(--chip)}
+.lsn-opt[disabled]{cursor:default;opacity:.55}
+.lsn-n{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font:700 13px var(--body);color:var(--soft)}
+.lsn-opt.right{opacity:1;border-color:var(--matsu);background:color-mix(in srgb, var(--matsu) 12%, var(--card))}
+.lsn-opt.right .lsn-n{background:var(--matsu);border-color:var(--matsu);color:var(--card)}
+.lsn-opt.wrong{opacity:1;border-color:var(--red);background:color-mix(in srgb, var(--red) 10%, var(--card))}
+.lsn-opt.wrong .lsn-n{background:var(--red);border-color:var(--red);color:var(--card)}
+.lsn-script{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card)}
+.lsn-script summary{cursor:pointer;font:700 14px var(--body);color:var(--soft)}
+.lsn-script p{margin:8px 0 0;font:500 15px/1.7 var(--body)}
+.lsn-script b{color:var(--soft)}
+.lsn-nar{color:var(--soft)}
+.lsn-next{align-self:stretch;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--raised);color:var(--ink);font:700 16px var(--body);cursor:pointer;box-shadow:var(--lift)}
+.lsn-score{margin:12px 0 0;text-align:center;font:500 20px var(--body);color:var(--soft)}
+.lsn-score b{font:800 56px var(--display);color:var(--ink)}
+.lsn-parts{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lsn-parts li{display:flex;justify-content:space-between;padding:12px 16px;background:var(--card)}
+.lsn-parts li + li{border-top:1px solid var(--line)}
 </style>
 </head>
 
@@ -1940,7 +1979,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v136";
+const APP_VERSION = "v137";
 
 
 /* =========================================================
@@ -3330,7 +3369,7 @@ function prefetchPools(){   // warm the Complete list / Playground pool while th
 }
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
 const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
-  "Settings":"設定","Novels":"名作","Movies":"映画","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Settings":"設定","Novels":"名作","Movies":"映画","Library":"ライブラリ","Listening":"聴解","Tests with audio":"音声つきテスト","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
   "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
@@ -3461,12 +3500,13 @@ function renderHome(){
       <h2 class="home-h">Study</h2>
       <div class="core">
         <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
-        <button class="cover cover-list" data-home="complete"><i>覧</i><b>Complete list</b><span>${INDEX.reduce((n, x) => n + x.counts[0] + x.counts[1] + x.counts[2], 0)} cards</span></button>
         <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
+        <button class="cover cover-list" data-home="listening"><i>聴</i><b>Listening</b><span>Tests with audio</span></button>
       </div>
 
-      <h2 class="home-h">Side projects</h2>
+      <h2 class="home-h">Library</h2>
       <div class="side">
+        <button class="side-tile" data-home="complete"><i>覧</i><b>Complete list</b></button>
         <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
         <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
         <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
@@ -4369,6 +4409,65 @@ async function renderExtraTheme(theme){   // one theme's extra sessions (150 pic
   $("#xBack").onclick = () => { renderIllust(); scrollTo(0, 0); };
   document.querySelectorAll(".x-sess").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
 }
+/* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
+async function renderListening(){
+  let L = []; try{ L = await (await fetch("data/listening/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  $("#pageTitle").textContent = "Listening";
+  $("#list").innerHTML = `<section class="lsn-list">${L.map(t => { const r = store.get("jc:lsn:" + t.id, null);
+    return `<button type="button" class="lsn-test" data-lsn="${t.id}"><span class="lsn-lv">${esc(t.level)}</span><span class="lsn-t"><b>${esc(t.title)}</b><small>${esc(t.titleEn)} · ${t.count} questions</small></span>${r ? `<span class="lsn-best">${r.best}/${t.count}</span>` : ""}</button>`; }).join("")}
+    <p class="lsn-note">Original questions in the JLPT listening formats, not official test material.</p></section>`;
+  document.querySelectorAll("[data-lsn]").forEach(b => b.onclick = () => { renderListenTest(b.dataset.lsn); scrollTo(0, 0); });
+}
+async function renderListenTest(id){
+  const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
+  const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => Q.push({...q, part: pt, no: i + 1})));
+  const picked = new Array(Q.length).fill(0); let i = 0;
+  const SPK = {F: "女", F2: "女", M: "男", M2: "男", N: ""};
+  const draw = () => {
+    if(i >= Q.length) return done();
+    const q = Q[i], ans = picked[i];
+    $("#pageTitle").textContent = T.title;
+    $("#list").innerHTML = `<section class="lsn">
+      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
+      <div class="lsn-head"><b>${esc(q.part.ja)}</b><span>${q.no}番 · ${i + 1} / ${Q.length}</span></div>
+      <div class="lsn-player">
+        <button type="button" class="lsn-play" id="lsnPlay" aria-label="Play">${PLAY_ICO}</button>
+        <div class="lsn-bar"><i id="lsnBar"></i></div>
+      </div>
+      <ol class="lsn-opts">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span><span>${esc(o)}</span></button></li>`).join("")}</ol>
+      ${ans ? `<details class="lsn-script"><summary>Script</summary>
+        ${q.intro ? `<p class="lsn-nar">${esc(q.intro)}</p>` : ""}
+        ${q.lines.map(([spk, t]) => `<p>${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}</p>`).join("")}
+        ${q.question ? `<p class="lsn-nar">${esc(q.question)}</p>` : ""}</details>
+        <button type="button" class="lsn-next" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button>` : ""}
+    </section>`;
+    const play = $("#lsnPlay"), bar = $("#lsnBar");
+    const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
+    play.onclick = () => {
+      if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); return; }
+      if(PLAYER.dataset.q !== q.audio){ PLAYER.src = `data/listening/${q.audio}`; PLAYER.dataset.q = q.audio; }
+      PLAYER.onended = () => { setIco(false); bar.style.width = "100%"; };
+      PLAYER.ontimeupdate = () => { if(PLAYER.dataset.q === q.audio && PLAYER.duration) bar.style.width = `${PLAYER.currentTime / PLAYER.duration * 100}%`; };
+      PLAYER.play().then(() => setIco(true)).catch(() => {});
+    };
+    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { picked[i] = +b.dataset.k; PLAYER.pause(); NAV_SAME = true; draw(); });
+    if($("#lsnNext")) $("#lsnNext").onclick = () => { PLAYER.pause(); i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; renderListening(); };
+  };
+  const done = () => {
+    const right = Q.filter((q, k) => picked[k] === q.answer).length, key = "jc:lsn:" + id, r = store.get(key, {best: 0});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
+    $("#list").innerHTML = `<section class="lsn lsn-done">
+      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
+      <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>
+      <ul class="lsn-parts">${T.parts.map(pt => { const idx = Q.map((q, k) => [q, k]).filter(([q]) => q.part === pt);
+        return `<li><span>${esc(pt.ja)}</span><b>${idx.filter(([q, k]) => picked[k] === q.answer).length} / ${idx.length}</b></li>`; }).join("")}</ul>
+      <button type="button" class="lsn-next" id="lsnAgain">Try again</button></section>`;
+    $("#lsnBack").onclick = () => renderListening();
+    $("#lsnAgain").onclick = () => { picked.fill(0); i = 0; NAV_SAME = true; draw(); };
+  };
+  draw();
+}
 async function renderIllust(){   // いらすとや illustrations: actions, feelings, ideas (same viewer as Pictures)
   document.body.classList.remove("playing");
   let idx = []; try{ idx = (await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json()).filter(x => x.group === "illust"); }catch(e){}
@@ -5174,7 +5273,7 @@ function pick(id){
   CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening"};
   const lessonName = (INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -5219,6 +5318,9 @@ function pick(id){
 
   else if(id === "illust")
     renderIllust();
+
+  else if(id === "listening")
+    renderListening();
 
   else if(id === "photos"){
     SCENE_DIR = "photos"; renderScenes(); }
