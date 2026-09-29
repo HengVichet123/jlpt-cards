@@ -1751,6 +1751,19 @@ body.cinema #top,body.cinema .tabs{display:none!important}
 .th.idle .th-seek,.th.idle .th-ctl{opacity:0;pointer-events:none}
 .th.idle{cursor:none}
 @media (prefers-reduced-motion: reduce){ .th{animation:none} }
+/* v123: いらすとや group in Pictures (own heading + credit line); illustrations on white in the viewer */
+.pic-group{margin-top:34px;display:grid;gap:12px}
+.pic-gh{margin:0;font:700 20px var(--display);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pic-gh small{font:500 13px var(--body);color:var(--soft)}
+.pic-soon{margin:0;padding:22px;border:1px dashed var(--line);border-radius:10px;color:var(--faint);text-align:center}
+.pic-by{margin:0;font-size:13px;color:var(--soft)}
+.pic-by a,.pv-src{color:var(--soft);text-decoration:underline;text-underline-offset:2px}
+.pic-cat.illust .pic-cover{background:#FFFFFF}
+.pic-cat.illust .pic-cover img{object-fit:contain;padding:8px;box-sizing:border-box}
+.pv-photo.illust{background:#FFFFFF}
+.pv-photo.illust .pv-bg{display:none}
+.pv-photo.illust .pv-fg{padding:6%;box-sizing:border-box}
+.pv-src{display:inline-block;margin-top:4px;font-size:12px}
 </style>
 </head>
 
@@ -1799,7 +1812,7 @@ body.cinema #top,body.cinema .tabs{display:none!important}
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v122";
+const APP_VERSION = "v123";
 
 
 /* =========================================================
@@ -4103,12 +4116,18 @@ async function renderPictures(){
   document.body.classList.remove("playing");
   let idx = []; try{ idx = await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json(); }catch(e){}
   $("#pageTitle").textContent = "Pictures";
-  $("#list").innerHTML = `<section class="pics">
-
-    <div class="pic-cats">${idx.map(x => `<button class="pic-cat" data-pcat="${x.key}">
+  const tile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
       <span class="pic-cover"><img src="data/pictures/${x.cover}" alt="" loading="lazy"></span>
-      <b>${esc(x.ja)}</b><span>${esc(x.en)} · ${x.count}</span></button>`).join("")}</div>
-    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo credits</summary><ol id="picCreditList"></ol></details></section>`;
+      <b>${esc(x.ja)}</b><span>${esc(x.en.replace(" (いらすとや)", ""))} · ${x.count}</span></button>`;
+  const photos = idx.filter(x => x.group !== "illust"), ills = idx.filter(x => x.group === "illust");
+  $("#list").innerHTML = `<section class="pics">
+    <div class="pic-cats">${photos.map(tile).join("")}</div>
+    <div class="pic-group" id="picIllust">
+      <h2 class="pic-gh">いらすとや<small>Illustrations for actions, feelings and ideas</small></h2>
+      ${ills.length ? `<div class="pic-cats">${ills.map(tile).join("")}</div>` : `<p class="pic-soon">${isJa() ? "準備中" : "Coming soon"}</p>`}
+      <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p>
+    </div>
+    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo and illustration credits</summary><ol id="picCreditList"></ol></details></section>`;
   document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
   $("#picCredits").addEventListener("toggle", async () => {   // all categories' credits, fetched on first open
     const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
@@ -4144,9 +4163,9 @@ function picView(C, W, clean){
       <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
     <div class="pv-bar"><i id="pvBar"></i></div>
     <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
-      <button class="pv-photo" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
+      <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="data/pictures/${P[0].img}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="data/pictures/${P[0].img}" alt="${esc(w.word)}" loading="${ld}"></button>
       ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="data/pictures/${p.img}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span></div></div>`; }).join("")}</div>
+      <div class="pv-word"><b>${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(clean(w.en))}</span>${/irasutoya/.test(P[0].page || "") ? `<a class="pv-src" href="${esc(P[0].page)}" target="_blank" rel="noopener">いらすとや</a>` : ""}</div></div>`; }).join("")}</div>
   </section>`;
   const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
   const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
