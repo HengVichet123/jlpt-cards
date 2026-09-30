@@ -1,8 +1,9 @@
 /* JLPT-style tests: the list (Listening / Reading tests / 言語知識) and the three players.
    Answers are kept until the test is finished or started over (src/tests/quiz.ts). */
-import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import * as Quiz from "../tests/quiz";
+import * as Mistakes from "../tests/mistakes";
 import { useBodyHost } from "../react/float";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
 
@@ -167,14 +168,7 @@ function vocMark(t: string): ReactNode {
     : s === "＿＿" ? <span key={k} className="voc-bl" /> : s === "★" ? <span key={k} className="voc-bl voc-star">★</span> : <Fragment key={k}>{s}</Fragment>);
 }
 
-/** The word a vocabulary question tests (for Quiz mistakes): ［marked］ word, the right option, or the question itself. */
-function testedWord(key: string, q: VocQ): string | null {
-  if (key === "yomi" || key === "iikae") return (q.q.match(/［(.+?)］/) || [])[1] || null;
-  if (key === "bunmyaku") return q.options[q.answer - 1] || null;
-  if (key === "yoho") return q.q.trim() || null;
-  return null;   // grammar parts: not collected (words only)
-}
-export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: (t: string) => void; onWrong: (word: string, level: string) => void }) {
+export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: (t: string) => void; onWrong: (m: { test: string; part: number; item: number; level: string; q: string }) => void }) {
   const P = p.T.parts, nQ = P.reduce((n, x) => n + x.items.length, 0);
   const exam = p.mode === "exam", review = p.mode === "review";
   const q = useQuiz("voc", p.id, () => P.map(x => new Array(x.items.length).fill(0)) as number[][], pk => pk, p.mode, p.init);
@@ -182,11 +176,12 @@ export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: 
   const el = useClock(exam && !q.done), limit = Quiz.examLimit("voc", nQ);
   useEffect(() => { if (exam && limit && el >= limit && !q.done) q.finish(); }, [el]);   // time up: finish
   useEffect(() => { p.setTitle(p.T.level + " 言語知識"); }, []);
+  const wrong = (k: number, m: number) => p.onWrong({ test: p.id, part: k, item: m, level: p.T.level, q: P[k].items[m].q });
   if (q.done) {
     const pk = q.picked; let right = 0; P.forEach((pt, k) => pt.items.forEach((x, m) => { if (pk[k][m] === x.answer) right++; }));
     const parts = P.map((pt, k) => [pt.ja, pt.items.filter((x, m) => pk[k][m] === x.answer).length, pt.items.length] as [string, number, number]);
     if (exam) { if (!saved.current) { saved.current = true; Quiz.saveExam("voc", p.id, Math.round(right / nQ * 100), el);
-        P.forEach((pt, k) => pt.items.forEach((x, m) => { if (pk[k][m] && pk[k][m] !== x.answer) { const w = testedWord(pt.key, x); if (w) p.onWrong(w, p.T.level); } })); }   // wrong words → Exam mistakes
+        P.forEach((pt, k) => pt.items.forEach((x, m) => { if (pk[k][m] && pk[k][m] !== x.answer) wrong(k, m); })); }   // wrong questions → Exam mistakes
       return <ExamResult right={right} total={nQ} parts={parts} time={el} limit={limit} back="Vocab & Grammar" tr={p.tr} onBack={p.onBack} onReview={() => p.onReview?.(pk)} onAgain={() => p.onAgain?.()} />; }
     if (!saved.current) { saved.current = true; Quiz.saveScore("voc", p.id, right); Quiz.clear("voc", p.id); }
     return <Result right={right} total={nQ} skipped={pk.flat().filter(x => !x).length} parts={parts} back="Vocab & Grammar" tr={p.tr} onBack={p.onBack} onAgain={() => { saved.current = false; q.again(); }} />;
@@ -202,10 +197,56 @@ export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: 
       {pt.items.map((x, k) => <div key={k} className="rd-q"><p className="rd-qt"><span className="rd-qn">{k + 1}</span><span>{vocMark(x.q)}</span></p>
         <Options opts={x.options} answer={x.answer} chosen={A[k]} render={vocMark} grid={pt.key !== "yoho" && x.options.every(o => o.length <= 9)} exam={exam}
           onPick={m => { if (review) return; const y = scrollY; const next = q.picked.map(a => [...a]); next[q.i][k] = m; q.pick(next); requestAnimationFrame(() => scrollTo(0, y));
-            if (!exam && m !== x.answer) { const w = testedWord(pt.key, x); if (w) p.onWrong(w, p.T.level); } }} />
+            if (!exam && m !== x.answer) wrong(q.i, k); }} />
         {A[k] && x.full && !exam ? <p className="voc-full">{x.full}</p> : null}{A[k] && x.why && !exam ? <p className="t-why">{x.why}</p> : null}</div>)}
       <Dock host={host} i={q.i} n={P.length} tr={p.tr} last={exam ? "Finish" : review ? "Done" : undefined}
         onGo={d => review && q.i + d >= P.length ? p.onBack() : q.go(d)} />
+    </section>
+  );
+}
+
+/* ---------------- Exam mistakes review (v182) ---------------- */
+/* The wrong question itself, options shuffled; right/wrong only. 3 rights in a row on different days clear it (src/tests/mistakes.ts).
+   A wrong answer comes back once at the end of the session (that retry doesn't count). */
+export type ReviewItem = { miss: Mistakes.Miss; title: string; part: VocabTestData["parts"][number]; x: VocQ };
+export function ExamReview(p: { items: ReviewItem[]; waiting: number; next: number; tr: Common["tr"]; onBack: () => void }) {
+  const [queue, setQueue] = useState(() => p.items.map((_, k) => ({ k, retry: false })));
+  const [pos, setPos] = useState(0);
+  const [chosen, setChosen] = useState(0);
+  const [tally, setTally] = useState({ right: 0, wrong: 0, cleared: 0 });
+  const cur = queue[pos], it = cur ? p.items[cur.k] : null;
+  const perm = useMemo(() => { const a = it ? it.x.options.map((_, i) => i) : [];
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }, [pos, queue.length]);
+  const back = <button className="nav-btn" data-back="Practice" onClick={p.onBack}>Back</button>;
+  const later = p.waiting ? <p className="exr-later">{p.tr(`${p.waiting} more come back in ${p.next} ${p.next === 1 ? "day" : "days"}.`)}</p> : null;
+  if (!p.items.length) return <section className="lsn lsn-done exr">{back}
+    <p className="exr-empty">{p.tr("Nothing to review now.")}</p>{later}</section>;
+  if (!it) return <section className="lsn lsn-done exr">{back}
+    <p className="lsn-score"><b>{tally.right}</b>{` / ${tally.right + tally.wrong}`}</p>
+    <ul className="lsn-parts"><li><span>{p.tr("Cleared")}</span><b>{tally.cleared}</b></li><li><span>{p.tr("Back tomorrow")}</span><b>{tally.wrong}</b></li></ul>
+    {later}<button type="button" className="lsn-next" onClick={p.onBack}>{p.tr("Done")}</button></section>;
+  const { x, part, miss } = it, opts = perm.map(i => x.options[i]), answer = perm.indexOf(x.answer - 1) + 1;
+  const step = miss.step;   // rights so far (before this answer)
+  const pick = (m: number) => {
+    if (chosen) return; setChosen(m); const right = m === answer;
+    if (cur.retry) return;   // the same-session retry doesn't count
+    const cleared = Mistakes.answer(miss, right);
+    setTally(t => ({ right: t.right + (right ? 1 : 0), wrong: t.wrong + (right ? 0 : 1), cleared: t.cleared + (cleared ? 1 : 0) }));
+    if (!right) setQueue(q => [...q, { k: cur.k, retry: true }]);
+  };
+  const next = () => { setPos(pos + 1); setChosen(0); scrollTo(0, 0); };
+  return (
+    <section className="rdt voc q-pad exr">
+      {back}
+      <Head part={part.ja} count={`${pos + 1} / ${queue.length}`} show={false} onOver={() => {}} tr={p.tr} />
+      <p className="exr-src"><span>{it.title}</span>{cur.retry ? <em>{p.tr("again")}</em>
+        : <span className="exr-steps" aria-label={`${step} of ${Mistakes.GAPS.length} right`}>{Mistakes.GAPS.map((_, k) => <i key={k} className={k < step ? "on" : ""} />)}</span>}</p>
+      {part.instr && <p className="voc-instr">{part.instr}</p>}
+      {part.text && <article className="rd-text voc-text">{part.text.split("\n").filter(Boolean).map((l, k) => <p key={k}>{vocMark(l)}</p>)}</article>}
+      <div className="rd-q"><p className="rd-qt"><span>{vocMark(x.q)}</span></p>
+        <Options opts={opts} answer={answer} chosen={chosen} render={vocMark} grid={part.key !== "yoho" && opts.every(o => o.length <= 9)} onPick={pick} />
+        {chosen && x.full ? <p className="voc-full">{x.full}</p> : null}{chosen && x.why ? <p className="t-why">{x.why}</p> : null}</div>
+      {chosen ? <div className="q-nav"><button type="button" className="main" onClick={next}>{p.tr(pos + 1 < queue.length ? "Next" : "Finish")}</button></div> : null}
     </section>
   );
 }

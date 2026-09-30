@@ -3,7 +3,8 @@ import { CompleteList, SectionPage, SectionsToc } from "../screens/Lists";
 import { ExtraTheme, Illustrations, PicViewer, PicturesHome, picsOf } from "../screens/Pictures";
 import { Home } from "../screens/Home";
 import { K, store } from "../data/store";
-import { ListenTest, ReadTest, TestList, VocabTest } from "../screens/Tests";
+import { ExamReview, ListenTest, ReadTest, TestList, VocabTest } from "../screens/Tests";
+import * as Mistakes from "../tests/mistakes";
 import { MovieList, Novel, Theatre } from "../screens/Movies";
 import { Prelearn, Reader, ReadingHome, Shelf, Story } from "../screens/Reading";
 import { Scene, SceneList } from "../screens/Scenes";
@@ -236,16 +237,24 @@ export async function renderExtraTheme(theme){   // one theme's extra sessions (
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
 /* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
 /* v159: tests are React screens (src/screens/Tests.tsx); answers/scores in src/tests/quiz.ts */
-/* v174: a wrong answer in a 言語知識 vocabulary question puts that word's card in the Quiz mistakes session (jc:mistakes) */
-async function addMistake(word, level){
-  const clean = w => w.replace(/[（(].*?[）)]|[〜～]/g, "").trim();
-  for(const lv of [level, level === "N1" ? "N2" : "N1"]){
-    const c = (await pgPool(lv)).words.find(x => x.word === word || clean(x.word) === clean(word));
-    if(!c) continue;
-    const all = store.get("jc:mistakes", []);
-    if(!all.some(([l, t, n]) => l === lv && t === "words" && n === c.no)) store.set("jc:mistakes", [...all, [lv, "words", c.no]]);
-    return;
+/* v182: a wrong answer in a 言語知識 question puts the question itself in Exam mistakes (src/tests/mistakes.ts) */
+const addMistake = m => Mistakes.add(m);
+/** Exam mistakes: the due questions, looked up in their tests (a question whose test changed is found by its text, or dropped). */
+export async function renderExamReview(){
+  const due = Mistakes.due(), T = {}, items = [];
+  for(const m of due){
+    try{ T[m.test] = T[m.test] || await (await fetch(`data/vocabtests/${m.test}.json`, {cache:"no-cache"})).json(); }catch(e){ continue; }
+    const t = T[m.test]; let part = m.part, item = m.item;
+    if(!t.parts[part] || !t.parts[part].items[item] || t.parts[part].items[item].q !== m.q){
+      part = t.parts.findIndex(pt => pt.items.some(x => x.q === m.q));
+      item = part < 0 ? -1 : t.parts[part].items.findIndex(x => x.q === m.q);
+    }
+    if(item < 0){ Mistakes.drop(m); continue; }
+    items.push({miss: {...m, part, item}, title: t.title || m.test, part: t.parts[part], x: t.parts[part].items[item]});
   }
+  const c = Mistakes.counts();
+  $("#pageTitle").textContent = tr("Exam mistakes");
+  showScreen(`exr-${Date.now()}`, createElement(ExamReview, {items, waiting: c.waiting, next: c.next, tr, onBack: () => { renderPG(); scrollTo(0, 0); }}));
 }
 export const TEST_KINDS = {
   lsn: {title: "Listening", index: "data/listening/index.json", back: null},

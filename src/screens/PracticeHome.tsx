@@ -18,7 +18,7 @@ export type SheetData = {
   placeholder: string;
 };
 /** A built-in session from the learning plan (a day, all cards of a level, quiz mistakes). */
-export type PlanRow = { id: string; name: string; ids: import("../practice/srs").CardRef[] };
+export type PlanRow = { id: string; name: string; ids: import("../practice/srs").CardRef[]; counts?: { n: number; l: number; d: number } };
 export type PlanData = { today: PlanRow[]; days: { lv: string; rows: PlanRow[]; current: number }[]; all: PlanRow[]; mistakes: PlanRow | null };
 export type PracticeHomeProps = {
   plan: PlanData | null;
@@ -159,7 +159,7 @@ function Progress({ p }: { p: PracticeHomeProps }) {
 function PlanItems({ p }: { p: PracticeHomeProps }) {
   const [openLv, setOpenLv] = useState<string | null>(null);
   const plan = p.plan; if (!plan) return null;
-  const row = (r: PlanRow, cls = "") => { const c = Sess.counts({ ids: r.ids, done: [] } as unknown as Session);
+  const row = (r: PlanRow, cls = "") => { const c = r.counts || Sess.counts({ ids: r.ids, done: [] } as unknown as Session);
     return <li key={r.id} className={`plan-li ${cls}`}><button type="button" className="deck" data-plan={r.id} aria-label={`${r.name}: ${c.n} new, ${c.l} learning, ${c.d} due`} onClick={() => p.onPlan(r)}>
       <span className="deck-name">{r.name}</span><Num v={c.n} c="new" /><Num v={c.l} c="learn" /><Num v={c.d} c="due" /></button></li>; };
   return <>

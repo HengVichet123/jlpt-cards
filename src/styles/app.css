@@ -2225,3 +2225,11 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .bar-end:has(.to-top.on) .hdr-icon{display:none}
 .bar-end:has(.hdr-icon) .to-top:not(.on){display:none}
 .complete-section h2.cl-title .bm-btn{margin:0 -8px 0 auto}   /* v181: bookmark at the right end of the title row */
+/* v182: Exam mistakes review — source test, and 3 dots for the rights in a row that clear a question */
+.exr-src{display:flex;align-items:center;gap:10px;margin:-6px 0 0;font:500 13px var(--body);color:var(--faint)}
+.exr-src em{margin-left:auto;font-style:normal;font-weight:700;color:var(--shu)}
+.exr-steps{margin-left:auto;display:inline-flex;gap:5px}
+.exr-steps i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--faint)}
+.exr-steps i.on{background:var(--matsu);border-color:var(--matsu)}
+.exr-empty{margin:40px 0 0;text-align:center;font:700 17px var(--body);color:var(--ink)}
+.exr-later{margin:0;text-align:center;font-size:14px;color:var(--soft)}

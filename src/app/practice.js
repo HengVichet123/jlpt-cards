@@ -11,6 +11,8 @@ import { $ } from "../app/core.js";
 import { calmMotion, grammarCard, kanjiCard, shortAnswer, wordCard } from "../cards/cards.js";
 import { isJa, tr } from "../app/i18n.js";
 import { pick, render, showScreen } from "../app/shell.js";
+import * as Mistakes from "../tests/mistakes";
+import { renderExamReview } from "../app/pages.js";
 
 /* =========================================================
    PLAYGROUND DATA
@@ -29,11 +31,13 @@ export async function planRows(){
   const lvDays = ["N1", "N2"].map(lv => { const D = days(o, lv), cur = Math.max(0, D.findIndex(unseen));
     return {lv, current: D.findIndex(unseen) < 0 ? D.length - 1 : cur, rows: D.map((ids, d) => ({id: `plan:${lv}:day${d + 1}`, name: DAY_NAME(lv, d), ids}))}; });
   const all = ["N1", "N2"].map(lv => ({id: `plan:${lv}:all`, name: `${lv} · ${tr("All cards")}`, ids: days(o, lv).flat()}));
-  const miss = store.get("jc:mistakes", []);
+  if(store.raw("jc:mistakes") !== null) store.remove("jc:mistakes");   // v182: the old word-card list is replaced by the questions themselves
+  const mc = Mistakes.counts();   // v182: exam questions (right/wrong only), not cards
   return {today: lvDays.map(d => d.rows[d.current]), days: lvDays, all,
-    mistakes: miss.length ? {id: "plan:mistakes", name: tr("Exam mistakes"), ids: miss} : null};
+    mistakes: mc.total ? {id: "plan:mistakes", name: tr("Exam mistakes"), ids: [], counts: {n: 0, l: mc.waiting, d: mc.due}} : null};
 }
 export function pgStartPlan(r){
+  if(r.id === "plan:mistakes") return renderExamReview();
   const st = pgState(); Object.assign(st, {level: "ALL", from: "plan", ids: r.ids, sid: r.id, planName: r.name});
   store.set("jc:pg", st); St.PG_NEW = false; St.SESS_EDIT = null; St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
@@ -50,8 +54,6 @@ export function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the runnin
   SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
   const p = SRS.rate(lvl, type, no, m);   // v178: Anki scheduling (Again / Hard / Good / Easy)
   if(p.state === "review") Sess.markDone([lvl, type, no]);   // graduated: done for this session
-  if(p.state === "review" && pgState().sid === "plan:mistakes")   // known now: off the Exam mistakes list
-    store.set("jc:mistakes", store.get("jc:mistakes", []).filter(([l, t, n]) => !(l === lvl && t === type && n === no)));
   renderPG();
 }
 export const pgKey = K.due, profileKey = K.profile;
