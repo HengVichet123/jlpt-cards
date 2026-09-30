@@ -1935,6 +1935,17 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn-nav .lsn-skip{margin-left:auto}
 .lsn-prev{min-height:50px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--soft);font:600 15px var(--body);cursor:pointer}
 .lsn-prev:hover{color:var(--ink);background:var(--chip)}
+/* v149: Script = a short tab joined to its box (folder tab), not a full-width bar; Previous / Next sized to their words at the two ends */
+.lsn .lsn-script{border:0;padding:0;background:none;border-radius:0}
+.lsn .lsn-script summary{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);list-style:none;font:700 14px var(--body);color:var(--soft);-webkit-tap-highlight-color:transparent}
+.lsn .lsn-script summary::-webkit-details-marker{display:none}
+.lsn .lsn-script summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s ease}
+.lsn .lsn-script[open] summary{position:relative;z-index:1;margin-bottom:-1px;border-bottom-color:var(--card);border-radius:12px 12px 0 0;color:var(--ink)}
+.lsn .lsn-script[open] summary::before{transform:rotate(45deg) translate(-2px,-2px)}
+.lsn-body{border:1px solid var(--line);border-radius:0 12px 12px 12px;background:var(--card);padding:6px 14px 12px}
+.lsn-nav{justify-content:space-between}
+.lsn-nav .lsn-next{flex:none;align-self:auto;min-width:132px;padding:0 28px;margin-left:auto}
+@media (prefers-reduced-motion: reduce){ .lsn .lsn-script summary::before{transition:none} }
 .lsn-next{align-self:stretch;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--raised);color:var(--ink);font:700 16px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .lsn-score{margin:12px 0 0;text-align:center;font:500 20px var(--body);color:var(--soft)}
 .lsn-score b{font:800 56px var(--display);color:var(--ink)}
@@ -2074,7 +2085,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v148";
+const APP_VERSION = "v149";
 
 
 /* =========================================================
@@ -4665,10 +4676,10 @@ async function renderListenTest(id){
       ${q.part.spoken && !ans ? `<p class="lsn-hear">Answers are only heard. Pick a number.</p>` : ""}
       <ol class="lsn-opts${q.part.spoken && !ans ? " lsn-nums" : ""}">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span>${q.part.spoken && !ans ? "" : `<span>${esc(o)}</span>`}</button></li>`).join("")}</ol>
       ${ans && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}
-      <details class="lsn-script" id="lsnScript"${scriptOpen ? " open" : ""}><summary>Script</summary>
+      <details class="lsn-script" id="lsnScript"${scriptOpen ? " open" : ""}><summary>Script</summary><div class="lsn-body">
         ${q.intro ? line(0, "lsn-nar", esc(q.intro)) : ""}
         ${q.lines.map(([spk, t], k) => line(q.at ? q.at[k] : null, "", `${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}`)).join("")}
-        ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</details>
+        ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</div></details>
       <div class="lsn-nav">${i ? `<button type="button" class="lsn-prev" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
         <button type="button" class="${ans ? "lsn-next" : "lsn-skip"}" id="lsnNext">${i + 1 < Q.length ? (ans ? "Next" : "Skip") : "See result"}</button></div>
     </section>`;
