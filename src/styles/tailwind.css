@@ -1,0 +1,5 @@
+/* Tailwind utilities only: no preflight reset, so the existing design is untouched.
+   Layered CSS loses to the unlayered app.css, so utilities never override current styles by accident. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);

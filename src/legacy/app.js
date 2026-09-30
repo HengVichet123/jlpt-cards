@@ -1,0 +1,3692 @@
+
+
+/* =========================================================
+   APP VERSION
+   ========================================================= */
+
+const APP_VERSION = "v153";
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+const $ = s =>
+  document.querySelector(s);
+
+
+const esc = s =>
+  String(s ?? "").replace(
+    /[&<>"]/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;"
+    }[c])
+  );
+
+
+function hl(text,targets){
+
+  let out = esc(text);
+
+  for(
+    const t of [].concat(targets)
+      .filter(Boolean)
+      .sort((a,b) => b.length-a.length)
+  ){
+
+    const e = esc(t);
+
+    if(out.includes(e)){
+
+      out =
+        out.split(e).join(
+          `<b class="hl">${e}</b>`
+        );
+
+      break;
+
+    }
+
+  }
+
+  return out;
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
+   ========================================================= */
+
+const store = {
+
+  get(k,d){
+
+    try{
+
+      const v =
+        localStorage.getItem(k);
+
+      return v
+        ? JSON.parse(v)
+        : d;
+
+    }catch(e){
+
+      return d;
+
+    }
+
+  },
+
+
+  set(k,v){
+
+    try{
+
+      localStorage.setItem(
+        k,
+        JSON.stringify(v)
+      );
+
+    }catch(e){}
+
+  }
+
+};
+
+
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
+
+let INDEX = [];
+
+let DATA = null;
+
+let TAB =
+  new URLSearchParams(location.search)
+    .get("tab")
+  ||
+  store.get(
+    "jc:tab",
+    "words"
+  );
+
+let ONLY_WEAK =
+  store.get(
+    "jc:weak",
+    false
+  );
+
+
+/* =========================================================
+   DOTS
+   ========================================================= */
+
+function dotsKey(type,no){
+
+  return `jc:dots:${DATA.level}:${type}:${no}`;
+
+}
+
+
+function dotsHTML(type,no){
+
+  const v =
+    store.get(
+      dotsKey(type,no),
+      [0,0,0]
+    );
+
+  return `
+
+    <div
+      class="dots"
+      data-type="${type}"
+      data-no="${no}"
+    >
+
+      ${
+        v.map(
+          (on,i) =>
+            `<div
+              class="dot${on ? " on" : ""}"
+              data-i="${i}"
+            ></div>`
+        ).join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   EXAMPLES
+   ========================================================= */
+
+/* compact 例 line (his preferred style): 「例： sentence」, tap shows English */
+function exLine(e, target){
+  const src = e.url ? ` <a class="exsrc" href="${esc(e.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${e.src && e.src.startsWith("Wikipedia") ? "Wikipedia" : esc(e.src || "source")}</a>` : "";
+  return `<div class="ex exc"><span class="rei">例：</span>${hl(e.jp, target)}${e.en || src ? `<div class="tr">${e.en ? esc(e.en) : ""}${src}</div>` : ""}</div>`;
+}
+
+function exHTML(e,targets){
+
+
+  const tr =
+    e.en
+      ? esc(e.en)
+      : "-";
+
+
+  const src =
+    e.url
+      ? ` · <a
+            href="${esc(e.url)}"
+            target="_blank"
+            rel="noopener"
+          >${esc(e.src||"source")}</a>`
+      : "";
+
+
+  return `
+
+    <div class="ex">
+
+      <span class="tip">
+        EN
+      </span>
+
+      ${
+        e.src &&
+        e.src.startsWith("Wikipedia")
+          ? "🌐 "
+          : ""
+      }
+
+      ${hl(e.jp,targets)}
+
+      <div class="tr">
+        ${tr}${src}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function srcLine(label,url){
+
+  return `
+
+    <div class="src">
+
+      ${esc(label)}
+
+      ${
+        url
+          ? ` · <a
+                href="${esc(url)}"
+                target="_blank"
+                rel="noopener"
+              >link</a>`
+          : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   WORD CARD
+   ========================================================= */
+
+/* 大辞泉 entries can be very long (手 = 1,468 chars). Show meaning 1 only (cut before 「２」), capped ~120 chars
+   at a sentence end; the full verbatim entry stays one tap away. Nothing is rewritten. */
+function defHTML(text, target){
+  return `<div class="jp">${hl(text, target)}</div>`;
+}
+
+function wordCard(c){
+
+  const back = [
+
+    c.img
+      ? `<img
+          class="img"
+          loading="lazy"
+          src="${esc(c.img)}"
+          alt=""
+        >`
+      : "",
+
+
+    `<h4>English</h4>
+
+     <div class="en">
+       ${esc(c.en)}
+     </div>`,
+
+
+    c.jp
+      ? `<h4>大辞泉</h4>
+
+         ${defHTML(c.jp, c.word)}
+
+         ${srcLine(
+           "デジタル大辞泉 (Kotobank)",
+           c.jpUrl
+         )}`
+      : "",
+
+
+    (c.ex && c.ex.length) || c.use
+      ? `<h4>例文</h4>
+         ${[...(c.ex || []), ...(c.use ? [c.use] : [])].map(e => exLine(e, c.word)).join("")}`
+      : ""
+
+  ].join("");
+
+
+  return card(
+    "w",
+    c.no,
+
+    `<div class="rd">
+       ${esc(c.reading)}
+     </div>
+
+     <div class="big">
+       ${esc(c.word)}${sayIcon(c.word)}
+     </div>`,
+
+    back,
+
+    c.level
+  );
+
+}
+
+
+/* =========================================================
+   KANJI CARD
+   ========================================================= */
+
+function kanjiCard(c){
+
+  const words =
+    c.words.length
+
+      ? `<h4>言葉</h4>
+
+         <ul class="w">
+
+           ${
+             c.words.map(
+               w =>
+                 `<li>
+
+                    ${hl(
+                      w.w,
+                      c.kanji
+                    )}
+
+                    （${esc(w.r)}）
+                    : ${esc(w.m)}
+
+                    ${
+                      w.ex
+                        ? exLine({jp:w.ex, en:w.exEn, url:w.exUrl, src:w.exUrl ? "Tatoeba" : ""}, c.kanji).replace('class="ex exc"', 'class="ex exc exl"')
+                        : ""
+                    }
+
+                  </li>`
+             ).join("")
+           }
+
+         </ul>`
+
+      : "";
+
+
+  const back = [
+
+    `<h4>読み</h4>
+
+     <div>
+
+       音
+       <b>
+         ${esc(
+           c.on.join("・") || "-"
+         )}
+       </b>
+
+      　
+       訓
+       <b>
+         ${esc(
+           c.kun.join("・") || "-"
+         )}
+       </b>
+
+      　
+       <span class="src">
+         ${c.strokes}画
+       </span>
+
+     </div>`,
+
+
+    `<h4>意味</h4>
+
+     <div class="en">
+       ${esc(c.en)}
+     </div>`,
+
+
+    c.jp
+      ? `${defHTML(c.jp, c.kanji)}
+
+         ${srcLine(
+           "デジタル大辞泉［漢字項目］",
+           c.jpUrl
+         )}`
+      : "",
+
+
+    words,
+
+
+    c.use
+      ? `<h4>例文</h4>
+         ${exLine(
+           c.use,
+           c.kanji
+         )}`
+      : ""
+
+  ].join("");
+
+
+  const rd =
+    [
+      c.on.join("・"),
+      c.kun.join("・")
+    ]
+    .filter(Boolean)
+    .join(" · ");
+
+
+  return card(
+    "k",
+    c.no,
+
+    `<div class="rd">
+       ${esc(rd)}
+     </div>
+
+     <div class="big">
+       ${esc(c.kanji)}
+     </div>`,
+
+    back,
+
+    c.level
+  );
+
+}
+
+
+/* =========================================================
+   GRAMMAR CARD
+   ========================================================= */
+
+function grammarCard(c){
+
+  const back = [
+
+    c.en
+      ? `<h4>English</h4>
+
+         <div class="en">
+           ${esc(c.en)}
+         </div>`
+      : "",
+
+
+    c.imi.length
+      ? `<h4>意味</h4>
+
+         ${
+           c.imi
+             .map(
+               x =>
+                 `<div>${esc(x)}</div>`
+             )
+             .join("")
+         }`
+      : "",
+
+
+    c.setsuzoku.length
+      ? `<h4>接続</h4>
+
+         <code>
+           ${esc(
+             c.setsuzoku.join(" / ")
+           )}
+         </code>`
+      : "",
+
+
+    c.rei.length
+      ? `<h4>
+           例文
+           <span class="src">
+             (tap for English)
+           </span>
+         </h4>
+
+         ${
+           c.rei
+             .map(
+               e =>
+                 exLine(
+                   e,
+                   c.variants
+                 )
+             )
+             .join("")
+         }`
+      : "",
+
+
+    srcLine(
+      "日本語教師NET",
+      c.url
+    )
+
+  ].join("");
+
+
+  return card(
+    "g",
+    c.no,
+
+    `<div class="rd"></div>
+
+     <div class="big">
+       ${esc(c.pattern)}
+     </div>`,
+
+    back,
+
+    c.level
+  );
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+function card(
+  t,
+  no,
+  head,
+  back,
+  level
+){
+
+  const type = {
+    w:"words",
+    k:"kanji",
+    g:"grammar"
+  }[t];
+
+
+  return `
+
+    <div
+      class="card ${t}"
+      data-type="${type}"
+      data-no="${no}"
+    >
+
+      <div class="front">
+
+        <div class="head">
+
+          ${
+            head.replace(
+              '<div class="rd">',
+              `<div class="rd">
+
+                 <span class="num">
+                   #${t.toUpperCase()}${no}
+                 </span>　
+
+               `
+            )
+          }
+
+        </div>
+
+
+        ${dotsOrButtons(type,no)}
+
+      </div>
+
+
+      <div class="back">
+        ${back}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   PLAYGROUND DATA
+   ========================================================= */
+
+const PG = {
+  pool:{},
+  now:() => Date.now()
+};
+
+
+/* Undo in a practice run: each rating saves what it changes (card profile, due time, session) so it can be put back */
+const PG_UNDO = [];
+function pgSnap(lvl, t, no){
+  const keys = [profileKey(lvl, t, no), pgKey(lvl, t, no), "jc:sessions"], snap = {sid: pgState().sid, v: {}};
+  try{ for(const k of keys) snap.v[k] = localStorage.getItem(k); }catch(e){ return; }
+  PG_UNDO.push(snap); if(PG_UNDO.length > 30) PG_UNDO.shift();
+}
+const pgCanUndo = () => PG_UNDO.length && PG_UNDO[PG_UNDO.length - 1].sid === pgState().sid;
+function pgUndo(){
+  if(!pgCanUndo()) return;
+  const snap = PG_UNDO.pop();
+  try{ for(const [k, v] of Object.entries(snap.v)) v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){}
+  NAV_SAME = true; renderPG();
+}
+const pgKey =
+  (lvl,t,no) =>
+    `jc:due:${lvl}:${t}:${no}`;
+
+
+const profileKey =
+  (lvl,t,no) =>
+    `jc:profile:${lvl}:${t}:${no}`;
+
+
+function pgProfile(lvl,t,no){
+
+  const oldDue =
+    store.get(
+      pgKey(lvl,t,no),
+      null
+    );
+
+
+  return store.get(
+    profileKey(lvl,t,no),
+
+    {
+      familiarity:0,
+      reviews:0,
+      correct:0,
+      incorrect:0,
+      dueAt:oldDue || 0
+    }
+
+  );
+
+}
+
+
+const PG_LOADING = {};
+function pgPool(level){   // one load per level, shared by everyone asking while it runs
+  if(PG.pool[level]) return Promise.resolve(PG.pool[level]);
+  return PG_LOADING[level] || (PG_LOADING[level] = pgPoolLoad(level).finally(() => delete PG_LOADING[level]));
+}
+async function pgPoolLoad(level){
+
+  if(level === "ALL"){   // build from the per-level pools (loaded once each)
+    const a = await pgPool("N1"), b = await pgPool("N2"), m = {};
+    for(const t of ["words","kanji","grammar"]) m[t] = [...a[t], ...b[t]];
+    return PG.pool.ALL = m;
+  }
+
+
+  const pool = {
+    words:[],
+    kanji:[],
+    grammar:[]
+  };
+
+
+  // all lesson files of the level in parallel (was one-by-one: ~30 round trips in a row on a phone)
+  const files = INDEX.filter(i => i.level === level);
+  const got = await Promise.all(files.map(x =>
+    fetch(`data/${x.id}.json`, {cache:"no-cache"})   // revalidate: card updates show up right away
+      .then(r => r.json()).then(d => [x, d]).catch(() => null)));
+  for(const g of got){
+    if(!g) continue;
+    const [x, d] = g;
+    for(const t of ["words","kanji","grammar"])
+      pool[t].push(...(d[t] || []).map(c => ({...c, level:x.level})));
+  }
+
+
+  for(const t of ["words","kanji","grammar"])
+    pool[t].sort((a, b) => a.level.localeCompare(b.level) || a.no - b.no);
+
+  return PG.pool[level] =
+    pool;
+
+}
+
+
+/* Sections: N1/N2 words grouped by meaning (分類語彙表), like chapters in a textbook */
+let SECTIONS = null;
+async function loadSections(){
+  if(!SECTIONS){ try{ SECTIONS = await (await fetch("data/sections.json", {cache:"no-cache"})).json(); }catch(e){ SECTIONS = {N1:[], N2:[]}; } }
+  return SECTIONS;
+}
+/* Pre-learn readings: a real text + the list of our cards it uses */
+const READINGS = {};
+async function loadReading(id){
+  if(!READINGS[id]) READINGS[id] = await (await fetch(`data/readings/${id}.json`, {cache:"no-cache"})).json();
+  return READINGS[id];
+}
+const secSeen = (lvl, s) => s.words.filter(no => pgProfile(lvl, "words", no).reviews).length;
+
+function pgState(){
+
+  return store.get(
+    "jc:pg",
+
+    {
+      level:"ALL",
+
+      n:{
+        words:10,
+        kanji:5,
+        grammar:2
+      },
+
+      ids:[]
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   NEW PLAYGROUND SESSION
+   ========================================================= */
+
+/* Saved sessions (this device): every started Practice is kept until all its cards are done, so it can be continued */
+const SESS_MAX = 30;
+const sessList = () => store.get("jc:sessions", []);
+const sessTodo = se => se.ids.filter(([lvl, t, no]) => !(se.done || []).includes(`${lvl}:${t}:${no}`));   // Easy = done for this session
+const sessLeft = se => sessTodo(se).length;
+function sessDone(lvl, t, no){ const st = pgState(), se = st.sid && sessList().find(x => x.id === st.sid);
+  if(se){ se.done = [...new Set([...(se.done || []), `${lvl}:${t}:${no}`])]; se.at = Date.now(); sessSave(se); } }
+function sessOpen(){ return sessList().filter(se => sessLeft(se) > 0); }
+function sessSave(se){ const all = sessList(), i = all.findIndex(x => x.id === se.id); if(i >= 0) all[i] = se; else all.unshift(se);
+  all.sort((a, b) => (b.at || 0) - (a.at || 0)); store.set("jc:sessions", all.slice(0, SESS_MAX)); }
+function sessDrop(id){ store.set("jc:sessions", sessList().filter(x => x.id !== id)); }
+function sessResume(id){
+  const se = sessList().find(x => x.id === id); if(!se) return;
+  const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id});
+  store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
+  PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+}
+let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null, SESS_ALL = false;   // SESS_ALL: Continue list expanded   // on the New session page? which row is being renamed? last deleted (for Undo)
+const sessName = se => se.name || se.label;
+const sessDay = () => { const d = new Date(); return `${d.getMonth() + 1}/${d.getDate()}`; };
+function sessAutoName(title){ const st = pgState();
+  return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${sessDay()}`; }
+function pgDueIds(){   // every card whose review time has come (jc:due:<lvl>:<type>:<no>)
+  const ids = [], now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:") && +localStorage.getItem(k) <= now){ const [, , lvl, t, no] = k.split(":"); ids.push([lvl, t, +no]); } } }catch(e){}
+  return ids.slice(0, 50);
+}
+async function pgQuickIds(n){ const pool = await pgPool("ALL"), ids = [];
+  for(const c of pool.words){ if(!pgProfile(c.level, "words", c.no).reviews){ ids.push([c.level, "words", c.no]); if(ids.length >= n) break; } }
+  return ids; }
+function pgStartWith(ids, label){
+  if(!ids.length) return;
+  const st = pgState(); Object.assign(st, {level: "ALL", from: "all", ids, sid: "s" + Date.now()});
+  sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
+  store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+}
+function sessCounts(se){   // Anki-style: New = never reviewed, Learn = seen but coming back soon, Due = review time has come
+  const done = new Set(se.done || []), now = Date.now(); let n = 0, l = 0, d = 0;
+  for(const [lvl, t, no] of se.ids){ if(done.has(`${lvl}:${t}:${no}`)) continue;
+    const p = pgProfile(lvl, t, no); if(!p.reviews) n++; else if((p.dueAt || 0) > now) l++; else d++; }
+  return {n, l, d};
+}
+function pgSheet(html){   // New session = a card sliding in from the right; the Practice list is nudged aside behind it
+  let sh = $("#pgSheet");
+  if(!html){ pgSheetClose(); return; }
+  if(!sh){
+    document.body.insertAdjacentHTML("beforeend", `<div id="pgScrim" class="pg-scrim"></div><aside id="pgSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="New session">
+      <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="pgSheetX" aria-label="Close">‹</button><b>${isJa() ? "新しいセッション" : "New session"}</b></div>
+      <div class="pg-sheet-body play-setup"></div></aside>`);
+    sh = $("#pgSheet");
+    const close = () => { PG_NEW = false;   // opened from Cards / a section: leaving the sheet = going back there (v147: the scrim covered the header back link, so one tap only closed the sheet)
+      if(PG_RETURN){ pgSheetClose(true); NAV_DIR = "back"; PG_RETURN.go(); } else pgSheetClose(); };
+    $("#pgScrim").onclick = close; $("#pgSheetX").onclick = close;
+    let x0 = null;   // swipe right closes it
+    sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+    sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
+    requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+  }
+  sh.querySelector(".pg-sheet-body").innerHTML = html;
+  if(isJa()) jaWalk(sh);
+}
+function pgSheetClose(instant){
+  const sh = $("#pgSheet"), sc = $("#pgScrim"); if(!sh) return;
+  document.body.classList.remove("sheet-open");
+  const gone = () => { sh.remove(); sc && sc.remove(); };
+  if(instant || calmMotion()) gone(); else setTimeout(gone, 320);
+}
+function pgDockLift(){   // move the bottom dock out of #list (page transitions transform #list, which drags fixed children along)
+  document.querySelectorAll("body > .pg-dock").forEach(d => d.remove());
+  const d = $("#list .pg-dock"); if(d) document.body.appendChild(d);
+}
+function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); if(PG_RUNNING || CURRENT !== "playground") pgSheetClose(true); }
+function pgHome(){
+  const has = sessOpen().length > 0;
+  const ghost = `<div class="deck-table"><div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
+    [1, 2, 3].map(i => `<li><button type="button" class="deck ghost" data-act="new" aria-label="Empty. Start a new session"><span class="deck-name">${isJa() ? "空のセッション" : "Empty session"}</span><span class="deck-n">0</span><span class="deck-n">0</span><span class="deck-n">0</span></button></li>`).join("")}</ul></div>`;
+  return `${has || SESS_UNDO ? sessLedger() : ghost}
+    <div class="pg-dock"><div class="pg-dock-in">
+      <button type="button" class="pg-act" data-act="quick">${isJa() ? "クイック10" : "Quick 10"}</button>
+      <button type="button" class="pg-act main" data-act="new">${isJa() ? "新規" : "New session"}</button>
+      <button type="button" class="pg-act" data-act="random">${isJa() ? "ランダム" : "Random"}</button>
+    </div></div>`;
+}
+function sessLedger(){
+  const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 6, hidden = Math.max(0, all.length - SHOW);
+  const editing = false, vis = SESS_ALL ? all : all.filter((se, i) => i < SHOW || se.id === SESS_EDIT);
+  const num = (v, c) => `<span class="deck-n ${c}${v ? "" : " zero"}">${v}</span>`;
+  const TOOL = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z M14 6l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  const rows = vis.map(se => {   // one row at a time is renamed, in place, from its own tool icon
+    const c = sessCounts(se);
+    if(se.id === SESS_EDIT) return `<li class="renaming" data-sid="${se.id}"><div class="deck"><span class="deck-name" contenteditable="plaintext-only" spellcheck="false" enterkeyhint="done" aria-label="Session name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</div><button type="button" class="deck-tool deck-bin" aria-label="Delete ${esc(sessName(se))}"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></button></li>`;
+    return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button><button type="button" class="deck-tool" data-edit="${se.id}" aria-label="Rename ${esc(sessName(se))}">${TOOL}</button></li>`; });
+  if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
+  return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div>`}
+    <ul class="deck-list">${rows.join("")}</ul></div>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
+}
+function sessRedraw(){ NAV_SAME = true; return renderPG(); }
+function sessSaveNames(){ document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
+  const se = sessList().find(x => x.id === li.dataset.sid); if(!se) return; const v = li.querySelector("input").value.trim();
+  const nm = !v || v === se.label ? "" : v; if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }); }
+function sessWire(){
+  document.querySelectorAll(".deck[data-sid]").forEach(b => b.onclick = () => sessResume(b.dataset.sid));
+  document.querySelectorAll(".deck-tool[data-edit]").forEach(b => b.onclick = e => { e.stopPropagation(); SESS_EDIT = b.dataset.edit;
+    sessRedraw().then(() => { const n = $(".renaming .deck-name"); if(!n) return; n.focus();
+      const r = document.createRange(); r.selectNodeContents(n); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }); });
+  const rn = $(".renaming");
+  if(rn){
+    const id = rn.dataset.sid, name = rn.querySelector(".deck-name"); let bin = false;
+    const commit = () => { if(SESS_EDIT !== id) return; const se = sessList().find(x => x.id === id);
+      if(se){ const v = name.textContent.replace(/\s+/g, " ").trim().slice(0, 40); const nm = !v || v === se.label ? "" : v;
+        if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }
+      SESS_EDIT = null; sessRedraw(); };
+    name.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); name.blur(); } if(e.key === "Escape"){ name.textContent = sessName(sessList().find(x => x.id === id) || {}); name.blur(); } };
+    name.onblur = () => { if(!bin) commit(); };
+    const b = rn.querySelector(".deck-bin");
+    b.onpointerdown = () => { bin = true; };
+    b.onclick = () => {
+      const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
+      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); SESS_EDIT = null; sessRedraw();
+      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
+    };
+  }
+  document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
+    const id = li.dataset.sid, finish = () => { sessSaveNames(); SESS_EDIT = null; sessRedraw(); };
+    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") finish(); if(e.key === "Escape"){ SESS_EDIT = null; sessRedraw(); } };
+    li.querySelector(".deck-done").onclick = finish;
+    li.querySelector(".deck-del").onclick = () => {
+      sessSaveNames();
+      const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
+      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); SESS_EDIT = null; sessRedraw();
+      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
+    };
+  });
+  if($(".sess-more")) $(".sess-more").onclick = () => { SESS_ALL = !SESS_ALL; sessRedraw(); };
+  const u = $(".sess-undo-btn");
+  if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); sessRedraw(); } };
+}
+function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
+async function pgNew(){
+
+  const st =
+    pgState();
+
+
+  st.level =
+    $("#pgLevel").value;
+
+
+  for(
+    const t of [
+      "words",
+      "kanji",
+      "grammar"
+    ]
+  ){
+
+    if($(`#pg_${t}`)) st.n[t] =
+      Math.max(
+        0,
+        +$(`#pg_${t}`).value || 0
+      );
+
+  }
+
+
+  const pool =
+    await pgPool(
+      st.level
+    );
+
+
+  // Section mode: words only, from the chosen section
+  let secNos = null, secPool = null;
+  if(st.from === "section" && st.section){
+    const S = await loadSections(), lv = st.section.split("-")[0], sec = (S[lv] || []).find(x => x.id === st.section);
+    if(sec){ secNos = new Set(sec.words); st.level = lv; secPool = await pgPool(lv); }
+  }
+
+  let rdSet = null, rdPool = null;
+  if(st.from === "reading" && st.reading){
+    const R = await loadReading(st.reading);
+    rdSet = {}; for(const t of ["words","kanji","grammar"]) rdSet[t] = new Set(R[t].map(x => x[0] + ":" + x[1]));
+    rdPool = await pgPool("ALL");
+  }
+
+  st.ids = [];
+
+
+  for(
+    const t of [
+      "words",
+      "kanji",
+      "grammar"
+    ]
+  ){
+
+    if(secNos && t !== "words") continue;
+    const candidates =
+      (rdSet ? rdPool[t].filter(c => rdSet[t].has(c.level + ":" + c.no)) : secNos ? secPool[t].filter(c => secNos.has(c.no)) : pool[t])
+
+        .filter(
+          c => {
+
+            const p =
+              pgProfile(
+                c.level,
+                t,
+                c.no
+              );
+
+
+            return (
+              !p.dueAt ||
+              p.dueAt <= PG.now()
+            );
+
+          }
+        )
+
+        .sort(
+          (a,b) =>
+
+            pgProfile(
+              a.level,
+              t,
+              a.no
+            ).familiarity
+
+            -
+
+            pgProfile(
+              b.level,
+              t,
+              b.no
+            ).familiarity
+        );
+
+
+    candidates
+      .slice(0,st.n[t])
+      .forEach(
+        c =>
+          st.ids.push([
+            c.level,
+            t,
+            c.no
+          ])
+      );
+
+  }
+
+
+  let label = isJa() ? "全カード" : "All cards";
+  if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
+  if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
+  st.sid = "s" + Date.now(); PG_NEW = false; SESS_EDIT = null;
+  const nm = (($("#pgName") || {}).value || "").trim();
+  if(st.ids.length) sessSave({id: st.sid, name: nm, start: Date.now(), at: Date.now(), label: sessAutoName(label === (isJa() ? "全カード" : "All cards") ? null : label), level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
+  store.set("jc:pg", st);
+  PG_RUNNING = true;
+
+  renderPG();
+
+}
+
+
+/* =========================================================
+   RENDER PLAYGROUND
+   ========================================================= */
+
+async function renderPG(){
+  pgDockDrop();
+
+  document.body.classList.toggle(
+    "playing",
+    PLAY && PG_RUNNING
+  );
+
+
+  const st =
+    pgState();
+
+
+  const pool =
+    await pgPool(
+      st.level
+    );
+
+
+  const now =
+    PG.now();
+
+
+  if(!PG_RUNNING){
+
+    DATA = {
+      level:st.level
+    };
+
+
+    if(st.from === "section"){   // saved section may be gone (sections rebuilt) or from the other level -> first one
+      const S0 = await loadSections(), lvls0 = st.level === "ALL" ? ["N1","N2"] : [st.level];
+      const ok = st.section && lvls0.includes(st.section.split("-")[0]) && S0[st.section.split("-")[0]].some(x => x.id === st.section);
+      if(!ok){ st.section = (S0[lvls0[0]][0] || {}).id; store.set("jc:pg", st); }
+    }
+    const secSet = st.from === "section" && st.section ? new Set(((await loadSections())[st.section.split("-")[0]].find(x => x.id === st.section) || {words:[]}).words) : null;
+    const inRead = st.from === "reading" && st.reading;
+    let rdInfo = null, rdKeys = null;
+    if(inRead){
+      rdInfo = await loadReading(st.reading);
+      rdKeys = {}; for(const t of ["words","kanji","grammar"]) rdKeys[t] = new Set(rdInfo[t].map(x => x[0] + ":" + x[1]));
+    }
+    const pool2 = inRead ? await pgPool("ALL") : pool;
+    const newLeft = t => inRead ? pool2[t].filter(c => rdKeys[t].has(c.level + ":" + c.no) && !pgProfile(c.level, t, c.no).reviews).length : pool[t].filter(c => (!secSet || (t === "words" && secSet.has(c.no) && c.level === st.section.split("-")[0])) && !pgProfile(c.level || st.level, t, c.no).reviews).length;
+    const row = (t, glyph, name) => `
+          <div class="set-row">
+            <div class="set-name"><span class="set-glyph">${glyph}</span><span><b>${name}</b><small>${newLeft(t)} new left</small></span></div>
+            <div class="stepper" data-t="${t}">
+              <button type="button" data-d="-1" aria-label="Fewer ${name}">−</button>
+              <output id="out_${t}">${st.n[t]}</output>
+              <button type="button" data-d="1" aria-label="More ${name}">+</button>
+            </div>
+            <input id="pg_${t}" type="hidden" value="${st.n[t]}">
+          </div>`;
+    const inSec = st.from === "section";
+
+    let secOptions = "";
+    if(inSec){
+      const S = await loadSections();
+      const lvls = st.level === "ALL" ? ["N1","N2"] : [st.level];
+      if(!st.section || !lvls.includes(st.section.split("-")[0])){ st.section = (S[lvls[0]][0] || {}).id; store.set("jc:pg", st); }
+      secOptions = lvls.map(lv => `<optgroup label="${lv}">${S[lv].map((s, i) =>
+        `<option value="${s.id}"${s.id === st.section ? " selected" : ""}>${i + 1}. ${esc(s.name)}${s.en ? ` (${esc(s.en)})` : ""} · ${secSeen(lv, s)}/${s.words.length}</option>`).join("")}</optgroup>`).join("");
+    }
+    const total = inSec ? st.n.words : st.n.words + st.n.kanji + st.n.grammar;
+
+    const setup = `
+
+      <section class="play-setup pg-home">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
+        ${pgHome()}</section>`;
+    const form = !PG_NEW ? "" : `<div class="pg-new">
+
+
+
+        <div class="set-label">Level</div>
+        <div class="seg" role="radiogroup">
+          ${["ALL","N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===st.level}" class="${l===st.level?"on":""}" data-l="${l}">${l}</button>`).join("")}
+        </div>
+        <select id="pgLevel" hidden>${["ALL","N1","N2"].map(l => `<option value="${l}"${l===st.level?" selected":""}>${l}</option>`).join("")}</select>
+
+        <div class="set-label">From</div>
+        <div class="seg ${st.reading ? "" : "seg-2"}" id="pgFrom" role="radiogroup">
+          ${[["all","All cards"],["section","Section"], ...(st.reading ? [["reading","Reading"]] : [])].map(([v,l]) => `<button type="button" role="radio" aria-checked="${(st.from||"all")===v}" class="${(st.from||"all")===v?"on":""}" data-from="${v}">${l}</button>`).join("")}
+        </div>
+        ${inSec ? `<select id="pgSection" class="sec-select">${secOptions}</select>` : ""}
+        ${inRead ? `<div class="rd-from">📖 <b>${esc(rdInfo.title)}</b> <span>${rdInfo.words.length} words · ${rdInfo.kanji.length} kanji · ${rdInfo.grammar.length} grammar</span></div>` : ""}
+
+        <div class="set-label">Cards per session</div>
+        <div class="set-rows">
+          ${row("words","語","Words")}
+          ${inSec ? "" : row("kanji","字","Kanji")}
+          ${inSec ? "" : row("grammar","文","Grammar")}
+        </div>
+
+        <div class="set-label"><label for="pgName">Name</label></div>
+        <input id="pgName" class="pg-name" maxlength="40" autocomplete="off" placeholder="${esc(sessAutoName(inRead ? rdInfo.title : null))}">
+        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>`;
+
+
+    $("#list").innerHTML =
+      setup;
+    pgSheet(form);
+
+
+    $("#count").textContent =
+      `Practice · ${st.level}`;
+
+
+    document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(btn => btn.onclick = () => {
+      document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(x => { x.classList.toggle("on", x === btn); x.setAttribute("aria-checked", x === btn); });
+      $("#pgLevel").value = btn.dataset.l;
+      const cur = pgState(); cur.level = btn.dataset.l; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
+    });
+    document.querySelectorAll(".stepper button").forEach(btn => btn.onclick = () => {
+      const t = btn.parentElement.dataset.t, inp = $(`#pg_${t}`);
+      const v = Math.max(0, Math.min(99, (+inp.value || 0) + (+btn.dataset.d)));
+      inp.value = v; $(`#out_${t}`).textContent = v;
+      const cur = pgState(); cur.n[t] = v; store.set("jc:pg", cur);
+      $("#pgTotal").textContent = ["words","kanji","grammar"].reduce((n,k) => n + (+($(`#pg_${k}`) || {}).value || 0), 0);
+    });
+
+    document.querySelectorAll("#pgFrom button").forEach(btn => btn.onclick = () => {
+      const cur = pgState(); cur.from = btn.dataset.from; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
+    });
+    if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); NAV_SAME = true; renderPG(); };
+    if($("#pgGo")) $("#pgGo").onclick = pgNew;
+    $("#pageTitle").textContent = "Practice";
+    pgDockLift();
+
+    document.querySelectorAll(".pg-act, .deck.ghost").forEach(b => b.onclick = async () => {
+      const a = b.dataset.act;
+      if(a === "new"){ PG_NEW = true; NAV_SAME = true; renderPG(); return; }
+      if(a === "edit"){ if(SESS_EDIT === "all") sessSaveNames(); SESS_EDIT = SESS_EDIT === "all" ? null : "all"; sessRedraw(); return; }
+      if(a === "quick") pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`);
+    });
+    sessWire();
+    if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
+
+
+    return;
+
+  }
+
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  };
+
+
+  const live = [];
+  const later = [];
+
+
+  for(
+    const [lvl,t,no] of st.ids
+  ){
+
+    const c =
+      pool[t].find(
+        x =>
+          x.level === lvl &&
+          x.no === no
+      );
+
+
+    if(!c)
+      continue;
+
+
+    const due =
+      pgProfile(
+        lvl,
+        t,
+        no
+      ).dueAt || 0;
+
+
+    (
+      due <= now
+        ? live
+        : later
+    ).push([
+      lvl,
+      t,
+      c,
+      due
+    ]);
+
+  }
+
+
+  DATA = {
+    level:st.level
+  };
+
+
+  const current =
+    live[0];
+
+
+  const buckets = [
+
+    [
+      "Now",
+      live.length
+    ],
+
+    [
+      "3m",
+      later.filter(
+        x =>
+          x[3] - now <=
+          3 * 60000
+      ).length
+    ],
+
+    [
+      "10m",
+      later.filter(
+        x =>
+          x[3] - now <=
+          10 * 60000
+      ).length
+    ],
+
+    [
+      "1d",
+      later.filter(
+        x =>
+          x[3] - now <=
+          1440 * 60000
+      ).length
+    ]
+
+  ];
+
+
+  const cardHTML =
+    current
+
+      ? shortAnswer(current[1], current[2], make[current[1]](
+          current[2]
+        )).replace(
+          '<div class="card ',
+          '<div class="card play-card '
+        )
+
+      : `
+
+        <div class="play-empty">
+
+          <h2>
+            Session complete
+          </h2>
+
+          <p>
+            All cards are resting.
+          </p>
+
+        </div>
+
+      `;
+
+
+  const ratings =
+    current
+
+      ? `
+
+        <div
+          class="play-ratings"
+          data-level="${current[0]}"
+          data-type="${current[1]}"
+          data-no="${current[2].no}"
+        >
+
+          <button data-m="3">
+
+            Again
+
+            <span>
+              3 min
+            </span>
+
+          </button>
+
+
+          <button data-m="10">
+
+            Hard
+
+            <span>
+              10 min
+            </span>
+
+          </button>
+
+
+          <button data-m="1440">
+
+            Easy
+
+            <span>
+              1 day
+            </span>
+
+          </button>
+
+        </div>
+        <div class="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy · Z undo</div>
+
+      `
+
+      : "";
+
+
+  const queue = `<div class="play-queue"><span><b>${live.length}</b> to go</span>${later.length ? `<span class="pq-later">${later.length} coming back</span>` : ""}</div>`;
+
+
+  $("#list").innerHTML = `
+
+    <div class="play-screen">
+
+      <div class="play-bar pg-bottom">
+        <div class="play-top">${queue}<button type="button" class="pg-undo" id="pgUndo" aria-label="Undo last answer" ${pgCanUndo() ? "" : "disabled"}><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
+        <button class="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
+      </div>
+
+
+      <div class="play-stage">
+
+        ${cardHTML}
+
+      </div>
+
+
+      ${ratings}
+
+    </div>
+
+  `;
+
+
+  $("#count").textContent =
+    `Practice · ${st.level}`;
+
+
+  if($("#pgUndo")) $("#pgUndo").onclick = pgUndo;
+  $("#pgBack").onclick =
+    () => {
+
+      PG_RUNNING = false;
+
+      renderPG();
+
+    };
+
+
+  document.body.classList.remove("clean");
+
+}
+
+
+function pgExit(){
+
+  $("#lesson").value =
+    "home";
+
+
+  store.set(
+    "jc:lesson",
+    "home"
+  );
+
+
+  pick("home");
+
+}
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+function prefetchPools(){   // warm the Complete list / Playground pool while the user looks at Home
+  const lv = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";
+  const go = () => pgPool(lv);
+  "requestIdleCallback" in window ? requestIdleCallback(go, {timeout: 3000}) : setTimeout(go, 800);
+}
+/* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
+const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解",
+  "Settings":"設定","Novels":"名作","Movies":"映画","Library":"ライブラリ","Listening":"聴解","Vocab & Grammar":"言語知識","言語知識 tests":"言語知識テスト","Tests with audio":"音声つきテスト","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
+  "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
+  "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
+  "Level":"レベル","From":"範囲","All cards":"すべて","Section":"分野","Cards per session":"1回の枚数","Words":"単語","Kanji":"漢字","Grammar":"文法","ALL":"全部",
+  "Again":"もう一度","Hard":"難しい","Easy":"簡単","3 min":"3分","10 min":"10分","1 day":"1日","Cards":"カード","Start":"始める","Photo credits":"写真の出典",
+  "Study this section":"この分野を練習","Study these":"練習する","Read 本文":"本文を読む","Session complete":"今日はここまで","All cards are resting.":"すべてのカードが休憩中です。",
+  "Play 現像":"再生 現像","Recorded voice: Microsoft Nanami. Words without a recording use the device voice above.":"収録音声：Microsoft Nanami。収録のない語は端末の声で読みます。","Show all":"すべて表示","Learn, then read":"覚えてから読む","Start with new cards":"新しいカードから始める"};
+const JA_RX = [
+  [/^(\d+) cards$/, "$1枚"], [/^(\d+) books$/, "$1冊"], [/^(\d+) words$/, "$1語"], [/^(\d+) new left$/, "未学習 $1"],
+  [/^Start · (\d+) cards$/, "始める・$1枚"], [/^(\d+) cards? ready to review$/, "復習 $1枚"], [/^Next review in (\d+) min$/, "次の復習まで $1分"],
+  [/^Next review in (\d+) h$/, "次の復習まで $1時間"], [/^Next review in (\d+) d$/, "次の復習まで $1日"], [/^to go$/, "枚 残り"], [/^(\d+) coming back$/, "あとで $1枚"],
+  [/^Female · (.+)$/, "女性・$1"], [/^Male · (.+)$/, "男性・$1"],
+  [/^(\d+) words · (\d+) kanji · (\d+) grammar$/, "単語 $1・漢字 $2・文法 $3"], [/^[A-Za-z &]+ · (\d+)$/, "$1語"], [/^‹ (.+)$/, m => "‹ " + (JA[m.slice(2)] || m.slice(2))]];
+const isJa = () => store.get("jc:lang", "en") === "ja";
+function jaText(t){ const k = t.trim(); if(!k) return null;
+  if(JA[k]) return t.replace(k, JA[k]);
+  for(const [rx, to] of JA_RX) if(rx.test(k)) return t.replace(k, typeof to === "function" ? to(k) : k.replace(rx, to));
+  return null; }
+function jaWalk(root){
+  if(!isJa() || !root) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+  while((n = w.nextNode())){ if(n.parentNode && n.parentNode.closest("select,option,textarea,script,style")) continue;   // never touch form values
+    const r = jaText(n.nodeValue); if(r !== null && r !== n.nodeValue) n.nodeValue = r; }
+}
+function applyLang(){
+  const ja = isJa(); document.body.classList.toggle("ja", ja); document.documentElement.lang = ja ? "ja" : "en";
+  jaWalk(document.querySelector("header")); jaWalk($("#list"));
+}
+/* one optional action on the right of the header, owned by the page that set it */
+function setHeaderAction(label, fn){ const b = $("#hdrAct"); b.textContent = label; b.onclick = fn; b.hidden = false; b._owner = $("#list").firstElementChild; jaWalk(b); }
+function syncHeaderAction(){ const b = $("#hdrAct"); if(b && !b.hidden && !(b._owner && document.body.contains(b._owner))) b.hidden = true; }
+function applyTheme(){
+  const t = store.get("jc:theme", "auto");
+  if(t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+}
+function jaVoices(){ try{ return speechSynthesis.getVoices().filter(v => /^ja/i.test(v.lang)); }catch(e){ return []; } }
+function bestVoice(){   // the saved choice, else the most natural-sounding Japanese voice on this device
+  const vs = jaVoices(), saved = store.get("jc:voice", "");
+  return vs.find(v => v.name === saved) ||
+    vs.find(v => /natural|neural|online|enhanced|premium|siri/i.test(v.name)) ||
+    vs.find(v => /google/i.test(v.name)) || vs.find(v => /kyoko|o-ren|nanami|haruka/i.test(v.name)) || vs[0] || null;
+}
+let KEEP_SETTINGS = false;   // true while the page under the Settings sheet is redrawn (language switch)
+function openSettingsSheet(){   // Settings = a card sliding in from the right, Home nudged aside behind it
+  if($("#appSheet")) return;
+  document.body.insertAdjacentHTML("beforeend", `<div id="appScrim" class="pg-scrim"></div><aside id="appSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="appSheetX" aria-label="Close">‹</button><b>${isJa() ? "設定" : "Settings"}</b></div>
+    <div class="pg-sheet-body app-sheet-body"></div></aside>`);
+  const sh = $("#appSheet"), close = () => closeSettingsSheet();
+  $("#appScrim").onclick = close; $("#appSheetX").onclick = close;
+  let x0 = null;
+  sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
+  sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
+  renderSettings(sh.querySelector(".app-sheet-body"));
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+}
+function closeSettingsSheet(instant){
+  const sh = $("#appSheet"), sc = $("#appScrim"); if(!sh) return;
+  document.body.classList.remove("sheet-open");
+  const gone = () => { sh.remove(); sc && sc.remove(); };
+  if(instant || calmMotion()) gone(); else setTimeout(gone, 320);
+}
+function renderSettings(target){
+  document.body.classList.remove("playing");
+  const theme = store.get("jc:theme", "auto"), rate = store.get("jc:rate", 0.9), fam = store.get("jc:showfam", false);
+  const draw = () => {
+    const vs = jaVoices(), cur = bestVoice();
+    (target || $("#list")).innerHTML = `<section class="settings">
+      <div class="set-group"><h2 class="set-h">Appearance</h2>
+        <div class="seg" role="radiogroup" id="setTheme">${[["auto","Auto"],["light","Light"],["dark","Dark"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${k === theme ? "on" : ""}" aria-checked="${k === theme}">${l}</button>`).join("")}</div></div>
+      <div class="set-group"><h2 class="set-h">Language</h2>
+        <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
+      <div class="set-group"><h2 class="set-h">Practice answer</h2>
+        <div class="seg seg-2" role="radiogroup" id="setAnswer">${[["short","Short"],["full","Full"]].map(([k, l]) =>
+          `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:answer", "full") ? "on" : ""}" aria-checked="${k === store.get("jc:answer", "full")}">${l}</button>`).join("")}</div></div>
+      <div class="set-group"><h2 class="set-h">Cards</h2>
+        <label class="opt-row opt-switch" for="setSay"><span>Sound</span><input type="checkbox" id="setSay" ${soundOn() ? "checked" : ""}></label>
+        <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
+      <p class="set-ver">${APP_VERSION}</p>
+    </section>`;
+    $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
+    $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v);
+      if(target){ NAV_SAME = true; KEEP_SETTINGS = true; pick(CURRENT); KEEP_SETTINGS = false; applyLang(); draw(); const t = $("#appSheet .pg-sheet-head b"); if(t) t.textContent = isJa() ? "設定" : "Settings"; return; }
+      if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
+    $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
+    $("#setAnswer").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:answer", b.dataset.v); draw(); });
+    $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
+    if(target && isJa()) jaWalk(target);
+  };
+  draw();
+  try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings" || (target && target.isConnected)) draw(); }; }catch(e){}
+}
+function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
+  let due = 0, later = 0; const now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t <= now) due++; else later++; } } }catch(e){}
+  return due ? `${due} card${due === 1 ? "" : "s"} ready to review` : later ? `Next review ${nextDueIn()}` : "Start with new cards";
+}
+function nextDueIn(){
+  let min = Infinity; const now = Date.now();
+  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
+    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t > now && t < min) min = t; } } }catch(e){}
+  const m = Math.round((min - now) / 60000);
+  return !isFinite(min) ? "soon" : m < 60 ? `in ${m} min` : m < 1440 ? `in ${Math.round(m / 60)} h` : `in ${Math.round(m / 1440)} d`;
+}
+function renderHome(){
+  prefetchPools();
+
+  document.body.classList.remove(
+    "playing"
+  );
+
+
+  $("#list").innerHTML = `
+
+    <section class="home">
+
+      <h1>
+        記憶の宮殿
+      </h1>
+
+
+      <p class="home-goal">${isJa() ? "選んだことを、いろいろな方法で身につける場所。" : "What you choose to learn, learned every way."}</p>
+      <button class="home-gear" type="button" data-home="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4Z"/></svg></button>
+
+
+      <h2 class="home-h">Study</h2>
+      <div class="core core-4">
+        <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
+        <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
+        <button class="cover cover-list" data-home="listening"><i>聴</i><b>Listening</b><span>Tests with audio</span></button>
+        <button class="cover cover-all" data-home="vocab"><i>語</i><b>Vocab &amp; Grammar</b><span>言語知識 tests</span></button>
+      </div>
+
+      <h2 class="home-h">Library</h2>
+      <div class="side">
+        <button class="side-tile" data-home="complete"><i>覧</i><b>Complete list</b></button>
+        <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
+        <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
+        <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
+        <button class="side-tile" data-home="sections"><i>節</i><b>Sections</b></button>
+        <button class="side-tile" data-home="useit"><i>使</i><b>Use it</b></button>
+        <button class="side-tile" data-home="scenes"><i>絵</i><b>Scenes</b></button>
+        <button class="side-tile" data-home="photos"><i>写</i><b>Photos</b></button>
+        <button class="side-tile" data-home="explore"><i>探</i><b>Explorer</b></button>
+        <button class="side-tile soon" disabled><i>商</i><b>Business</b></button>
+      </div>
+
+
+
+
+    </section>
+
+  `;
+
+
+  $("#count").textContent =
+    "Home";
+
+}
+
+
+/* =========================================================
+   COMPLETE LIST
+   ========================================================= */
+
+async function renderComplete(){
+
+  document.body.classList.remove(
+    "playing"
+  );
+
+
+  const LVL = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";   // one level at a time
+  if(!PG.pool[LVL]) $("#list").innerHTML = `<p class="loading-note">Loading ${LVL} cards…</p>`;   // never look frozen
+  const pool =
+    await pgPool(LVL);
+  if(CURRENT !== "complete") return;   // user left while it was loading
+
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  };
+
+
+  const PAGE = 60;   // draw cards in pages; the rest load as you scroll (thousands of cards)
+  const section =
+    (t,label) =>
+      `
+
+        <section class="complete-section">
+
+          <h2>
+            ${label}
+          </h2>
+
+          <div class="complete-cards">${
+            pool[t].slice(0, PAGE)
+              .map(c => miniFor(t, c, c.level))
+              .join("")
+          }</div>
+          <div class="complete-more" aria-hidden="true"></div>
+
+        </section>
+
+      `;
+
+
+  $("#list").innerHTML = `
+
+    <section class="complete">
+
+      <div class="complete-head">
+
+        <div>
+
+          <h1>
+            Complete list
+          </h1>
+
+          <div class="stat">
+            ${pool.words.length} words · ${pool.kanji.length} kanji · ${pool.grammar.length} grammar
+          </div>
+
+        </div>
+
+        <div class="seg seg-2" role="radiogroup" aria-label="Level">
+          ${["N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===LVL}" class="${l===LVL?"on":""}" data-clevel="${l}">${l}</button>`).join("")}
+        </div>
+
+
+
+
+      </div>
+
+
+      <div class="tabs tabs-in" role="tablist">${[["words","語","Words"],["kanji","字","Kanji"],["grammar","文","Grammar"]].map(([t, j, l]) =>
+        `<div class="tab${t === TAB ? " on" : ""}" data-t="${t}" role="tab" tabindex="0" aria-selected="${t === TAB}"><span class="jp">${j}</span>${l}</div>`).join("")}</div>
+
+      ${section(TAB, {words:"Words",kanji:"Kanji",grammar:"Grammar"}[TAB] + ` <span class="stat">${pool[TAB].length}</span>`)}
+
+    </section>
+
+  `;
+
+
+  $("#count").textContent =
+    "Complete list";
+
+
+  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
+  document.querySelectorAll("[data-clevel]").forEach(el => el.onclick = () => { store.set("jc:clevel", el.dataset.clevel); renderComplete(); });
+  let shown = PAGE;
+  const more = document.querySelector(".complete-more");
+  if(more && pool[TAB].length > PAGE){
+    const grow = () => {
+      if(!more.isConnected || shown >= pool[TAB].length) return;
+      if(more.getBoundingClientRect().top > innerHeight + 800) return;
+      const next = pool[TAB].slice(shown, shown + PAGE); shown += next.length;
+      document.querySelector(".complete-cards").insertAdjacentHTML("beforeend",
+        next.map(c => miniFor(TAB, c, c.level)).join(""));
+    };
+    new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)) grow(); }, {rootMargin:"800px"}).observe(more);
+    addEventListener("scroll", grow, {passive:true});
+  }
+  if(false) $("#completeHome").onclick =
+    () => {
+
+      $("#lesson").value =
+        "home";
+
+
+      store.set(
+        "jc:lesson",
+        "home"
+      );
+
+
+      pick("home");
+
+    };
+
+}
+
+
+/* =========================================================
+   DOTS / PLAYGROUND
+   ========================================================= */
+
+/* Open/close with motion: the word glides to its new place (FLIP),
+   the back drops down like a curtain. */
+/* Desktop keyboard in Playground: Space/Enter = flip, 1/2/3 = Again/Hard/Easy */
+addEventListener("keydown", e => { const sp = e.target.closest && e.target.closest(".say-i");   // speaker icons work from the keyboard
+  if(sp && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); speak(sp.dataset.say); return; } });
+addEventListener("keydown", e => {
+  if(!document.body.classList.contains("playing") || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || "")) || e.target.isContentEditable) return;
+  if((e.key === "z" || e.key === "Z" || e.key === "Backspace") && !e.altKey && !e.shiftKey && document.querySelector(".play-screen")){ e.preventDefault(); pgUndo(); return; }
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  const card = document.querySelector(".play-stage .card");
+  if((e.key === " " || e.key === "Enter") && card){
+    e.preventDefault();
+    const hit = card.classList.contains("open") ? card.querySelector(".front") : card;
+    (hit || card).dispatchEvent(new MouseEvent("click", {bubbles:true}));
+    return;
+  }
+  const m = {"1":"3", "2":"10", "3":"1440"}[e.key];
+  const btn = m && document.querySelector(`.play-ratings button[data-m="${m}"]`);
+  if(btn){ e.preventDefault(); btn.click(); }
+});
+
+const calmMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function unfoldBack(back){   // paper unfold: the answer hangs from the fold under the headword and swings down flat
+  if(!back || calmMotion()) return;
+  back.animate([{transform:"perspective(900px) rotateX(-88deg)", opacity:.35},
+                {transform:"perspective(900px) rotateX(8deg)", opacity:1, offset:.72},
+                {transform:"perspective(900px) rotateX(0deg)", opacity:1}],
+               {duration:520, delay:60, easing:"cubic-bezier(.22,.9,.3,1)", fill:"backwards"});
+  back.animate([{boxShadow:"inset 0 60px 40px -30px rgba(0,0,0,.18)"},{boxShadow:"inset 0 0 0 0 rgba(0,0,0,0)"}],
+               {duration:560, delay:60, easing:"ease-out", fill:"backwards"});
+}
+function foldBack(back, done){   // fold the paper back up under the headword, then continue
+  if(!back || calmMotion()){ done(); return; }
+  back.animate([{transform:"perspective(900px) rotateX(0deg)", opacity:1},{transform:"perspective(900px) rotateX(-88deg)", opacity:.2}],
+               {duration:240, easing:"cubic-bezier(.5,0,.75,0)"}).onfinish = done;
+}
+function flipCard(card, open){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const back = card.querySelector(".back");
+  const move = () => {
+    const b = card.getBoundingClientRect();
+    card.classList.toggle("open", open);
+    if(reduce) return;
+    const a = card.getBoundingClientRect();
+    card.animate([{transform:`translateY(${b.top - a.top}px)`},{transform:"none"}],
+                 {duration:340, easing:"cubic-bezier(.2,.8,.2,1)"});
+    if(open) unfoldBack(back);
+  };
+  if(!open && back && !reduce){
+    foldBack(back, move);
+  } else move();
+}
+
+let CARD_LVL = null;
+
+/* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
+let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
+const PLAYER = new Audio(); PLAYER.preload = "auto"; PLAYER.setAttribute("playsinline", "");
+const SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//OEwAAAAAAAAAAAAEluZm8AAAAPAAAACQAABCAARUVFRUVFRUVFRUVdXV1dXV1dXV1dXXR0dHR0dHR0dHR0i4uLi4uLi4uLi4uioqKioqKioqKiorq6urq6urq6urq60dHR0dHR0dHR0dHo6Ojo6Ojo6Ojo6P//////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQD8AAAAAAAAAQgDea3ZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//NExAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExFMAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKYAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}   // iPhone: play even with the silent switch on
+// iPhone: an audio element may only play after a tap has "unlocked" it once with a real sound
+function unlockAudio(){ removeEventListener("touchend", unlockAudio); removeEventListener("click", unlockAudio);
+  if(PLAYER.src) return; PLAYER.src = SILENT; PLAYER.play().then(() => PLAYER.pause()).catch(() => {}); }
+addEventListener("touchend", unlockAudio, {passive: true}); addEventListener("click", unlockAudio);
+const soundOn = () => store.get("jc:sound", true);
+let SAY_ON = null;   // the speaker icon currently playing (shown in the accent color)
+const sayOff = () => { if(SAY_ON){ SAY_ON.classList.remove("playing"); SAY_ON = null; } };
+PLAYER.addEventListener("ended", sayOff); PLAYER.addEventListener("pause", sayOff);
+function soundNote(msg){   // only when every way of playing failed, so the cause can be reported
+  let n = $("#soundNote"); if(!n){ n = document.createElement("div"); n.id = "soundNote"; n.className = "sound-note"; document.body.appendChild(n); }
+  n.textContent = msg; n.hidden = false; clearTimeout(n._t); n._t = setTimeout(() => n.hidden = true, 6000);
+}
+fetch("data/audio/map.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
+const speaker = () => "nanami";   // one voice for everything (keeps the app small as content grows)
+function speak(text){
+  try{ if(AUDIO_NOW) AUDIO_NOW.pause(); }catch(e){}
+  const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
+  if(key){
+    try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
+    const url = `data/audio/${sp}/${key}.mp3`, a = PLAYER; AUDIO_NOW = a;
+    try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
+    a.src = url;
+    a.play().catch(err1 =>   // route 2: load the whole file into memory and play it from there
+      fetch(url).then(r => r.blob()).then(b => { a.src = URL.createObjectURL(b); return a.play(); })
+        .catch(err2 => { sayOff(); speakDevice(text); soundNote(`No sound (${(err2 || err1).name || "error"}). Tell Claude this message.`); }));
+    return;
+  }
+  speakDevice(text);
+}
+function speakDevice(text){
+  try{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP"; u.rate = store.get("jc:rate", 0.9);
+    const v = bestVoice();
+    if(v) u.voice = v;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+const SPK_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const SPK = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const sayIcon = text => `<span class="say say-i" role="button" tabindex="0" data-say="${esc(text)}" aria-label="Play ${esc(text)}">${SPK}</span>`;
+const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
+
+/* ---------- Novels ---------- */
+let NOVELS = null;
+async function renderNovels(){
+  document.body.classList.remove("playing");
+  try{ NOVELS = NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
+  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
+  $("#list").innerHTML = `<section class="reading">
+
+    <div class="novel-grid">${NOVELS.map(x => `<button class="novel-tile" data-novel="${x.id}">
+      <img src="data/novels/${x.id}.svg" alt="" loading="lazy"><b>${esc(x.title)}</b><span>${esc(x.titleEn)}</span></button>`).join("")}</div></section>`;
+}
+async function renderNovel(id){
+  let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
+  if(st.scenes && st.scenes.length) return renderTheatre(st);
+  $("#pageTitle").textContent = st.title;
+  $("#list").innerHTML = `<section class="reading story">
+    <div class="story-top"><button class="nav-btn" id="novelBack" data-back="Movies">Back</button>
+      <button class="listen-btn" id="novelListen" type="button" aria-pressed="false"><span class="lb-ico">${PLAY_ICO}</span><span class="lb-t">Listen</span></button></div>
+    <img class="novel-art" src="data/novels/${st.id}.svg" alt="">
+    <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
+    <div class="story-meta">${esc(st.source)}</div>
+    ${st.sentences.map(x => x.h ? `<h3 class="novel-ch">${esc(x.h)}<small>${esc(x.en || "")}</small></h3>`
+      : `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
+  </section>`;
+  $("#novelBack").onclick = () => { stopStory(); $("#pageTitle").textContent = "Movies"; renderNovels(); };
+  // listening: tap a sentence to hear it; Listen plays the story sentence by sentence (highlighted, kept in view)
+  const lines = [...document.querySelectorAll(".story .story-line")], btn = $("#novelListen");
+  const setBtn = on => { btn.setAttribute("aria-pressed", on); btn.querySelector(".lb-ico").innerHTML = on ? PAUSE_ICO : PLAY_ICO;
+    btn.querySelector(".lb-t").textContent = on ? (isJa() ? "一時停止" : "Pause") : (isJa() ? "聞く" : "Listen"); };
+  STORY.play = (i, cont) => {
+    const line = lines[i]; if(!line) { stopStory(); return; }
+    const text = line.querySelector(".jpline").textContent, key = AUDIO_MAP && AUDIO_MAP[text];
+    lines.forEach(l => l.classList.toggle("speaking", l === line)); STORY.i = i; STORY.cont = cont; setBtn(cont);
+    if(cont) line.scrollIntoView({block: "center", behavior: calmMotion() ? "auto" : "smooth"});
+    const next = () => { if(STORY.cont && STORY.i === i) STORY.play(i + 1, true); else line.classList.remove("speaking"); };
+    if(key){ PLAYER.onended = next; PLAYER.src = `data/audio/nanami/${key}.mp3`; PLAYER.play().catch(() => { speakDevice(text); }); }
+    else { try{ const u = new SpeechSynthesisUtterance(text); u.lang = "ja-JP"; u.onend = next; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+  };
+  STORY.stopUI = () => { setBtn(false); lines.forEach(l => l.classList.remove("speaking")); };
+  lines.forEach((l, i) => l.addEventListener("click", () => { if(!soundOn()) return; STORY.play(i, STORY.cont); }));
+  btn.onclick = () => { if(STORY.cont){ stopStory(); return; } STORY.play(Math.max(0, STORY.i || 0), true); };
+  STORY.i = 0; STORY.cont = false;
+}
+const STORY = {i: 0, cont: false, play: null, stopUI: null};
+/* ---------- Theatre: a novel as a film. One picture per scene, the spoken line as a subtitle ---------- */
+function renderTheatre(st){
+  const L = st.sentences, sceneAt = i => { let k = 0; st.scenes.forEach((sc, j) => { if(sc.from <= i) k = j; }); return k; };
+  document.body.classList.add("cinema"); NAV_SAME = true;
+  const cc = () => store.get("jc:cc", true), enOn = () => store.get("jc:thEn", true);
+  $("#list").innerHTML = `<div class="th${cc() ? "" : " no-cc"}${enOn() ? "" : " no-en"}" role="region" aria-label="${esc(st.title)}">
+    <div class="th-top">
+      <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
+      <div class="th-tg"><button class="th-cc" type="button" aria-pressed="${cc()}" aria-label="Subtitles">CC</button><button class="th-entg" type="button" aria-pressed="${enOn()}" aria-label="English line">EN</button></div>
+    </div>
+    <div class="th-stage"><div class="th-frame">
+      <img class="th-img" alt=""><img class="th-img" alt="">
+      <div class="th-card" hidden><b></b><small></small></div>
+      <button class="th-big" type="button" aria-label="Play">${PLAY_ICO}</button>
+    </div>
+    <div class="th-sub" aria-live="polite"><div class="th-tip" hidden></div><p class="th-jp"></p><p class="th-en"></p></div></div>
+    <div class="th-hud"><div class="th-seek"><input class="th-range" type="range" min="0" max="${L.length - 1}" step="1" value="0" aria-label="Line"><div class="th-bar" aria-hidden="true"><i></i></div></div>
+    <div class="th-ctl">
+      <div class="th-mid">
+        <button class="th-btn th-play" type="button" aria-label="Play">${PLAY_ICO}</button>
+        <button class="th-btn th-prev" type="button" aria-label="Previous line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
+        <button class="th-btn th-next" type="button" aria-label="Next line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
+      </div>
+      <span class="th-count"></span>
+    </div></div></div>`;
+  const subHTML = x => { if(!x.tk) return esc(x.jp); let h = "", at = 0;
+    for(const [a, b, g, r, c, base] of x.tk){ if(a < at) continue; h += esc(x.jp.slice(at, a)) + `<span class="th-tk" data-g="${esc(g)}" data-r="${esc(r)}" data-b="${esc(base || "")}">${esc(x.jp.slice(a, b))}</span>`; at = b; }
+    return h + esc(x.jp.slice(at)); };
+  const imgs = [...document.querySelectorAll(".th-img")], card = $(".th-card"), big = $(".th-big"), playB = $(".th-play");
+  let front = 0, shown = -1, timer = 0;
+  const showScene = (k, instant) => {
+    if(k === shown) return; shown = k;
+    const nxt = imgs[1 - front]; nxt.src = `data/novels/${st.scenes[k].img}`;
+    const swap = () => { imgs[front].classList.remove("on"); nxt.classList.remove("on"); void nxt.offsetWidth; nxt.classList.add("on"); front = 1 - front; };
+    if(instant || nxt.complete) swap(); else nxt.onload = swap;
+  };
+  const setLine = i => {
+    const x = L[i]; STORY.i = i; showScene(sceneAt(i), i === 0);
+    card.hidden = !x.h; if(x.h){ card.querySelector("b").textContent = x.h; card.querySelector("small").textContent = x.en || ""; }
+    $(".th-jp").innerHTML = x.h ? "" : subHTML(x); $(".th-en").textContent = x.h ? "" : (x.en || ""); $(".th-tip").hidden = true;
+    $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`; $(".th-range").value = i;
+  };
+  const setPlaying = on => { STORY.cont = on; big.hidden = on; playB.innerHTML = on ? PAUSE_ICO : PLAY_ICO; playB.setAttribute("aria-label", on ? "Pause" : "Play");
+    document.querySelector(".th").classList.toggle("paused", !on); if(on){ const t = $(".th-tip"); if(t) t.hidden = true; } if(STORY.onPlaying) STORY.onPlaying(on); };
+  STORY.play = (i, cont) => {
+    clearTimeout(timer);
+    if(i >= L.length){ stopStory(); setLine(L.length - 1); return; }
+    setLine(i); setPlaying(cont); if(!cont) return;
+    const text = L[i].h || L[i].jp, key = AUDIO_MAP && AUDIO_MAP[text];
+    const next = () => { if(STORY.cont && STORY.i === i) timer = setTimeout(() => STORY.play(i + 1, true), L[i].h ? 900 : 350); };
+    if(key){ PLAYER.onended = next; PLAYER.src = `data/audio/nanami/${key}.mp3`; PLAYER.play().catch(() => { timer = setTimeout(next, text.length * 160); }); }
+    else timer = setTimeout(next, text.length * 160 + 800);
+  };
+  STORY.stopUI = () => { clearTimeout(timer); setPlaying(false); };
+  const toggle = () => { if(STORY.cont){ stopStory(); return; } if(PLAYER.src && PLAYER.paused && PLAYER.currentTime > 0 && !PLAYER.ended && PLAYER.onended){ setPlaying(true); PLAYER.play().catch(() => {}); return; } STORY.play(STORY.i, true); };
+  const go = d => { const i = Math.max(0, Math.min(L.length - 1, STORY.i + d)); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} STORY.play(i, STORY.cont); };
+  big.onclick = playB.onclick = toggle;
+  $(".th-frame").addEventListener("click", e => { if(!e.target.closest(".th-big")) toggle(); });
+  $(".th-prev").onclick = () => go(-1); $(".th-next").onclick = () => go(1);
+  $(".th-sub").addEventListener("click", e => {
+    const w = e.target.closest(".th-tk"), tip = $(".th-tip");
+    document.querySelectorAll(".th-tk.on").forEach(x => x.classList.remove("on"));
+    if(!w){ tip.hidden = true; return; }
+    const wasOn = STORY.cont, line = STORY.i, thEl = $(".th"); if(wasOn){ thEl.classList.add("peek"); stopStory(); }
+    w.classList.add("on");
+    const short = (w.dataset.g || "").split(/[;；/]/)[0].replace(/\s*\(.*?\)\s*/g, " ").trim();
+    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (short ? `<span class="tip-en">${esc(short)}</span>` : "");
+    tip.hidden = false;
+    if(soundOn()) speak(w.textContent);   // hear it as written in the line
+    clearTimeout(tip._t);
+    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); thEl.classList.remove("peek"); if(wasOn && STORY.i === line && !STORY.cont) STORY.play(line, true); }, 2000);
+    const r = w.getBoundingClientRect(), br = $(".th-sub").getBoundingClientRect();
+    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
+  });
+  $(".th-cc").onclick = () => { const on = !cc(); store.set("jc:cc", on); $(".th-cc").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-cc", !on); };
+  $(".th-entg").onclick = () => { const on = !enOn(); store.set("jc:thEn", on); $(".th-entg").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-en", !on); };
+  const rg = $(".th-range");   // drag = preview picture + line, release = play from there
+  rg.oninput = () => { clearTimeout(timer); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} setLine(+rg.value); };
+  rg.onchange = () => STORY.play(+rg.value, STORY.cont || th.dataset.was === "1");
+  rg.onpointerdown = () => { th.dataset.was = STORY.cont ? "1" : "0"; };
+  // 2. controls fade out while playing; any movement brings them back (first tap on a phone only reveals them)
+  const th = $(".th"); let idleT = 0;
+  const wake = () => { th.classList.remove("idle"); clearTimeout(idleT); idleT = setTimeout(() => { if(STORY.cont && document.body.classList.contains("cinema")) th.classList.add("idle"); }, 2600); };
+  th.addEventListener("pointermove", e => { if(e.pointerType === "mouse") wake(); });
+  th.addEventListener("pointerdown", e => { if(th.classList.contains("idle") && e.pointerType !== "mouse"){ e.preventDefault(); e.stopPropagation(); th.dataset.swallow = "1"; } wake(); }, true);
+  th.addEventListener("click", e => { if(th.dataset.swallow === "1"){ th.dataset.swallow = ""; e.stopPropagation(); e.preventDefault(); } }, true);
+  addEventListener("keydown", wake);
+  let wasOn = false;
+  STORY.onPlaying = on => { if(on === wasOn) return; wasOn = on; if(on) wake(); else { clearTimeout(idleT); th.classList.remove("idle"); } };
+  $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; NAV_DIR = "back"; renderNovels(); };
+  STORY.i = 0; STORY.cont = false; setLine(0); setPlaying(false); card.hidden = true;   // poster: picture + title only
+  $(".th-jp").textContent = st.title; $(".th-en").textContent = `${st.titleEn} · ${st.author}`;
+}
+addEventListener("keydown", e => { if(!document.body.classList.contains("cinema") || e.target.closest("input,textarea")) return;
+  if(e.key === " "){ e.preventDefault(); $(".th-play") && $(".th-play").click(); }
+  else if(e.key === "ArrowRight") $(".th-next") && $(".th-next").click();
+  else if(e.key === "ArrowLeft") $(".th-prev") && $(".th-prev").click();
+  else if(e.key === "Escape") $(".th-exit") && $(".th-exit").click(); });
+function stopStory(){ STORY.cont = false; try{ PLAYER.pause(); PLAYER.onended = null; speechSynthesis.cancel(); }catch(e){} if(STORY.stopUI) STORY.stopUI(); }
+const PLAY_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>';
+const PAUSE_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
+
+/* ---------- Scenes: learn words through pictures ---------- */
+const loadScript = src => new Promise((ok, bad) => {
+  if(document.querySelector(`script[data-src="${src}"]`)) return ok();
+  const el = document.createElement("script"); el.src = src; el.dataset.src = src; el.onload = ok; el.onerror = bad;
+  document.head.appendChild(el);
+});
+let SCENE_DIR = "scenes";   // Scenes = flat pictures; Explorer = zoomable places (data/explore)
+async function renderScenes(){
+  document.body.classList.remove("playing");
+  let list; try{ list = await (await fetch(`data/${SCENE_DIR}/index.json`, {cache:"no-cache"})).json(); }
+  catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
+  $("#pageTitle").textContent = SCENE_DIR === "photos" ? "Photos" : "Scenes";
+  $("#list").innerHTML = `<section class="reading">
+
+    <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
+      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${x.count} words</span></button>`).join("")}</div></section>`;
+}
+async function renderScene(id, arrive){
+  let sc, svg;
+  try{
+    sc = await (await fetch(`data/${SCENE_DIR}/${id}.json`, {cache:"no-cache"})).json();
+    if(sc.photo){   // real photo + invisible tap boxes, drawn as an SVG so labels/Show all work the same
+      const [W, H] = sc.size;
+      svg = `<svg viewBox="0 0 ${W} ${H}" class="photo-scene" role="img" aria-label="${esc(sc.titleEn)}">
+        <image href="data/${SCENE_DIR}/${sc.photo}" width="${W}" height="${H}"/>
+        ${Object.entries(sc.items).filter(([k,v]) => v.box).map(([k,v]) => `<g class="spot" data-id="${k}"><rect class="hit" x="${v.box[0]}" y="${v.box[1]}" width="${v.box[2]}" height="${v.box[3]}" rx="${W/100}"/></g>`).join("")}</svg>`;
+    }
+    else svg = await (await fetch(`data/${SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
+  }catch(e){ return; }
+  $("#pageTitle").textContent = sc.title;
+  if(sc.parent){ try{ const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
+  const open = store.get("jc:scenewords", true);
+  $("#list").innerHTML = `<section class="scene">
+    <div class="story-top"><button class="nav-btn" id="sceneBack" data-back="${sc.parent ? "Zoom out" : SCENE_DIR === "explore" ? "Home" : SCENE_DIR === "photos" ? "Photos" : "Scenes"}">${sc.parent ? "Zoom out" : SCENE_DIR === "explore" ? "Home" : "Back"}</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
+    ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
+    <div class="scene-info" id="sceneInfo"><div class="scene-hint">${SCENE_DIR === "explore" ? "Tap anything to learn its name. 🔍 = you can zoom in." : "Tap anything in the picture."}</div></div>
+    <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
+      <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
+        <b>${esc(v.jp)}</b><span class="rd">${esc(v.reading)}</span><span class="en">${esc(v.en)}</span></button>`).join("")}</div>
+    </details>
+    <div class="story-meta">${sc.sourceUrl ? `<a href="${sc.sourceUrl}" target="_blank" rel="noopener">${esc(sc.source)}</a>` : esc(sc.source)}</div>
+  </section>`;
+  const svgEl = document.querySelector("#sceneCanvas svg");
+  let view3d = null;
+  if(sc.three){
+    try{
+      await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js?" + APP_VERSION);
+      if(window.__scene3d) window.__scene3d.dispose();
+      view3d = window.__scene3d = mountKonbini3D($("#scene3d"), k => show(k));
+    }catch(e){ $("#scene3d").innerHTML = `<div class="empty">3D could not start on this device.</div>`; }
+  }
+  // labels drawn on the SVG: one for the selected item, or all of them ("Show all"); overlaps relaxed apart
+  let allOn = false, cur = null;
+  const tags = () => {
+    if(!svgEl) return;
+    svgEl.querySelectorAll(".tag").forEach(t => t.remove());
+    const keys = allOn ? Object.keys(sc.items) : (cur ? [cur] : []);
+    const ns = "http://www.w3.org/2000/svg", VW = svgEl.viewBox.baseVal.width, VH = svgEl.viewBox.baseVal.height;
+    const u = VW/400;
+    const P = keys.map(k => {
+      const g = svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
+      const bb = g.getBBox(), t = document.createElementNS(ns, "g"), label = document.createElementNS(ns, "text");
+      t.setAttribute("class", "tag"); label.textContent = sc.items[k].jp + (sc.items[k].zoom ? " 🔍" : "");
+      label.setAttribute("font-size", (allOn ? 10.5 : 12)*u); label.setAttribute("font-weight", "700");
+      label.setAttribute("text-anchor", "middle"); label.setAttribute("fill", "#fff");
+      t.appendChild(label); svgEl.appendChild(t);
+      const w = label.getComputedTextLength() + 10*u, h = (allOn ? 15 : 18)*u;
+      const x = bb.x + bb.width/2, y = allOn ? bb.y + Math.min(bb.height/2, 18*u) : bb.y - 4*u;
+      return {k, t, label, w, h, ax:x, ay:y, x, y};
+    }).filter(Boolean);
+    for(let it = 0; it < 120 && P.length > 1; it++){
+      for(let i = 0; i < P.length; i++) for(let j = i + 1; j < P.length; j++){
+        const p = P[i], q = P[j];
+        const ox = (p.w + q.w)/2 + 2*u - Math.abs(p.x - q.x), oy = (p.h + q.h)/2 + u - Math.abs(p.y - q.y);
+        if(ox <= 0 || oy <= 0) continue;
+        if(oy < ox){ const s = p.y <= q.y ? -1 : 1; p.y += s*oy/2; q.y -= s*oy/2; }
+        else { const s = p.x <= q.x ? -1 : 1; p.x += s*ox/2; q.x -= s*ox/2; }
+      }
+      for(const p of P){ p.x += (p.ax - p.x)*.02; p.y += (p.ay - p.y)*.02; }
+    }
+    for(const p of P){
+      p.x = Math.max(p.w/2 + 2*u, Math.min(VW - p.w/2 - 2*u, p.x)); p.y = Math.max(p.h + u, Math.min(VH - 2*u, p.y));
+      const r = document.createElementNS(ns, "rect");
+      r.setAttribute("x", p.x - p.w/2); r.setAttribute("y", p.y - p.h + 3); r.setAttribute("width", p.w); r.setAttribute("height", p.h);
+      r.setAttribute("rx", 4*u); r.setAttribute("fill", p.k === cur || !allOn ? "var(--shu)" : "rgba(43,36,52,.8)");
+      p.t.insertBefore(r, p.label); p.label.setAttribute("x", p.x); p.label.setAttribute("y", p.y - (allOn ? 1 : 0)*u);
+      p.t.style.pointerEvents = "none";
+    }
+  };
+  const setAll = on => { allOn = on; $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); if(svgEl) svgEl.classList.toggle("all", on);
+    if(view3d && view3d.showAll) view3d.showAll(Object.fromEntries(Object.entries(sc.items).map(([k,v]) => [k, v.jp])), on); tags(); };
+  $("#showAll").onclick = () => setAll($("#showAll").getAttribute("aria-pressed") !== "true");
+  const show = k => {
+    const v = sc.items[k]; if(!v) return;
+    const g = svgEl ? svgEl.querySelector(`.spot[data-id="${k}"]`) : null;
+    if(svgEl) svgEl.querySelectorAll(".spot").forEach(x => x.classList.toggle("on", x === g));
+    if(view3d){ view3d.select(k, true); view3d.setLabel(v.jp); }
+    document.querySelectorAll(".scene-row").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
+    cur = k; tags();
+    speak(v.jp);
+    $("#sceneInfo").innerHTML = `<div class="scene-word">${esc(v.jp)} ${sayBtn(v.jp)}</div>
+      <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
+      <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>
+      ${v.zoom ? `<button class="nav-btn zoom-in" id="zoomIn">Zoom in</button>` : ""}`;
+    if(v.zoom) $("#zoomIn").onclick = () => zoomTo(k);
+  };
+  setAll(store.get("jc:scenelabels", false));
+  if(svgEl) svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
+  document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); (document.querySelector("#scene3d, #sceneZoom")).scrollIntoView({behavior:"smooth", block:"start"}); });
+  document.querySelector(".scene-words").addEventListener("toggle", e => store.set("jc:scenewords", e.target.open));
+  // zoom: fly into a spot, then open the closer scene; zoom out flies back from it
+  const canvas = $("#sceneCanvas"), VB = svgEl && svgEl.viewBox.baseVal;
+  const focus = k => {
+    const g = svgEl && svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
+    const bb = g.getBBox();
+    return {ox: (bb.x + bb.width/2)/VB.width*100, oy: (bb.y + bb.height/2)/VB.height*100,
+            s: Math.min(4, .9*Math.min(VB.width/bb.width, VB.height/bb.height))};
+  };
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const play = (frames, opt) => { const an = canvas.animate(frames, opt);
+    return Promise.race([an.finished, new Promise(r => setTimeout(r, opt.duration + 60))]); };
+  async function zoomTo(k){
+    const f = focus(k), next = sc.items[k].zoom;
+    if(f && !still && canvas.animate){
+      canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
+      await play([{transform:"scale(1)", opacity:1}, {transform:`scale(${f.s})`, opacity:0}],
+        {duration:480, easing:"cubic-bezier(.5,0,.8,.4)", fill:"forwards"});
+    }
+    renderScene(next, {dir:"in"});
+  }
+  if(arrive && canvas && !still && canvas.animate){
+    const f = arrive.dir === "out" && arrive.spot ? focus(arrive.spot) : null;
+    if(f){ canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
+      canvas.animate([{transform:`scale(${f.s})`, opacity:0}, {transform:"scale(1)", opacity:1}], {duration:480, easing:"cubic-bezier(.2,.6,.3,1)"}); }
+    else canvas.animate([{transform:"scale(.85)", opacity:0}, {transform:"scale(1)", opacity:1}], {duration:380, easing:"cubic-bezier(.2,.6,.3,1)"});
+  }
+  if(sc.parent) $("#sceneBack").onclick = async () => {
+    if(canvas && !still && canvas.animate){ canvas.style.transformOrigin = "50% 50%";
+      await play([{transform:"scale(1)", opacity:1}, {transform:"scale(.7)", opacity:0}], {duration:320, easing:"ease-in", fill:"forwards"}); }
+    const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json();
+    renderScene(sc.parent, {dir:"out", spot: Object.keys(par.items).find(x => par.items[x].zoom === id)});
+  };
+  else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; }
+    if(SCENE_DIR === "explore") pick("home"); else renderScenes(); };
+}
+
+/* ---------- Sections: topic chapters ---------- */
+const SEC_PARTS = {"1":["関係","Relations & abstract ideas"],"2":["人間","People & society"],"3":["活動","Actions, mind & life"],
+  "4":["生産物","Things people make"],"5":["自然","Nature"],"x":["その他","Other words"]};
+async function renderSections(){
+  document.body.classList.remove("playing");
+  const S = await loadSections();
+  const LVL = store.get("jc:slevel", "N1") === "N2" ? "N2" : "N1";
+  $("#pageTitle").textContent = "Sections";
+  const part = s => /^[1-5]/.test(s.code) ? s.code[0] : "x";
+  const parts = {}; S[LVL].forEach((s, i) => (parts[part(s)] = parts[part(s)] || []).push([s, i + 1]));
+  const PN = ["一","二","三","四","五","六"];
+  $("#list").innerHTML = `<section class="sections toc-page">
+    <div class="complete-head"><div><h2 class="toc-h">目次 <small>${S[LVL].length} sections · ${S[LVL].reduce((n, s) => n + s.words.length, 0)} words</small></h2></div>
+      <div class="seg seg-2" role="radiogroup">${["N1","N2"].map(l => `<button type="button" class="${l===LVL?"on":""}" data-slevel="${l}">${l}</button>`).join("")}</div></div>
+    ${Object.keys(SEC_PARTS).filter(k => parts[k]).map((k, pi) => `
+      <h3 class="toc-part"><span>第${PN[pi]}部</span>${SEC_PARTS[k][0]}<small>${SEC_PARTS[k][1]}</small></h3>
+      <ol class="toc">${parts[k].map(([s, n]) => { const seen = secSeen(LVL, s);
+        return `<li><button data-sec="${s.id}"><span class="toc-no">${n}</span><span class="toc-name">${esc(s.name)}${s.en ? `<small>${esc(s.en)}</small>` : ""}</span><span class="toc-dots"></span>
+          <span class="toc-n${seen ? " on" : ""}">${seen ? `${seen}/` : ""}${s.words.length}語</span></button></li>`; }).join("")}</ol>`).join("")}
+    <p class="story-meta">${esc(S.source || "")}</p></section>`;
+  document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
+  document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
+}
+/* ===== Cards outside Playground: MINI by default, tap = full card, tap its top = back to mini =====
+   MINI.reg holds the card objects so any list (Complete list, sections, readings) can swap mini <-> full. */
+const MINI = {reg: new Map()};
+const miniKey = (t, lv, no) => `${t}:${lv}:${no}`;
+function miniCard(c, lv){ return miniFor("words", c, lv); }
+function miniFor(t, c, lv){
+  lv = lv || c.level;
+  return cardFront(t, c, lv);
+  MINI.reg.set(miniKey(t, lv, c.no), c);
+  const tag = {words:"W", kanji:"K", grammar:"G"}[t];
+  let head = "", en = "", e = null, target = "";
+  if(t === "words"){
+    head = `<b class="mini-w">${esc(c.word)}</b><span class="mini-rd">${esc(c.reading)}</span>${sayIcon(c.word)}`;
+    en = (c.en || "").split(" / ")[0]; e = (c.ex && c.ex[0]) || c.use; target = c.word;
+  }else if(t === "kanji"){
+    head = `<b class="mini-w">${esc(c.kanji)}</b><span class="mini-rd">${esc([(c.on || []).join("・"), (c.kun || []).join("・")].filter(Boolean).join(" ／ "))}</span>`;
+    en = c.en || ""; const w = (c.words || [])[0];
+    e = w ? {jp: `${w.w}（${w.r}）${w.m ? ": " + w.m : ""}`} : null; target = c.kanji;
+  }else{
+    head = `<b class="mini-w">${esc(c.pattern)}</b>`;
+    en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern;
+  }
+  return `<button class="mini mini-${t}" data-mt="${t}" data-mlv="${lv}" data-no="${c.no}">
+    <span class="mini-top"><span class="mini-no">#${tag}${c.no}</span>${head}</span>
+    ${en ? `<span class="mini-en">${esc(en)}</span>` : ""}
+    ${e ? `<span class="mini-ex">${t === "kanji" ? "" : `<span class="rei">例：</span>`}${t === "kanji" ? esc(e.jp) : hl(e.jp, target)}</span>` : ""}
+  </button>`;
+}
+function peekFor(t, c){   // the short meaning + first example shown under a closed card in lists
+  let en = "", e = null, target = "";
+  if(t === "words"){ en = (c.en || "").split(" / ")[0]; e = (c.ex && c.ex[0]) || c.use; target = c.word; }
+  else if(t === "kanji"){ en = c.en || ""; const w = (c.words || [])[0]; e = w ? {jp: `${w.w}（${w.r}）${w.m ? ": " + w.m : ""}`} : null; target = c.kanji; }
+  else { en = c.en || ""; e = (c.rei || [])[0]; target = c.variants || c.pattern; }
+  return `<div class="card-peek">${en ? `<span class="mini-en">${esc(en)}</span>` : ""}${e ? `<span class="mini-ex">${t === "kanji" ? esc(e.jp) : `<span class="rei">例：</span>${hl(e.jp, target)}`}</span>` : ""}</div>`;
+}
+function shortAnswer(t, c, html){   // Settings → Answer: Short = reveal only the meaning + one example (the mini card's content)
+  if(store.get("jc:answer", "full") !== "short") return html;
+  const i = html.indexOf('<div class="back">');
+  return html.slice(0, i) + `<div class="back back-short">${peekFor(t, c)}</div></div>`;
+}
+function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
+  MINI.reg.set(miniKey(t, lv, c.no), c); CARD_LVL = lv;
+  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
+  return html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>";
+}
+function fullFor(t, c, lv){
+  CARD_LVL = lv;
+  const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
+  return (html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`);
+}
+// one handler for every mini list on any page (Playground never renders minis)
+document.addEventListener("click", e => {
+  if(e.target.closest(".say")) return;   // speaker icon: play only
+  const word = e.target.closest(".card .big");   // the headword itself = hear it, the card stays as it is
+  if(word && word.closest(".play-stage")){   // Practice: a quick second tap on the word = reveal
+    const now = Date.now(), card = word.closest(".card");
+    if(now - (word._t || 0) < 350 && !card.classList.contains("open")){ e.stopPropagation(); word._t = 0; flipCard(card, true); return; }
+    word._t = now; }
+  if(word && soundOn()){ const cd = word.closest(".card"), c = cd && MINI.reg.get(miniKey(cd.dataset.mt, cd.dataset.mlv, cd.dataset.no));
+    const text = (c && c.word) || (cd && cd.dataset.type === "words" ? word.textContent.trim() : "");
+    if(text && AUDIO_MAP && AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
+  const m = e.target.closest(".list-card[data-mt]:not(.open)");
+  if(m && !e.target.closest("a")){
+    const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
+    if(c){ e.stopPropagation();
+      const tmp = document.createElement("div"); tmp.innerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv).trim();
+      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); }
+    return;
+  }
+  const f = e.target.closest(".list-card.open[data-mt] .front");
+  if(f){
+    const card = f.closest(".card"), c = MINI.reg.get(miniKey(card.dataset.mt, card.dataset.mlv, card.dataset.no));
+    if(c){ e.stopPropagation(); foldBack(card.querySelector(".back"), () => { card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }); }
+  }
+}, true);
+
+async function renderSection(id){
+  const S = await loadSections(), lv = id.split("-")[0], idx = S[lv].findIndex(x => x.id === id), s = S[lv][idx];
+  const pool = await pgPool(lv), set = new Set(s.words);
+  const cards = pool.words.filter(c => set.has(c.no));
+  $("#pageTitle").textContent = s.name;
+  $("#list").innerHTML = `<section class="complete">
+    <div class="story-top"><button class="nav-btn" id="secBack" data-back="Sections">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
+    <h2 class="sec-title">${esc(s.name)}${s.en ? `<em>${esc(s.en)}</em>` : ""}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
+    <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
+
+  $("#secBack").onclick = () => { renderSections(); };
+  $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
+    const name = s.name; pick("playground"); PG_NEW = true; PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); };
+}
+
+/* ---------- Pre-learn reading page ---------- */
+async function renderPrelearn(id){
+  document.body.classList.remove("playing");
+  const R = await loadReading(id);
+  // the reading file carries its own cards, so the page opens without loading the whole database
+  const get = (t, lv, no) => ((R.cards || {})[t] || []).find(c => c.level === lv && c.no === no);
+  const studied = R.words.filter(([lv, no]) => pgProfile(lv, "words", no).reviews).length;
+  let html = "", at = 0;
+  for(const [s, e, t, lv, no] of R.spans){
+    if(s < at) continue;
+    html += esc(R.text.slice(at, s)) + `<mark class="pw pw-${t}" data-t="${t}" data-lv="${lv}" data-no="${no}">${esc(R.text.slice(s, e))}</mark>`;
+    at = e;
+  }
+  html += esc(R.text.slice(at));
+  html = html.split("\n").map(p => `<p>${p}</p>`).join("");
+  const list = (t, rows) => rows.map(([lv, no]) => { const c = get(t, lv, no); return c ? miniFor(t, c, lv) : ""; }).join("");
+  $("#pageTitle").textContent = R.title;
+  $("#list").innerHTML = `<section class="reading prelearn">
+    <div class="story-top"><button class="nav-btn" id="preBack" data-back="本文">Back</button><button class="nav-btn pre-read" id="preReadBtn" hidden>Read 本文</button></div>
+    <div class="pre-head"><h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
+      <button class="nav-btn pre-study" id="preStudy">Study these</button></div>
+    <h3 class="pre-part">言葉 <small>${R.words.length} words</small></h3>
+    <div class="complete-cards">${list("words", R.words)}</div>
+    ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
+    ${R.kanji.length ? `<h3 class="pre-part">漢字 <small>${R.kanji.length} kanji</small></h3><div class="complete-cards">${list("kanji", R.kanji)}</div>` : ""}
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a>${R.imgCredit ? ` · <a href="${esc(R.imgUrl || R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.imgCredit)}</a>` : ""}</p>
+  </section>`;
+  $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
+  $("#preBack").onclick = () => { renderReader(id); scrollTo(0, 0); };
+  $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
+    cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
+    pick("playground"); PG_NEW = true; PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); };
+
+}
+
+/* ---------- Clean reader: only the text; tap any word = quick English ---------- */
+async function renderReader(id){
+  const R = await loadReading(id);
+  const listed = new Set(R.spans.filter(x => x[2] === "words").map(x => x[0] + ":" + x[1]));
+  let html = "", at = 0;
+  for(const [s, e, g, rd] of (R.tokens || [])){
+    if(s < at) continue;
+    html += esc(R.text.slice(at, s)) + `<span class="tk${listed.has(s + ":" + e) ? " tk-own" : ""}" data-g="${esc(g || "")}" data-r="${esc(rd || "")}">${esc(R.text.slice(s, e))}</span>`;
+    at = e;
+  }
+  html += esc(R.text.slice(at));
+  $("#pageTitle").textContent = R.title;
+  $("#list").innerHTML = `<section class="reader">
+    <div class="story-top"><span class="pre-btns"><button class="nav-btn" id="rdShelf" data-back="${esc(((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading")}">Back</button><button class="nav-btn" id="rdBack" hidden>Cards</button></span><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
+      <path class="wv" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+    <h1 class="reader-title">${esc(R.title)}</h1>
+    <div class="reader-text">${html.split("\n").map(p => p.startsWith("§") ? `<h3 class="reader-ch">${p.slice(1)}</h3>` : `<p>${p}</p>`).join("")}</div>
+    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · tap a word for English</p>
+    <div class="tip-bubble" id="tipB" hidden></div>
+  </section>`;
+  $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  setHeaderAction("Cards", () => { renderPrelearn(id); scrollTo(0, 0); });
+  $("#rdShelf").onclick = () => { renderShelf(R.shelf || "article"); scrollTo(0, 0); };
+  $("#rdVoice").onclick = e => { e.stopPropagation(); const on = !store.get("jc:tapvoice", true); store.set("jc:tapvoice", on); $("#rdVoice").setAttribute("aria-pressed", on); };
+  const tip = $("#tipB"), box = document.querySelector(".reader");
+  box.onclick = e => {
+    const w = e.target.closest(".tk");
+    document.querySelectorAll(".tk.on").forEach(x => x.classList.remove("on"));
+    if(!w){ tip.hidden = true; return; }
+    w.classList.add("on");
+    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : "");
+    tip.hidden = false;
+    if(store.get("jc:tapvoice", true)) speak(w.textContent);   // hear the word as written in the text
+    clearTimeout(tip._t);   // quick look: disappears by itself after 2 s
+    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); }, 2000);
+    const r = w.getBoundingClientRect(), br = box.getBoundingClientRect();
+    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
+  };
+}
+
+/* ---------- Use it: write a message that uses the target words; Claude replies (and corrects misuse) ----------
+   Skeleton: Send unlocks only when every target word is in the message; Hint fills a real example (logged as a hint).
+   The user's own API key stays in this browser (localStorage). Log: jc:uselog [{ts, words, hint, text}]. */
+const USE = {words: [], hinted: new Set(), history: [], client: null};
+const SDK_URL = "https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.128.0/+esm";
+function usesWord(msg, c){
+  const w = c.word.replace(/[（(].*?[）)]|[〜～]/g, "").trim();
+  if(msg.includes(w)) return true;
+  // conjugated verbs / i-adjectives: accept the stem when it keeps a kanji (掲げる -> 掲げ, 著しい -> 著し)
+  if(/[\u4e00-\u9fff]/.test(w) && /[うくぐすつぬぶむるい]$/.test(w) && w.length >= 2){
+    const stem = w.slice(0, -1);
+    if(/[\u4e00-\u9fff]/.test(stem) && msg.includes(stem)) return true;
+  }
+  return false;
+}
+async function pickUseWords(){
+  const affix = c => /[〜～]/.test(c.word + (c.reading || ""));   // suffix/prefix entries (～宛, ～化) are not usable on their own
+  const all = [...(await pgPool("N1")).words, ...(await pgPool("N2")).words].filter(c => !affix(c));
+  const studied = all.filter(c => pgProfile(c.level, "words", c.no).reviews);
+  const from = studied.length >= 2 ? studied : all.filter(c => c.level === "N1");
+  const out = []; while(out.length < 2){ const c = from[Math.floor(Math.random() * from.length)]; if(!out.includes(c)) out.push(c); }
+  USE.words = out; USE.hinted = new Set(); return studied.length >= 2;
+}
+async function renderUseIt(){
+  document.body.classList.remove("playing");
+  const key = store.get("jc:apikey", "");
+  if(!key && USE.wantKey){
+    $("#list").innerHTML = `<section class="useit">
+      <h2 class="sec-title">使ってみる<em>Use your words in a message</em></h2>
+      <p class="set-lead">This practice talks to Claude with your own Anthropic API key. The key is saved only in this browser.</p>
+      <label class="set-label" for="useKey">Anthropic API key</label>
+      <input id="useKey" class="use-key" type="password" autocomplete="off" placeholder="sk-ant-…">
+      <button class="go start" id="useKeySave">Save key</button><button class="use-keyx" id="useNoKey">Back to Claude-app mode</button></section>`;
+    $("#useNoKey").onclick = () => { USE.wantKey = false; renderUseIt(); };
+    $("#useKeySave").onclick = () => { const v = $("#useKey").value.trim(); if(v){ store.set("jc:apikey", v); USE.client = null; renderUseIt(); } };
+    return;
+  }
+  if(!USE.words.length) USE.fromStudied = await pickUseWords();
+  const chips = USE.words.map((c, i) => `<span class="use-chip" data-i="${i}"><b>${esc(c.word)}</b><small>${esc(c.reading)} · ${esc((c.en || "").split(" / ")[0].split(";")[0])}</small></span>`).join("");
+  $("#list").innerHTML = `<section class="useit">
+    <div class="use-task">
+      <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words: study some in Playground first)</small>"}</div>
+      <div class="use-chips">${chips}</div>
+      <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">${key ? "Remove API key" : "Use an API key"}</button></div>
+    </div>
+    <div class="use-log" id="useLog">${USE.history.map(m => `<div class="use-msg ${m.role}">${esc(m.content)}</div>`).join("")}</div>
+    <div class="use-input"><textarea id="useText" rows="3" placeholder="日本語で書いてみよう…"></textarea>
+      <button class="go start" id="useSend" disabled>${key ? "Send" : "Ask Claude ↗"}</button></div>
+    ${key ? "" : `<p class="use-note">Opens Claude with your sentence ready. It uses your Claude plan, no API key.</p>`}
+  </section>`;
+  const ta = $("#useText"), send = $("#useSend");
+  const check = () => {
+    const ok = USE.words.map(c => usesWord(ta.value, c));
+    document.querySelectorAll(".use-chip").forEach((el, i) => el.classList.toggle("ok", ok[i]));
+    send.disabled = !ok.every(Boolean) || !ta.value.trim();
+  };
+  ta.oninput = check;
+  $("#useNew").onclick = async () => { USE.fromStudied = await pickUseWords(); renderUseIt(); };
+  $("#useKeyReset").onclick = () => { if(key){ store.set("jc:apikey", ""); USE.client = null; USE.wantKey = false; } else USE.wantKey = true; renderUseIt(); };
+  $("#useHint").onclick = () => {
+    // cheat mode: a real example sentence from the cards (logged)
+    const parts = USE.words.map(c => { USE.hinted.add(c.no + c.level); const e = (c.ex && c.ex[0]) || c.use; return e ? e.jp : `${c.word}を使ってみました。`; });
+    ta.value = parts.join(""); check(); ta.focus();
+  };
+  send.onclick = async () => {
+    const text = ta.value.trim(); if(!text) return;
+    const log0 = store.get("jc:uselog", []);
+    if(!key){
+      log0.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text, via: "claude-app"});
+      store.set("jc:uselog", log0.slice(-500));
+      const words = USE.words.map(c => `${c.word}（${c.reading}）= ${(c.en || "").split(" / ")[0]}`).join(" / ");
+      const prompt = `I'm learning Japanese for JLPT N1. I wrote a message that uses these target words: ${words}\n\nMy message:「${text}」\n\n`
+        + `1) If a target word is used wrongly or unnaturally, correct it in one line: ✎ 「wrong part」→「better」— short English reason. If it's fine, skip this.\n`
+        + `2) Then reply to my message naturally in Japanese (2–4 sentences, about N2 level), as if we're chatting.`;
+      try{ await navigator.clipboard.writeText(prompt); }catch(e){}
+      window.open("https://claude.ai/new?q=" + encodeURIComponent(prompt), "_blank", "noopener");
+      $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant">Opened in Claude ↗ (also copied, in case you need to paste)</div>`);
+      USE.history.push({role: "user", content: text}, {role: "assistant", content: "Opened in Claude ↗"});
+      USE.fromStudied = await pickUseWords(); const keep = [...USE.history]; renderUseIt(); USE.history = keep;
+      return;
+    }
+    const log = log0;
+    log.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text});
+    store.set("jc:uselog", log.slice(-500));
+    USE.history.push({role: "user", content: text});
+    $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant pending" id="usePending">…</div>`);
+    ta.value = ""; check(); send.disabled = true;
+    const pend = $("#usePending"); pend.removeAttribute("id");
+    try{
+      if(!USE.client){ const { default: Anthropic } = await import(SDK_URL);
+        USE.client = new Anthropic({apiKey: store.get("jc:apikey", ""), dangerouslyAllowBrowser: true}); USE.Anthropic = Anthropic; }
+      const target = USE.words.map(c => `${c.word}（${c.reading}）: ${(c.en || "").split(" / ")[0]}`).join("\n");
+      const response = await USE.client.beta.messages.create({
+        model: "claude-opus-5",
+        max_tokens: 1024,
+        betas: ["server-side-fallback-2026-07-01"],
+        fallbacks: "default",
+        output_config: {effort: "low"},
+        system: `You are a friendly Japanese conversation partner for a JLPT N1/N2 learner.
+The learner's message had to use these target words:
+${target}
+Reply in natural Japanese, 2 to 4 short sentences, at about N2 level, continuing the conversation.
+If a target word is used incorrectly or unnaturally, begin with one correction line in this form:
+✎ 「wrong part」→「better phrasing」— one short English explanation
+then continue the conversation. If the usage is fine, do not comment on it; just reply naturally.`,
+        messages: USE.history,
+      });
+      if(response.stop_reason === "refusal"){ pend.textContent = "The model declined to answer this message. Try writing it differently."; USE.history.pop(); return; }
+      const reply = response.content.filter(b => b.type === "text").map(b => b.text).join("").trim();
+      USE.history.push({role: "assistant", content: reply});
+      pend.classList.remove("pending"); pend.textContent = reply;
+      USE.fromStudied = await pickUseWords();   // next round: new words
+      const keep = [...USE.history]; renderUseIt(); USE.history = keep;
+      document.querySelector("#useLog").scrollTop = 1e9;
+    }catch(err){
+      USE.history.pop();
+      const A = USE.Anthropic;
+      pend.classList.add("err");
+      pend.textContent = A && err instanceof A.AuthenticationError ? "The API key was rejected. Tap “Change key” and enter a valid key."
+        : A && err instanceof A.RateLimitError ? "Too many requests right now. Wait a moment and send again."
+        : A && err instanceof A.APIConnectionError ? "No connection to the API. Check your internet and send again."
+        : `Could not get a reply: ${err.message || err}`;
+    }
+  };
+  check();
+}
+
+/* ---------- Pictures: one word, one photo (Wikidata label + Commons image, meaning-checked with JMdict) ---------- */
+async function renderPictures(){
+  document.body.classList.remove("playing");
+  let idx = []; try{ idx = await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  $("#pageTitle").textContent = "Pictures";
+  idx = idx.filter(x => x.group !== "illust");
+  $("#list").innerHTML = `<section class="pics">
+    <div class="pic-cats">${idx.map(picTile).join("")}</div>
+    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo credits</summary><ol id="picCreditList"></ol></details></section>`;
+  document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+  $("#picCredits").addEventListener("toggle", async () => {   // all categories' credits, fetched on first open
+    const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
+    const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
+    ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => { const P = picsOf(w);
+      return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`); })).join("");
+  });
+}
+const picTile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
+      <span class="pic-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span>
+      <b>${esc(x.ja)}</b><span>${esc(x.en.replace(" (いらすとや)", ""))} · ${x.count}</span></button>`;
+let EXTRA_IDX = null;
+async function extraIdx(){ if(!EXTRA_IDX){ try{ EXTRA_IDX = await (await fetch("data/pictures/extra/index.json", {cache:"no-cache"})).json(); }catch(e){ EXTRA_IDX = []; } } return EXTRA_IDX; }
+async function extraThemes(){ const I = await extraIdx(), m = new Map();
+  for(const x of I){ const t = m.get(x.theme) || {theme: x.theme, themeEn: x.themeEn, count: 0, cover: x.cover}; t.count += x.count; m.set(x.theme, t); }
+  return [...m.values()]; }
+async function renderExtraTheme(theme){   // one theme's extra sessions (150 pictures each)
+  const S = (await extraIdx()).filter(x => x.theme === theme);
+  $("#pageTitle").textContent = theme;
+  $("#list").innerHTML = `<section class="pics xtheme">
+    <button class="nav-btn" id="xBack" data-back="Illustrations">Back</button>
+    <ul class="x-sessions">${S.map((x, i) => `<li><button type="button" class="x-sess" data-pcat="${x.key}"><span class="x-no">${i + 1}</span><span class="x-lab">${esc(x.labels.join("・"))}</span><span class="x-n">${x.count}</span></button></li>`).join("")}</ul>
+    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a>. Meanings here are automatic (dictionary), so a few may be off.</p></section>`;
+  $("#xBack").onclick = () => { renderIllust(); scrollTo(0, 0); };
+  document.querySelectorAll(".x-sess").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+}
+/* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
+/* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
+/* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
+const quizKey = (kind, id) => `jc:prog:${kind}:${id}`;
+function quizLoad(kind, id, fresh){ const v = store.get(quizKey(kind, id), null);   // saved shape must match (tests can be edited)
+  const same = Array.isArray(v) && v.length === fresh.length && v.every((x, k) => Array.isArray(fresh[k]) ? Array.isArray(x) && x.length === fresh[k].length : typeof x === "number");
+  return same ? v : fresh; }
+const quizSave = (kind, id, picked) => store.set(quizKey(kind, id), picked);
+function quizClear(kind, id){ try{ localStorage.removeItem(quizKey(kind, id)); }catch(e){} }
+const quizStart = screens => { const k = screens.findIndex(a => a.some(x => !x)); return k < 0 ? Math.max(0, screens.length - 1) : k; };
+const quizOver = picked => picked.flat().some(Boolean) ? `<button type="button" class="q-over" id="qOver">Start over</button>` : "";
+function testList({kind, title, idx, credit, open}){
+  const levels = [...new Set(idx.map(t => t.level))].sort(), key = "jc:tlv:" + kind;
+  let lv = store.get(key, levels.includes("N1") ? "N1" : levels[0]);
+  if(!levels.includes(lv)) lv = levels[0];
+  const draw = () => {
+    const L = idx.filter(t => t.level === lv);
+    const state = t => store.get(`jc:${kind}:${t.id}`, null) ? "done" : store.get(`jc:seen:${kind}:${t.id}`, 0) ? "seen" : "new";   // opened once = seen; finished = done
+    const tried = L.filter(t => state(t) !== "new").length;
+    $("#list").innerHTML = `<section class="tl">
+      <div class="tl-top">${levels.length > 1 ? `<div class="tl-lv" role="tablist">${levels.map(l => `<button type="button" role="tab" aria-selected="${l === lv}" data-lv="${l}">${l}</button>`).join("")}</div>` : ""}
+        <span class="tl-count" aria-label="${tried} of ${L.length} opened">${tried} / ${L.length}</span></div>
+      <ol class="tl-rows">${L.map((t, i) => { const r = store.get(`jc:${kind}:${t.id}`, null), st = state(t);
+        return `<li><button type="button" class="tl-row ${st}" data-test="${t.id}"><span class="tl-no">${i + 1}</span><span class="tl-t"><b>${esc(t.scenes && t.scenes.length ? t.scenes.slice(0, 4).join("・") : t.title)}</b><small>${t.count} questions</small></span>${r ? `<span class="tl-best">${r.best}/${t.count}</span>` : ""}</button></li>`; }).join("")}</ol>
+      <p class="lsn-note">Original questions in the JLPT formats, not official test material.</p>${credit ? `<details class="tl-credit"><summary>Voice credits</summary><p class="lsn-note">${esc(credit)}</p></details>` : ""}</section>`;
+    $("#list").querySelectorAll(".tl-lv [data-lv]").forEach(b => b.onclick = () => { lv = b.dataset.lv; store.set(key, lv); NAV_SAME = true; draw(); });
+    $("#list").querySelectorAll("[data-test]").forEach(b => b.onclick = () => { store.set(`jc:seen:${kind}:${b.dataset.test}`, Date.now()); open(b.dataset.test); scrollTo(0, 0); });
+  };
+  $("#pageTitle").textContent = title;
+  draw();
+}
+async function renderListening(){
+  let L = []; try{ L = await (await fetch("data/listening/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  const v = [...new Set(L.flatMap(t => t.voices || []))].sort();
+  testList({kind: "lsn", title: "Listening", idx: L, open: renderListenTest,
+    credit: v.length ? "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)" : ""});
+}
+/* ---------- Reading tests: JLPT reading formats. One passage (or set of texts) per screen with its questions ---------- */
+async function renderReadTests(){
+  let L = []; try{ L = await (await fetch("data/readtests/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  testList({kind: "rdt", title: "Reading tests", idx: L, open: renderReadTest});
+  const bk = document.createElement("button"); bk.className = "nav-btn"; bk.dataset.back = "Reading"; bk.textContent = "Back";
+  bk.onclick = () => { renderReading(); scrollTo(0, 0); }; $(".tl").prepend(bk);
+}
+function rdBody(t){   // paragraphs; "■ " = heading; lines starting with "|" = a table (first row = header)
+  const out = [], lines = t.split("\n"); let tb = [];
+  const flush = () => { if(!tb.length) return;
+    const rows = tb.map(l => l.replace(/^\||\|$/g, "").split("|").map(c => c.trim()));
+    out.push(`<div class="rd-tbl"><table>${rows.map((r, i) => `<tr>${r.map(c => i ? `<td>${esc(c)}</td>` : `<th>${esc(c)}</th>`).join("")}</tr>`).join("")}</table></div>`); tb = []; };
+  for(const l of lines){
+    if(/^\|/.test(l)){ tb.push(l); continue; } flush();
+    if(!l.trim()) continue;
+    out.push(/^■/.test(l) ? `<h4>${esc(l.replace(/^■\s*/, ""))}</h4>` : `<p>${esc(l)}</p>`);
+  }
+  flush(); return out.join("");
+}
+async function renderReadTest(id){
+  const T = await (await fetch(`data/readtests/${id}.json`, {cache:"no-cache"})).json();
+  const S = []; T.parts.forEach(pt => pt.items.forEach((it, i) => S.push({...it, part: pt, no: i + 1})));
+  const nQ = S.reduce((n, x) => n + x.questions.length, 0);
+  const picked = quizLoad("rdt", id, S.map(x => new Array(x.questions.length).fill(0))); let i = quizStart(picked);
+  const draw = () => {
+    if(i >= S.length) return done();
+    const it = S[i], P = picked[i], all = P.every(Boolean);
+    $("#pageTitle").textContent = T.level + " 読解";
+    $("#list").innerHTML = `<section class="rdt">
+      <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
+      <div class="lsn-head"><b>${esc(it.part.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${S.length}</span></div>
+      ${it.texts.map(x => `<article class="rd-text">${x.label ? `<span class="rd-lab">${esc(x.label)}</span>` : ""}${x.title ? `<h3>${esc(x.title)}</h3>` : ""}${rdBody(x.body)}</article>`).join("")}
+      ${it.questions.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span>${esc(q.q)}</p>
+        <ol class="lsn-opts">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${P[k] ? (m + 1 === q.answer ? " right" : m + 1 === P[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${P[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${esc(o)}</span></button></li>`).join("")}</ol>
+        ${P[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
+      <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="rdNext">${i + 1 < S.length ? (all ? "Next" : "Skip") : "See result"}</button>
+    </section>`;
+    document.querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; P[+b.dataset.k] = +b.dataset.m; quizSave("rdt", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { quizClear("rdt", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#rdNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#rdBack").onclick = () => renderReadTests();
+  };
+  const done = () => {
+    let right = 0; S.forEach((it, k) => it.questions.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
+    const skipped = picked.flat().filter(x => !x).length, key = "jc:rdt:" + id, r = store.get(key, {best: 0});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("rdt", id);
+    $("#list").innerHTML = `<section class="lsn lsn-done">
+      <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
+      <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
+      <ul class="lsn-parts">${T.parts.map(pt => { let a = 0, n = 0; S.forEach((it, k) => { if(it.part === pt) it.questions.forEach((q, m) => { n++; if(picked[k][m] === q.answer) a++; }); });
+        return `<li><span>${esc(pt.ja)}</span><b>${a} / ${n}</b></li>`; }).join("")}</ul>
+      <button type="button" class="lsn-next" id="rdAgain">Try again</button></section>`;
+    $("#rdBack").onclick = () => renderReadTests();
+    $("#rdAgain").onclick = () => { picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); };
+  };
+  draw();
+}
+/* ---------- 文字・語彙 tests: one section per screen (its instruction + all its questions). ［word］ = underlined ---------- */
+async function renderVocabTests(){
+  let L = []; try{ L = await (await fetch("data/vocabtests/index.json", {cache:"no-cache"})).json(); }catch(e){}
+  testList({kind: "voc", title: "Vocab & Grammar", idx: L, open: renderVocabTest});
+}
+const vocMark = t => esc(t).replace(/［(.+?)］/g, '<u class="voc-u">$1</u>').replace(/＿＿/g, '<span class="voc-bl"></span>').replace(/★/g, '<span class="voc-bl voc-star">★</span>');
+async function renderVocabTest(id){
+  const T = await (await fetch(`data/vocabtests/${id}.json`, {cache:"no-cache"})).json();
+  const P = T.parts, picked = quizLoad("voc", id, P.map(p => new Array(p.items.length).fill(0))); let i = quizStart(picked);
+  const nQ = P.reduce((n, p) => n + p.items.length, 0);
+  const draw = () => {
+    if(i >= P.length) return done();
+    const pt = P[i], A = picked[i], all = A.every(Boolean);
+    $("#pageTitle").textContent = T.level + " 言語知識";
+    $("#list").innerHTML = `<section class="rdt voc">
+      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
+      <div class="lsn-head"><b>${esc(pt.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${P.length}</span></div>
+      ${pt.instr ? `<p class="voc-instr">${esc(pt.instr)}</p>` : ""}
+      ${pt.text ? `<article class="rd-text voc-text">${pt.text.split("\n").filter(Boolean).map(l => `<p>${vocMark(l)}</p>`).join("")}</article>` : ""}
+      ${pt.items.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span><span>${vocMark(q.q)}</span></p>
+        <ol class="lsn-opts${pt.key !== "yoho" && q.options.every(o => o.length <= 9) ? " voc-grid" : ""}">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${A[k] ? (m + 1 === q.answer ? " right" : m + 1 === A[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${A[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${vocMark(o)}</span></button></li>`).join("")}</ol>
+        ${A[k] && q.full ? `<p class="voc-full">${esc(q.full)}</p>` : ""}${A[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
+      <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="vcNext">${i + 1 < P.length ? (all ? "Next" : "Skip") : "See result"}</button>
+    </section>`;
+    $("#list").querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; A[+b.dataset.k] = +b.dataset.m; quizSave("voc", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { quizClear("voc", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#vcNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#vcBack").onclick = () => renderVocabTests();
+  };
+  const done = () => {
+    let right = 0; P.forEach((pt, k) => pt.items.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
+    const skipped = picked.flat().filter(x => !x).length, key = "jc:voc:" + id, r = store.get(key, {best: 0});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("voc", id);
+    $("#list").innerHTML = `<section class="lsn lsn-done">
+      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
+      <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
+      <ul class="lsn-parts">${P.map((pt, k) => `<li><span>${esc(pt.ja)}</span><b>${pt.items.filter((q, m) => picked[k][m] === q.answer).length} / ${pt.items.length}</b></li>`).join("")}</ul>
+      <button type="button" class="lsn-next" id="vcAgain">Try again</button></section>`;
+    $("#vcBack").onclick = () => renderVocabTests();
+    $("#vcAgain").onclick = () => { picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); };
+  };
+  draw();
+}
+async function renderListenTest(id){
+  const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
+  const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => q.sub ? q.sub.forEach((x, j) => Q.push({...q, ...x, part: pt, no: i + 1, subNo: j + 1})) : Q.push({...q, part: pt, no: i + 1})));
+  const picked = quizLoad("lsn", id, new Array(Q.length).fill(0)); let i = quizStart(picked.map(x => [x])), scriptOpen = false;
+  const SPK = {F: "女", F2: "女", M: "男", M2: "男", N: ""};
+  const line = (t, cls, body) => t == null ? `<p class="${cls}">${body}</p>` : `<button type="button" class="lsn-line ${cls}" data-t="${t}">${body}</button>`;
+  const draw = () => {
+    if(i >= Q.length) return done();
+    const q = Q[i], ans = picked[i];
+    $("#pageTitle").textContent = T.title;
+    $("#list").innerHTML = `<section class="lsn lsn-pad">
+      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
+      <div class="lsn-head"><b>${esc(q.part.ja)}</b>${quizOver(picked)}<span>${q.no}番${q.subNo ? ` 質問${q.subNo}` : ""} · ${i + 1} / ${Q.length}</span></div>
+      <div class="lsn-player">
+        <button type="button" class="lsn-play" id="lsnPlay" aria-label="Play">${PLAY_ICO}</button>
+        <div class="lsn-bar"><i id="lsnBar"></i></div>
+      </div>
+      ${q.part.spoken && !ans ? `<p class="lsn-hear">Answers are only heard. Pick a number.</p>` : ""}
+      <ol class="lsn-opts${q.part.spoken && !ans ? " lsn-nums" : ""}">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span>${q.part.spoken && !ans ? "" : `<span>${esc(o)}</span>`}</button></li>`).join("")}</ol>
+      ${ans && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}
+      <details class="lsn-script" id="lsnScript"${scriptOpen ? " open" : ""}><summary>Script</summary><div class="lsn-body">
+        ${q.intro ? line(0, "lsn-nar", esc(q.intro)) : ""}
+        ${q.lines.map(([spk, t], k) => line(q.at ? q.at[k] : null, "", `${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}`)).join("")}
+        ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</div></details>
+      <div class="pg-dock lsn-dock"><div class="pg-dock-in lsn-nav">${i ? `<button type="button" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
+        <button type="button" class="main" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button></div></div>
+    </section>`;
+    pgDockLift();
+    const play = $("#lsnPlay"), bar = $("#lsnBar");
+    const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
+    const lines = [...document.querySelectorAll(".lsn-line")];
+    const mark = () => { const now = PLAYER.dataset.q === q.audio && !PLAYER.paused ? PLAYER.currentTime + 0.05 : -1;   // the line being spoken
+      const cur = lines.filter(b => +b.dataset.t <= now).pop(); lines.forEach(b => b.classList.toggle("on", b === cur)); };
+    const start = at => {
+      if(PLAYER.dataset.q !== q.audio){ PLAYER.src = `data/listening/${q.audio}`; PLAYER.dataset.q = q.audio; }
+      PLAYER.onended = () => { setIco(false); bar.style.width = "100%"; mark(); };
+      PLAYER.ontimeupdate = () => { if(PLAYER.dataset.q === q.audio && PLAYER.duration) bar.style.width = `${PLAYER.currentTime / PLAYER.duration * 100}%`; mark(); };
+      if(at != null){ if(PLAYER.readyState >= 1) PLAYER.currentTime = at; else PLAYER.addEventListener("loadedmetadata", () => { PLAYER.currentTime = at; }, {once: true}); }   // iPhone ignores a seek before metadata
+      PLAYER.play().then(() => { setIco(true); mark(); }).catch(() => {});
+    };
+    play.onclick = () => { if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); mark(); return; } start(); };
+    lines.forEach(b => b.onclick = () => start(+b.dataset.t));
+    $("#lsnScript").ontoggle = e => { scriptOpen = e.target.open; };
+    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; picked[i] = +b.dataset.k; quizSave("lsn", id, picked); PLAYER.pause(); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { PLAYER.pause(); quizClear("lsn", id); picked.fill(0); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    const go = d => { PLAYER.pause(); i += d; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#lsnNext").onclick = () => go(1);
+    if($("#lsnPrev")) $("#lsnPrev").onclick = () => go(-1);
+    $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; pgDockDrop(); renderListening(); };
+  };
+  const done = () => {
+    pgDockDrop();
+    const right = Q.filter((q, k) => picked[k] === q.answer).length, key = "jc:lsn:" + id, r = store.get(key, {best: 0});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("lsn", id);
+    $("#list").innerHTML = `<section class="lsn lsn-done">
+      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
+      <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>${picked.filter(x => !x).length ? `<p class="lsn-skipped">${picked.filter(x => !x).length} skipped</p>` : ""}
+      <ul class="lsn-parts">${T.parts.map(pt => { const idx = Q.map((q, k) => [q, k]).filter(([q]) => q.part === pt);
+        return `<li><span>${esc(pt.ja)}</span><b>${idx.filter(([q, k]) => picked[k] === q.answer).length} / ${idx.length}</b></li>`; }).join("")}</ul>
+      <button type="button" class="lsn-next" id="lsnAgain">Try again</button></section>`;
+    $("#lsnBack").onclick = () => renderListening();
+    $("#lsnAgain").onclick = () => { picked.fill(0); i = 0; NAV_SAME = true; draw(); };
+  };
+  draw();
+}
+async function renderIllust(){   // いらすとや: one row per topic, sessions scroll sideways (words with pictures)
+  document.body.classList.remove("playing");
+  let idx = [], ext = [];
+  try{ idx = (await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json()).filter(x => x.group === "illust"); }catch(e){}
+  ext = await extraIdx();
+  for(const x of idx) if(!x.first) x.first = [];
+  const rows = new Map(), themeOf = x => x.theme || x.ja.replace(/ \d+$/, "");
+  for(const x of [...idx, ...ext]){ const t = themeOf(x); if(!rows.has(t)) rows.set(t, {en: (x.themeEn || x.en || "").replace(" (いらすとや)", ""), items: []}); rows.get(t).items.push(x); }
+  const order = [...rows.keys()].sort((a, b) => (a === "その他") - (b === "その他"));
+  $("#pageTitle").textContent = "Illustrations";
+  $("#list").innerHTML = `<section class="pics ill-rows">
+    ${order.map((t, ti) => { const R = rows.get(t), total = R.items.reduce((n, x) => n + x.count, 0);
+      return `<div class="ill-row"><h2 class="ill-h"><span class="ill-no">${ti + 1}</span>${esc(t)}<small>${esc(R.en)} · ${total.toLocaleString()}</small></h2>
+        <div class="ill-scroll">${R.items.map((x, i) => `<button type="button" class="ill-tile" data-pcat="${x.key}"><span class="ill-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span><span class="ill-words">${esc((x.first || []).slice(0, 2).join("・"))}</span></button>`).join("")}</div></div>`; }).join("")}
+    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p></section>`;
+  document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+  if(isJa()) jaWalk($("#list"));
+}
+const picSrc = f => /^https?:/.test(f) ? f : `data/pictures/${f}`;   // extras load from いらすとや directly
+const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
+async function renderPicCat(key){
+  const C = await (await fetch(`data/pictures/${/^x/.test(key) ? "extra/" : ""}${key}.json`, {cache:"no-cache"})).json();
+  const clean = s => (s || "").replace(/\s*\([^)]*[A-Z][a-z]+ [a-z]+[^)]*\)/g, "").trim();   // drop Latin species names
+  const W = C.words;
+  $("#pageTitle").textContent = C.ja;
+  return picView(C, W, clean);   // tapping a category opens the viewer directly
+  // 1) start screen: cover, title, count, Start, and the photo credits (kept OUT of the session)
+  $("#list").innerHTML = `<section class="pic-start">
+    <div class="story-top"><button class="nav-btn" id="picBack" data-back="Pictures">Back</button></div>
+    <div class="ps-cover"><img src="data/pictures/${picsOf(W[0])[0].img}" alt=""></div>
+    <h2 class="ps-title">${esc(C.ja)}<small>${esc(C.en)}</small></h2>
+    <p class="ps-count">${W.length} words</p>
+    <button class="ps-go" id="picGo" type="button">Start</button>
+    <details class="ps-credits"><summary>Photo credits</summary><ol>${W.map(w => { const P = picsOf(w); return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`).join(""); }).join("")}</ol></details>
+  </section>`;
+  $("#picBack").onclick = () => { renderPictures(); scrollTo(0, 0); };
+  $("#picGo").onclick = () => picView(C, W, clean);
+}
+// 2) the clean session: one photo at a time (swipe / drag / ‹ › / arrow keys; click the photo = voice)
+function picView(C, W, clean){
+  const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  $("#list").innerHTML = `<section class="pv">
+    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${/^x/.test(C.key) || C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
+      <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
+    <div class="pv-bar"><i id="pvBar"></i></div>
+    <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
+      <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="${picSrc(P[0].img)}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="${picSrc(P[0].img)}" alt="${esc(w.word)}" loading="${ld}"></button>
+      ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="${picSrc(p.img)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
+      <div class="pv-word"><b class="${w.word.length > 5 ? (w.word.length > 9 ? "longer" : "long") : ""}">${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei" role="button" tabindex="0">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}${P[0].exEn ? `<span class="pv-rei-en">${esc(P[0].exEn)}</span>` : ""}</span>` : ""}</div></div>`; }).join("")}</div>
+  </section>`;
+  const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
+  const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
+    $("#pvPrev").disabled = i === 0; $("#pvNext").disabled = i === W.length - 1; };
+  const go = n => { n = Math.max(0, Math.min(W.length - 1, n));
+    slides[n].scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", inline: "start", block: "nearest"}); mark(n); };
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) mark(+e.target.dataset.n); }), {root: tr, threshold: .6});
+  slides.forEach(s => io.observe(s));
+  tr.addEventListener("click", e => { if(dragged){ dragged = false; return; }
+    const t = e.target.closest(".pv-thumb");
+    if(t){ const sl = t.closest(".pv-slide");   // switch this word's big photo
+      sl.querySelectorAll(".pv-photo img").forEach(im => im.src = picSrc(t.dataset.src));
+      sl.querySelectorAll(".pv-thumb").forEach(x => x.classList.toggle("on", x === t)); return; }
+    const b = e.target.closest(".pv-photo"); if(!b) return;
+    const n = +b.dataset.n;
+    if(n !== i){ go(n); return; }
+    b.animate([{transform:"scale(1)"},{transform:"scale(.97)"},{transform:"scale(1)"}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"});   // press feedback
+    if(soundOn()) speak(W[n].word); });
+  $("#pvSound").onclick = () => { const on = !soundOn(); store.set("jc:sound", on);
+    $("#pvSound").innerHTML = on ? SPK : SPK_OFF; $("#pvSound").setAttribute("aria-pressed", on); };
+  tr.addEventListener("pointerdown", e => { if(e.pointerType !== "mouse") return; dragX = e.clientX; startLeft = tr.scrollLeft; dragged = false; });
+  tr.addEventListener("pointermove", e => { if(dragX === null) return; const dx = e.clientX - dragX;
+    if(!dragged && Math.abs(dx) > 6){ dragged = true; tr.style.scrollSnapType = "none"; tr.setPointerCapture(e.pointerId); }
+    if(dragged) tr.scrollLeft = startLeft - dx; });
+  tr.addEventListener("pointerup", e => { if(dragX === null) return; const dx = e.clientX - dragX; dragX = null;
+    if(dragged){ tr.style.scrollSnapType = ""; go(Math.abs(dx) > 60 ? i + (dx < 0 ? 1 : -1) : i); } });
+  $("#pvPrev").onclick = () => go(i - 1); $("#pvNext").onclick = () => go(i + 1);
+  const keys = e => { if(!document.body.contains(tr)){ removeEventListener("keydown", keys); return; }
+    if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
+  addEventListener("keydown", keys);
+  $("#pvBack").onclick = () => { (C.key.startsWith("ira_") || /^x/.test(C.key) ? renderIllust : renderPictures)(); scrollTo(0, 0); };
+  const pv = document.querySelector(".pv"); pv.classList.toggle("extra", /^x/.test(C.key));
+  tr.addEventListener("click", e => { const r = e.target.closest(".pv-rei"); if(r){ e.stopPropagation(); r.classList.toggle("show"); } }, true);
+  mark(0);
+}
+
+/* ---------- Reading ---------- */
+let STORIES = null;
+/* Reading = a library: shelves of books, every book works the same (learn cards -> read -> tap a word) */
+const SHELVES = [["article","記事","Articles","記"],["news","ニュース","News","報"],["novel","小説","Novels","小"],["story","物語","Short stories","物"],["literature","文学","Literature","文"]];
+/* 文庫本 look: paper covers in slightly different tones; colour only on the spine + mark (muted traditional colours) */
+const SPINE = {article:"#3A4F6B", news:"#66683A", novel:"#7A3E3E", story:"#3E3B38"};   // 藍 / 鶯 / 小豆 / 墨
+const PAPER = ["var(--pp1)","var(--pp2)","var(--pp3)","var(--pp4)"];
+let READ_INDEX = null;
+async function readIndex(){
+  if(!READ_INDEX){ try{ READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ READ_INDEX = []; } }
+  // News: newest first (by publish date); other shelves keep their order
+  READ_INDEX.sort((a, b) => (a.shelf === "news" && b.shelf === "news") ? (b.date || "").localeCompare(a.date || "") : 0);
+  return READ_INDEX;
+}
+function bookHTML(x){
+  const mins = Math.max(1, Math.round(x.chars / 400));
+  // the picture is the cover; without a free image, a typographic cover (the title's first kanji)
+  const first = (x.title.match(/[\u4e00-\u9fff]/) || [x.title[0]])[0];
+  return `<button class="book" data-prelearn="${x.id}" aria-label="${esc(x.title)}">
+    <span class="bk-cover">${x.img ? `<img src="data/readings/${x.img}" alt="" loading="lazy">` : `<span class="bk-type">${esc(first)}</span>`}</span>
+    <b class="bk-t">${esc(x.title)}</b>
+    <span class="bk-meta">${x.date ? `${+x.date.slice(5, 7)}/${+x.date.slice(8, 10)} · ` : ""}${x.counts[0]}語 · ${mins}分</span>
+  </button>`;
+}
+async function renderReading(){
+  document.body.classList.remove("playing");
+  READ_INDEX = null; const RD = await readIndex();
+  $("#pageTitle").textContent = "Reading";
+  // level 1: the sections only; each shows a small fan of its OWN covers (styles never mix)
+  $("#list").innerHTML = `<section class="library">
+    <button class="sec-row rdt-row" id="rdtOpen"><span class="sec-row-t"><b>読解テスト</b><span>JLPT-style reading tests</span></span><span class="sec-row-go" aria-hidden="true">›</span></button>
+    <div class="sec-rows" id="secRows">${shelfOrder().filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => {
+      const items = RD.filter(x => (x.shelf || "article") === k), fan = items.filter(x => x.img).slice(0, 3);
+      return `<button class="sec-row" data-shelf="${k}">
+        <span class="sec-row-t"><b>${jp}</b><span>${en}</span><em>${items.length} books</em></span>
+        <span class="fan">${fan.map((x, i) => `<img src="data/readings/${x.img}" alt="" style="--i:${i}" loading="lazy">`).join("")}</span>
+        <span class="sec-row-go" aria-hidden="true">›</span></button>`; }).join("")}</div>
+  </section>`;
+  document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { if(SEC_DRAG.justDropped) return; renderShelf(b.dataset.shelf); scrollTo(0, 0); });
+  $("#rdtOpen").onclick = () => { renderReadTests(); scrollTo(0, 0); };
+  secReorder($("#secRows"));
+}
+/* his order of the Reading sections (press-and-hold + drag); saved per device */
+function shelfOrder(){
+  let o = []; try{ o = JSON.parse(localStorage.getItem("jc:shelforder") || "[]"); }catch(e){}
+  const rank = k => { const i = o.indexOf(k); return i < 0 ? 99 + SHELVES.findIndex(s => s[0] === k) : i; };
+  return [...SHELVES].sort((a, b) => rank(a[0]) - rank(b[0]));
+}
+const SEC_DRAG = {justDropped: false};
+function secReorder(box){
+  if(!box) return;
+  let row = null, timer = null, startX = 0, startY = 0, grab = 0, on = false, mouse = false;
+  const lift = () => { on = true; grab = startY - row.getBoundingClientRect().top;
+    row.classList.add("lifted"); box.classList.add("sorting"); if(!mouse && navigator.vibrate) navigator.vibrate(15); };
+  const pt = e => e.touches ? e.touches[0] : e;
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches, EASE = "cubic-bezier(.2,.8,.2,1)";
+  const place = y => {   // move the lifted row to the slot under the finger; the others SLIDE out of the way (FLIP)
+    const sibs = [...box.querySelectorAll(".sec-row")].filter(b => b !== row);
+    const before = new Map(sibs.map(b => [b, b.getBoundingClientRect().top]));
+    const slotTop = b => box.getBoundingClientRect().top + b.offsetTop - box.offsetTop;   // resting layout position (ignores running transforms/scale)
+    for(const sib of sibs){
+      const mid = slotTop(sib) + sib.offsetHeight / 2;
+      const after = row.compareDocumentPosition(sib) & Node.DOCUMENT_POSITION_FOLLOWING;
+      if(after && y > mid) sib.after(row); else if(!after && y < mid) sib.before(row);
+    }
+    row.style.transform = `translateY(${y - grab - slotTop(row)}px)`;
+    if(calm) return;
+    for(const sib of sibs){   // First/Last/Invert/Play: start where it was, glide to the new slot
+      sib.style.transition = "none"; sib.style.transform = "";
+      const d = before.get(sib) - sib.getBoundingClientRect().top;
+      if(Math.abs(d) < 1) continue;
+      sib.style.transform = `translateY(${d}px)`; sib.getBoundingClientRect();
+      sib.style.transition = `transform .26s ${EASE}`; sib.style.transform = "";
+    }
+  };
+  const start = e => {
+    const r = e.target.closest(".sec-row"); if(!r || (e.button && e.button !== 0)) return;
+    const p = pt(e); startX = p.clientX; startY = p.clientY; row = r; mouse = !e.touches;
+    if(mouse){ e.preventDefault(); return; }   // mouse: drag starts on movement (no hold); touch: hold first so swipes still scroll
+    timer = setTimeout(lift, 420);
+  };
+  const move = e => {
+    if(!document.body.contains(box)){ removeEventListener("mousemove", move); removeEventListener("mouseup", end); return; }
+    if(!row) return; const p = pt(e);
+    if(!on){
+      if(Math.hypot(p.clientX - startX, p.clientY - startY) > 6){
+        if(mouse) lift(); else { clearTimeout(timer); row = null; return; }   // touch moved before the hold = a scroll
+      } else return;
+    }
+    if(e.cancelable) e.preventDefault(); place(p.clientY);
+  };
+  const end = () => {
+    clearTimeout(timer);
+    if(on){ const r = row; box.classList.remove("sorting");
+      if(calm){ r.classList.remove("lifted"); r.style.transform = ""; }
+      else { r.style.transition = `transform .24s ${EASE}, scale .24s ${EASE}, box-shadow .3s ease`; r.style.transform = ""; r.classList.remove("lifted");
+        setTimeout(() => { r.style.transition = ""; }, 320); }   // glide into its slot and settle
+      try{ localStorage.setItem("jc:shelforder", JSON.stringify([...box.querySelectorAll(".sec-row")].map(b => b.dataset.shelf))); }catch(e){}
+      SEC_DRAG.justDropped = true; setTimeout(() => SEC_DRAG.justDropped = false, 350); }
+    row = null; on = false;
+  };
+  box.addEventListener("touchstart", start, {passive: true});
+  box.addEventListener("touchmove", move, {passive: false});
+  box.addEventListener("touchend", end); box.addEventListener("touchcancel", end);
+  box.addEventListener("mousedown", start);
+  addEventListener("mousemove", move); addEventListener("mouseup", end);
+  box.addEventListener("contextmenu", e => { if(e.target.closest(".sec-row")) e.preventDefault(); });
+}
+async function renderShelf(k){
+  const RD = await readIndex(), [, jp, en] = SHELVES.find(s => s[0] === k), items = RD.filter(x => (x.shelf || "article") === k);
+  $("#pageTitle").textContent = jp;
+  $("#list").innerHTML = `<section class="library">
+    <div class="story-top"><button class="nav-btn" id="shelfBack" data-back="Reading">Back</button></div>
+    <h2 class="sec-title">${jp}<em>${en}</em><small>${items.length} books</small></h2>
+    <div class="shelf-grid">${items.map(x => bookHTML(x)).join("")}</div></section>`;
+  $("#shelfBack").onclick = () => { renderReading(); scrollTo(0, 0); };
+}
+async function renderStory(id){
+  let st; try{ st = await (await fetch(`data/stories/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
+  $("#pageTitle").textContent = st.title;
+  $("#list").innerHTML = `<section class="reading story">
+    <div class="story-top"><button class="nav-btn" id="storyBack" data-back="Reading">Back</button>${sayBtn(st.sentences.map(x=>x.jp).join(""))}</div>
+    <div class="story-meta">${st.level} · ${esc(st.source)}</div>
+    ${st.sentences.map(x => `<div class="ex story-line">${sayBtn(x.jp)}<span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
+  </section>`;
+  $("#storyBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+}
+
+function famBar(lvl, t, no){
+  const f = Math.max(0, Math.min(5, (store.get(profileKey(lvl, t, no), {familiarity:0}).familiarity || 0))) / 5;
+  return `<div class="fam" style="--f:${f}" aria-label="familiarity ${Math.round(f*5)} of 5"><i></i></div>`;
+}
+
+function dotsOrButtons(type,no){
+
+  if(!PLAY)
+    return famBar(CARD_LVL || (DATA && DATA.level), type, no);
+
+  return "";
+
+}
+
+
+let PLAY = false, CURRENT = "home";
+
+let PG_RUNNING = false;
+let PG_RETURN = null;   // {label, go}: where Practice goes back to when it was opened from a reading or a section
+function leavePracticeTo(id, render){ pgDockDrop(); PLAY = false; PG_RUNNING = false; CURRENT = id; document.body.classList.remove("playing");
+  document.querySelector(".tabs").hidden = true; const r = PG_RETURN; PG_RETURN = null; render(); }
+
+
+setInterval(
+  () => {
+
+    if(PLAY && document.querySelector("#list .play-empty"))   // only the "come back later" screen; never reset a card on screen
+      renderPG();
+
+  },
+  30000
+);
+
+
+/* =========================================================
+   NORMAL RENDER
+   ========================================================= */
+
+function render(){
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      el =>
+        el.classList.toggle(
+          "on",
+          el.dataset.t === TAB
+        )
+    );
+
+
+  $("#filter").textContent =
+    ONLY_WEAK
+      ? "Weak only"
+      : "All";
+
+
+  $("#filter").classList.toggle(
+    "on",
+    ONLY_WEAK
+  );
+
+
+  if(!DATA)
+    return;
+
+
+  let items =
+    DATA[TAB];
+
+
+  if(ONLY_WEAK){
+
+    items =
+      items.filter(
+        c =>
+          store
+            .get(
+              dotsKey(
+                TAB,
+                c.no
+              ),
+              [0,0,0]
+            )
+            .filter(Boolean)
+            .length < 3
+      );
+
+  }
+
+
+  const make = {
+    words:wordCard,
+    kanji:kanjiCard,
+    grammar:grammarCard
+  }[TAB];
+
+
+  $("#list").innerHTML =
+    items.length
+
+      ? items
+          .map(make)
+          .join("")
+
+      : `
+
+        <div class="empty">
+          Nothing here.
+        </div>
+
+      `;
+
+
+  $("#count").textContent =
+    `${DATA.level} Day ${DATA.day} · ${items.length} cards`;
+
+}
+
+
+/* =========================================================
+   CLICK HANDLING
+   ========================================================= */
+
+document.addEventListener(
+  "click",
+  e => {
+
+    const say = e.target.closest(".say");
+    if(say){ e.stopPropagation(); sayOff(); speak(say.dataset.say); if(say.classList.contains("say-i") && PLAYER.src && !PLAYER.src.startsWith("data:")){ SAY_ON = say; say.classList.add("playing"); } return; }
+
+    const scene = e.target.closest("[data-scene]");
+    if(scene){ renderScene(scene.dataset.scene); window.scrollTo(0,0); return; }
+
+    const novel = e.target.closest("[data-novel]");
+    if(novel){ renderNovel(novel.dataset.novel); window.scrollTo(0,0); return; }
+
+    const pre = e.target.closest("[data-prelearn]");
+    if(pre){ renderReader(pre.dataset.prelearn); window.scrollTo(0,0); return; }   // a book opens straight into the text
+    const story = e.target.closest("[data-story]");
+    if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
+
+
+    /* ---------- Playground rating ---------- */
+
+    const pb =
+      e.target.closest(
+        ".play-ratings button"
+      );
+
+
+    if(pb){
+
+      const box =
+        pb.parentElement;
+
+
+      const lvl =
+        box.dataset.level;
+
+
+      const type =
+        box.dataset.type;
+
+
+      const no =
+        +box.dataset.no;
+
+
+      const p =
+        pgProfile(
+          lvl,
+          type,
+          no
+        );
+
+
+      const m =
+        +pb.dataset.m;
+
+      pgSnap(lvl, type, no);
+      p.reviews += 1;
+
+
+      if(m === 3){
+
+        p.incorrect += 1;
+
+        p.familiarity =
+          Math.max(
+            0,
+            p.familiarity - 1
+          );
+
+      }else{
+
+        p.correct += 1;
+
+        p.familiarity =
+          Math.min(
+            5,
+            p.familiarity +
+            (
+              m === 1440
+                ? 2
+                : 1
+            )
+          );
+
+      }
+
+
+      p.dueAt =
+        PG.now() +
+        m * 60000;
+
+
+      store.set(
+        profileKey(
+          lvl,
+          type,
+          no
+        ),
+        p
+      );
+
+
+      store.set(
+        pgKey(
+          lvl,
+          type,
+          no
+        ),
+        p.dueAt
+      );
+      if(m === 1440) sessDone(lvl, type, no);
+
+
+      renderPG();
+
+      return;
+
+    }
+
+
+    /* ---------- Dots ---------- */
+
+    const dot =
+      e.target.closest(
+        ".dot"
+      );
+
+
+    if(dot){
+
+      const box =
+        dot.parentElement;
+
+
+      const k =
+        dotsKey(
+          box.dataset.type,
+          box.dataset.no
+        );
+
+
+      const v =
+        store.get(
+          k,
+          [0,0,0]
+        );
+
+
+      v[
+        +dot.dataset.i
+      ] =
+        v[
+          +dot.dataset.i
+        ]
+          ? 0
+          : 1;
+
+
+      store.set(
+        k,
+        v
+      );
+
+
+      dot.classList.toggle(
+        "on",
+        !!v[
+          +dot.dataset.i
+        ]
+      );
+
+
+      return;
+
+    }
+
+
+    /* ---------- Links ---------- */
+
+    if(
+      e.target.closest("a")
+    )
+      return;
+
+
+    /* ---------- Example translation ---------- */
+
+    const ex =
+      e.target.closest(
+        ".ex"
+      );
+
+
+    if(ex){
+
+      ex.classList.toggle(
+        "open"
+      );
+
+      return;
+
+    }
+
+
+    /* ---------- Playground card: tap anywhere to open, tap the top to close ---------- */
+
+    const stageCard = e.target.closest(".play-stage .card") || (e.target.closest(".play-stage") && !e.target.closest("button") && $(".play-stage .card"));
+    if(stageCard){   // anywhere in the practice area flips; examples keep their own tap (English)
+      if(e.target.closest(".ex, a, .say")) return;
+      flipCard(stageCard, !stageCard.classList.contains("open")); return;
+    }
+
+
+    /* ---------- Normal card ---------- */
+
+    const front =
+      e.target.closest(
+        ".front"
+      );
+
+
+    if(front){
+
+      front.parentElement
+        .classList.toggle(
+          "open"
+        );
+
+      return;
+
+    }
+
+
+    /* ---------- Home buttons ---------- */
+
+    const home =
+      e.target.closest(
+        "[data-home]"
+      );
+    if(home && home.dataset.home === "settings"){ openSettingsSheet(); return; }
+
+
+    if(home){
+
+      $("#lesson").value =
+        home.dataset.home;
+
+
+      store.set(
+        "jc:lesson",
+        home.dataset.home
+      );
+
+
+      pick(
+        home.dataset.home
+      );
+
+
+      return;
+
+    }
+
+
+    /* ---------- Lesson buttons ---------- */
+
+    const lesson =
+      e.target.closest(
+        "[data-lesson]"
+      );
+
+
+    if(lesson){
+
+      $("#lesson").value =
+        lesson.dataset.lesson;
+
+
+      store.set(
+        "jc:lesson",
+        lesson.dataset.lesson
+      );
+
+
+      pick(
+        lesson.dataset.lesson
+      );
+
+
+      return;
+
+    }
+
+
+    /* ---------- Tabs ---------- */
+
+    const tab =
+      e.target.closest(
+        ".tab"
+      );
+
+
+    if(tab){
+
+      TAB =
+        tab.dataset.t;
+
+
+      store.set(
+        "jc:tab",
+        TAB
+      );
+
+
+      if(CURRENT === "complete"){ NAV_SAME = true; renderComplete(); }
+      else render();
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+  }
+);
+
+$("#famToggle").onclick = () => {
+  const on = !document.body.classList.contains("showfam");
+  document.body.classList.toggle("showfam", on); store.set("jc:showfam", on);
+  $("#famToggle").setAttribute("aria-pressed", on);
+};
+/* one back link in the header: goes to the page's parent (its hidden [data-back] button), else Home */
+$("#goHome").onclick = () => { NAV_DIR = "back"; const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
+const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textContent = "‹ " + (b ? b.dataset.back : "Home"); };
+new MutationObserver(() => { syncBack(); syncHeaderAction(); }).observe($("#list"), {childList: true});
+/* page swap: every full page change goes through #list.innerHTML; the old page eases out while the new one eases in.
+   Forward = new page from the right; back (header back / swipe) = from the left. */
+let NAV_DIR = "fwd", SWIPE_FROM = 0, NAV_SAME = false;   // NAV_SAME: same page redrawn in place, no page transition
+(() => {
+  const LIST = $("#list"), d = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
+  Object.defineProperty(LIST, "innerHTML", {get(){ return d.get.call(this); }, set(v){
+    const dir = NAV_DIR, from = SWIPE_FROM, same = NAV_SAME; NAV_DIR = "fwd"; SWIPE_FROM = 0; NAV_SAME = false;
+    const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && had.classList.contains("play-screen"));
+    if(calmMotion() || !had || practice || same){ d.set.call(this, v); return; }
+    const r = LIST.getBoundingClientRect(), ghost = LIST.cloneNode(true);
+    ghost.removeAttribute("id"); ghost.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
+    Object.assign(ghost.style, {position:"fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", margin:"0", pointerEvents:"none", zIndex:"0", transform:""});
+    document.body.appendChild(ghost);
+    d.set.call(this, v);
+    const w = Math.min(innerWidth, 900), out = dir === "back" ? w * .35 : -w * .18, inn = dir === "back" ? -w * .12 : w * .22;
+    ghost.animate([{transform:`translateX(${from}px)`, opacity:1},{transform:`translateX(${dir === "back" ? Math.max(from, out) : out}px)`, opacity:0}],
+      {duration:360, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}).onfinish = () => ghost.remove();
+    LIST.animate([{transform:`translateX(${inn}px)`, opacity:0},{transform:"none", opacity:1}], {duration:440, delay:40, easing:"cubic-bezier(.2,.8,.2,1)", fill:"backwards"});
+  }});
+})();
+new MutationObserver(ms => {   // Practice: a new card pops in and stays put
+  if(calmMotion() || !ms.some(m => m.removedNodes.length && m.addedNodes.length)) return;
+  const pc = $("#list .play-stage .play-card");
+  if(pc){ pc.animate([{opacity:0, transform:"scale(.96)"},{opacity:1, transform:"none"}], {duration:240, easing:"cubic-bezier(.2,.8,.2,1)"}); return; }
+  return;
+  $("#list").animate([{opacity:0, transform:"translateY(6px)"},{opacity:1, transform:"none"}], {duration:200, easing:"cubic-bezier(.2,.8,.2,1)"});
+}).observe($("#list"), {childList: true});
+applyTheme();
+new MutationObserver(ms => { if(isJa()) for(const m of ms) m.addedNodes.forEach(n => jaWalk(n.nodeType === 1 ? n : n.parentNode)); })
+  .observe($("#list"), {childList: true, subtree: true});
+new MutationObserver(() => { if(isJa()) jaWalk(document.querySelector("header")); })
+  .observe(document.querySelector("header"), {childList: true, subtree: true, characterData: true});
+applyLang();
+(() => { let x0 = 0, y0 = 0, t0 = 0, ok = false, drag = false, dx = 0;
+  const L = () => $("#list");
+  const inRun = () => document.body.classList.contains("playing") && !!$("#pgBack");   // Practice run: swipe right = Exit
+  const inFilm = () => document.body.classList.contains("cinema") && !!$(".th-exit");      // Movies: swipe right = Exit to the Movies list
+  addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); drag = false; dx = 0;
+    ok = e.touches.length === 1 && CURRENT !== "home" && (inRun() || inFilm() || (!$("#top").hidden && !document.body.classList.contains("cinema") && !e.target.closest(".play-screen"))) &&
+      !e.target.closest(".pv-track,.home-rail,input,select,textarea,.sec-rows.sorting,.reader,.seg,.th-seek,.pg-sheet"); }, {passive: true});
+  addEventListener("touchmove", e => { if(!ok) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
+    if(!drag){ if(Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)){ ok = false; return; } if(dx > 14 && dx > Math.abs(dy) * 1.4) drag = true; else return; }
+    if(e.cancelable) e.preventDefault();   // horizontal swipe: keep the page still (no scroll, no drag)
+  }, {passive: false});
+  addEventListener("touchend", () => { if(!ok || !drag){ ok = false; return; } ok = false;
+    const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .25 || (v > .4 && dx > 50);
+    const l = L();
+    if(go && inRun()){ NAV_DIR = "back"; $("#pgBack").click(); return; }
+    if(go && inFilm()){ $(".th-exit").click(); return; }
+    if(go){ NAV_DIR = "back"; $("#goHome").click(); }
+  }, {passive: true});
+})();
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+$("#filter").onclick =
+  () => {
+
+    ONLY_WEAK =
+      !ONLY_WEAK;
+
+
+    store.set(
+      "jc:weak",
+      ONLY_WEAK
+    );
+
+
+    render();
+
+  };
+
+
+/* =========================================================
+   LESSON SELECT
+   ========================================================= */
+
+$("#lesson").onchange =
+  e => {
+
+    if(
+      e.target.value ===
+      "playground"
+    ){
+
+      store.set(
+        "jc:returnLesson",
+        store.get(
+          "jc:lesson",
+          INDEX[0]?.id || ""
+        )
+      );
+
+    }
+
+
+    store.set(
+      "jc:lesson",
+      e.target.value
+    );
+
+
+    pick(
+      e.target.value
+    );
+
+  };
+
+
+/* =========================================================
+   PICK VIEW
+   ========================================================= */
+
+function pick(id){
+  pgDockDrop(); pgSheetClose(true); if(!KEEP_SETTINGS) closeSettingsSheet(true); document.body.classList.remove("cinema");
+  if(id !== "playground") PG_RETURN = null;
+  PG_NEW = false; SESS_EDIT = null;
+  if(typeof stopStory === "function" && STORY.cont) stopStory();
+
+  PLAY =
+    id === "playground";
+
+  PG_RUNNING = false;
+  CURRENT = id;
+
+  const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
+  const lessonName = (INDEX.find(x => x.id === id) || {});
+  $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
+
+  $("#top").hidden = id === "home";
+  document.querySelector(".tabs").hidden = id in titles;   // Complete list has its own tabs in the page
+  $("#filter").hidden = true;
+  $("#ver").hidden = true;   // version lives in Settings only
+  $("#famToggle").hidden = true;   // moved to Settings
+  const showFam = store.get("jc:showfam", false);
+  document.body.classList.toggle("showfam", showFam);
+  $("#famToggle").setAttribute("aria-pressed", showFam);
+
+  if(PLAY)
+    renderPG();
+
+  else if(id === "home")
+    renderHome();
+
+  else if(id === "settings")
+    renderSettings();
+
+  else if(id === "complete")
+    renderComplete();
+
+  else if(id === "reading")
+    renderReading();
+
+  else if(id === "novels")
+    renderNovels();
+
+  else if(id === "scenes"){
+    SCENE_DIR = "scenes"; renderScenes(); }
+
+  else if(id === "sections")
+    renderSections();
+
+  else if(id === "useit")
+    renderUseIt();
+
+  else if(id === "pictures")
+    renderPictures();
+
+  else if(id === "illust")
+    renderIllust();
+
+  else if(id === "listening")
+    renderListening();
+
+  else if(id === "vocab")
+    renderVocabTests();
+
+  else if(id === "photos"){
+    SCENE_DIR = "photos"; renderScenes(); }
+
+  else if(id === "explore"){
+    SCENE_DIR = "explore";
+    fetch("data/explore/index.json", {cache:"no-cache"}).then(r => r.json()).then(x => renderScene(x.start)).catch(() => {}); }
+
+  else
+    load(id);
+
+}
+
+
+/* =========================================================
+   LOAD LESSON
+   ========================================================= */
+
+async function load(id){
+
+  try{
+
+    const r =
+      await fetch(
+        `data/${id}.json`,
+        {
+          cache:"no-cache"
+        }
+      );
+
+
+    DATA =
+      await r.json();
+
+
+    render();
+
+
+    window.scrollTo(
+      0,
+      0
+    );
+
+  }catch(err){
+
+    $("#list").innerHTML =
+      `<div class="empty">
+        Could not load
+        ${esc(id)}.
+      </div>`;
+
+  }
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+(async function init(){
+
+  $("#ver").textContent =
+    APP_VERSION;
+
+
+  try{
+
+    INDEX =
+      await (
+        await fetch(
+          "data/index.json",
+          {
+            cache:"no-cache"
+          }
+        )
+      ).json();
+
+  }catch(e){
+
+    $("#list").innerHTML =
+      `<div class="empty">
+        Could not load lesson list.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const sel =
+    $("#lesson");
+
+
+  sel.innerHTML = `
+
+    <option value="home">
+      ⌂ Home
+    </option>
+
+    <option value="playground">
+      ▶ Playground
+    </option>
+
+    ${
+      INDEX
+        .map(
+          x =>
+            `<option value="${x.id}">
+              ${x.level} · Day ${x.day}
+              (${x.counts[0]}語
+               ${x.counts[1]}字
+               ${x.counts[2]}文法)
+            </option>`
+        )
+        .join("")
+    }
+
+  `;
+
+
+  const saved =
+    store.get(
+      "jc:lesson",
+      null
+    );
+
+
+  sel.value = "home"; // always open on Home
+
+
+  if(
+    new URLSearchParams(
+      location.search
+    ).has("play")
+  ){
+
+    sel.value =
+      "playground";
+
+  }
+
+
+  pick(
+    sel.value
+  );
+
+
+  if(
+    new URLSearchParams(
+      location.search
+    ).get("play") ===
+    "new"
+  ){
+
+    setTimeout(
+      pgNew,
+      300
+    );
+
+  }
+
+})();
+
+
+/* =========================================================
+   SERVICE WORKER
+   ========================================================= */
+
+if(
+  "serviceWorker" in navigator
+){
+
+  navigator.serviceWorker
+    .register("sw.js")
+    .catch(
+      () => {}
+    );
+
+}
+
