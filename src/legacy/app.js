@@ -9,6 +9,9 @@ import { ReadingHome, Shelf, Prelearn, Reader, Story } from "../screens/Reading"
 import { MovieList, Novel, Theatre } from "../screens/Movies";
 import { STORY, stopStory } from "../movies/player";
 import { PicturesHome, Illustrations, ExtraTheme, PicViewer, picsOf } from "../screens/Pictures";
+import { UseIt } from "../screens/UseIt";
+import { SceneList, Scene } from "../screens/Scenes";
+import { USE, pickUseWords } from "../useit/chat";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -21,7 +24,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v164";
+const APP_VERSION = "v165";
 
 
 /* =========================================================
@@ -1313,10 +1316,7 @@ async function renderScenes(){
   let list; try{ list = await (await fetch(`data/${SCENE_DIR}/index.json`, {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
   $("#pageTitle").textContent = SCENE_DIR === "photos" ? "Photos" : "Scenes";
-  $("#list").innerHTML = `<section class="reading">
-
-    <div class="story-list">${list.map(x => `<button class="home-card story-item" data-scene="${x.id}">
-      <b>${esc(x.title)}</b><span>${esc(x.titleEn)} · ${x.count} words</span></button>`).join("")}</div></section>`;
+  showScreen("scenes-" + SCENE_DIR, createElement(SceneList, {items: list}));   // v165: React (src/screens/Scenes.tsx)
 }
 async function renderScene(id, arrive){
   let sc, svg;
@@ -1332,119 +1332,12 @@ async function renderScene(id, arrive){
   }catch(e){ return; }
   $("#pageTitle").textContent = sc.title;
   if(sc.parent){ try{ const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
-  const open = store.get("jc:scenewords", true);
-  $("#list").innerHTML = `<section class="scene">
-    <div class="story-top"><button class="nav-btn" id="sceneBack" data-back="${sc.parent ? "Zoom out" : SCENE_DIR === "explore" ? "Home" : SCENE_DIR === "photos" ? "Photos" : "Scenes"}">${sc.parent ? "Zoom out" : SCENE_DIR === "explore" ? "Home" : "Back"}</button><button class="nav-btn" id="showAll" aria-pressed="false">Show all</button></div>
-    ${sc.three ? `<div class="scene-3d" id="scene3d"></div>` : `<div class="scene-zoom" id="sceneZoom"><div class="scene-canvas" id="sceneCanvas">${svg}</div></div>`}
-    <div class="scene-info" id="sceneInfo"><div class="scene-hint">${SCENE_DIR === "explore" ? "Tap anything to learn its name. 🔍 = you can zoom in." : "Tap anything in the picture."}</div></div>
-    <details class="scene-words"${open ? " open" : ""}><summary>Words in this scene · ${Object.keys(sc.items).length}</summary>
-      <div class="scene-list">${Object.entries(sc.items).map(([k,v]) => `<button class="scene-row" data-spot="${k}">
-        <b>${esc(v.jp)}</b><span class="rd">${esc(v.reading)}</span><span class="en">${esc(v.en)}</span></button>`).join("")}</div>
-    </details>
-    <div class="story-meta">${sc.sourceUrl ? `<a href="${sc.sourceUrl}" target="_blank" rel="noopener">${esc(sc.source)}</a>` : esc(sc.source)}</div>
-  </section>`;
-  const svgEl = document.querySelector("#sceneCanvas svg");
-  let view3d = null;
-  if(sc.three){
-    try{
-      await loadScript("vendor/three.min.js"); await loadScript("vendor/OrbitControls.js"); await loadScript("scene3d.js?" + APP_VERSION);
-      if(window.__scene3d) window.__scene3d.dispose();
-      view3d = window.__scene3d = mountKonbini3D($("#scene3d"), k => show(k));
-    }catch(e){ $("#scene3d").innerHTML = `<div class="empty">3D could not start on this device.</div>`; }
-  }
-  // labels drawn on the SVG: one for the selected item, or all of them ("Show all"); overlaps relaxed apart
-  let allOn = false, cur = null;
-  const tags = () => {
-    if(!svgEl) return;
-    svgEl.querySelectorAll(".tag").forEach(t => t.remove());
-    const keys = allOn ? Object.keys(sc.items) : (cur ? [cur] : []);
-    const ns = "http://www.w3.org/2000/svg", VW = svgEl.viewBox.baseVal.width, VH = svgEl.viewBox.baseVal.height;
-    const u = VW/400;
-    const P = keys.map(k => {
-      const g = svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
-      const bb = g.getBBox(), t = document.createElementNS(ns, "g"), label = document.createElementNS(ns, "text");
-      t.setAttribute("class", "tag"); label.textContent = sc.items[k].jp + (sc.items[k].zoom ? " 🔍" : "");
-      label.setAttribute("font-size", (allOn ? 10.5 : 12)*u); label.setAttribute("font-weight", "700");
-      label.setAttribute("text-anchor", "middle"); label.setAttribute("fill", "#fff");
-      t.appendChild(label); svgEl.appendChild(t);
-      const w = label.getComputedTextLength() + 10*u, h = (allOn ? 15 : 18)*u;
-      const x = bb.x + bb.width/2, y = allOn ? bb.y + Math.min(bb.height/2, 18*u) : bb.y - 4*u;
-      return {k, t, label, w, h, ax:x, ay:y, x, y};
-    }).filter(Boolean);
-    for(let it = 0; it < 120 && P.length > 1; it++){
-      for(let i = 0; i < P.length; i++) for(let j = i + 1; j < P.length; j++){
-        const p = P[i], q = P[j];
-        const ox = (p.w + q.w)/2 + 2*u - Math.abs(p.x - q.x), oy = (p.h + q.h)/2 + u - Math.abs(p.y - q.y);
-        if(ox <= 0 || oy <= 0) continue;
-        if(oy < ox){ const s = p.y <= q.y ? -1 : 1; p.y += s*oy/2; q.y -= s*oy/2; }
-        else { const s = p.x <= q.x ? -1 : 1; p.x += s*ox/2; q.x -= s*ox/2; }
-      }
-      for(const p of P){ p.x += (p.ax - p.x)*.02; p.y += (p.ay - p.y)*.02; }
-    }
-    for(const p of P){
-      p.x = Math.max(p.w/2 + 2*u, Math.min(VW - p.w/2 - 2*u, p.x)); p.y = Math.max(p.h + u, Math.min(VH - 2*u, p.y));
-      const r = document.createElementNS(ns, "rect");
-      r.setAttribute("x", p.x - p.w/2); r.setAttribute("y", p.y - p.h + 3); r.setAttribute("width", p.w); r.setAttribute("height", p.h);
-      r.setAttribute("rx", 4*u); r.setAttribute("fill", p.k === cur || !allOn ? "var(--shu)" : "rgba(43,36,52,.8)");
-      p.t.insertBefore(r, p.label); p.label.setAttribute("x", p.x); p.label.setAttribute("y", p.y - (allOn ? 1 : 0)*u);
-      p.t.style.pointerEvents = "none";
-    }
-  };
-  const setAll = on => { allOn = on; $("#showAll").setAttribute("aria-pressed", on); store.set("jc:scenelabels", on); if(svgEl) svgEl.classList.toggle("all", on);
-    if(view3d && view3d.showAll) view3d.showAll(Object.fromEntries(Object.entries(sc.items).map(([k,v]) => [k, v.jp])), on); tags(); };
-  $("#showAll").onclick = () => setAll($("#showAll").getAttribute("aria-pressed") !== "true");
-  const show = k => {
-    const v = sc.items[k]; if(!v) return;
-    const g = svgEl ? svgEl.querySelector(`.spot[data-id="${k}"]`) : null;
-    if(svgEl) svgEl.querySelectorAll(".spot").forEach(x => x.classList.toggle("on", x === g));
-    if(view3d){ view3d.select(k, true); view3d.setLabel(v.jp); }
-    document.querySelectorAll(".scene-row").forEach(c => c.classList.toggle("on", c.dataset.spot === k));
-    cur = k; tags();
-    speak(v.jp);
-    $("#sceneInfo").innerHTML = `<div class="scene-word">${esc(v.jp)} ${sayBtn(v.jp)}</div>
-      <div class="rd">${esc(v.reading)}</div><div class="en">${esc(v.en)}</div>
-      <div class="ex"><span class="jpline">${esc(v.phrase)}</span><div class="tr">${esc(v.phraseEn)}</div></div>
-      ${v.zoom ? `<button class="nav-btn zoom-in" id="zoomIn">Zoom in</button>` : ""}`;
-    if(v.zoom) $("#zoomIn").onclick = () => zoomTo(k);
-  };
-  setAll(store.get("jc:scenelabels", false));
-  if(svgEl) svgEl.querySelectorAll(".spot").forEach(g => g.addEventListener("click", ev => { ev.stopPropagation(); show(g.dataset.id); }));
-  document.querySelectorAll(".scene-row").forEach(c => c.onclick = () => { show(c.dataset.spot); (document.querySelector("#scene3d, #sceneZoom")).scrollIntoView({behavior:"smooth", block:"start"}); });
-  document.querySelector(".scene-words").addEventListener("toggle", e => store.set("jc:scenewords", e.target.open));
-  // zoom: fly into a spot, then open the closer scene; zoom out flies back from it
-  const canvas = $("#sceneCanvas"), VB = svgEl && svgEl.viewBox.baseVal;
-  const focus = k => {
-    const g = svgEl && svgEl.querySelector(`.spot[data-id="${k}"]`); if(!g) return null;
-    const bb = g.getBBox();
-    return {ox: (bb.x + bb.width/2)/VB.width*100, oy: (bb.y + bb.height/2)/VB.height*100,
-            s: Math.min(4, .9*Math.min(VB.width/bb.width, VB.height/bb.height))};
-  };
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const play = (frames, opt) => { const an = canvas.animate(frames, opt);
-    return Promise.race([an.finished, new Promise(r => setTimeout(r, opt.duration + 60))]); };
-  async function zoomTo(k){
-    const f = focus(k), next = sc.items[k].zoom;
-    if(f && !still && canvas.animate){
-      canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
-      await play([{transform:"scale(1)", opacity:1}, {transform:`scale(${f.s})`, opacity:0}],
-        {duration:480, easing:"cubic-bezier(.5,0,.8,.4)", fill:"forwards"});
-    }
-    renderScene(next, {dir:"in"});
-  }
-  if(arrive && canvas && !still && canvas.animate){
-    const f = arrive.dir === "out" && arrive.spot ? focus(arrive.spot) : null;
-    if(f){ canvas.style.transformOrigin = `${f.ox}% ${f.oy}%`;
-      canvas.animate([{transform:`scale(${f.s})`, opacity:0}, {transform:"scale(1)", opacity:1}], {duration:480, easing:"cubic-bezier(.2,.6,.3,1)"}); }
-    else canvas.animate([{transform:"scale(.85)", opacity:0}, {transform:"scale(1)", opacity:1}], {duration:380, easing:"cubic-bezier(.2,.6,.3,1)"});
-  }
-  if(sc.parent) $("#sceneBack").onclick = async () => {
-    if(canvas && !still && canvas.animate){ canvas.style.transformOrigin = "50% 50%";
-      await play([{transform:"scale(1)", opacity:1}, {transform:"scale(.7)", opacity:0}], {duration:320, easing:"ease-in", fill:"forwards"}); }
-    const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json();
-    renderScene(sc.parent, {dir:"out", spot: Object.keys(par.items).find(x => par.items[x].zoom === id)});
-  };
-  else $("#sceneBack").onclick = () => { if(window.__scene3d){ window.__scene3d.dispose(); window.__scene3d = null; }
-    if(SCENE_DIR === "explore") pick("home"); else renderScenes(); };
+  const dir = SCENE_DIR;
+  showScreen(`scene-${dir}-${id}`, createElement(Scene, {id, sc, svg: svg || "", dir, arrive: arrive || null, wordsOpen: store.get("jc:scenewords", true),   // v165: React + src/scenes/scene.ts
+    parentItems: async () => (await (await fetch(`data/${dir}/${sc.parent}.json`, {cache:"no-cache"})).json()).items,
+    deps: {speak, sayBtn, version: APP_VERSION, loadScript,
+      zoomInto: t => { const [nid, spot] = t.split("|"); renderScene(nid, spot !== undefined ? {dir: "out", spot} : {dir: "in"}); },
+      back: () => { if(dir === "explore") pick("home"); else renderScenes(); }}}));
 }
 
 /* ---------- Sections: topic chapters ---------- */
@@ -1593,131 +1486,12 @@ async function renderReader(id){
   setHeaderAction("Cards", () => { renderPrelearn(id); scrollTo(0, 0); });
 }
 
-/* ---------- Use it: write a message that uses the target words; Claude replies (and corrects misuse) ----------
-   Skeleton: Send unlocks only when every target word is in the message; Hint fills a real example (logged as a hint).
-   The user's own API key stays in this browser (localStorage). Log: jc:uselog [{ts, words, hint, text}]. */
-const USE = {words: [], hinted: new Set(), history: [], client: null};
-const SDK_URL = "https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.128.0/+esm";
-function usesWord(msg, c){
-  const w = c.word.replace(/[（(].*?[）)]|[〜～]/g, "").trim();
-  if(msg.includes(w)) return true;
-  // conjugated verbs / i-adjectives: accept the stem when it keeps a kanji (掲げる -> 掲げ, 著しい -> 著し)
-  if(/[\u4e00-\u9fff]/.test(w) && /[うくぐすつぬぶむるい]$/.test(w) && w.length >= 2){
-    const stem = w.slice(0, -1);
-    if(/[\u4e00-\u9fff]/.test(stem) && msg.includes(stem)) return true;
-  }
-  return false;
-}
-async function pickUseWords(){
-  const affix = c => /[〜～]/.test(c.word + (c.reading || ""));   // suffix/prefix entries (～宛, ～化) are not usable on their own
-  const all = [...(await pgPool("N1")).words, ...(await pgPool("N2")).words].filter(c => !affix(c));
-  const studied = all.filter(c => pgProfile(c.level, "words", c.no).reviews);
-  const from = studied.length >= 2 ? studied : all.filter(c => c.level === "N1");
-  const out = []; while(out.length < 2){ const c = from[Math.floor(Math.random() * from.length)]; if(!out.includes(c)) out.push(c); }
-  USE.words = out; USE.hinted = new Set(); return studied.length >= 2;
-}
+/* ---------- Use it (v165: React src/screens/UseIt.tsx, logic src/useit/chat.ts) ---------- */
 async function renderUseIt(){
   document.body.classList.remove("playing");
-  const key = store.get("jc:apikey", "");
-  if(!key && USE.wantKey){
-    $("#list").innerHTML = `<section class="useit">
-      <h2 class="sec-title">使ってみる<em>Use your words in a message</em></h2>
-      <p class="set-lead">This practice talks to Claude with your own Anthropic API key. The key is saved only in this browser.</p>
-      <label class="set-label" for="useKey">Anthropic API key</label>
-      <input id="useKey" class="use-key" type="password" autocomplete="off" placeholder="sk-ant-…">
-      <button class="go start" id="useKeySave">Save key</button><button class="use-keyx" id="useNoKey">Back to Claude-app mode</button></section>`;
-    $("#useNoKey").onclick = () => { USE.wantKey = false; renderUseIt(); };
-    $("#useKeySave").onclick = () => { const v = $("#useKey").value.trim(); if(v){ store.set("jc:apikey", v); USE.client = null; renderUseIt(); } };
-    return;
-  }
-  if(!USE.words.length) USE.fromStudied = await pickUseWords();
-  const chips = USE.words.map((c, i) => `<span class="use-chip" data-i="${i}"><b>${esc(c.word)}</b><small>${esc(c.reading)} · ${esc((c.en || "").split(" / ")[0].split(";")[0])}</small></span>`).join("");
-  $("#list").innerHTML = `<section class="useit">
-    <div class="use-task">
-      <div class="use-h">Write a message using ${USE.words.length === 1 ? "this word" : "both words"}${USE.fromStudied ? "" : " <small>(random N1 words: study some in Playground first)</small>"}</div>
-      <div class="use-chips">${chips}</div>
-      <div class="use-tools"><button class="nav-btn" id="useHint">Hint</button><button class="nav-btn" id="useNew">New words</button><button class="use-keyx" id="useKeyReset">${key ? "Remove API key" : "Use an API key"}</button></div>
-    </div>
-    <div class="use-log" id="useLog">${USE.history.map(m => `<div class="use-msg ${m.role}">${esc(m.content)}</div>`).join("")}</div>
-    <div class="use-input"><textarea id="useText" rows="3" placeholder="日本語で書いてみよう…"></textarea>
-      <button class="go start" id="useSend" disabled>${key ? "Send" : "Ask Claude ↗"}</button></div>
-    ${key ? "" : `<p class="use-note">Opens Claude with your sentence ready. It uses your Claude plan, no API key.</p>`}
-  </section>`;
-  const ta = $("#useText"), send = $("#useSend");
-  const check = () => {
-    const ok = USE.words.map(c => usesWord(ta.value, c));
-    document.querySelectorAll(".use-chip").forEach((el, i) => el.classList.toggle("ok", ok[i]));
-    send.disabled = !ok.every(Boolean) || !ta.value.trim();
-  };
-  ta.oninput = check;
-  $("#useNew").onclick = async () => { USE.fromStudied = await pickUseWords(); renderUseIt(); };
-  $("#useKeyReset").onclick = () => { if(key){ store.set("jc:apikey", ""); USE.client = null; USE.wantKey = false; } else USE.wantKey = true; renderUseIt(); };
-  $("#useHint").onclick = () => {
-    // cheat mode: a real example sentence from the cards (logged)
-    const parts = USE.words.map(c => { USE.hinted.add(c.no + c.level); const e = (c.ex && c.ex[0]) || c.use; return e ? e.jp : `${c.word}を使ってみました。`; });
-    ta.value = parts.join(""); check(); ta.focus();
-  };
-  send.onclick = async () => {
-    const text = ta.value.trim(); if(!text) return;
-    const log0 = store.get("jc:uselog", []);
-    if(!key){
-      log0.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text, via: "claude-app"});
-      store.set("jc:uselog", log0.slice(-500));
-      const words = USE.words.map(c => `${c.word}（${c.reading}）= ${(c.en || "").split(" / ")[0]}`).join(" / ");
-      const prompt = `I'm learning Japanese for JLPT N1. I wrote a message that uses these target words: ${words}\n\nMy message:「${text}」\n\n`
-        + `1) If a target word is used wrongly or unnaturally, correct it in one line: ✎ 「wrong part」→「better」— short English reason. If it's fine, skip this.\n`
-        + `2) Then reply to my message naturally in Japanese (2–4 sentences, about N2 level), as if we're chatting.`;
-      try{ await navigator.clipboard.writeText(prompt); }catch(e){}
-      window.open("https://claude.ai/new?q=" + encodeURIComponent(prompt), "_blank", "noopener");
-      $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant">Opened in Claude ↗ (also copied, in case you need to paste)</div>`);
-      USE.history.push({role: "user", content: text}, {role: "assistant", content: "Opened in Claude ↗"});
-      USE.fromStudied = await pickUseWords(); const keep = [...USE.history]; renderUseIt(); USE.history = keep;
-      return;
-    }
-    const log = log0;
-    log.push({ts: Date.now(), words: USE.words.map(c => [c.level, c.no, c.word]), hint: USE.words.some(c => USE.hinted.has(c.no + c.level)), text});
-    store.set("jc:uselog", log.slice(-500));
-    USE.history.push({role: "user", content: text});
-    $("#useLog").insertAdjacentHTML("beforeend", `<div class="use-msg user">${esc(text)}</div><div class="use-msg assistant pending" id="usePending">…</div>`);
-    ta.value = ""; check(); send.disabled = true;
-    const pend = $("#usePending"); pend.removeAttribute("id");
-    try{
-      if(!USE.client){ const { default: Anthropic } = await import(SDK_URL);
-        USE.client = new Anthropic({apiKey: store.get("jc:apikey", ""), dangerouslyAllowBrowser: true}); USE.Anthropic = Anthropic; }
-      const target = USE.words.map(c => `${c.word}（${c.reading}）: ${(c.en || "").split(" / ")[0]}`).join("\n");
-      const response = await USE.client.beta.messages.create({
-        model: "claude-opus-5",
-        max_tokens: 1024,
-        betas: ["server-side-fallback-2026-07-01"],
-        fallbacks: "default",
-        output_config: {effort: "low"},
-        system: `You are a friendly Japanese conversation partner for a JLPT N1/N2 learner.
-The learner's message had to use these target words:
-${target}
-Reply in natural Japanese, 2 to 4 short sentences, at about N2 level, continuing the conversation.
-If a target word is used incorrectly or unnaturally, begin with one correction line in this form:
-✎ 「wrong part」→「better phrasing」— one short English explanation
-then continue the conversation. If the usage is fine, do not comment on it; just reply naturally.`,
-        messages: USE.history,
-      });
-      if(response.stop_reason === "refusal"){ pend.textContent = "The model declined to answer this message. Try writing it differently."; USE.history.pop(); return; }
-      const reply = response.content.filter(b => b.type === "text").map(b => b.text).join("").trim();
-      USE.history.push({role: "assistant", content: reply});
-      pend.classList.remove("pending"); pend.textContent = reply;
-      USE.fromStudied = await pickUseWords();   // next round: new words
-      const keep = [...USE.history]; renderUseIt(); USE.history = keep;
-      document.querySelector("#useLog").scrollTop = 1e9;
-    }catch(err){
-      USE.history.pop();
-      const A = USE.Anthropic;
-      pend.classList.add("err");
-      pend.textContent = A && err instanceof A.AuthenticationError ? "The API key was rejected. Tap “Change key” and enter a valid key."
-        : A && err instanceof A.RateLimitError ? "Too many requests right now. Wait a moment and send again."
-        : A && err instanceof A.APIConnectionError ? "No connection to the API. Check your internet and send again."
-        : `Could not get a reply: ${err.message || err}`;
-    }
-  };
-  check();
+  const newWords = async () => { USE.fromStudied = await pickUseWords(pgPool, c => pgProfile(c.level, "words", c.no).reviews); };
+  if(!USE.words.length) await newWords();
+  showScreen("useit-" + (store.get("jc:apikey", "") ? "key" : USE.wantKey ? "form" : "app"), createElement(UseIt, {newWords, onKeyChange: () => renderUseIt()}));
 }
 
 /* ---------- Pictures: one word, one photo (Wikidata label + Commons image, meaning-checked with JMdict) ---------- */
