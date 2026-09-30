@@ -2213,3 +2213,14 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 /* v179: Practice = sessions table, then progress, then the action row (all in the page) */
 .pg-home .prog{margin:22px 0 0}
 .pg-actions{margin:22px 0 8px}
+
+/* v180: Complete list: filter icon in the header (right), bookmark before the section title */
+.hdr-icon{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--soft);cursor:pointer}
+.hdr-icon:hover{background:var(--chip);color:var(--ink)}
+.hdr-icon.on{color:var(--shu)}
+.complete-section h2.cl-title{display:flex;align-items:center;gap:6px}
+.complete-section h2.cl-title .bm-btn{width:36px;height:36px;margin-left:-8px;border:0;background:none;color:var(--soft);display:grid;place-items:center;cursor:pointer;border-radius:8px}
+.complete-section h2.cl-title .bm-btn:hover{background:var(--chip);color:var(--ink)}
+/* v180: filter and back-to-top share the header spot: filter at the top of the page, back-to-top once scrolled down */
+.bar-end:has(.to-top.on) .hdr-icon{display:none}
+.bar-end:has(.hdr-icon) .to-top:not(.on){display:none}
