@@ -4,6 +4,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import * as Sess from "../practice/sessions";
+import { profile } from "../practice/srs";
 import { useBodyHost } from "../react/float";
 import type { Session } from "../practice/sessions";
 
@@ -123,6 +124,34 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
   </>);
 }
 
+/* ---------------- progress: mastered / learning / struggling / not seen, per level (tap = per type) ---------------- */
+type Stat = { m: number; l: number; s: number; u: number };
+const STATUS: [keyof Stat, string, string][] = [["m", "Mastered", "st-m"], ["l", "Learning", "st-l"], ["s", "Struggling", "st-s"], ["u", "Not seen", "st-u"]];
+function statOf(ids: import("../practice/srs").CardRef[]): Record<string, Stat> {
+  const out: Record<string, Stat> = { all: { m: 0, l: 0, s: 0, u: 0 }, words: { m: 0, l: 0, s: 0, u: 0 }, kanji: { m: 0, l: 0, s: 0, u: 0 }, grammar: { m: 0, l: 0, s: 0, u: 0 } };
+  for (const [lv, t, no] of ids) {
+    const pr = profile(lv, t, no);
+    const k: keyof Stat = !pr.reviews ? "u" : pr.familiarity >= 4 ? "m" : pr.incorrect >= 2 && pr.familiarity <= 1 ? "s" : "l";
+    out.all[k]++; out[t][k]++;
+  }
+  return out;
+}
+function Progress({ p }: { p: PracticeHomeProps }) {
+  const [open, setOpen] = useState<string | null>(null);
+  if (!p.plan) return null;
+  return (
+    <div className="prog">{p.plan.all.map(r => { const lv = r.id.split(":")[1], S = statOf(r.ids), total = r.ids.length;
+      const bar = (st: Stat, n: number) => <div className="prog-bar" aria-hidden="true">{STATUS.map(([k, , c]) => st[k] ? <i key={k} className={c} style={{ flexGrow: st[k] / n }} /> : null)}</div>;
+      return <div key={lv} className="prog-lv">
+        <button type="button" className="prog-row" aria-expanded={open === lv} onClick={() => setOpen(open === lv ? null : lv)}>
+          <span className="prog-name">{lv}<small>{`${total - S.all.u} / ${total}`}</small></span>{bar(S.all, total)}</button>
+        <div className="prog-legend">{STATUS.map(([k, name, c]) => <span key={k}><i className={c} />{`${p.tr(name)} ${S.all[k]}`}</span>)}</div>
+        {open === lv && <table className="prog-table"><thead><tr><th />{STATUS.map(([k, name]) => <th key={k}>{p.tr(name)}</th>)}</tr></thead>
+          <tbody>{(["words", "kanji", "grammar"] as const).map(t => <tr key={t}><th>{p.tr(t[0].toUpperCase() + t.slice(1))}</th>{STATUS.map(([k]) => <td key={k}>{S[t][k]}</td>)}</tr>)}</tbody></table>}
+      </div>; })}</div>
+  );
+}
+
 /* ---------------- plan: today, days, all cards, quiz mistakes ---------------- */
 function Plan({ p }: { p: PracticeHomeProps }) {
   const [openLv, setOpenLv] = useState<string | null>(null);
@@ -230,6 +259,7 @@ export function PracticeHome(p: PracticeHomeProps) {
   return (<>
     <section className="play-setup pg-home">
       {p.origin && <button className="nav-btn" data-back={p.origin} onClick={p.onOrigin}>Back</button>}
+      <Progress p={p} />
       <Plan p={p} />
       <Ledger p={p} onOpenSheet={openSheet} />
     </section>

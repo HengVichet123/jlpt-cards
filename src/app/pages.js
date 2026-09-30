@@ -244,7 +244,7 @@ async function addMistake(word, level){
 }
 export const TEST_KINDS = {
   lsn: {title: "Listening", index: "data/listening/index.json", back: null},
-  rdt: {title: "Reading tests", index: "data/readtests/index.json", back: null},   // v170: own Home tile (JLPT group)
+  rdt: {title: "Reading exams", index: "data/readtests/index.json", back: null},   // v170: own Home tile (JLPT group)
   voc: {title: "Vocab & Grammar", index: "data/vocabtests/index.json", back: null},
 };
 export async function renderTestList(kind){

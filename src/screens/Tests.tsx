@@ -104,12 +104,12 @@ export function ReadTest(p: Common & { id: string; T: ReadTestData; setTitle: (t
     const pk = q.picked; let right = 0; S.forEach((it, k) => it.questions.forEach((x, m) => { if (pk[k][m] === x.answer) right++; }));
     if (!saved.current) { saved.current = true; Quiz.saveScore("rdt", p.id, right); Quiz.clear("rdt", p.id); }
     const parts = p.T.parts.map(pt => { let a = 0, n = 0; S.forEach((it, k) => { if (it.part === pt) it.questions.forEach((x, m) => { n++; if (pk[k][m] === x.answer) a++; }); }); return [pt.ja, a, n] as [string, number, number]; });
-    return <Result right={right} total={nQ} skipped={pk.flat().filter(x => !x).length} parts={parts} back="Reading tests" tr={p.tr} onBack={p.onBack} onAgain={() => { saved.current = false; q.again(); }} />;
+    return <Result right={right} total={nQ} skipped={pk.flat().filter(x => !x).length} parts={parts} back="Reading exams" tr={p.tr} onBack={p.onBack} onAgain={() => { saved.current = false; q.again(); }} />;
   }
   const it = S[q.i], P = q.picked[q.i], all = P.every(Boolean);
   return (
     <section className="rdt q-pad">
-      <button className="nav-btn" data-back="Reading tests" onClick={p.onBack}>Back</button>
+      <button className="nav-btn" data-back="Reading exams" onClick={p.onBack}>Back</button>
       <Head part={it.part.ja} count={`${q.i + 1} / ${S.length}`} show={Quiz.anyAnswered(q.picked)} onOver={q.over} tr={p.tr} />
       {it.texts.map((x, k) => <article key={k} className="rd-text">{x.label && <span className="rd-lab">{x.label}</span>}{x.title && <h3>{x.title}</h3>}{rdBody(x.body)}</article>)}
       {it.questions.map((x, k) => <div key={k} className="rd-q"><p className="rd-qt"><span className="rd-qn">{k + 1}</span>{x.q}</p>

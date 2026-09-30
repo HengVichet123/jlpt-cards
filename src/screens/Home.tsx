@@ -9,9 +9,9 @@ const GEAR = (
 );
 
 const JLPT = [   // v170: the JLPT-style tests have their own group
-  { id: "readtests", cls: "cover-read", jp: "読", name: "Reading", sub: "読解 tests" },
-  { id: "listening", cls: "cover-list", jp: "聴", name: "Listening", sub: "Tests with audio" },
-  { id: "vocab", cls: "cover-all", jp: "語", name: "Vocab & Grammar", sub: "言語知識 tests" },
+  { id: "readtests", cls: "cover-read", jp: "読", name: "Reading", sub: "読解 exams" },
+  { id: "listening", cls: "cover-list", jp: "聴", name: "Listening", sub: "Exams with audio" },
+  { id: "vocab", cls: "cover-all", jp: "語", name: "Vocab & Grammar", sub: "言語知識 exams" },
 ] as const;
 
 const LIBRARY = [
@@ -34,13 +34,11 @@ export function Home({ ja, due }: Props) {
       <p className="home-goal">{ja ? "選んだことを、いろいろな方法で身につける場所。" : "What you choose to learn, learned every way."}</p>
       <button className="home-gear" type="button" data-home="settings" aria-label="Settings">{GEAR}</button>
 
-      <h2 className="home-h">Study</h2>
       <div className="core core-2">
         <button className="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>{due}</span></button>
         <button className="cover cover-cards" data-home="complete"><i>覧</i><b>Complete list</b><span>Every card, in order</span></button>
       </div>
 
-      <h2 className="home-h">JLPT</h2>
       <div className="core core-3">
         {JLPT.map(t => (
           <button key={t.id} className={`cover ${t.cls}`} data-home={t.id}>

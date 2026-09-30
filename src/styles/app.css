@@ -2130,3 +2130,19 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .cover-cards span{color:var(--soft)}
 .cover-cards i{color:var(--ink);opacity:.045}
 .plan-table .deck-list > li > .deck:not(.plan-fold){margin-right:48px}   /* same room as the ✎ in session rows, so numbers line up with the header */
+
+/* v173: progress at the top of Practice: one bar per level (mastered / learning / struggling / not seen), tap = per type */
+.prog{display:grid;gap:14px;margin:0 0 18px}
+.prog-row{width:100%;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:14px;min-height:44px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer;text-align:left}
+.prog-name{font:800 18px var(--display);display:flex;flex-direction:column;line-height:1.1}
+.prog-name small{font:600 12px var(--body);color:var(--faint);font-variant-numeric:tabular-nums}
+.prog-bar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line)}
+.prog-bar i{display:block;min-width:3px}
+.st-m{background:var(--matsu)} .st-l{background:#5B7DB5} .st-s{background:var(--red)} .st-u{background:var(--line)}
+.prog-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font:600 12.5px var(--body);color:var(--soft);font-variant-numeric:tabular-nums}
+.prog-legend span{display:inline-flex;align-items:center;gap:6px}
+.prog-legend i{display:inline-block;width:9px;height:9px;border-radius:2px}
+.prog-table{width:100%;margin-top:10px;border-collapse:collapse;font:600 13px var(--body);font-variant-numeric:tabular-nums}
+.prog-table th,.prog-table td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--line)}
+.prog-table th:first-child{text-align:left}
+.prog-table thead th{color:var(--faint);font-weight:600}

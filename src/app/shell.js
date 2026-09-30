@@ -484,7 +484,7 @@ export function pick(id){
   St.CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Books", readtests:"Reading tests", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Books", readtests:"Reading exams", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
   const lessonName = (St.INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 

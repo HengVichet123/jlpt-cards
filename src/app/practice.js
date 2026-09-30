@@ -31,7 +31,7 @@ export async function planRows(){
   const all = ["N1", "N2"].map(lv => ({id: `plan:${lv}:all`, name: `${lv} · ${tr("All cards")}`, ids: days(o, lv).flat()}));
   const miss = store.get("jc:mistakes", []);
   return {today: lvDays.map(d => d.rows[d.current]), days: lvDays, all,
-    mistakes: miss.length ? {id: "plan:mistakes", name: tr("Quiz mistakes"), ids: miss} : null};
+    mistakes: miss.length ? {id: "plan:mistakes", name: tr("Exam mistakes"), ids: miss} : null};
 }
 export function pgStartPlan(r){
   const st = pgState(); Object.assign(st, {level: "ALL", from: "plan", ids: r.ids, sid: r.id, planName: r.name});
