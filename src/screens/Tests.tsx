@@ -131,7 +131,14 @@ function vocMark(t: string): ReactNode {
     : s === "＿＿" ? <span key={k} className="voc-bl" /> : s === "★" ? <span key={k} className="voc-bl voc-star">★</span> : <Fragment key={k}>{s}</Fragment>);
 }
 
-export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: (t: string) => void }) {
+/** The word a vocabulary question tests (for Quiz mistakes): ［marked］ word, the right option, or the question itself. */
+function testedWord(key: string, q: VocQ): string | null {
+  if (key === "yomi" || key === "iikae") return (q.q.match(/［(.+?)］/) || [])[1] || null;
+  if (key === "bunmyaku") return q.options[q.answer - 1] || null;
+  if (key === "yoho") return q.q.trim() || null;
+  return null;   // grammar parts: not collected (words only)
+}
+export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: (t: string) => void; onWrong: (word: string, level: string) => void }) {
   const P = p.T.parts, nQ = P.reduce((n, x) => n + x.items.length, 0);
   const q = useQuiz("voc", p.id, () => P.map(x => new Array(x.items.length).fill(0)) as number[][], pk => pk);
   const saved = useRef(false), host = useBodyHost();
@@ -151,7 +158,8 @@ export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: 
       {pt.text && <article className="rd-text voc-text">{pt.text.split("\n").filter(Boolean).map((l, k) => <p key={k}>{vocMark(l)}</p>)}</article>}
       {pt.items.map((x, k) => <div key={k} className="rd-q"><p className="rd-qt"><span className="rd-qn">{k + 1}</span><span>{vocMark(x.q)}</span></p>
         <Options opts={x.options} answer={x.answer} chosen={A[k]} render={vocMark} grid={pt.key !== "yoho" && x.options.every(o => o.length <= 9)}
-          onPick={m => { const y = scrollY; const next = q.picked.map(a => [...a]); next[q.i][k] = m; q.pick(next); requestAnimationFrame(() => scrollTo(0, y)); }} />
+          onPick={m => { const y = scrollY; const next = q.picked.map(a => [...a]); next[q.i][k] = m; q.pick(next); requestAnimationFrame(() => scrollTo(0, y));
+            if (m !== x.answer) { const w = testedWord(pt.key, x); if (w) p.onWrong(w, p.T.level); } }} />
         {A[k] && x.full ? <p className="voc-full">{x.full}</p> : null}{A[k] && x.why ? <p className="t-why">{x.why}</p> : null}</div>)}
       <Dock host={host} i={q.i} n={P.length} onGo={q.go} tr={p.tr} />
     </section>

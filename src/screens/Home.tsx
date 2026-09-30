@@ -16,7 +16,6 @@ const JLPT = [   // v170: the JLPT-style tests have their own group
 
 const LIBRARY = [
   { id: "reading", jp: "本", name: "Books" },   // news, articles, novels, stories, literature
-  { id: "complete", jp: "覧", name: "Complete list" },
   { id: "novels", jp: "映", name: "Movies" },
   { id: "pictures", jp: "図", name: "Pictures" },
   { id: "illust", jp: "描", name: "Illustrations" },
@@ -36,8 +35,9 @@ export function Home({ ja, due }: Props) {
       <button className="home-gear" type="button" data-home="settings" aria-label="Settings">{GEAR}</button>
 
       <h2 className="home-h">Study</h2>
-      <div className="core core-1">
+      <div className="core core-2">
         <button className="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>{due}</span></button>
+        <button className="cover cover-cards" data-home="complete"><i>覧</i><b>Complete list</b><span>Every card, in order</span></button>
       </div>
 
       <h2 className="home-h">JLPT</h2>

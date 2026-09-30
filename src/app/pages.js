@@ -8,6 +8,7 @@ import { MovieList, Novel, Theatre } from "../screens/Movies";
 import { Prelearn, Reader, ReadingHome, Shelf, Story } from "../screens/Reading";
 import { Scene, SceneList } from "../screens/Scenes";
 import { St } from "../app/state";
+import { loadOrder, inOrder } from "../practice/plan";
 import { USE, pickUseWords } from "../useit/chat";
 import { UseIt } from "../screens/UseIt";
 import { createElement } from "react";
@@ -49,8 +50,8 @@ export async function renderComplete(jump = null){
 
   const LVL = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";   // one level at a time
   if(!PG.pool[LVL]) $("#list").innerHTML = `<p class="loading-note">Loading ${LVL} cards…</p>`;   // never look frozen
-  const pool =
-    await pgPool(LVL);
+  const order = await loadOrder(), raw = await pgPool(LVL);   // v172: learning order (words by theme, kanji by frequency)
+  const pool = {words: inOrder(raw.words, order[LVL].words), kanji: inOrder(raw.kanji, order[LVL].kanji), grammar: inOrder(raw.grammar, order[LVL].grammar)};
   if(St.CURRENT !== "complete") return;   // user left while it was loading
 
 
@@ -230,6 +231,17 @@ export async function renderExtraTheme(theme){   // one theme's extra sessions (
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
 /* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
 /* v159: tests are React screens (src/screens/Tests.tsx); answers/scores in src/tests/quiz.ts */
+/* v174: a wrong answer in a 言語知識 vocabulary question puts that word's card in the Quiz mistakes session (jc:mistakes) */
+async function addMistake(word, level){
+  const clean = w => w.replace(/[（(].*?[）)]|[〜～]/g, "").trim();
+  for(const lv of [level, level === "N1" ? "N2" : "N1"]){
+    const c = (await pgPool(lv)).words.find(x => x.word === word || clean(x.word) === clean(word));
+    if(!c) continue;
+    const all = store.get("jc:mistakes", []);
+    if(!all.some(([l, t, n]) => l === lv && t === "words" && n === c.no)) store.set("jc:mistakes", [...all, [lv, "words", c.no]]);
+    return;
+  }
+}
 export const TEST_KINDS = {
   lsn: {title: "Listening", index: "data/listening/index.json", back: null},
   rdt: {title: "Reading tests", index: "data/readtests/index.json", back: null},   // v170: own Home tile (JLPT group)
@@ -254,7 +266,7 @@ export async function renderTest(kind, id){
   const dir = {lsn: "listening", rdt: "readtests", voc: "vocabtests"}[kind];
   const T = await (await fetch(`data/${dir}/${id}.json`, {cache:"no-cache"})).json();
   const C = {lsn: ListenTest, rdt: ReadTest, voc: VocabTest}[kind];
-  showScreen(`test-${kind}-${id}`, createElement(C, {id, T, tr, setTitle: t => { $("#pageTitle").textContent = t; },
+  showScreen(`test-${kind}-${id}`, createElement(C, {id, T, tr, setTitle: t => { $("#pageTitle").textContent = t; }, onWrong: addMistake,
     onBack: () => renderTestList(kind)}));
 }
 export const renderReadTest = id => renderTest("rdt", id), renderVocabTest = id => renderTest("voc", id), renderListenTest = id => renderTest("lsn", id);

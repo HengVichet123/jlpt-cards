@@ -11,9 +11,14 @@ export type Profile = { familiarity: number; reviews: number; correct: number; i
 /** Rating buttons: minutes until the card comes back. */
 export const AGAIN = 3, HARD = 10, EASY = 1440;
 
+/* Progress is read for thousands of cards when Practice lists the plan; keep what was read (only rate/undo change it). */
+const CACHE = new Map<string, Profile>();
 export function profile(lvl: Level, t: string, no: number): Profile {
+  const key = K.profile(lvl, t, no), hit = CACHE.get(key);
+  if (hit) return { ...hit };
   const oldDue = store.get<number | null>(K.due(lvl, t, no), null);
-  return store.get<Profile>(K.profile(lvl, t, no), { familiarity: 0, reviews: 0, correct: 0, incorrect: 0, dueAt: oldDue || 0 });
+  const p = store.get<Profile>(key, { familiarity: 0, reviews: 0, correct: 0, incorrect: 0, dueAt: oldDue || 0 });
+  CACHE.set(key, p); return { ...p };
 }
 
 /** Apply a rating (minutes: AGAIN / HARD / EASY) and save it. Returns the new profile. */
@@ -25,6 +30,7 @@ export function rate(lvl: Level, t: string, no: number, minutes: number, now = D
   p.dueAt = now + minutes * 60000;
   store.set(K.profile(lvl, t, no), p);
   store.set(K.due(lvl, t, no), p.dueAt);
+  CACHE.set(K.profile(lvl, t, no), { ...p });
   return p;
 }
 
@@ -64,5 +70,6 @@ export const canUndo = (sid: string | undefined) => UNDO.length > 0 && UNDO[UNDO
 export function undo(sid: string | undefined): boolean {
   if (!canUndo(sid)) return false;
   for (const [k, v] of Object.entries(UNDO.pop()!.v)) store.setRaw(k, v);
+  CACHE.clear();
   return true;
 }

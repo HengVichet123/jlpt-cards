@@ -2103,3 +2103,30 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .to-top:hover{background:var(--chip);color:var(--ink)}
 @media (prefers-reduced-motion: reduce){ .to-top{transition:none} }
 .flag-body{padding:6px 16px 20px}
+
+/* v173: Plan table (today, all days, all cards, quiz mistakes) above your own sessions */
+.plan-table{margin-bottom:18px}
+.plan-today .deck-name{font-weight:800}
+.plan-today .deck-name::before{content:"";display:inline-block;width:7px;height:7px;margin:0 8px 2px 0;border-radius:50%;background:var(--shu);vertical-align:middle}
+.deck.plan-fold{display:flex;align-items:center;justify-content:space-between}
+.plan-fold .deck-name small{margin-left:8px;font:600 13px var(--body);color:var(--faint)}
+.plan-chev{font-size:22px;color:var(--faint);transition:transform .2s ease}
+.plan-fold[aria-expanded="true"] .plan-chev{transform:rotate(90deg)}
+.plan-day .deck{padding-left:28px}
+.plan-day .deck-name{font-weight:500;color:var(--soft)}
+.plan-day.now .deck-name{color:var(--ink);font-weight:700}
+.plan-miss .deck-name{color:var(--red)}
+.deck-table .deck.plan-fold{padding-right:16px}
+
+/* v172: Study = Practice + Complete list side by side */
+.core.core-2{grid-template-columns:1.5fr 1fr;gap:8px}
+.core-2 .cover-play{grid-column:auto;min-height:150px}
+.core-2 .cover-cards{min-height:150px;padding:12px}
+.core-2 .cover-cards b{font-size:16px;line-height:1.2}
+.core-2 .cover-cards span{font-size:11.5px}
+.core-2 .cover-cards i{font-size:84px;top:-12px}
+@media (min-width:700px){ .core.core-2{gap:14px} }
+.cover-cards{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.cover-cards span{color:var(--soft)}
+.cover-cards i{color:var(--ink);opacity:.045}
+.plan-table .deck-list > li > .deck:not(.plan-fold){margin-right:48px}   /* same room as the ✎ in session rows, so numbers line up with the header */

@@ -5,6 +5,7 @@ import { PracticeRun } from "../screens/PracticeRun";
 import * as SRS from "../practice/srs";
 import * as Sess from "../practice/sessions";
 import { St } from "../app/state";
+import { loadOrder, days } from "../practice/plan";
 import { createElement } from "react";
 import { $ } from "../app/core.js";
 import { calmMotion, grammarCard, kanjiCard, shortAnswer, wordCard } from "../cards/cards.js";
@@ -15,6 +16,27 @@ import { pick, render, showScreen } from "../app/shell.js";
    PLAYGROUND DATA
    ========================================================= */
 
+/** One card from a pool by level + number, via an index built once per pool. */
+export function cardIn(pool, lvl, t, no){
+  const ix = pool.__ix || Object.defineProperty(pool, "__ix", {value: {}}).__ix;
+  const m = ix[t] || (ix[t] = new Map(pool[t].map(c => [c.level + ":" + c.no, c])));
+  return m.get(lvl + ":" + no);
+}
+/* v173: the learning plan as built-in sessions (not saved: rebuilt from data/order.json). Progress = the cards' own progress. */
+const DAY_NAME = (lv, d) => `${lv} · Day ${d + 1}`;
+export async function planRows(){
+  const o = await loadOrder(), unseen = ids => ids.some(([l, t, n]) => !pgProfile(l, t, n).reviews);
+  const lvDays = ["N1", "N2"].map(lv => { const D = days(o, lv), cur = Math.max(0, D.findIndex(unseen));
+    return {lv, current: D.findIndex(unseen) < 0 ? D.length - 1 : cur, rows: D.map((ids, d) => ({id: `plan:${lv}:day${d + 1}`, name: DAY_NAME(lv, d), ids}))}; });
+  const all = ["N1", "N2"].map(lv => ({id: `plan:${lv}:all`, name: `${lv} · ${tr("All cards")}`, ids: days(o, lv).flat()}));
+  const miss = store.get("jc:mistakes", []);
+  return {today: lvDays.map(d => d.rows[d.current]), days: lvDays, all,
+    mistakes: miss.length ? {id: "plan:mistakes", name: tr("Quiz mistakes"), ids: miss} : null};
+}
+export function pgStartPlan(r){
+  const st = pgState(); Object.assign(st, {level: "ALL", from: "plan", ids: r.ids, sid: r.id, planName: r.name});
+  store.set("jc:pg", st); St.PG_NEW = false; St.SESS_EDIT = null; St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+}
 export const PG = {
   pool:{},
   now:() => Date.now()
@@ -28,6 +50,8 @@ export function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the runnin
   SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
   SRS.rate(lvl, type, no, m);
   if(m === SRS.EASY) Sess.markDone([lvl, type, no]);
+  if(m === SRS.EASY && pgState().sid === "plan:mistakes")   // known now: off the Quiz mistakes list
+    store.set("jc:mistakes", store.get("jc:mistakes", []).filter(([l, t, n]) => !(l === lvl && t === type && n === no)));
   renderPG();
 }
 export const pgKey = K.due, profileKey = K.profile;
@@ -299,7 +323,9 @@ export async function renderPG(){
     const saveSt = f => { const cur = pgState(); f(cur); store.set("jc:pg", cur); redraw(); };
     $("#count").textContent = `Practice · ${st.level}`;
     $("#pageTitle").textContent = "Practice";
+    const plan = await planRows();   // v173: learning plan sessions (days, all cards, quiz mistakes)
     showScreen("pg-home", createElement(PracticeHome, {   // v157: Practice home is a React screen (src/screens/PracticeHome.tsx)
+      plan, onPlan: r => pgStartPlan(r),
       ja: isJa(), tr, calm: calmMotion(), sheetOpen: St.PG_NEW, origin: St.PG_RETURN ? St.PG_RETURN.label : null,
       sheet: {level: st.level, from: st.from || "all", hasReading: !!st.reading, n: {...st.n},
         newLeft: St.PG_NEW ? {words: newLeft("words"), kanji: newLeft("kanji"), grammar: newLeft("grammar")} : {words: 0, kanji: 0, grammar: 0},
@@ -336,12 +362,7 @@ export async function renderPG(){
     const [lvl,t,no] of st.ids
   ){
 
-    const c =
-      pool[t].find(
-        x =>
-          x.level === lvl &&
-          x.no === no
-      );
+    const c = cardIn(pool, lvl, t, no);   // v173: indexed (sessions can hold thousands of cards)
 
 
     if(!c)

@@ -15,7 +15,12 @@ export type SheetData = {
   reading: { title: string; words: number; kanji: number; grammar: number } | null;
   placeholder: string;
 };
+/** A built-in session from the learning plan (a day, all cards of a level, quiz mistakes). */
+export type PlanRow = { id: string; name: string; ids: import("../practice/srs").CardRef[] };
+export type PlanData = { today: PlanRow[]; days: { lv: string; rows: PlanRow[]; current: number }[]; all: PlanRow[]; mistakes: PlanRow | null };
 export type PracticeHomeProps = {
+  plan: PlanData | null;
+  onPlan: (row: PlanRow) => void;
   ja: boolean;
   tr: (s: string) => string;           // app translation (Japanese-only mode)
   calm: boolean;                       // reduced motion
@@ -118,6 +123,27 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
   </>);
 }
 
+/* ---------------- plan: today, days, all cards, quiz mistakes ---------------- */
+function Plan({ p }: { p: PracticeHomeProps }) {
+  const [openLv, setOpenLv] = useState<string | null>(null);
+  const plan = p.plan; if (!plan) return null;
+  const row = (r: PlanRow, cls = "") => { const c = Sess.counts({ ids: r.ids, done: [] } as unknown as Session);
+    return <li key={r.id} className={cls}><button type="button" className="deck" data-plan={r.id} aria-label={`${r.name}: ${c.n} new, ${c.l} learning, ${c.d} due`} onClick={() => p.onPlan(r)}>
+      <span className="deck-name">{r.name}</span><Num v={c.n} c="new" /><Num v={c.l} c="learn" /><Num v={c.d} c="due" /></button></li>; };
+  return (
+    <div className="deck-table plan-table"><div className="deck-head" aria-hidden="true"><span className="dh-name">{p.tr("Plan")}</span><span>New</span><span>Learn</span><span>Due</span></div>
+      <ul className="deck-list">
+        {plan.today.map(r => row(r, "plan-today"))}
+        {plan.days.map(d => [
+          <li key={"days-" + d.lv}><button type="button" className="deck plan-fold" aria-expanded={openLv === d.lv} onClick={() => setOpenLv(openLv === d.lv ? null : d.lv)}>
+            <span className="deck-name">{`${d.lv} · ${p.tr("All days")}`}<small>{`${d.current + 1} / ${d.rows.length}`}</small></span><span className="plan-chev" aria-hidden="true">›</span></button></li>,
+          ...(openLv === d.lv ? d.rows.map((r, k) => row(r, "plan-day" + (k === d.current ? " now" : ""))) : [])])}
+        {plan.all.map(r => row(r))}
+        {plan.mistakes && row(plan.mistakes, "plan-miss")}
+      </ul></div>
+  );
+}
+
 /* ---------------- New session sheet ---------------- */
 function Stepper({ t, glyph, name, p, n, setN }: { t: CardKind; glyph: string; name: string; p: PracticeHomeProps; n: Record<CardKind, number>; setN: (t: CardKind, v: number) => void }) {
   return (
@@ -204,6 +230,7 @@ export function PracticeHome(p: PracticeHomeProps) {
   return (<>
     <section className="play-setup pg-home">
       {p.origin && <button className="nav-btn" data-back={p.origin} onClick={p.onOrigin}>Back</button>}
+      <Plan p={p} />
       <Ledger p={p} onOpenSheet={openSheet} />
     </section>
     {createPortal(
