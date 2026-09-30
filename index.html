@@ -1944,7 +1944,11 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn .lsn-script[open] summary::before{transform:rotate(45deg) translate(-2px,-2px)}
 .lsn-body{border:1px solid var(--line);border-radius:0 12px 12px 12px;background:var(--card);padding:6px 14px 12px}
 .lsn-nav{justify-content:space-between}
-.lsn-nav .lsn-next{flex:none;align-self:auto;min-width:132px;padding:0 28px;margin-left:auto}
+/* v150: Previous / Next float above the bottom edge like the Practice dock; always "Next" */
+.lsn.lsn-pad{padding-bottom:110px}
+.pg-dock-in.lsn-nav{display:flex;justify-content:space-between;gap:10px}
+.lsn-nav button{min-width:132px;padding:0 24px}
+.lsn-nav #lsnNext{margin-left:auto}
 @media (prefers-reduced-motion: reduce){ .lsn .lsn-script summary::before{transition:none} }
 .lsn-next{align-self:stretch;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--raised);color:var(--ink);font:700 16px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .lsn-score{margin:12px 0 0;text-align:center;font:500 20px var(--body);color:var(--soft)}
@@ -2085,7 +2089,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v149";
+const APP_VERSION = "v150";
 
 
 /* =========================================================
@@ -4666,7 +4670,7 @@ async function renderListenTest(id){
     if(i >= Q.length) return done();
     const q = Q[i], ans = picked[i];
     $("#pageTitle").textContent = T.title;
-    $("#list").innerHTML = `<section class="lsn">
+    $("#list").innerHTML = `<section class="lsn lsn-pad">
       <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
       <div class="lsn-head"><b>${esc(q.part.ja)}</b><span>${q.no}番${q.subNo ? ` 質問${q.subNo}` : ""} · ${i + 1} / ${Q.length}</span></div>
       <div class="lsn-player">
@@ -4680,9 +4684,10 @@ async function renderListenTest(id){
         ${q.intro ? line(0, "lsn-nar", esc(q.intro)) : ""}
         ${q.lines.map(([spk, t], k) => line(q.at ? q.at[k] : null, "", `${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}`)).join("")}
         ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</div></details>
-      <div class="lsn-nav">${i ? `<button type="button" class="lsn-prev" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
-        <button type="button" class="${ans ? "lsn-next" : "lsn-skip"}" id="lsnNext">${i + 1 < Q.length ? (ans ? "Next" : "Skip") : "See result"}</button></div>
+      <div class="pg-dock lsn-dock"><div class="pg-dock-in lsn-nav">${i ? `<button type="button" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
+        <button type="button" class="main" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button></div></div>
     </section>`;
+    pgDockLift();
     const play = $("#lsnPlay"), bar = $("#lsnBar");
     const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
     const lines = [...document.querySelectorAll(".lsn-line")];
@@ -4702,9 +4707,10 @@ async function renderListenTest(id){
     const go = d => { PLAYER.pause(); i += d; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#lsnNext").onclick = () => go(1);
     if($("#lsnPrev")) $("#lsnPrev").onclick = () => go(-1);
-    $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; renderListening(); };
+    $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; pgDockDrop(); renderListening(); };
   };
   const done = () => {
+    pgDockDrop();
     const right = Q.filter((q, k) => picked[k] === q.answer).length, key = "jc:lsn:" + id, r = store.get(key, {best: 0});
     store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
     $("#list").innerHTML = `<section class="lsn lsn-done">
