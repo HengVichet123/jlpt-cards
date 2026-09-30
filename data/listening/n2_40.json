@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "Choose a (non-sweet) gift, then consult her.",
-     "audio": "n2_40/q01.mp3?v=cc6a3bb1"
+     "audio": "n2_40/q01.mp3?v=cc6a3bb1",
+     "at": [
+      11.1,
+      14.95,
+      20.82,
+      31.23,
+      34.28,
+      43.0
+     ],
+     "atQ": 45.4
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 4,
      "why": "The original shop closed; go to the one by the station.",
-     "audio": "n2_40/q02.mp3?v=f0c29a8f"
+     "audio": "n2_40/q02.mp3?v=f0c29a8f",
+     "at": [
+      9.93,
+      14.47,
+      24.52,
+      29.56,
+      39.41
+     ],
+     "atQ": 41.95
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 4,
      "why": "Tidy the floor before vacuuming.",
-     "audio": "n2_40/q03.mp3?v=fa78fdce"
+     "audio": "n2_40/q03.mp3?v=fa78fdce",
+     "at": [
+      9.02,
+      13.34,
+      15.95,
+      23.92,
+      26.55
+     ],
+     "atQ": 30.51
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "For a friend's wedding dance.",
-     "audio": "n2_40/q04.mp3?v=24f3a2bc"
+     "audio": "n2_40/q04.mp3?v=24f3a2bc",
+     "at": [
+      14.29,
+      19.4,
+      22.95,
+      25.04
+     ],
+     "atQ": 37.6
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Construction noise next door.",
-     "audio": "n2_40/q05.mp3?v=1c728fc1"
+     "audio": "n2_40/q05.mp3?v=1c728fc1",
+     "at": [
+      15.89,
+      23.91,
+      29.61,
+      33.55
+     ],
+     "atQ": 44.01
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 2,
      "why": "A library opened in the park.",
-     "audio": "n2_40/q06.mp3?v=6c227b50"
+     "audio": "n2_40/q06.mp3?v=6c227b50",
+     "at": [
+      15.74
+     ],
+     "atQ": 44.2
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 2,
      "why": "Cook freely and enjoy it.",
-     "audio": "n2_40/q07.mp3?v=2437eb7a"
+     "audio": "n2_40/q07.mp3?v=2437eb7a",
+     "at": [
+      5.68
+     ],
+     "atQ": 45.71
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "Free umbrella lending; return at any station.",
-     "audio": "n2_40/q08.mp3?v=02e1d71b"
+     "audio": "n2_40/q08.mp3?v=02e1d71b",
+     "at": [
+      5.09
+     ],
+     "atQ": 44.86
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 2,
      "why": "Asked to carry: agree.",
-     "audio": "n2_40/q09.mp3?v=71b3c686"
+     "audio": "n2_40/q09.mp3?v=71b3c686",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Thanked: you're welcome.",
-     "audio": "n2_40/q10.mp3?v=fb563380"
+     "audio": "n2_40/q10.mp3?v=fb563380",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 2,
      "why": "Is that all? Yes.",
-     "audio": "n2_40/q11.mp3?v=e0a54da1"
+     "audio": "n2_40/q11.mp3?v=e0a54da1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Asking for a day off: approve.",
-     "audio": "n2_40/q12.mp3?v=7fcf07f9"
+     "audio": "n2_40/q12.mp3?v=7fcf07f9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 1,
      "why": "Worried it's bland: reassure.",
-     "audio": "n2_40/q13.mp3?v=ef164bf9"
+     "audio": "n2_40/q13.mp3?v=ef164bf9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 3,
      "why": "An apology: accept with a word.",
-     "audio": "n2_40/q14.mp3?v=29429135"
+     "audio": "n2_40/q14.mp3?v=29429135",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 3,
      "why": "Close, rain-proof, fun experiments.",
-     "audio": "n2_40/q15.mp3?v=182bbcbd"
+     "audio": "n2_40/q15.mp3?v=182bbcbd",
+     "at": [
+      7.79,
+      14.24,
+      17.15,
+      27.62,
+      37.13,
+      45.45
+     ],
+     "atQ": 51.85
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Station lunchbox fair."
       }
      ],
-     "audio": "n2_40/q16.mp3?v=cf0e9131"
+     "audio": "n2_40/q16.mp3?v=cf0e9131",
+     "at": [
+      8.16,
+      37.16,
+      43.47,
+      48.4
+     ]
     }
    ],
    "spoken": false

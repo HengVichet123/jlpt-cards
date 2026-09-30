@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "Wednesday at 7 p.m.",
-     "audio": "n2_39/q01.mp3?v=620d0a5f"
+     "audio": "n2_39/q01.mp3?v=620d0a5f",
+     "at": [
+      9.1,
+      16.51,
+      20.16,
+      23.04,
+      34.74,
+      39.39,
+      42.65
+     ],
+     "atQ": 46.39
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 3,
      "why": "The room comes first.",
-     "audio": "n2_39/q02.mp3?v=5132a8a6"
+     "audio": "n2_39/q02.mp3?v=5132a8a6",
+     "at": [
+      9.79,
+      13.24,
+      16.37,
+      31.32,
+      36.16,
+      44.99
+     ],
+     "atQ": 47.05
     },
     {
      "tags": [
@@ -129,7 +148,14 @@
      ],
      "answer": 3,
      "why": "Stick the barcode labels on.",
-     "audio": "n2_39/q03.mp3?v=4864d02e"
+     "audio": "n2_39/q03.mp3?v=4864d02e",
+     "at": [
+      10.92,
+      15.71,
+      23.76,
+      26.54
+     ],
+     "atQ": 36.86
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 2,
      "why": "Noisy upstairs neighbour.",
-     "audio": "n2_39/q04.mp3?v=65c23953"
+     "audio": "n2_39/q04.mp3?v=65c23953",
+     "at": [
+      13.61,
+      22.68,
+      25.95,
+      28.53
+     ],
+     "atQ": 42.15
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 1,
      "why": "Talking with other departments.",
-     "audio": "n2_39/q05.mp3?v=e2e0825b"
+     "audio": "n2_39/q05.mp3?v=e2e0825b",
+     "at": [
+      18.14,
+      20.66,
+      24.74,
+      26.52
+     ],
+     "atQ": 38.48
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 4,
      "why": "Opens at 7 a.m.",
-     "audio": "n2_39/q06.mp3?v=f1615c8d"
+     "audio": "n2_39/q06.mp3?v=f1615c8d",
+     "at": [
+      17.91,
+      22.37,
+      29.1,
+      31.51
+     ],
+     "atQ": 46.61
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 1,
      "why": "Let kids play outside.",
-     "audio": "n2_39/q07.mp3?v=d5b8ac6a"
+     "audio": "n2_39/q07.mp3?v=d5b8ac6a",
+     "at": [
+      5.19
+     ],
+     "atQ": 51.86
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 4,
      "why": "A public piano at the station.",
-     "audio": "n2_39/q08.mp3?v=e0548967"
+     "audio": "n2_39/q08.mp3?v=e0548967",
+     "at": [
+      5.08
+     ],
+     "atQ": 50.48
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 3,
      "why": "Asked to check: agree.",
-     "audio": "n2_39/q09.mp3?v=949c2df3"
+     "audio": "n2_39/q09.mp3?v=949c2df3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 3,
      "why": "Invitation: accept.",
-     "audio": "n2_39/q10.mp3?v=94278098"
+     "audio": "n2_39/q10.mp3?v=94278098",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "Customer asks if card is OK: yes.",
-     "audio": "n2_39/q11.mp3?v=3b84b407"
+     "audio": "n2_39/q11.mp3?v=3b84b407",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 2,
      "why": "A message: thank.",
-     "audio": "n2_39/q12.mp3?v=40bb3c2b"
+     "audio": "n2_39/q12.mp3?v=40bb3c2b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 2,
      "why": "Hoping for sunshine: reply about the forecast.",
-     "audio": "n2_39/q13.mp3?v=8c458238"
+     "audio": "n2_39/q13.mp3?v=8c458238",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 1,
      "why": "Thanked for lending: modest reply.",
-     "audio": "n2_39/q14.mp3?v=738b3757"
+     "audio": "n2_39/q14.mp3?v=738b3757",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -463,7 +536,16 @@
      ],
      "answer": 2,
      "why": "Rain forecast: indoor aquarium.",
-     "audio": "n2_39/q15.mp3?v=f41cfffe"
+     "audio": "n2_39/q15.mp3?v=f41cfffe",
+     "at": [
+      6.53,
+      11.23,
+      17.03,
+      27.82,
+      36.8,
+      39.09
+     ],
+     "atQ": 45.49
     }
    ],
    "spoken": true
@@ -520,7 +602,13 @@
        "why": "Exam prep."
       }
      ],
-     "audio": "n2_39/q16.mp3?v=21402d84"
+     "audio": "n2_39/q16.mp3?v=21402d84",
+     "at": [
+      11.83,
+      28.16,
+      33.59,
+      37.7
+     ]
     }
    ],
    "spoken": false

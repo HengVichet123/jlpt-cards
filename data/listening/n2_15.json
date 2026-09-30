@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "He'll fill in the dinner time and guest register first.",
-     "audio": "n2_15/q01.mp3?v=9577f63e"
+     "audio": "n2_15/q01.mp3?v=9577f63e",
+     "at": [
+      10.94,
+      12.72,
+      23.59,
+      26.73,
+      38.22
+     ],
+     "atQ": 42.24
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 4,
      "why": "Turn it off and check the cables first.",
-     "audio": "n2_15/q02.mp3?v=28faf60c"
+     "audio": "n2_15/q02.mp3?v=28faf60c",
+     "at": [
+      11.67,
+      14.51,
+      16.93,
+      20.36,
+      34.19
+     ],
+     "atQ": 37.86
     },
     {
      "tags": [
@@ -121,7 +137,15 @@
      ],
      "answer": 1,
      "why": "Phone the oversized-rubbish centre first; they give the date and fee.",
-     "audio": "n2_15/q03.mp3?v=60a4f9c3"
+     "audio": "n2_15/q03.mp3?v=60a4f9c3",
+     "at": [
+      10.06,
+      13.72,
+      19.87,
+      21.17,
+      31.33
+     ],
+     "atQ": 37.03
     }
    ],
    "spoken": false
@@ -163,7 +187,14 @@
      ],
      "answer": 1,
      "why": "He gets off a station early and walks 40 minutes a day.",
-     "audio": "n2_15/q04.mp3?v=2fe5b2e6"
+     "audio": "n2_15/q04.mp3?v=2fe5b2e6",
+     "at": [
+      14.37,
+      19.06,
+      23.04,
+      25.2
+     ],
+     "atQ": 33.54
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 1,
      "why": "There are no windows; it feels stuffy.",
-     "audio": "n2_15/q05.mp3?v=a8516506"
+     "audio": "n2_15/q05.mp3?v=a8516506",
+     "at": [
+      16.97,
+      21.6,
+      27.4,
+      29.5
+     ],
+     "atQ": 36.38
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 4,
      "why": "Using the best fruit of the season.",
-     "audio": "n2_15/q06.mp3?v=7d954016"
+     "audio": "n2_15/q06.mp3?v=7d954016",
+     "at": [
+      17.24,
+      21.88,
+      26.14,
+      28.97
+     ],
+     "atQ": 38.05
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 3,
      "why": "A children's cafeteria run by local elderly people.",
-     "audio": "n2_15/q07.mp3?v=e952a6e3"
+     "audio": "n2_15/q07.mp3?v=e952a6e3",
+     "at": [
+      5.06
+     ],
+     "atQ": 45.84
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 2,
      "why": "Listen to the end first; advise only when asked.",
-     "audio": "n2_15/q08.mp3?v=45c96f82"
+     "audio": "n2_15/q08.mp3?v=45c96f82",
+     "at": [
+      5.31
+     ],
+     "atQ": 55.93
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 1,
      "why": "Enough copies? Yes, one for everyone.",
-     "audio": "n2_15/q09.mp3?v=486b299f"
+     "audio": "n2_15/q09.mp3?v=486b299f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 2,
      "why": "Have you seen it? Not yet.",
-     "audio": "n2_15/q10.mp3?v=8f57a446"
+     "audio": "n2_15/q10.mp3?v=8f57a446",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "A return: ask for the receipt.",
-     "audio": "n2_15/q11.mp3?v=cda01be8"
+     "audio": "n2_15/q11.mp3?v=cda01be8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "Finished homework? Almost.",
-     "audio": "n2_15/q12.mp3?v=cff7c088"
+     "audio": "n2_15/q12.mp3?v=cff7c088",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Leaving the office: お疲れさまでした.",
-     "audio": "n2_15/q13.mp3?v=6266c975"
+     "audio": "n2_15/q13.mp3?v=6266c975",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 3,
      "why": "Staff asks which train to locate the bag.",
-     "audio": "n2_15/q14.mp3?v=2280b42c"
+     "audio": "n2_15/q14.mp3?v=2280b42c",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +522,15 @@
      ],
      "answer": 2,
      "why": "It will rain; the aquarium is indoors.",
-     "audio": "n2_15/q15.mp3?v=8045a046"
+     "audio": "n2_15/q15.mp3?v=8045a046",
+     "at": [
+      6.5,
+      9.51,
+      19.04,
+      28.0,
+      33.78
+     ],
+     "atQ": 42.48
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "He wants an English qualification: study costs."
       }
      ],
-     "audio": "n2_15/q16.mp3?v=4de3a2e4"
+     "audio": "n2_15/q16.mp3?v=4de3a2e4",
+     "at": [
+      7.83,
+      28.69,
+      35.28
+     ]
     }
    ],
    "spoken": false

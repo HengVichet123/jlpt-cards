@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "He must check his notes for the right age before fixing and sending.",
-     "audio": "n1_25/q01.mp3?v=5c714cd9"
+     "audio": "n1_25/q01.mp3?v=5c714cd9",
+     "at": [
+      10.11,
+      19.88,
+      25.5,
+      37.25,
+      42.48,
+      46.14
+     ],
+     "atQ": 51.18
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 2,
      "why": "The outline goes inside the form; the device costs over 100,000 yen, so a quote is needed.",
-     "audio": "n1_25/q02.mp3?v=4b1794c4"
+     "audio": "n1_25/q02.mp3?v=4b1794c4",
+     "at": [
+      15.05,
+      21.56,
+      37.79,
+      40.96,
+      57.43,
+      61.37
+     ],
+     "atQ": 67.33
     },
     {
      "tags": [
@@ -137,7 +155,17 @@
      ],
      "answer": 4,
      "why": "First check the in-house training centre; keep the big room for now.",
-     "audio": "n1_25/q03.mp3?v=c92fb81f"
+     "audio": "n1_25/q03.mp3?v=c92fb81f",
+     "at": [
+      11.74,
+      15.46,
+      19.25,
+      25.35,
+      29.87,
+      39.23,
+      42.64
+     ],
+     "atQ": 47.34
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 2,
      "why": "He imposed his ideal instead of listening to the players.",
-     "audio": "n1_25/q04.mp3?v=9b796de0"
+     "audio": "n1_25/q04.mp3?v=9b796de0",
+     "at": [
+      17.6,
+      23.75,
+      30.3,
+      33.88
+     ],
+     "atQ": 50.72
     },
     {
      "tags": [
@@ -217,7 +252,15 @@
      ],
      "answer": 3,
      "why": "A safety problem (overheating) found in the final test.",
-     "audio": "n1_25/q05.mp3?v=d61c962b"
+     "audio": "n1_25/q05.mp3?v=d61c962b",
+     "at": [
+      16.66,
+      22.92,
+      27.54,
+      29.42,
+      40.07
+     ],
+     "atQ": 43.34
     },
     {
      "tags": [
@@ -239,7 +282,11 @@
      ],
      "answer": 1,
      "why": "Shared in-group words confirm group unity.",
-     "audio": "n1_25/q06.mp3?v=ced5589b"
+     "audio": "n1_25/q06.mp3?v=ced5589b",
+     "at": [
+      16.93
+     ],
+     "atQ": 51.7
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 4,
      "why": "One core value kept; everything else changed boldly.",
-     "audio": "n1_25/q07.mp3?v=1363a9c1"
+     "audio": "n1_25/q07.mp3?v=1363a9c1",
+     "at": [
+      6.33
+     ],
+     "atQ": 58.17
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 1,
      "why": "Sleep consolidates memory; review before bed and sleep well.",
-     "audio": "n1_25/q08.mp3?v=da503690"
+     "audio": "n1_25/q08.mp3?v=da503690",
+     "at": [
+      4.69
+     ],
+     "atQ": 53.23
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 2,
      "why": "She doubts she can do it; reassure her.",
-     "audio": "n1_25/q09.mp3?v=329279de"
+     "audio": "n1_25/q09.mp3?v=329279de",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 3,
      "why": "Asked to attend in his place: accept and ask for the materials.",
-     "audio": "n1_25/q10.mp3?v=7a3fe88b"
+     "audio": "n1_25/q10.mp3?v=7a3fe88b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "An apology: apologise back.",
-     "audio": "n1_25/q11.mp3?v=9b45b6ea"
+     "audio": "n1_25/q11.mp3?v=9b45b6ea",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 2,
      "why": "いささか厳しい = a polite no; propose a new condition.",
-     "audio": "n1_25/q12.mp3?v=a06bc1d2"
+     "audio": "n1_25/q12.mp3?v=a06bc1d2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 1,
      "why": "Thanked for hard work: modest thanks.",
-     "audio": "n1_25/q13.mp3?v=6b8923a1"
+     "audio": "n1_25/q13.mp3?v=6b8923a1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 3,
      "why": "Nagged: promise to go to bed.",
-     "audio": "n1_25/q14.mp3?v=a041a014"
+     "audio": "n1_25/q14.mp3?v=a041a014",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +532,15 @@
      ],
      "answer": 1,
      "why": "Start with the low-burden option: in-house study sessions.",
-     "audio": "n1_25/q15.mp3?v=66963d22"
+     "audio": "n1_25/q15.mp3?v=66963d22",
+     "at": [
+      7.79,
+      33.04,
+      44.17,
+      52.37,
+      68.91
+     ],
+     "atQ": 85.41
     }
    ],
    "spoken": true
@@ -516,7 +597,13 @@
        "why": "A classic he never finished: reading The Tale of Genji."
       }
      ],
-     "audio": "n1_25/q16.mp3?v=9744e4a5"
+     "audio": "n1_25/q16.mp3?v=9744e4a5",
+     "at": [
+      7.34,
+      36.21,
+      43.23,
+      50.92
+     ]
     }
    ],
    "spoken": false

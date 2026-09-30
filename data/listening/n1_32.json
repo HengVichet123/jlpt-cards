@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Confirm dietary needs first; restaurant after.",
-     "audio": "n1_32/q01.mp3?v=cf761542"
+     "audio": "n1_32/q01.mp3?v=cf761542",
+     "at": [
+      12.59,
+      17.27,
+      22.08,
+      28.97,
+      33.04,
+      42.63
+     ],
+     "atQ": 45.03
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "He only needs to read it: use the digital version now.",
-     "audio": "n1_32/q02.mp3?v=6f0a335c"
+     "audio": "n1_32/q02.mp3?v=6f0a335c",
+     "at": [
+      10.81,
+      15.55,
+      28.27,
+      30.16,
+      44.49
+     ],
+     "atQ": 48.29
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 2,
      "why": "Post the notice today; tags next week.",
-     "audio": "n1_32/q03.mp3?v=525a75c3"
+     "audio": "n1_32/q03.mp3?v=525a75c3",
+     "at": [
+      10.38,
+      16.36,
+      23.95,
+      32.64,
+      40.46
+     ],
+     "atQ": 45.98
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "He now starts by trusting others.",
-     "audio": "n1_32/q04.mp3?v=2571e83c"
+     "audio": "n1_32/q04.mp3?v=2571e83c",
+     "at": [
+      17.99,
+      21.62,
+      26.26,
+      28.37
+     ],
+     "atQ": 50.79
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "Quiet, good for flats.",
-     "audio": "n1_32/q05.mp3?v=836e259e"
+     "audio": "n1_32/q05.mp3?v=836e259e",
+     "at": [
+      19.14,
+      25.45,
+      29.18,
+      33.14
+     ],
+     "atQ": 46.37
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 1,
      "why": "Spaces where people can talk.",
-     "audio": "n1_32/q06.mp3?v=53dce41e"
+     "audio": "n1_32/q06.mp3?v=53dce41e",
+     "at": [
+      17.47
+     ],
+     "atQ": 51.82
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 2,
      "why": "Weeds avoid competition by choosing harsh spots.",
-     "audio": "n1_32/q07.mp3?v=2519756f"
+     "audio": "n1_32/q07.mp3?v=2519756f",
+     "at": [
+      5.41
+     ],
+     "atQ": 51.7
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 3,
      "why": "Language reflects worldview.",
-     "audio": "n1_32/q08.mp3?v=7cfef37d"
+     "audio": "n1_32/q08.mp3?v=7cfef37d",
+     "at": [
+      5.46
+     ],
+     "atQ": 55.34
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 2,
      "why": "Told to go home: thank and leave.",
-     "audio": "n1_32/q09.mp3?v=7eef086d"
+     "audio": "n1_32/q09.mp3?v=7eef086d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Reunion: return the compliment.",
-     "audio": "n1_32/q10.mp3?v=cc1026e1"
+     "audio": "n1_32/q10.mp3?v=cc1026e1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 1,
      "why": "The person is away: leave a message.",
-     "audio": "n1_32/q11.mp3?v=11bb6068"
+     "audio": "n1_32/q11.mp3?v=11bb6068",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Complimented: thank.",
-     "audio": "n1_32/q12.mp3?v=826a1594"
+     "audio": "n1_32/q12.mp3?v=826a1594",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Asked to answer the door.",
-     "audio": "n1_32/q13.mp3?v=26e973eb"
+     "audio": "n1_32/q13.mp3?v=26e973eb",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 3,
      "why": "Praised by a superior: humble thanks.",
-     "audio": "n1_32/q14.mp3?v=7e189c11"
+     "audio": "n1_32/q14.mp3?v=7e189c11",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +520,17 @@
      ],
      "answer": 4,
      "why": "Keep lectures, add short discussion breaks.",
-     "audio": "n1_32/q15.mp3?v=4300ffc7"
+     "audio": "n1_32/q15.mp3?v=4300ffc7",
+     "at": [
+      8.17,
+      36.14,
+      47.2,
+      58.37,
+      61.49,
+      72.74,
+      75.07
+     ],
+     "atQ": 84.37
     }
    ],
    "spoken": true
@@ -508,7 +587,13 @@
        "why": "Big house: the mapping model."
       }
      ],
-     "audio": "n1_32/q16.mp3?v=061f4871"
+     "audio": "n1_32/q16.mp3?v=061f4871",
+     "at": [
+      10.91,
+      30.95,
+      36.38,
+      47.33
+     ]
     }
    ],
    "spoken": false

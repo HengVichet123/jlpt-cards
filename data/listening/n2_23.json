@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "The warranty can come later; fill in the repair form first.",
-     "audio": "n2_23/q01.mp3?v=7dae115f"
+     "audio": "n2_23/q01.mp3?v=7dae115f",
+     "at": [
+      12.03,
+      15.65,
+      17.89,
+      20.99,
+      37.73
+     ],
+     "atQ": 40.33
     },
     {
      "tags": [
@@ -79,7 +87,14 @@
      ],
      "answer": 2,
      "why": "Set out the samples; tea after they arrive.",
-     "audio": "n2_23/q02.mp3?v=38c1a48a"
+     "audio": "n2_23/q02.mp3?v=38c1a48a",
+     "at": [
+      10.71,
+      14.74,
+      17.27,
+      28.29
+     ],
+     "atQ": 30.83
     },
     {
      "tags": [
@@ -117,7 +132,15 @@
      ],
      "answer": 1,
      "why": "Her mother's income certificate is also needed.",
-     "audio": "n2_23/q03.mp3?v=7ab78c48"
+     "audio": "n2_23/q03.mp3?v=7ab78c48",
+     "at": [
+      11.01,
+      14.4,
+      21.47,
+      24.38,
+      31.51
+     ],
+     "atQ": 35.79
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 2,
      "why": "Child-friendly seats and menus.",
-     "audio": "n2_23/q04.mp3?v=973bd084"
+     "audio": "n2_23/q04.mp3?v=973bd084",
+     "at": [
+      18.11,
+      22.87,
+      27.12,
+      28.05
+     ],
+     "atQ": 36.01
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 4,
      "why": "The projector broke.",
-     "audio": "n2_23/q05.mp3?v=ee6d04ae"
+     "audio": "n2_23/q05.mp3?v=ee6d04ae",
+     "at": [
+      14.86,
+      18.03,
+      22.12,
+      24.26
+     ],
+     "atQ": 34.55
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 4,
      "why": "His part-time manager scolds him every day.",
-     "audio": "n2_23/q06.mp3?v=ae2d3552"
+     "audio": "n2_23/q06.mp3?v=ae2d3552",
+     "at": [
+      13.76,
+      17.21,
+      19.62,
+      21.48
+     ],
+     "atQ": 29.56
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 1,
      "why": "UV is strong year-round; protect skin always.",
-     "audio": "n2_23/q07.mp3?v=bedcae67"
+     "audio": "n2_23/q07.mp3?v=bedcae67",
+     "at": [
+      4.46
+     ],
+     "atQ": 43.72
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 1,
      "why": "Keep showing up in the same places.",
-     "audio": "n2_23/q08.mp3?v=8b6e549b"
+     "audio": "n2_23/q08.mp3?v=8b6e549b",
+     "at": [
+      5.71
+     ],
+     "atQ": 48.6
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 3,
      "why": "Stepping away: OK.",
-     "audio": "n2_23/q09.mp3?v=c6b17e53"
+     "audio": "n2_23/q09.mp3?v=c6b17e53",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 2,
      "why": "Decline an invitation politely.",
-     "audio": "n2_23/q10.mp3?v=c85b4f32"
+     "audio": "n2_23/q10.mp3?v=c85b4f32",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 1,
      "why": "Need a bag? No, I have one.",
-     "audio": "n2_23/q11.mp3?v=858d2d9c"
+     "audio": "n2_23/q11.mp3?v=858d2d9c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 1,
      "why": "When will you be back? Around seven.",
-     "audio": "n2_23/q12.mp3?v=0a23e4b4"
+     "audio": "n2_23/q12.mp3?v=0a23e4b4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 2,
      "why": "Offer of help: give a task.",
-     "audio": "n2_23/q13.mp3?v=1742726a"
+     "audio": "n2_23/q13.mp3?v=1742726a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 3,
      "why": "Confirm the next appointment.",
-     "audio": "n2_23/q14.mp3?v=40b84723"
+     "audio": "n2_23/q14.mp3?v=40b84723",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 3,
      "why": "The hall is booked, the civic hall too big: the small theatre.",
-     "audio": "n2_23/q15.mp3?v=904c3db9"
+     "audio": "n2_23/q15.mp3?v=904c3db9",
+     "at": [
+      8.0,
+      17.03,
+      24.36,
+      28.04,
+      33.17,
+      41.15
+     ],
+     "atQ": 47.88
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "Friends stay over, no room for a bed: sofa bed."
       }
      ],
-     "audio": "n2_23/q16.mp3?v=6b96738f"
+     "audio": "n2_23/q16.mp3?v=6b96738f",
+     "at": [
+      6.3,
+      25.84,
+      29.31
+     ]
     }
    ],
    "spoken": false

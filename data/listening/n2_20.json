@@ -45,7 +45,15 @@
      ],
      "answer": 4,
      "why": "Fill in the form first, then go to window 3.",
-     "audio": "n2_20/q01.mp3?v=a8fdb8d0"
+     "audio": "n2_20/q01.mp3?v=a8fdb8d0",
+     "at": [
+      10.15,
+      12.31,
+      17.87,
+      21.57,
+      30.45
+     ],
+     "atQ": 32.85
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 2,
      "why": "Business cards are packed; copy the handouts before leaving.",
-     "audio": "n2_20/q02.mp3?v=cdac393f"
+     "audio": "n2_20/q02.mp3?v=cdac393f",
+     "at": [
+      11.09,
+      14.95,
+      17.9,
+      26.54,
+      30.64
+     ],
+     "atQ": 37.45
     },
     {
      "tags": [
@@ -125,7 +141,16 @@
      ],
      "answer": 1,
      "why": "Write the essay before dinner; games and bath later.",
-     "audio": "n2_20/q03.mp3?v=7786e633"
+     "audio": "n2_20/q03.mp3?v=7786e633",
+     "at": [
+      8.12,
+      10.4,
+      13.99,
+      19.04,
+      21.17,
+      23.99
+     ],
+     "atQ": 26.26
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "The crowded train tired her out.",
-     "audio": "n2_20/q04.mp3?v=bdd9a12c"
+     "audio": "n2_20/q04.mp3?v=bdd9a12c",
+     "at": [
+      16.26,
+      21.07,
+      27.21,
+      30.07
+     ],
+     "atQ": 35.16
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Longer opening hours brought after-work customers.",
-     "audio": "n2_20/q05.mp3?v=610433bb"
+     "audio": "n2_20/q05.mp3?v=610433bb",
+     "at": [
+      14.33,
+      19.62,
+      26.43,
+      30.1
+     ],
+     "atQ": 35.63
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 1,
      "why": "Her grandmother is in hospital; she must help at home.",
-     "audio": "n2_20/q06.mp3?v=9c116c68"
+     "audio": "n2_20/q06.mp3?v=9c116c68",
+     "at": [
+      16.3,
+      21.05,
+      24.12,
+      27.03
+     ],
+     "atQ": 39.97
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 2,
      "why": "A subsidy for compost machines to cut food waste.",
-     "audio": "n2_20/q07.mp3?v=fcddda1f"
+     "audio": "n2_20/q07.mp3?v=fcddda1f",
+     "at": [
+      5.1
+     ],
+     "atQ": 43.86
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 3,
      "why": "Change how you take things, not the other person.",
-     "audio": "n2_20/q08.mp3?v=62128d92"
+     "audio": "n2_20/q08.mp3?v=62128d92",
+     "at": [
+      5.32
+     ],
+     "atQ": 43.51
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 3,
      "why": "Can I use the copier? Sure.",
-     "audio": "n2_20/q09.mp3?v=2408ef42"
+     "audio": "n2_20/q09.mp3?v=2408ef42",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Invitation: agree and ask the time.",
-     "audio": "n2_20/q10.mp3?v=f262aa45"
+     "audio": "n2_20/q10.mp3?v=f262aa45",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 2,
      "why": "How much? State the price.",
-     "audio": "n2_20/q11.mp3?v=c41c7cb4"
+     "audio": "n2_20/q11.mp3?v=c41c7cb4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 2,
      "why": "Scolded: apologise.",
-     "audio": "n2_20/q12.mp3?v=5bac3801"
+     "audio": "n2_20/q12.mp3?v=5bac3801",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Offered sweets: thank them.",
-     "audio": "n2_20/q13.mp3?v=4774e9aa"
+     "audio": "n2_20/q13.mp3?v=4774e9aa",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "Doctor asks what's wrong: describe symptoms.",
-     "audio": "n2_20/q14.mp3?v=4d10cd47"
+     "audio": "n2_20/q14.mp3?v=4d10cd47",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 4,
      "why": "The one with a part-time job goes first.",
-     "audio": "n2_20/q15.mp3?v=1f19cd5c"
+     "audio": "n2_20/q15.mp3?v=1f19cd5c",
+     "at": [
+      7.77,
+      10.74,
+      19.42,
+      30.23,
+      38.13
+     ],
+     "atQ": 46.07
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "English study with others: the English reading group."
       }
      ],
-     "audio": "n2_20/q16.mp3?v=809218ba"
+     "audio": "n2_20/q16.mp3?v=809218ba",
+     "at": [
+      6.58,
+      25.68,
+      31.01
+     ]
     }
    ],
    "spoken": false

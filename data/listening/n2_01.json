@@ -54,7 +54,17 @@
       "会社・会議準備"
      ],
      "why": "The graph can wait and the room is booked; the boss is away tomorrow, so first get the content checked.",
-     "audio": "n2_01/q01.mp3?v=094b60c5"
+     "audio": "n2_01/q01.mp3?v=094b60c5",
+     "at": [
+      10.72,
+      14.94,
+      19.65,
+      29.18,
+      32.63,
+      37.02,
+      39.58
+     ],
+     "atQ": 42.8
     },
     {
      "intro": "大学で男の学生と女の学生が話しています。女の学生は明日何を持っていきますか。",
@@ -96,7 +106,16 @@
       "大学・ゼミ"
      ],
      "why": "Laptop and projector are in the lab; print the survey and bring a USB stick (the lab PC has no internet).",
-     "audio": "n2_01/q02.mp3?v=4786ba49"
+     "audio": "n2_01/q02.mp3?v=4786ba49",
+     "at": [
+      11.04,
+      14.31,
+      19.95,
+      26.54,
+      30.53,
+      43.54
+     ],
+     "atQ": 46.91
     },
     {
      "intro": "市役所で男の人と係の人が話しています。男の人はこのあとまずどこへ行きますか。",
@@ -142,7 +161,17 @@
       "市役所・転入届"
      ],
      "why": "Fill in the form and hand it to window 2 first; insurance comes after, at window 5.",
-     "audio": "n2_01/q03.mp3?v=6c78cea3"
+     "audio": "n2_01/q03.mp3?v=6c78cea3",
+     "at": [
+      10.19,
+      14.67,
+      20.92,
+      22.68,
+      34.55,
+      40.2,
+      46.32
+     ],
+     "atQ": 48.72
     }
    ],
    "spoken": false
@@ -188,7 +217,15 @@
       "友人・ジム"
      ],
      "why": "Not work, not money: the gym was far from home.",
-     "audio": "n2_01/q04.mp3?v=fdd12ea4"
+     "audio": "n2_01/q04.mp3?v=fdd12ea4",
+     "at": [
+      13.98,
+      19.81,
+      33.35,
+      35.34,
+      47.58
+     ],
+     "atQ": 49.99
     },
     {
      "intro": "男の人と女の人が新しいレストランについて話しています。男の人はこのレストランの何がいちばんいいと言っていますか。",
@@ -226,7 +263,15 @@
       "友人・レストラン"
      ],
      "why": "何よりいいのは、窓から川が見えること.",
-     "audio": "n2_01/q05.mp3?v=fb915c1e"
+     "audio": "n2_01/q05.mp3?v=fb915c1e",
+     "at": [
+      17.66,
+      21.65,
+      27.54,
+      31.11,
+      39.11
+     ],
+     "atQ": 42.47
     },
     {
      "intro": "会社で女の人と男の人が話しています。会議の時間が変わったのはどうしてですか。",
@@ -264,7 +309,15 @@
       "会社・予定変更"
      ],
      "why": "A person from the Osaka branch joins and their train arrives at 9:30.",
-     "audio": "n2_01/q06.mp3?v=c2bdad42"
+     "audio": "n2_01/q06.mp3?v=c2bdad42",
+     "at": [
+      14.58,
+      19.22,
+      23.24,
+      32.92,
+      36.25
+     ],
+     "atQ": 39.66
     }
    ],
    "spoken": false
@@ -294,7 +347,11 @@
       "テレビ・医者"
      ],
      "why": "Advice on phones before bed and dim lights: how to sleep well.",
-     "audio": "n2_01/q07.mp3?v=2b7084df"
+     "audio": "n2_01/q07.mp3?v=2b7084df",
+     "at": [
+      4.16
+     ],
+     "atQ": 43.84
     },
     {
      "intro": "ラジオで女の人が話しています。",
@@ -316,7 +373,11 @@
       "ラジオ・地域活動"
      ],
      "why": "Exchanging things reduces rubbish and connects neighbours.",
-     "audio": "n2_01/q08.mp3?v=6b69e249"
+     "audio": "n2_01/q08.mp3?v=6b69e249",
+     "at": [
+      4.73
+     ],
+     "atQ": 50.62
     }
    ],
    "spoken": true
@@ -343,7 +404,10 @@
       "同僚・飲み会"
      ],
      "why": "Asked if you can come: politely declining with ちょっと…",
-     "audio": "n2_01/q09.mp3?v=0d82c37a"
+     "audio": "n2_01/q09.mp3?v=0d82c37a",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -362,7 +426,10 @@
       "上司・依頼"
      ],
      "why": "〜てもらえないかな is a request; accept with やっておきます.",
-     "audio": "n2_01/q10.mp3?v=3ba83cb9"
+     "audio": "n2_01/q10.mp3?v=3ba83cb9",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -381,7 +448,10 @@
       "友人・天気"
      ],
      "why": "The rain won't stop, so suggest borrowing an umbrella.",
-     "audio": "n2_01/q11.mp3?v=28750d19"
+     "audio": "n2_01/q11.mp3?v=28750d19",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -400,7 +470,10 @@
       "職場・お礼"
      ],
      "why": "Thanks for time off: ask if they could rest well.",
-     "audio": "n2_01/q12.mp3?v=d85c8111"
+     "audio": "n2_01/q12.mp3?v=d85c8111",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -419,7 +492,10 @@
       "職場・残業"
      ],
      "why": "Still here? Explain you want to finish this job.",
-     "audio": "n2_01/q13.mp3?v=82036c66"
+     "audio": "n2_01/q13.mp3?v=82036c66",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true

@@ -1689,7 +1689,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}   /* stop mobile text 
 .deck-table .deck-n{text-align:center;padding:0}
 .deck-table .deck-name{padding-right:12px}
 /* v117: Practice run = no top bar; count sits above Again/Hard/Easy, a quiet "‹ Exit" below them */
-body.playing .play-bar.pg-bottom{position:fixed;inset:auto 0 0 0;display:block;padding:0;background:none;border:0;pointer-events:none;z-index:11}
+body.playing .play-bar.pg-bottom{position:fixed;inset:0;display:block;padding:0;background:none;border:0;pointer-events:none;z-index:11}
 .pg-bottom .play-top{position:fixed;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 122px);display:flex;justify-content:center;pointer-events:none}
 .pg-bottom .play-queue{font-size:14px!important;opacity:1!important}
 .pg-bottom .pg-exit{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 4px);min-height:44px;padding:0 18px;font:600 14px var(--body);color:var(--faint);pointer-events:auto;border-radius:8px}
@@ -1925,6 +1925,16 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn-script p{margin:8px 0 0;font:500 15px/1.7 var(--body)}
 .lsn-script b{color:var(--soft)}
 .lsn-nar{color:var(--soft)}
+/* v146: script open anytime; tap a line to play from it (the spoken line is marked); Previous beside Next */
+.lsn-line{display:block;width:calc(100% + 16px);margin:6px -8px 0;padding:6px 8px;border:0;border-left:3px solid transparent;border-radius:6px;background:none;color:var(--ink);text-align:left;font:500 15px/1.7 var(--body);cursor:pointer}
+.lsn-line.lsn-nar{color:var(--soft)}
+.lsn-line:hover{background:var(--chip)}
+.lsn-line.on{border-left-color:var(--shu);background:color-mix(in srgb, var(--shu) 8%, transparent)}
+.lsn-nav{display:flex;gap:10px;align-items:center}
+.lsn-nav .lsn-next{flex:1}
+.lsn-nav .lsn-skip{margin-left:auto}
+.lsn-prev{min-height:50px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--soft);font:600 15px var(--body);cursor:pointer}
+.lsn-prev:hover{color:var(--ink);background:var(--chip)}
 .lsn-next{align-self:stretch;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--raised);color:var(--ink);font:700 16px var(--body);cursor:pointer;box-shadow:var(--lift)}
 .lsn-score{margin:12px 0 0;text-align:center;font:500 20px var(--body);color:var(--soft)}
 .lsn-score b{font:800 56px var(--display);color:var(--ink)}
@@ -2063,7 +2073,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v145";
+const APP_VERSION = "v146";
 
 
 /* =========================================================
@@ -4636,8 +4646,9 @@ async function renderVocabTest(id){
 async function renderListenTest(id){
   const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
   const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => q.sub ? q.sub.forEach((x, j) => Q.push({...q, ...x, part: pt, no: i + 1, subNo: j + 1})) : Q.push({...q, part: pt, no: i + 1})));
-  const picked = new Array(Q.length).fill(0); let i = 0;
+  const picked = new Array(Q.length).fill(0); let i = 0, scriptOpen = false;
   const SPK = {F: "女", F2: "女", M: "男", M2: "男", N: ""};
+  const line = (t, cls, body) => t == null ? `<p class="${cls}">${body}</p>` : `<button type="button" class="lsn-line ${cls}" data-t="${t}">${body}</button>`;
   const draw = () => {
     if(i >= Q.length) return done();
     const q = Q[i], ans = picked[i];
@@ -4652,23 +4663,32 @@ async function renderListenTest(id){
       ${q.part.spoken && !ans ? `<p class="lsn-hear">Answers are only heard. Pick a number.</p>` : ""}
       <ol class="lsn-opts${q.part.spoken && !ans ? " lsn-nums" : ""}">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span>${q.part.spoken && !ans ? "" : `<span>${esc(o)}</span>`}</button></li>`).join("")}</ol>
       ${ans && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}
-      ${ans ? `<details class="lsn-script"><summary>Script</summary>
-        ${q.intro ? `<p class="lsn-nar">${esc(q.intro)}</p>` : ""}
-        ${q.lines.map(([spk, t]) => `<p>${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}</p>`).join("")}
-        ${q.question ? `<p class="lsn-nar">${esc(q.question)}</p>` : ""}</details>
-        <button type="button" class="lsn-next" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button>` : `<button type="button" class="lsn-skip" id="lsnNext">${i + 1 < Q.length ? "Skip" : "See result"}</button>`}
+      <details class="lsn-script" id="lsnScript"${scriptOpen ? " open" : ""}><summary>Script</summary>
+        ${q.intro ? line(0, "lsn-nar", esc(q.intro)) : ""}
+        ${q.lines.map(([spk, t], k) => line(q.at ? q.at[k] : null, "", `${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}`)).join("")}
+        ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</details>
+      <div class="lsn-nav">${i ? `<button type="button" class="lsn-prev" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
+        <button type="button" class="${ans ? "lsn-next" : "lsn-skip"}" id="lsnNext">${i + 1 < Q.length ? (ans ? "Next" : "Skip") : "See result"}</button></div>
     </section>`;
     const play = $("#lsnPlay"), bar = $("#lsnBar");
     const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
-    play.onclick = () => {
-      if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); return; }
+    const lines = [...document.querySelectorAll(".lsn-line")];
+    const mark = () => { const now = PLAYER.dataset.q === q.audio && !PLAYER.paused ? PLAYER.currentTime + 0.05 : -1;   // the line being spoken
+      const cur = lines.filter(b => +b.dataset.t <= now).pop(); lines.forEach(b => b.classList.toggle("on", b === cur)); };
+    const start = at => {
       if(PLAYER.dataset.q !== q.audio){ PLAYER.src = `data/listening/${q.audio}`; PLAYER.dataset.q = q.audio; }
-      PLAYER.onended = () => { setIco(false); bar.style.width = "100%"; };
-      PLAYER.ontimeupdate = () => { if(PLAYER.dataset.q === q.audio && PLAYER.duration) bar.style.width = `${PLAYER.currentTime / PLAYER.duration * 100}%`; };
-      PLAYER.play().then(() => setIco(true)).catch(() => {});
+      PLAYER.onended = () => { setIco(false); bar.style.width = "100%"; mark(); };
+      PLAYER.ontimeupdate = () => { if(PLAYER.dataset.q === q.audio && PLAYER.duration) bar.style.width = `${PLAYER.currentTime / PLAYER.duration * 100}%`; mark(); };
+      if(at != null){ if(PLAYER.readyState >= 1) PLAYER.currentTime = at; else PLAYER.addEventListener("loadedmetadata", () => { PLAYER.currentTime = at; }, {once: true}); }   // iPhone ignores a seek before metadata
+      PLAYER.play().then(() => { setIco(true); mark(); }).catch(() => {});
     };
-    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { picked[i] = +b.dataset.k; PLAYER.pause(); NAV_SAME = true; draw(); });
-    if($("#lsnNext")) $("#lsnNext").onclick = () => { PLAYER.pause(); i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    play.onclick = () => { if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); mark(); return; } start(); };
+    lines.forEach(b => b.onclick = () => start(+b.dataset.t));
+    $("#lsnScript").ontoggle = e => { scriptOpen = e.target.open; };
+    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; picked[i] = +b.dataset.k; PLAYER.pause(); NAV_SAME = true; draw(); scrollTo(0, y); });
+    const go = d => { PLAYER.pause(); i += d; NAV_SAME = true; draw(); scrollTo(0, 0); };
+    $("#lsnNext").onclick = () => go(1);
+    if($("#lsnPrev")) $("#lsnPrev").onclick = () => go(-1);
     $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; renderListening(); };
   };
   const done = () => {

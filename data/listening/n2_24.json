@@ -41,7 +41,14 @@
      ],
      "answer": 1,
      "why": "Fill in the card first, while the car is brought round.",
-     "audio": "n2_24/q01.mp3?v=96d0666c"
+     "audio": "n2_24/q01.mp3?v=96d0666c",
+     "at": [
+      10.31,
+      14.4,
+      23.76,
+      25.37
+     ],
+     "atQ": 31.42
     },
     {
      "tags": [
@@ -75,7 +82,14 @@
      ],
      "answer": 4,
      "why": "Rehearse aloud in the meeting room with the senior.",
-     "audio": "n2_24/q02.mp3?v=7f8b1235"
+     "audio": "n2_24/q02.mp3?v=7f8b1235",
+     "at": [
+      9.0,
+      11.86,
+      16.23,
+      21.29
+     ],
+     "atQ": 25.49
     },
     {
      "tags": [
@@ -97,7 +111,11 @@
      ],
      "answer": 3,
      "why": "Send the signed form with the child by Monday.",
-     "audio": "n2_24/q03.mp3?v=5ae2aaa9"
+     "audio": "n2_24/q03.mp3?v=5ae2aaa9",
+     "at": [
+      11.18
+     ],
+     "atQ": 30.41
     }
    ],
    "spoken": false
@@ -139,7 +157,14 @@
      ],
      "answer": 3,
      "why": "Working from home more; wanted the desk by the window.",
-     "audio": "n2_24/q04.mp3?v=b497727f"
+     "audio": "n2_24/q04.mp3?v=b497727f",
+     "at": [
+      15.46,
+      18.22,
+      21.23,
+      23.2
+     ],
+     "atQ": 33.29
     },
     {
      "tags": [
@@ -173,7 +198,14 @@
      ],
      "answer": 2,
      "why": "Noodles are adjusted to each customer's taste.",
-     "audio": "n2_24/q05.mp3?v=84399356"
+     "audio": "n2_24/q05.mp3?v=84399356",
+     "at": [
+      18.31,
+      22.84,
+      27.51,
+      29.42
+     ],
+     "atQ": 37.46
     },
     {
      "tags": [
@@ -207,7 +239,14 @@
      ],
      "answer": 2,
      "why": "Walking with an old classmate became a pleasure.",
-     "audio": "n2_24/q06.mp3?v=68d0f7db"
+     "audio": "n2_24/q06.mp3?v=68d0f7db",
+     "at": [
+      14.9,
+      18.14,
+      22.81,
+      24.83
+     ],
+     "atQ": 35.45
     }
    ],
    "spoken": false
@@ -237,7 +276,11 @@
      ],
      "answer": 1,
      "why": "Pupils grow rice through the year.",
-     "audio": "n2_24/q07.mp3?v=e23eebe7"
+     "audio": "n2_24/q07.mp3?v=e23eebe7",
+     "at": [
+      5.1
+     ],
+     "atQ": 50.72
     },
     {
      "tags": [
@@ -259,7 +302,11 @@
      ],
      "answer": 4,
      "why": "Find your own way to release stress often.",
-     "audio": "n2_24/q08.mp3?v=45a134cb"
+     "audio": "n2_24/q08.mp3?v=45a134cb",
+     "at": [
+      4.76
+     ],
+     "atQ": 45.42
     }
    ],
    "spoken": true
@@ -286,7 +333,10 @@
      ],
      "answer": 2,
      "why": "May I use this seat? Go ahead.",
-     "audio": "n2_24/q09.mp3?v=bb2b0773"
+     "audio": "n2_24/q09.mp3?v=bb2b0773",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -305,7 +355,10 @@
      ],
      "answer": 1,
      "why": "Recommend a book.",
-     "audio": "n2_24/q10.mp3?v=c2aaf54a"
+     "audio": "n2_24/q10.mp3?v=c2aaf54a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -324,7 +377,10 @@
      ],
      "answer": 2,
      "why": "Takeaway or eat in? Takeaway.",
-     "audio": "n2_24/q11.mp3?v=8479523f"
+     "audio": "n2_24/q11.mp3?v=8479523f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -343,7 +399,10 @@
      ],
      "answer": 3,
      "why": "Dad won't eat: make three portions.",
-     "audio": "n2_24/q12.mp3?v=e2042d02"
+     "audio": "n2_24/q12.mp3?v=e2042d02",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -362,7 +421,10 @@
      ],
      "answer": 1,
      "why": "Handed out? Yes, already.",
-     "audio": "n2_24/q13.mp3?v=591a65fd"
+     "audio": "n2_24/q13.mp3?v=591a65fd",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -381,7 +443,10 @@
      ],
      "answer": 3,
      "why": "Give transfer directions.",
-     "audio": "n2_24/q14.mp3?v=0c75873f"
+     "audio": "n2_24/q14.mp3?v=0c75873f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -431,7 +496,16 @@
      ],
      "answer": 1,
      "why": "Tie was last year, he has gear already: a sun hat for fishing.",
-     "audio": "n2_24/q15.mp3?v=3e0ee3aa"
+     "audio": "n2_24/q15.mp3?v=3e0ee3aa",
+     "at": [
+      7.35,
+      14.47,
+      17.75,
+      24.3,
+      29.86,
+      40.96
+     ],
+     "atQ": 48.3
     }
    ],
    "spoken": true
@@ -484,7 +558,12 @@
        "why": "Seasonal scenery: autumn leaves from the outdoor bath."
       }
      ],
-     "audio": "n2_24/q16.mp3?v=9b5be149"
+     "audio": "n2_24/q16.mp3?v=9b5be149",
+     "at": [
+      7.48,
+      33.18,
+      38.42
+     ]
     }
    ],
    "spoken": false

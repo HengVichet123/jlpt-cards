@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Cleaning is done by professionals, the AC was built in; he must return every key, including copies.",
-     "audio": "n1_16/q01.mp3?v=b72ee18f"
+     "audio": "n1_16/q01.mp3?v=b72ee18f",
+     "at": [
+      11.76,
+      15.68,
+      17.96,
+      29.55,
+      33.44,
+      44.77
+     ],
+     "atQ": 49.63
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "Have R&D check the figures before anything else; photos after.",
-     "audio": "n1_16/q02.mp3?v=1179aeac"
+     "audio": "n1_16/q02.mp3?v=1179aeac",
+     "at": [
+      10.97,
+      14.15,
+      16.56,
+      27.88,
+      30.7,
+      34.67
+     ],
+     "atQ": 38.71
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 2,
      "why": "She writes the reminder; he distributes it.",
-     "audio": "n1_16/q03.mp3?v=7b277f82"
+     "audio": "n1_16/q03.mp3?v=7b277f82",
+     "at": [
+      10.62,
+      13.69,
+      19.55,
+      22.64,
+      31.46
+     ],
+     "atQ": 36.06
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "Imagining the garden ten years on, as trees grow.",
-     "audio": "n1_16/q04.mp3?v=72e6c670"
+     "audio": "n1_16/q04.mp3?v=72e6c670",
+     "at": [
+      15.63,
+      18.68,
+      23.62,
+      25.96
+     ],
+     "atQ": 35.63
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 3,
      "why": "Requirements changed but the schedule was never revised.",
-     "audio": "n1_16/q05.mp3?v=50167a26"
+     "audio": "n1_16/q05.mp3?v=50167a26",
+     "at": [
+      16.87,
+      23.56,
+      27.34,
+      28.91
+     ],
+     "atQ": 43.0
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 1,
      "why": "Grandma remembers and makes it a little sweeter for her.",
-     "audio": "n1_16/q06.mp3?v=91121ca7"
+     "audio": "n1_16/q06.mp3?v=91121ca7",
+     "at": [
+      14.57,
+      18.69,
+      23.5,
+      25.84
+     ],
+     "atQ": 35.08
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 3,
      "why": "Meaning depends on situation and relationship, not just the dictionary.",
-     "audio": "n1_16/q07.mp3?v=0134a2d7"
+     "audio": "n1_16/q07.mp3?v=0134a2d7",
+     "at": [
+      5.51
+     ],
+     "atQ": 52.57
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 2,
      "why": "Having the courage to watch rather than solve everything.",
-     "audio": "n1_16/q08.mp3?v=702e489e"
+     "audio": "n1_16/q08.mp3?v=702e489e",
+     "at": [
+      5.68
+     ],
+     "atQ": 45.86
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 2,
      "why": "検討の余地がある = worth considering; refine it.",
-     "audio": "n1_16/q09.mp3?v=4816c8f9"
+     "audio": "n1_16/q09.mp3?v=4816c8f9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 2,
      "why": "〜そびれる = miss the chance to; no hurry.",
-     "audio": "n1_16/q10.mp3?v=3c78dba9"
+     "audio": "n1_16/q10.mp3?v=3c78dba9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "Offer to call back after three.",
-     "audio": "n1_16/q11.mp3?v=c10adcbe"
+     "audio": "n1_16/q11.mp3?v=c10adcbe",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 3,
      "why": "You needn't have come: I was nearby anyway.",
-     "audio": "n1_16/q12.mp3?v=f864933f"
+     "audio": "n1_16/q12.mp3?v=f864933f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 1,
      "why": "Accept the assignment humbly.",
-     "audio": "n1_16/q13.mp3?v=36a6621f"
+     "audio": "n1_16/q13.mp3?v=36a6621f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 3,
      "why": "Past last order: ask for the bill.",
-     "audio": "n1_16/q14.mp3?v=331ee7bf"
+     "audio": "n1_16/q14.mp3?v=331ee7bf",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +532,15 @@
      ],
      "answer": 4,
      "why": "Fewer helpers; ring toss is easy to prepare.",
-     "audio": "n1_16/q15.mp3?v=4f7486f0"
+     "audio": "n1_16/q15.mp3?v=4f7486f0",
+     "at": [
+      7.19,
+      12.55,
+      27.16,
+      31.69,
+      40.92
+     ],
+     "atQ": 47.12
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "She wants to practise English."
       }
      ],
-     "audio": "n1_16/q16.mp3?v=2bcc782c"
+     "audio": "n1_16/q16.mp3?v=2bcc782c",
+     "at": [
+      7.18,
+      31.3,
+      36.17
+     ]
     }
    ],
    "spoken": false

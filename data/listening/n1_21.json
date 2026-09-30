@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "R&D checks first, then legal.",
-     "audio": "n1_21/q01.mp3?v=217fd860"
+     "audio": "n1_21/q01.mp3?v=217fd860",
+     "at": [
+      10.97,
+      15.89,
+      19.74,
+      30.91,
+      33.38,
+      38.31
+     ],
+     "atQ": 42.51
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "Fill in the questionnaire, then the blood test, then the exam.",
-     "audio": "n1_21/q02.mp3?v=fdb01410"
+     "audio": "n1_21/q02.mp3?v=fdb01410",
+     "at": [
+      11.06,
+      15.2,
+      17.25,
+      19.0,
+      34.71
+     ],
+     "atQ": 37.12
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 3,
      "why": "List each dish's ingredients for allergy labels by tomorrow.",
-     "audio": "n1_21/q03.mp3?v=d49bf5f7"
+     "audio": "n1_21/q03.mp3?v=d49bf5f7",
+     "at": [
+      11.51,
+      15.47,
+      18.41,
+      28.36,
+      32.2
+     ],
+     "atQ": 35.52
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 2,
      "why": "The dog must trust and enjoy being with people.",
-     "audio": "n1_21/q04.mp3?v=f84031dc"
+     "audio": "n1_21/q04.mp3?v=f84031dc",
+     "at": [
+      17.9,
+      22.06,
+      25.65,
+      28.67
+     ],
+     "atQ": 41.15
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "A senior mentor for the first three months.",
-     "audio": "n1_21/q05.mp3?v=c35d7335"
+     "audio": "n1_21/q05.mp3?v=c35d7335",
+     "at": [
+      18.93,
+      24.07,
+      26.14,
+      28.75
+     ],
+     "atQ": 41.32
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 2,
      "why": "Food on the summit tastes special.",
-     "audio": "n1_21/q06.mp3?v=bc95a67e"
+     "audio": "n1_21/q06.mp3?v=bc95a67e",
+     "at": [
+      14.23,
+      19.87,
+      22.04,
+      24.46
+     ],
+     "atQ": 34.91
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 4,
      "why": "Household food waste and simple ways to cut it.",
-     "audio": "n1_21/q07.mp3?v=1c38d959"
+     "audio": "n1_21/q07.mp3?v=1c38d959",
+     "at": [
+      5.34
+     ],
+     "atQ": 46.66
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 4,
      "why": "Walking boosts thinking and ideas.",
-     "audio": "n1_21/q08.mp3?v=1212feb7"
+     "audio": "n1_21/q08.mp3?v=1212feb7",
+     "at": [
+      4.46
+     ],
+     "atQ": 55.05
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "Asking the boss's decision: show me the materials.",
-     "audio": "n1_21/q09.mp3?v=dbc98d51"
+     "audio": "n1_21/q09.mp3?v=dbc98d51",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Not as good as hoped: agree with a reason.",
-     "audio": "n1_21/q10.mp3?v=e4389b04"
+     "audio": "n1_21/q10.mp3?v=e4389b04",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Thanks for a quick response: glad to help.",
-     "audio": "n1_21/q11.mp3?v=25054ea5"
+     "audio": "n1_21/q11.mp3?v=25054ea5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "Offered help: accept gratefully.",
-     "audio": "n1_21/q12.mp3?v=e5fd84bb"
+     "audio": "n1_21/q12.mp3?v=e5fd84bb",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Behind schedule: reassure with a plan.",
-     "audio": "n1_21/q13.mp3?v=3b24008b"
+     "audio": "n1_21/q13.mp3?v=3b24008b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 2,
      "why": "Offered a taste: try it and comment.",
-     "audio": "n1_21/q14.mp3?v=9bc98afc"
+     "audio": "n1_21/q14.mp3?v=9bc98afc",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 3,
      "why": "A clock was given last year; benches for the courtyard.",
-     "audio": "n1_21/q15.mp3?v=b879f18e"
+     "audio": "n1_21/q15.mp3?v=b879f18e",
+     "at": [
+      7.4,
+      15.95,
+      21.61,
+      33.33,
+      35.67
+     ],
+     "atQ": 42.18
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "History for travel."
       }
      ],
-     "audio": "n1_21/q16.mp3?v=ad2ce464"
+     "audio": "n1_21/q16.mp3?v=ad2ce464",
+     "at": [
+      6.11,
+      26.28,
+      32.67
+     ]
     }
    ],
    "spoken": false

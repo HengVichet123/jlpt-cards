@@ -45,7 +45,15 @@
      ],
      "answer": 2,
      "why": "While the medicine is prepared, fill in the questionnaire; the sticker goes in the book later.",
-     "audio": "n2_13/q01.mp3?v=c07765b0"
+     "audio": "n2_13/q01.mp3?v=c07765b0",
+     "at": [
+      10.25,
+      12.84,
+      15.79,
+      17.7,
+      33.44
+     ],
+     "atQ": 36.02
     },
     {
      "tags": [
@@ -79,7 +87,14 @@
      ],
      "answer": 1,
      "why": "He'll copy the documents first, before the guests arrive at three.",
-     "audio": "n2_13/q02.mp3?v=352b61cf"
+     "audio": "n2_13/q02.mp3?v=352b61cf",
+     "at": [
+      9.85,
+      18.75,
+      21.78,
+      30.41
+     ],
+     "atQ": 35.2
     },
     {
      "tags": [
@@ -117,7 +132,15 @@
      ],
      "answer": 3,
      "why": "まず、そこの水道で傷を洗ってきて.",
-     "audio": "n2_13/q03.mp3?v=a71c9c79"
+     "audio": "n2_13/q03.mp3?v=a71c9c79",
+     "at": [
+      10.94,
+      12.34,
+      16.39,
+      25.65,
+      28.77
+     ],
+     "atQ": 33.25
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 4,
      "why": "Locals talk to her more when she's alone.",
-     "audio": "n2_13/q04.mp3?v=494b7364"
+     "audio": "n2_13/q04.mp3?v=494b7364",
+     "at": [
+      15.89,
+      19.24,
+      24.45,
+      25.98
+     ],
+     "atQ": 38.73
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 2,
      "why": "The instruction manuals weren't printed in time.",
-     "audio": "n2_13/q05.mp3?v=54153362"
+     "audio": "n2_13/q05.mp3?v=54153362",
+     "at": [
+      14.97,
+      21.38,
+      25.23,
+      27.99
+     ],
+     "atQ": 36.35
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 4,
      "why": "Too many buttons on the new TV's remote.",
-     "audio": "n2_13/q06.mp3?v=749deba6"
+     "audio": "n2_13/q06.mp3?v=749deba6",
+     "at": [
+      13.49,
+      18.6,
+      21.54,
+      24.56
+     ],
+     "atQ": 34.69
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 3,
      "why": "A rest space in an empty shop, for all generations.",
-     "audio": "n2_13/q07.mp3?v=9e6ce78d"
+     "audio": "n2_13/q07.mp3?v=9e6ce78d",
+     "at": [
+      5.11
+     ],
+     "atQ": 52.3
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 1,
      "why": "Look far away every 30 minutes and spend time outdoors.",
-     "audio": "n2_13/q08.mp3?v=9c646b4c"
+     "audio": "n2_13/q08.mp3?v=9c646b4c",
+     "at": [
+      5.41
+     ],
+     "atQ": 50.72
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "Contact me if anything happens: understood.",
-     "audio": "n2_13/q09.mp3?v=2aef6b0f"
+     "audio": "n2_13/q09.mp3?v=2aef6b0f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 3,
      "why": "Are you free? Yes, what's up?",
-     "audio": "n2_13/q10.mp3?v=bdc30da8"
+     "audio": "n2_13/q10.mp3?v=bdc30da8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 2,
      "why": "Order a drink.",
-     "audio": "n2_13/q11.mp3?v=5a51de44"
+     "audio": "n2_13/q11.mp3?v=5a51de44",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 1,
      "why": "Did you bring the washing in? Forgot, doing it now.",
-     "audio": "n2_13/q12.mp3?v=113ce258"
+     "audio": "n2_13/q12.mp3?v=113ce258",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 3,
      "why": "Enjoy your day off: thank you.",
-     "audio": "n2_13/q13.mp3?v=63481f48"
+     "audio": "n2_13/q13.mp3?v=63481f48",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 1,
      "why": "Small talk about the weather: agree.",
-     "audio": "n2_13/q14.mp3?v=0c1971b2"
+     "audio": "n2_13/q14.mp3?v=0c1971b2",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 1,
      "why": "Dad had yakiniku yesterday; the sushi place is cheap today.",
-     "audio": "n2_13/q15.mp3?v=0291d91a"
+     "audio": "n2_13/q15.mp3?v=0291d91a",
+     "at": [
+      6.59,
+      11.77,
+      15.78,
+      24.57,
+      36.5,
+      38.82
+     ],
+     "atQ": 45.0
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "Music and free: the classical concert."
       }
      ],
-     "audio": "n2_13/q16.mp3?v=65580fbb"
+     "audio": "n2_13/q16.mp3?v=65580fbb",
+     "at": [
+      5.73,
+      29.14,
+      34.37
+     ]
     }
    ],
    "spoken": false

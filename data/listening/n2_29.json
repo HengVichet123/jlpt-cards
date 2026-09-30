@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "Cut only takes an hour, so 3:30 works.",
-     "audio": "n2_29/q01.mp3?v=51d7ab79"
+     "audio": "n2_29/q01.mp3?v=51d7ab79",
+     "at": [
+      9.67,
+      14.2,
+      20.88,
+      26.82,
+      29.67,
+      34.84,
+      38.37
+     ],
+     "atQ": 45.95
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 2,
      "why": "Check the jammed copier first.",
-     "audio": "n2_29/q02.mp3?v=413a94e2"
+     "audio": "n2_29/q02.mp3?v=413a94e2",
+     "at": [
+      10.21,
+      15.01,
+      19.58,
+      26.28,
+      33.67,
+      41.73
+     ],
+     "atQ": 43.87
     },
     {
      "tags": [
@@ -117,7 +136,11 @@
      ],
      "answer": 3,
      "why": "Sunny forecast, no snacks, no money: lunch and water only.",
-     "audio": "n2_29/q03.mp3?v=0ff7fad9"
+     "audio": "n2_29/q03.mp3?v=0ff7fad9",
+     "at": [
+      10.08
+     ],
+     "atQ": 42.62
     }
    ],
    "spoken": false
@@ -163,7 +186,15 @@
      ],
      "answer": 1,
      "why": "The phone camera is good enough.",
-     "audio": "n2_29/q04.mp3?v=b7321053"
+     "audio": "n2_29/q04.mp3?v=b7321053",
+     "at": [
+      15.01,
+      19.17,
+      20.96,
+      22.42,
+      35.21
+     ],
+     "atQ": 37.66
     },
     {
      "tags": [
@@ -201,7 +232,15 @@
      ],
      "answer": 2,
      "why": "She wants to join the new overseas business.",
-     "audio": "n2_29/q05.mp3?v=ac4a5b7e"
+     "audio": "n2_29/q05.mp3?v=ac4a5b7e",
+     "at": [
+      15.99,
+      21.7,
+      25.75,
+      29.35,
+      52.86
+     ],
+     "atQ": 56.42
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 4,
      "why": "Fried to order: always piping hot.",
-     "audio": "n2_29/q06.mp3?v=bec18f4a"
+     "audio": "n2_29/q06.mp3?v=bec18f4a",
+     "at": [
+      17.3
+     ],
+     "atQ": 46.11
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 3,
      "why": "Show children that you enjoy reading.",
-     "audio": "n2_29/q07.mp3?v=60d15177"
+     "audio": "n2_29/q07.mp3?v=60d15177",
+     "at": [
+      5.88
+     ],
+     "atQ": 55.03
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "A town rents empty houses cheaply; over 20 families moved in.",
-     "audio": "n2_29/q08.mp3?v=8e863fa9"
+     "audio": "n2_29/q08.mp3?v=8e863fa9",
+     "at": [
+      5.03
+     ],
+     "atQ": 51.65
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 1,
      "why": "Asking for a day off: approve.",
-     "audio": "n2_29/q09.mp3?v=ce82d2a0"
+     "audio": "n2_29/q09.mp3?v=ce82d2a0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 1,
      "why": "今来たところ = just got here.",
-     "audio": "n2_29/q10.mp3?v=db7520ff"
+     "audio": "n2_29/q10.mp3?v=db7520ff",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 2,
      "why": "Offered a fitting: accept.",
-     "audio": "n2_29/q11.mp3?v=4dc1e373"
+     "audio": "n2_29/q11.mp3?v=4dc1e373",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 3,
      "why": "Can you do overtime? About an hour.",
-     "audio": "n2_29/q12.mp3?v=ead921f6"
+     "audio": "n2_29/q12.mp3?v=ead921f6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 3,
      "why": "Worried it's bland: reassure.",
-     "audio": "n2_29/q13.mp3?v=91d5c094"
+     "audio": "n2_29/q13.mp3?v=91d5c094",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 2,
      "why": "Sold out: ask when it'll be back.",
-     "audio": "n2_29/q14.mp3?v=984c62d8"
+     "audio": "n2_29/q14.mp3?v=984c62d8",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -443,7 +512,15 @@
      ],
      "answer": 4,
      "why": "She has too many things; they'll take her out for sushi.",
-     "audio": "n2_29/q15.mp3?v=493d7d55"
+     "audio": "n2_29/q15.mp3?v=493d7d55",
+     "at": [
+      7.3,
+      16.77,
+      22.17,
+      34.94,
+      45.96
+     ],
+     "atQ": 54.64
     }
    ],
    "spoken": true
@@ -500,7 +577,13 @@
        "why": "Sake tasting at three breweries."
       }
      ],
-     "audio": "n2_29/q16.mp3?v=e97e69b5"
+     "audio": "n2_29/q16.mp3?v=e97e69b5",
+     "at": [
+      11.46,
+      39.46,
+      43.96,
+      48.98
+     ]
     }
    ],
    "spoken": false

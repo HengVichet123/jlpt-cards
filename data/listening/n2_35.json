@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Form and insurance card first, then shopping.",
-     "audio": "n2_35/q01.mp3?v=06d95cd9"
+     "audio": "n2_35/q01.mp3?v=06d95cd9",
+     "at": [
+      10.25,
+      13.11,
+      24.55,
+      29.3,
+      37.96,
+      39.36
+     ],
+     "atQ": 48.89
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "Handouts done, samples shipped; she's short of business cards.",
-     "audio": "n2_35/q02.mp3?v=48ef2a35"
+     "audio": "n2_35/q02.mp3?v=48ef2a35",
+     "at": [
+      9.54,
+      13.53,
+      18.07,
+      25.76,
+      31.75,
+      37.99
+     ],
+     "atQ": 44.8
     },
     {
      "tags": [
@@ -125,7 +143,14 @@
      ],
      "answer": 3,
      "why": "Shorten the summary, expand his own analysis.",
-     "audio": "n2_35/q03.mp3?v=9f3d1118"
+     "audio": "n2_35/q03.mp3?v=9f3d1118",
+     "at": [
+      10.29,
+      15.07,
+      16.92,
+      40.17
+     ],
+     "atQ": 42.71
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 2,
      "why": "The office is moving: a 90-minute commute.",
-     "audio": "n2_35/q04.mp3?v=841c1f4f"
+     "audio": "n2_35/q04.mp3?v=841c1f4f",
+     "at": [
+      14.4,
+      19.0,
+      21.77,
+      24.47
+     ],
+     "atQ": 38.34
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "Slow fermentation time.",
-     "audio": "n2_35/q05.mp3?v=b40a92e0"
+     "audio": "n2_35/q05.mp3?v=b40a92e0",
+     "at": [
+      18.18,
+      25.12,
+      30.49,
+      33.08
+     ],
+     "atQ": 49.05
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 1,
      "why": "The survey results aren't ready.",
-     "audio": "n2_35/q06.mp3?v=77ea9258"
+     "audio": "n2_35/q06.mp3?v=77ea9258",
+     "at": [
+      14.65,
+      19.25,
+      22.55,
+      25.97
+     ],
+     "atQ": 37.68
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 2,
      "why": "Breakfast wakes body and brain; start small.",
-     "audio": "n2_35/q07.mp3?v=7411c646"
+     "audio": "n2_35/q07.mp3?v=7411c646",
+     "at": [
+      4.94
+     ],
+     "atQ": 58.22
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 1,
      "why": "Neighbours are the first responders.",
-     "audio": "n2_35/q08.mp3?v=141e4f95"
+     "audio": "n2_35/q08.mp3?v=141e4f95",
+     "at": [
+      5.83
+     ],
+     "atQ": 51.75
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "Asked to translate by tomorrow: accept.",
-     "audio": "n2_35/q09.mp3?v=b29da94b"
+     "audio": "n2_35/q09.mp3?v=b29da94b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Complimented and asked where: answer.",
-     "audio": "n2_35/q10.mp3?v=a5bb0fe2"
+     "audio": "n2_35/q10.mp3?v=a5bb0fe2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Not ready to order.",
-     "audio": "n2_35/q11.mp3?v=bf1a330d"
+     "audio": "n2_35/q11.mp3?v=bf1a330d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "A colleague asks to come late: say it's fine.",
-     "audio": "n2_35/q12.mp3?v=d284d2b1"
+     "audio": "n2_35/q12.mp3?v=d284d2b1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 2,
      "why": "Mum's late: eat first.",
-     "audio": "n2_35/q13.mp3?v=0afbc48d"
+     "audio": "n2_35/q13.mp3?v=0afbc48d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "Thanked for a treat: modest reply.",
-     "audio": "n2_35/q14.mp3?v=d48a8490"
+     "audio": "n2_35/q14.mp3?v=d48a8490",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 3,
      "why": "Easiest to prepare and popular.",
-     "audio": "n2_35/q15.mp3?v=cf42f22d"
+     "audio": "n2_35/q15.mp3?v=cf42f22d",
+     "at": [
+      7.87,
+      12.57,
+      22.24,
+      35.31,
+      43.06,
+      51.19
+     ],
+     "atQ": 57.42
     }
    ],
    "spoken": true
@@ -516,7 +597,13 @@
        "why": "Photo exhibition: 8F."
       }
      ],
-     "audio": "n2_35/q16.mp3?v=5319e6f3"
+     "audio": "n2_35/q16.mp3?v=5319e6f3",
+     "at": [
+      8.16,
+      37.4,
+      43.0,
+      48.5
+     ]
     }
    ],
    "spoken": false

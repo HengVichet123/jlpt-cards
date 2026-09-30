@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "Check competitors first.",
-     "audio": "n1_43/q01.mp3?v=0b726f82"
+     "audio": "n1_43/q01.mp3?v=0b726f82",
+     "at": [
+      9.78,
+      14.3,
+      21.12,
+      30.63,
+      37.63,
+      43.05
+     ],
+     "atQ": 45.77
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 2,
      "why": "Request signed consent by email.",
-     "audio": "n1_43/q02.mp3?v=b0a511d5"
+     "audio": "n1_43/q02.mp3?v=b0a511d5",
+     "at": [
+      11.73,
+      17.01,
+      21.69,
+      27.41,
+      34.65,
+      39.16
+     ],
+     "atQ": 43.82
     },
     {
      "tags": [
@@ -125,7 +143,14 @@
      ],
      "answer": 1,
      "why": "Confirm with the management company first.",
-     "audio": "n1_43/q03.mp3?v=700b049b"
+     "audio": "n1_43/q03.mp3?v=700b049b",
+     "at": [
+      11.4,
+      14.87,
+      18.86,
+      27.54
+     ],
+     "atQ": 31.52
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 4,
      "why": "Record and listen back.",
-     "audio": "n1_43/q04.mp3?v=6e5566b0"
+     "audio": "n1_43/q04.mp3?v=6e5566b0",
+     "at": [
+      17.73,
+      20.82,
+      28.58,
+      31.66
+     ],
+     "atQ": 44.77
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 2,
      "why": "Mentor system.",
-     "audio": "n1_43/q05.mp3?v=33113052"
+     "audio": "n1_43/q05.mp3?v=33113052",
+     "at": [
+      18.19,
+      23.07,
+      28.56,
+      30.95
+     ],
+     "atQ": 45.69
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 3,
      "why": "No reason to stay overnight.",
-     "audio": "n1_43/q06.mp3?v=8ca03caf"
+     "audio": "n1_43/q06.mp3?v=8ca03caf",
+     "at": [
+      17.37
+     ],
+     "atQ": 43.16
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 4,
      "why": "Urban beekeeping and its value.",
-     "audio": "n1_43/q07.mp3?v=44b7db95"
+     "audio": "n1_43/q07.mp3?v=44b7db95",
+     "at": [
+      5.99
+     ],
+     "atQ": 48.29
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "Saying no is honest.",
-     "audio": "n1_43/q08.mp3?v=c8a3e3ca"
+     "audio": "n1_43/q08.mp3?v=c8a3e3ca",
+     "at": [
+      5.83
+     ],
+     "atQ": 58.73
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 1,
      "why": "Asked about deadline: commit.",
-     "audio": "n1_43/q09.mp3?v=5ea66416"
+     "audio": "n1_43/q09.mp3?v=5ea66416",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 1,
      "why": "Concerned colleague: thank and accept.",
-     "audio": "n1_43/q10.mp3?v=249d282e"
+     "audio": "n1_43/q10.mp3?v=249d282e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 3,
      "why": "Scheduling a visit: offer a slot.",
-     "audio": "n1_43/q11.mp3?v=0a6e8186"
+     "audio": "n1_43/q11.mp3?v=0a6e8186",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 2,
      "why": "Asked if free to talk: yes.",
-     "audio": "n1_43/q12.mp3?v=e47d80be"
+     "audio": "n1_43/q12.mp3?v=e47d80be",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 3,
      "why": "Instruction: confirm back.",
-     "audio": "n1_43/q13.mp3?v=21d2cf47"
+     "audio": "n1_43/q13.mp3?v=21d2cf47",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 2,
      "why": "Near closing: welcome them.",
-     "audio": "n1_43/q14.mp3?v=ff122693"
+     "audio": "n1_43/q14.mp3?v=ff122693",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 3,
      "why": "Fresh ideas; potential over polish.",
-     "audio": "n1_43/q15.mp3?v=20be4073"
+     "audio": "n1_43/q15.mp3?v=20be4073",
+     "at": [
+      8.34,
+      27.96,
+      34.67,
+      43.43,
+      56.81,
+      63.49
+     ],
+     "atQ": 65.81
     }
    ],
    "spoken": true
@@ -512,7 +590,15 @@
        "why": "He defers to her: mountain walking and onsen."
       }
      ],
-     "audio": "n1_43/q16.mp3?v=ca54e705"
+     "audio": "n1_43/q16.mp3?v=ca54e705",
+     "at": [
+      10.41,
+      26.1,
+      30.99,
+      43.28,
+      46.71,
+      51.57
+     ]
     }
    ],
    "spoken": false

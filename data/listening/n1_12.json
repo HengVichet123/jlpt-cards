@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Repairs take time to arrange, so check the ramp now; ballot counts after.",
-     "audio": "n1_12/q01.mp3?v=aab2a1f6"
+     "audio": "n1_12/q01.mp3?v=aab2a1f6",
+     "at": [
+      10.71,
+      14.39,
+      19.05,
+      23.73,
+      26.75,
+      39.36
+     ],
+     "atQ": 43.08
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "Ask the university's legal staff to interpret the publication clause before signing.",
-     "audio": "n1_12/q02.mp3?v=faa06473"
+     "audio": "n1_12/q02.mp3?v=faa06473",
+     "at": [
+      9.59,
+      13.74,
+      15.84,
+      25.41,
+      27.26,
+      36.91
+     ],
+     "atQ": 39.54
     },
     {
      "tags": [
@@ -133,7 +151,16 @@
      ],
      "answer": 4,
      "why": "Tell the care manager several convenient dates for a home visit.",
-     "audio": "n1_12/q03.mp3?v=c8ba3f2e"
+     "audio": "n1_12/q03.mp3?v=c8ba3f2e",
+     "at": [
+      10.26,
+      16.52,
+      20.57,
+      29.14,
+      31.93,
+      40.4
+     ],
+     "atQ": 45.56
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 1,
      "why": "安全の一番の土台 — speaking up freely with the co-pilot.",
-     "audio": "n1_12/q04.mp3?v=393cfaf4"
+     "audio": "n1_12/q04.mp3?v=393cfaf4",
+     "at": [
+      16.28,
+      20.35,
+      27.16,
+      30.15
+     ],
+     "atQ": 42.6
     },
     {
      "tags": [
@@ -209,7 +243,14 @@
      ],
      "answer": 1,
      "why": "The competitor delivers two days faster, helping reduce stock.",
-     "audio": "n1_12/q05.mp3?v=f26f90d3"
+     "audio": "n1_12/q05.mp3?v=f26f90d3",
+     "at": [
+      17.56,
+      22.21,
+      26.13,
+      28.68
+     ],
+     "atQ": 38.2
     },
     {
      "tags": [
@@ -243,7 +284,14 @@
      ],
      "answer": 4,
      "why": "Only worry: she may be lonely abroad.",
-     "audio": "n1_12/q06.mp3?v=43d0f67f"
+     "audio": "n1_12/q06.mp3?v=43d0f67f",
+     "at": [
+      15.25,
+      19.11,
+      23.03,
+      25.47
+     ],
+     "atQ": 35.03
     }
    ],
    "spoken": false
@@ -273,7 +321,11 @@
      ],
      "answer": 3,
      "why": "Urban farmland gives food, shelter, cooling and education.",
-     "audio": "n1_12/q07.mp3?v=b6b2571d"
+     "audio": "n1_12/q07.mp3?v=b6b2571d",
+     "at": [
+      5.34
+     ],
+     "atQ": 48.29
     },
     {
      "tags": [
@@ -295,7 +347,11 @@
      ],
      "answer": 3,
      "why": "Apologise without excuses; explain only if asked.",
-     "audio": "n1_12/q08.mp3?v=6365dfdd"
+     "audio": "n1_12/q08.mp3?v=6365dfdd",
+     "at": [
+      5.2
+     ],
+     "atQ": 63.48
     }
    ],
    "spoken": true
@@ -322,7 +378,10 @@
      ],
      "answer": 3,
      "why": "〜だけに = precisely because; he's strict, but right.",
-     "audio": "n1_12/q09.mp3?v=7803f0d3"
+     "audio": "n1_12/q09.mp3?v=7803f0d3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -341,7 +400,10 @@
      ],
      "answer": 2,
      "why": "An offer to walk you: politely decline.",
-     "audio": "n1_12/q10.mp3?v=832fa934"
+     "audio": "n1_12/q10.mp3?v=832fa934",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -360,7 +422,10 @@
      ],
      "answer": 1,
      "why": "申し伝えます = I'll pass that on.",
-     "audio": "n1_12/q11.mp3?v=70a5f739"
+     "audio": "n1_12/q11.mp3?v=70a5f739",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -379,7 +444,10 @@
      ],
      "answer": 2,
      "why": "Warning about overwork: promise to rest.",
-     "audio": "n1_12/q12.mp3?v=4bdc336a"
+     "audio": "n1_12/q12.mp3?v=4bdc336a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -398,7 +466,10 @@
      ],
      "answer": 3,
      "why": "見送り = shelved: accept it.",
-     "audio": "n1_12/q13.mp3?v=0e1346ae"
+     "audio": "n1_12/q13.mp3?v=0e1346ae",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -417,7 +488,10 @@
      ],
      "answer": 1,
      "why": "Offered wrapping: yes, for a gift.",
-     "audio": "n1_12/q14.mp3?v=ba30e26a"
+     "audio": "n1_12/q14.mp3?v=ba30e26a",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -467,7 +541,16 @@
      ],
      "answer": 2,
      "why": "Head office has interruptions, overnight excludes some lecturers: the station-front rental room.",
-     "audio": "n1_12/q15.mp3?v=4d250dd1"
+     "audio": "n1_12/q15.mp3?v=4d250dd1",
+     "at": [
+      7.72,
+      13.43,
+      20.36,
+      30.36,
+      36.94,
+      47.54
+     ],
+     "atQ": 54.48
     }
    ],
    "spoken": true
@@ -520,7 +603,12 @@
        "why": "Rainy area, can't dry outside: the one with a dryer."
       }
      ],
-     "audio": "n1_12/q16.mp3?v=9bbd9dfc"
+     "audio": "n1_12/q16.mp3?v=9bbd9dfc",
+     "at": [
+      7.1,
+      29.32,
+      33.08
+     ]
     }
    ],
    "spoken": false

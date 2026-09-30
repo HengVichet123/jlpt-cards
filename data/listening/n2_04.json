@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "The clerk tapes the box; meanwhile she fills in the form in English. Payment comes after weighing.",
-     "audio": "n2_04/q01.mp3?v=2184db09"
+     "audio": "n2_04/q01.mp3?v=2184db09",
+     "at": [
+      10.0,
+      13.97,
+      16.72,
+      19.91,
+      33.91,
+      38.49
+     ],
+     "atQ": 47.76
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "Before meeting at the station, stop at the office for safety shoes.",
-     "audio": "n2_04/q02.mp3?v=b3d4c80f"
+     "audio": "n2_04/q02.mp3?v=b3d4c80f",
+     "at": [
+      10.76,
+      15.91,
+      19.74,
+      29.14,
+      33.23,
+      40.03
+     ],
+     "atQ": 44.01
     },
     {
      "tags": [
@@ -133,7 +151,16 @@
      ],
      "answer": 2,
      "why": "Thursday is full, Friday he works late: Saturday at 10.",
-     "audio": "n2_04/q03.mp3?v=d7a2b095"
+     "audio": "n2_04/q03.mp3?v=d7a2b095",
+     "at": [
+      9.49,
+      13.7,
+      18.69,
+      26.16,
+      29.92,
+      33.69
+     ],
+     "atQ": 37.7
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 3,
      "why": "いちばんの理由は… 使う人の意見を大切にする姿勢.",
-     "audio": "n2_04/q04.mp3?v=c28cb169"
+     "audio": "n2_04/q04.mp3?v=c28cb169",
+     "at": [
+      17.02,
+      20.65,
+      32.8,
+      33.89
+     ],
+     "atQ": 52.81
     },
     {
      "tags": [
@@ -217,7 +251,16 @@
      ],
      "answer": 1,
      "why": "She heats every bento for the same time without asking.",
-     "audio": "n2_04/q05.mp3?v=e9c92430"
+     "audio": "n2_04/q05.mp3?v=e9c92430",
+     "at": [
+      14.75,
+      17.1,
+      19.85,
+      25.54,
+      27.55,
+      38.36
+     ],
+     "atQ": 42.87
     },
     {
      "tags": [
@@ -255,7 +298,15 @@
      ],
      "answer": 1,
      "why": "Her sister's wedding is on the same day.",
-     "audio": "n2_04/q06.mp3?v=cd3899ba"
+     "audio": "n2_04/q06.mp3?v=cd3899ba",
+     "at": [
+      15.26,
+      19.6,
+      21.7,
+      25.43,
+      34.39
+     ],
+     "atQ": 37.2
     }
    ],
    "spoken": false
@@ -285,7 +336,11 @@
      ],
      "answer": 4,
      "why": "The bento box and folding lantern show clever design that is still useful today.",
-     "audio": "n2_04/q07.mp3?v=0a20b018"
+     "audio": "n2_04/q07.mp3?v=0a20b018",
+     "at": [
+      5.28
+     ],
+     "atQ": 49.69
     },
     {
      "tags": [
@@ -307,7 +362,11 @@
      ],
      "answer": 3,
      "why": "我慢するのではなく、仕組みで解決する.",
-     "audio": "n2_04/q08.mp3?v=175947c1"
+     "audio": "n2_04/q08.mp3?v=175947c1",
+     "at": [
+      4.8
+     ],
+     "atQ": 48.18
     }
    ],
    "spoken": true
@@ -334,7 +393,10 @@
      ],
      "answer": 1,
      "why": "Polite offer to try on: accept with お願いします.",
-     "audio": "n2_04/q09.mp3?v=7cc235b3"
+     "audio": "n2_04/q09.mp3?v=7cc235b3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -353,7 +415,10 @@
      ],
      "answer": 1,
      "why": "Advice to get the manager to check: agree.",
-     "audio": "n2_04/q10.mp3?v=6e27af52"
+     "audio": "n2_04/q10.mp3?v=6e27af52",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -372,7 +437,10 @@
      ],
      "answer": 2,
      "why": "An invitation: accept and ask what to watch.",
-     "audio": "n2_04/q11.mp3?v=f272b098"
+     "audio": "n2_04/q11.mp3?v=f272b098",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -391,7 +459,10 @@
      ],
      "answer": 2,
      "why": "Traffic ahead: ask for another route.",
-     "audio": "n2_04/q12.mp3?v=668ec9a6"
+     "audio": "n2_04/q12.mp3?v=668ec9a6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -410,7 +481,10 @@
      ],
      "answer": 3,
      "why": "Someone will be late: say OK, come safely.",
-     "audio": "n2_04/q13.mp3?v=e4e3fde2"
+     "audio": "n2_04/q13.mp3?v=e4e3fde2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -429,7 +503,10 @@
      ],
      "answer": 3,
      "why": "A new neighbour greets you: こちらこそ.",
-     "audio": "n2_04/q14.mp3?v=7470b09f"
+     "audio": "n2_04/q14.mp3?v=7470b09f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -483,7 +560,17 @@
      ],
      "answer": 4,
      "why": "Mountain inn was inconvenient, the sea is over budget; the lakeside centre is cheap, near the station, with a hall.",
-     "audio": "n2_04/q15.mp3?v=0d203eaa"
+     "audio": "n2_04/q15.mp3?v=0d203eaa",
+     "at": [
+      7.84,
+      16.59,
+      27.37,
+      36.1,
+      45.96,
+      51.55,
+      53.87
+     ],
+     "atQ": 61.31
     }
    ],
    "spoken": true
@@ -540,7 +627,13 @@
        "why": "His mother has bad hay fever: the paper-bag type that doesn't scatter dust."
       }
      ],
-     "audio": "n2_04/q16.mp3?v=c8bbb931"
+     "audio": "n2_04/q16.mp3?v=c8bbb931",
+     "at": [
+      6.98,
+      37.49,
+      45.82,
+      52.11
+     ]
     }
    ],
    "spoken": false

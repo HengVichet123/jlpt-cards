@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "First empty the pockets, then write her name.",
-     "audio": "n2_09/q01.mp3?v=3eab6338"
+     "audio": "n2_09/q01.mp3?v=3eab6338",
+     "at": [
+      10.46,
+      14.19,
+      19.46,
+      21.52,
+      27.16,
+      30.19
+     ],
+     "atQ": 38.44
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "Chairs are enough and tea is arranged; check the projector now.",
-     "audio": "n2_09/q02.mp3?v=cb893fa2"
+     "audio": "n2_09/q02.mp3?v=cb893fa2",
+     "at": [
+      9.5,
+      16.56,
+      18.92,
+      29.88,
+      32.74
+     ],
+     "atQ": 40.48
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 2,
      "why": "The teacher's permission can wait until next week; register the other classes by 5 today.",
-     "audio": "n2_09/q03.mp3?v=e2e8f3f8"
+     "audio": "n2_09/q03.mp3?v=e2e8f3f8",
+     "at": [
+      11.62,
+      14.81,
+      18.86,
+      24.17,
+      40.13
+     ],
+     "atQ": 42.68
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "一番は健康診断 — he was told he lacks vegetables.",
-     "audio": "n2_09/q04.mp3?v=e4f999f8"
+     "audio": "n2_09/q04.mp3?v=e4f999f8",
+     "at": [
+      16.11,
+      19.96,
+      23.76,
+      25.65
+     ],
+     "atQ": 37.39
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "Sales are fine; the owner is old and nobody will take over.",
-     "audio": "n2_09/q05.mp3?v=6e18d645"
+     "audio": "n2_09/q05.mp3?v=6e18d645",
+     "at": [
+      15.95,
+      19.52,
+      23.1,
+      29.88
+     ],
+     "atQ": 33.23
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 4,
      "why": "Not the camera or technique: waiting for the right light and expression.",
-     "audio": "n2_09/q06.mp3?v=29dad54c"
+     "audio": "n2_09/q06.mp3?v=29dad54c",
+     "at": [
+      16.94,
+      22.44,
+      29.45,
+      33.09
+     ],
+     "atQ": 44.32
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 3,
      "why": "The library now lends cooking tools and instruments.",
-     "audio": "n2_09/q07.mp3?v=3fbb8695"
+     "audio": "n2_09/q07.mp3?v=3fbb8695",
+     "at": [
+      5.03
+     ],
+     "atQ": 43.0
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 1,
      "why": "Write everything down; it looks smaller and easier to sort.",
-     "audio": "n2_09/q08.mp3?v=47220453"
+     "audio": "n2_09/q08.mp3?v=47220453",
+     "at": [
+      5.33
+     ],
+     "atQ": 46.44
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 3,
      "why": "Souvenirs for everyone: thank them.",
-     "audio": "n2_09/q09.mp3?v=814a68cf"
+     "audio": "n2_09/q09.mp3?v=814a68cf",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Do you know the way? Yes, straight along this road.",
-     "audio": "n2_09/q10.mp3?v=04ed27c4"
+     "audio": "n2_09/q10.mp3?v=04ed27c4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 2,
      "why": "できかねます = cannot; pay in cash.",
-     "audio": "n2_09/q11.mp3?v=48cb6daf"
+     "audio": "n2_09/q11.mp3?v=48cb6daf",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "A call for you: ask them to say you'll call back.",
-     "audio": "n2_09/q12.mp3?v=0f071c77"
+     "audio": "n2_09/q12.mp3?v=0f071c77",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Can you finish by tomorrow? I'll manage somehow.",
-     "audio": "n2_09/q13.mp3?v=6885b6f8"
+     "audio": "n2_09/q13.mp3?v=6885b6f8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 2,
      "why": "Suggestion to hold a neighbour's parcel: agree.",
-     "audio": "n2_09/q14.mp3?v=ae73b00b"
+     "audio": "n2_09/q14.mp3?v=ae73b00b",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 3,
      "why": "They went to Kyoto last year; Hiroshima fits the research, and early booking cuts costs.",
-     "audio": "n2_09/q15.mp3?v=c4d8d643"
+     "audio": "n2_09/q15.mp3?v=c4d8d643",
+     "at": [
+      7.49,
+      18.8,
+      29.68,
+      38.2,
+      43.4,
+      51.83
+     ],
+     "atQ": 58.03
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "Stiff shoulders, something to do at home: the five-minute exercise book."
       }
      ],
-     "audio": "n2_09/q16.mp3?v=01704d5e"
+     "audio": "n2_09/q16.mp3?v=01704d5e",
+     "at": [
+      6.21,
+      32.98,
+      39.66
+     ]
     }
    ],
    "spoken": false

@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "No photos without signed consent; get that first.",
-     "audio": "n1_34/q01.mp3?v=51ff1fb8"
+     "audio": "n1_34/q01.mp3?v=51ff1fb8",
+     "at": [
+      11.27,
+      16.24,
+      20.7,
+      25.06,
+      27.13,
+      38.4
+     ],
+     "atQ": 43.67
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 2,
      "why": "Be ready to explain the research plan in detail.",
-     "audio": "n1_34/q02.mp3?v=160d401b"
+     "audio": "n1_34/q02.mp3?v=160d401b",
+     "at": [
+      12.88,
+      18.4,
+      26.77,
+      29.67,
+      46.64
+     ],
+     "atQ": 49.12
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 3,
      "why": "The form needs the schedule; set it with the contractor first.",
-     "audio": "n1_34/q03.mp3?v=ff1f8088"
+     "audio": "n1_34/q03.mp3?v=ff1f8088",
+     "at": [
+      11.08,
+      17.11,
+      28.75,
+      32.49,
+      41.57
+     ],
+     "atQ": 47.39
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "Patience: wait for the wood to dry.",
-     "audio": "n1_34/q04.mp3?v=2f9d9871"
+     "audio": "n1_34/q04.mp3?v=2f9d9871",
+     "at": [
+      17.45,
+      24.7,
+      31.35,
+      34.15
+     ],
+     "atQ": 52.12
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "Privacy protection was judged insufficient.",
-     "audio": "n1_34/q05.mp3?v=56244c3c"
+     "audio": "n1_34/q05.mp3?v=56244c3c",
+     "at": [
+      15.83,
+      19.63,
+      25.33,
+      27.36
+     ],
+     "atQ": 55.34
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 3,
      "why": "Learning to cope when things don't go your way.",
-     "audio": "n1_34/q06.mp3?v=5d87cbe6"
+     "audio": "n1_34/q06.mp3?v=5d87cbe6",
+     "at": [
+      17.82
+     ],
+     "atQ": 49.24
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 1,
      "why": "Music evokes memories; used in dementia care.",
-     "audio": "n1_34/q07.mp3?v=2c017f80"
+     "audio": "n1_34/q07.mp3?v=2c017f80",
+     "at": [
+      5.17
+     ],
+     "atQ": 53.31
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 4,
      "why": "Linking discarded food with families in need.",
-     "audio": "n1_34/q08.mp3?v=5f443128"
+     "audio": "n1_34/q08.mp3?v=5f443128",
+     "at": [
+      6.13
+     ],
+     "atQ": 57.18
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 3,
      "why": "Asked to stand in: accept.",
-     "audio": "n1_34/q09.mp3?v=6c489f42"
+     "audio": "n1_34/q09.mp3?v=6c489f42",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 2,
      "why": "Thanked for listening: glad to help.",
-     "audio": "n1_34/q10.mp3?v=c4764cff"
+     "audio": "n1_34/q10.mp3?v=c4764cff",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 1,
      "why": "A price-rise notice: ask for details.",
-     "audio": "n1_34/q11.mp3?v=d63660f3"
+     "audio": "n1_34/q11.mp3?v=d63660f3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 3,
      "why": "Praised: thank.",
-     "audio": "n1_34/q12.mp3?v=4fb174a3"
+     "audio": "n1_34/q12.mp3?v=4fb174a3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 1,
      "why": "Concern: agree to rest.",
-     "audio": "n1_34/q13.mp3?v=72c6797f"
+     "audio": "n1_34/q13.mp3?v=72c6797f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 2,
      "why": "An invitation: decline politely.",
-     "audio": "n1_34/q14.mp3?v=0d154eb4"
+     "audio": "n1_34/q14.mp3?v=0d154eb4",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 2,
      "why": "Lectures don't stick; 50 mentors impossible.",
-     "audio": "n1_34/q15.mp3?v=b0465166"
+     "audio": "n1_34/q15.mp3?v=b0465166",
+     "at": [
+      8.37,
+      37.23,
+      46.1,
+      57.94,
+      69.04,
+      71.35
+     ],
+     "atQ": 79.37
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Travel phrasebook with audio."
       }
      ],
-     "audio": "n1_34/q16.mp3?v=bccb246d"
+     "audio": "n1_34/q16.mp3?v=bccb246d",
+     "at": [
+      11.2,
+      34.81,
+      41.2,
+      48.84
+     ]
     }
    ],
    "spoken": false

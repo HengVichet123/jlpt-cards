@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "The cover comes next week and the editor does proofreading; he must change the place name.",
-     "audio": "n1_08/q01.mp3?v=00f738c1"
+     "audio": "n1_08/q01.mp3?v=00f738c1",
+     "at": [
+      10.58,
+      15.43,
+      19.41,
+      30.98,
+      33.59,
+      38.05
+     ],
+     "atQ": 43.22
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 4,
      "why": "The client list is done; visits can be just before the transfer; the manual is due next week.",
-     "audio": "n1_08/q02.mp3?v=c21a935f"
+     "audio": "n1_08/q02.mp3?v=c21a935f",
+     "at": [
+      10.59,
+      14.96,
+      18.57,
+      27.62,
+      30.68
+     ],
+     "atQ": 40.1
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 4,
      "why": "First read the journal's rules on length and figures; the rest depends on them.",
-     "audio": "n1_08/q03.mp3?v=da2f44e6"
+     "audio": "n1_08/q03.mp3?v=da2f44e6",
+     "at": [
+      11.31,
+      16.57,
+      21.02,
+      28.26,
+      30.16
+     ],
+     "atQ": 42.15
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 2,
      "why": "一番は、お客様の顔を見ながら料理をしたかった.",
-     "audio": "n1_08/q04.mp3?v=12312f78"
+     "audio": "n1_08/q04.mp3?v=12312f78",
+     "at": [
+      15.82,
+      21.66,
+      26.74,
+      28.88
+     ],
+     "atQ": 44.92
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "Nobody knew what the meeting was meant to decide.",
-     "audio": "n1_08/q05.mp3?v=9b6dba5e"
+     "audio": "n1_08/q05.mp3?v=9b6dba5e",
+     "at": [
+      16.85,
+      22.28,
+      25.0,
+      27.85
+     ],
+     "atQ": 39.45
     },
     {
      "tags": [
@@ -239,7 +278,15 @@
      ],
      "answer": 1,
      "why": "She doesn't want to keep worrying the family.",
-     "audio": "n1_08/q06.mp3?v=e6b3939a"
+     "audio": "n1_08/q06.mp3?v=e6b3939a",
+     "at": [
+      14.65,
+      20.15,
+      24.63,
+      27.81,
+      35.68
+     ],
+     "atQ": 38.65
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 2,
      "why": "Visitors want everyday local life; showing it is the biggest resource.",
-     "audio": "n1_08/q07.mp3?v=efcbe7d2"
+     "audio": "n1_08/q07.mp3?v=efcbe7d2",
+     "at": [
+      6.38
+     ],
+     "atQ": 52.95
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 1,
      "why": "Testing yourself and recalling strengthens memory; mistakes help.",
-     "audio": "n1_08/q08.mp3?v=b6515677"
+     "audio": "n1_08/q08.mp3?v=b6515677",
+     "at": [
+      5.44
+     ],
+     "atQ": 48.01
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 3,
      "why": "〜あってのこと = only possible thanks to…; respond humbly.",
-     "audio": "n1_08/q09.mp3?v=18ec2096"
+     "audio": "n1_08/q09.mp3?v=18ec2096",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 1,
      "why": "Politely declining an invitation: don't worry.",
-     "audio": "n1_08/q10.mp3?v=2b537af2"
+     "audio": "n1_08/q10.mp3?v=2b537af2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 2,
      "why": "Accept a formal apology: just be careful from now on.",
-     "audio": "n1_08/q11.mp3?v=7ca29653"
+     "audio": "n1_08/q11.mp3?v=7ca29653",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 3,
      "why": "かえって邪魔 = might get in the way; reassure them.",
-     "audio": "n1_08/q12.mp3?v=240821e6"
+     "audio": "n1_08/q12.mp3?v=240821e6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 2,
      "why": "寝耳に水 = a complete surprise.",
-     "audio": "n1_08/q13.mp3?v=22a25303"
+     "audio": "n1_08/q13.mp3?v=22a25303",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 1,
      "why": "Wrong dish: apologise and replace it.",
-     "audio": "n1_08/q14.mp3?v=a79a4053"
+     "audio": "n1_08/q14.mp3?v=a79a4053",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -463,7 +536,16 @@
      ],
      "answer": 3,
      "why": "Overnight is hard for families; fruit picking clashes with year-end accounts; a day trip for autumn leaves.",
-     "audio": "n1_08/q15.mp3?v=043c15fb"
+     "audio": "n1_08/q15.mp3?v=043c15fb",
+     "at": [
+      6.22,
+      11.39,
+      20.37,
+      25.3,
+      38.58,
+      46.95
+     ],
+     "atQ": 53.93
     }
    ],
    "spoken": true
@@ -516,7 +598,12 @@
        "why": "She wants to present research in English and work abroad."
       }
      ],
-     "audio": "n1_08/q16.mp3?v=c130de50"
+     "audio": "n1_08/q16.mp3?v=c130de50",
+     "at": [
+      7.72,
+      36.73,
+      42.44
+     ]
     }
    ],
    "spoken": false

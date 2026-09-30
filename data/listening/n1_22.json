@@ -45,7 +45,15 @@
      ],
      "answer": 1,
      "why": "Read and categorise the free comments first; graphs later.",
-     "audio": "n1_22/q01.mp3?v=84306b2b"
+     "audio": "n1_22/q01.mp3?v=84306b2b",
+     "at": [
+      11.7,
+      15.08,
+      22.5,
+      32.36,
+      36.95
+     ],
+     "atQ": 42.24
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 3,
      "why": "Too early for the moving-out notice; contact the school first.",
-     "audio": "n1_22/q02.mp3?v=84cae2db"
+     "audio": "n1_22/q02.mp3?v=84cae2db",
+     "at": [
+      10.13,
+      14.94,
+      20.44,
+      24.16,
+      32.69
+     ],
+     "atQ": 38.98
     },
     {
      "tags": [
@@ -117,7 +133,14 @@
      ],
      "answer": 2,
      "why": "The name check by email is needed today.",
-     "audio": "n1_22/q03.mp3?v=f3898e9f"
+     "audio": "n1_22/q03.mp3?v=f3898e9f",
+     "at": [
+      12.29,
+      16.51,
+      20.1,
+      35.69
+     ],
+     "atQ": 38.09
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 3,
      "why": "Letting the dough ferment slowly.",
-     "audio": "n1_22/q04.mp3?v=d8cba6ee"
+     "audio": "n1_22/q04.mp3?v=d8cba6ee",
+     "at": [
+      16.49,
+      21.57,
+      25.97,
+      28.48
+     ],
+     "atQ": 40.58
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 1,
      "why": "Too many meetings; own work starts only in the evening.",
-     "audio": "n1_22/q05.mp3?v=d0380063"
+     "audio": "n1_22/q05.mp3?v=d0380063",
+     "at": [
+      17.32,
+      21.36,
+      23.76,
+      25.39
+     ],
+     "atQ": 36.02
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 1,
      "why": "Turning 50, she wanted to achieve something new.",
-     "audio": "n1_22/q06.mp3?v=0176d26b"
+     "audio": "n1_22/q06.mp3?v=0176d26b",
+     "at": [
+      14.36,
+      18.44,
+      20.51,
+      22.52
+     ],
+     "atQ": 32.22
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 4,
      "why": "Keigo also adjusts social distance.",
-     "audio": "n1_22/q07.mp3?v=52facb0e"
+     "audio": "n1_22/q07.mp3?v=52facb0e",
+     "at": [
+      5.45
+     ],
+     "atQ": 47.73
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 4,
      "why": "Empty rest days are fine and restorative.",
-     "audio": "n1_22/q08.mp3?v=a9cc7290"
+     "audio": "n1_22/q08.mp3?v=a9cc7290",
+     "at": [
+      5.06
+     ],
+     "atQ": 40.78
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 3,
      "why": "断っておく = give notice in advance; agree.",
-     "audio": "n1_22/q09.mp3?v=190a4024"
+     "audio": "n1_22/q09.mp3?v=190a4024",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 3,
      "why": "News: I didn't know.",
-     "audio": "n1_22/q10.mp3?v=d6f16180"
+     "audio": "n1_22/q10.mp3?v=d6f16180",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 1,
      "why": "追って = later; acknowledge.",
-     "audio": "n1_22/q11.mp3?v=3063b121"
+     "audio": "n1_22/q11.mp3?v=3063b121",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 2,
      "why": "Advice to stay home: agree.",
-     "audio": "n1_22/q12.mp3?v=edfa05b2"
+     "audio": "n1_22/q12.mp3?v=edfa05b2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "Thanked by a superior: humble reply.",
-     "audio": "n1_22/q13.mp3?v=76f40aa5"
+     "audio": "n1_22/q13.mp3?v=76f40aa5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 2,
      "why": "Fully booked: ask about another time.",
-     "audio": "n1_22/q14.mp3?v=3e9cf485"
+     "audio": "n1_22/q14.mp3?v=3e9cf485",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +517,15 @@
      ],
      "answer": 2,
      "why": "External experts are costly and generic; in-house mid-career staff.",
-     "audio": "n1_22/q15.mp3?v=2296b540"
+     "audio": "n1_22/q15.mp3?v=2296b540",
+     "at": [
+      7.25,
+      16.99,
+      22.7,
+      32.48,
+      42.19
+     ],
+     "atQ": 48.95
     }
    ],
    "spoken": true
@@ -500,7 +578,12 @@
        "why": "Protect his family if he dies: life insurance."
       }
      ],
-     "audio": "n1_22/q16.mp3?v=c28b376a"
+     "audio": "n1_22/q16.mp3?v=c28b376a",
+     "at": [
+      7.45,
+      28.77,
+      35.13
+     ]
     }
    ],
    "spoken": false

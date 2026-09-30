@@ -57,7 +57,18 @@
      ],
      "answer": 1,
      "why": "The agent checks with the tenant and will call her back.",
-     "audio": "n2_28/q01.mp3?v=169f2262"
+     "audio": "n2_28/q01.mp3?v=169f2262",
+     "at": [
+      11.26,
+      18.03,
+      21.82,
+      25.75,
+      41.47,
+      44.47,
+      50.42,
+      55.37
+     ],
+     "atQ": 60.76
     },
     {
      "tags": [
@@ -103,7 +114,17 @@
      ],
      "answer": 2,
      "why": "He'll go to the central library himself today.",
-     "audio": "n2_28/q02.mp3?v=a573e27e"
+     "audio": "n2_28/q02.mp3?v=a573e27e",
+     "at": [
+      11.74,
+      16.27,
+      26.94,
+      31.55,
+      41.44,
+      46.2,
+      52.55
+     ],
+     "atQ": 56.24
     },
     {
      "tags": [
@@ -145,7 +166,16 @@
      ],
      "answer": 2,
      "why": "Ask the two newcomers about food first.",
-     "audio": "n2_28/q03.mp3?v=c3ec6ffc"
+     "audio": "n2_28/q03.mp3?v=c3ec6ffc",
+     "at": [
+      11.72,
+      15.66,
+      22.61,
+      28.1,
+      31.71,
+      39.74
+     ],
+     "atQ": 43.89
     }
    ],
    "spoken": false
@@ -187,7 +217,14 @@
      ],
      "answer": 4,
      "why": "Working from home 4 days: needs a separate space.",
-     "audio": "n2_28/q04.mp3?v=aeda275d"
+     "audio": "n2_28/q04.mp3?v=aeda275d",
+     "at": [
+      13.68,
+      18.31,
+      23.35,
+      26.04
+     ],
+     "atQ": 38.66
     },
     {
      "tags": [
@@ -221,7 +258,14 @@
      ],
      "answer": 3,
      "why": "Accepting what weather can ruin.",
-     "audio": "n2_28/q05.mp3?v=f442ed88"
+     "audio": "n2_28/q05.mp3?v=f442ed88",
+     "at": [
+      17.98,
+      23.28,
+      28.15,
+      31.7
+     ],
+     "atQ": 49.4
     },
     {
      "tags": [
@@ -263,7 +307,16 @@
      ],
      "answer": 3,
      "why": "Her mother will need help after leaving hospital.",
-     "audio": "n2_28/q06.mp3?v=60fdaad1"
+     "audio": "n2_28/q06.mp3?v=60fdaad1",
+     "at": [
+      13.86,
+      17.74,
+      19.87,
+      33.24,
+      36.13,
+      39.51
+     ],
+     "atQ": 43.07
     }
    ],
    "spoken": false
@@ -293,7 +346,11 @@
      ],
      "answer": 4,
      "why": "Rolling stock: buy a bit more of daily food, use and replace.",
-     "audio": "n2_28/q07.mp3?v=210e452c"
+     "audio": "n2_28/q07.mp3?v=210e452c",
+     "at": [
+      5.56
+     ],
+     "atQ": 53.44
     },
     {
      "tags": [
@@ -315,7 +372,11 @@
      ],
      "answer": 1,
      "why": "Listeners can't re-read, so use easy words.",
-     "audio": "n2_28/q08.mp3?v=748f6e3b"
+     "audio": "n2_28/q08.mp3?v=748f6e3b",
+     "at": [
+      5.59
+     ],
+     "atQ": 53.09
     }
    ],
    "spoken": true
@@ -342,7 +403,10 @@
      ],
      "answer": 1,
      "why": "She needs it today: promise it soon.",
-     "audio": "n2_28/q09.mp3?v=5f943a28"
+     "audio": "n2_28/q09.mp3?v=5f943a28",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -361,7 +425,10 @@
      ],
      "answer": 2,
      "why": "Meeting after a long time: 卒業以来.",
-     "audio": "n2_28/q10.mp3?v=1016b452"
+     "audio": "n2_28/q10.mp3?v=1016b452",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -380,7 +447,10 @@
      ],
      "answer": 1,
      "why": "Eat in or take away? Take away.",
-     "audio": "n2_28/q11.mp3?v=158e6a67"
+     "audio": "n2_28/q11.mp3?v=158e6a67",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -399,7 +469,10 @@
      ],
      "answer": 3,
      "why": "Concern: thank and explain.",
-     "audio": "n2_28/q12.mp3?v=6f803c03"
+     "audio": "n2_28/q12.mp3?v=6f803c03",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -418,7 +491,10 @@
      ],
      "answer": 3,
      "why": "Receive the parcel: ask where the seal is.",
-     "audio": "n2_28/q13.mp3?v=ef814cea"
+     "audio": "n2_28/q13.mp3?v=ef814cea",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -437,7 +513,10 @@
      ],
      "answer": 2,
      "why": "The meeting slips to next week: ask to be told the date.",
-     "audio": "n2_28/q14.mp3?v=4e28b78c"
+     "audio": "n2_28/q14.mp3?v=4e28b78c",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -491,7 +570,17 @@
      ],
      "answer": 1,
      "why": "Trial: look after grandpa's dog on weekends for a month.",
-     "audio": "n2_28/q15.mp3?v=aa482425"
+     "audio": "n2_28/q15.mp3?v=aa482425",
+     "at": [
+      6.39,
+      14.08,
+      19.99,
+      27.0,
+      35.21,
+      37.9,
+      45.37
+     ],
+     "atQ": 54.34
     }
    ],
    "spoken": true
@@ -548,7 +637,13 @@
        "why": "He wants exercise: the three-hour hike."
       }
      ],
-     "audio": "n2_28/q16.mp3?v=da73fe38"
+     "audio": "n2_28/q16.mp3?v=da73fe38",
+     "at": [
+      9.92,
+      34.14,
+      41.54,
+      46.77
+     ]
     }
    ],
    "spoken": false

@@ -45,7 +45,15 @@
      ],
      "answer": 2,
      "why": "He fills in the slip while the clerk measures.",
-     "audio": "n2_25/q01.mp3?v=3e4c5022"
+     "audio": "n2_25/q01.mp3?v=3e4c5022",
+     "at": [
+      9.95,
+      12.26,
+      19.92,
+      22.79,
+      30.46
+     ],
+     "atQ": 33.08
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 4,
      "why": "Get his business cards from general affairs.",
-     "audio": "n2_25/q02.mp3?v=3417a506"
+     "audio": "n2_25/q02.mp3?v=3417a506",
+     "at": [
+      11.65,
+      18.69,
+      21.83,
+      23.33,
+      25.88,
+      36.77
+     ],
+     "atQ": 40.7
     },
     {
      "tags": [
@@ -129,7 +146,16 @@
      ],
      "answer": 1,
      "why": "Put the passport in the bag first.",
-     "audio": "n2_25/q03.mp3?v=fe6074d4"
+     "audio": "n2_25/q03.mp3?v=fe6074d4",
+     "at": [
+      8.18,
+      10.9,
+      12.89,
+      14.38,
+      17.22,
+      23.78
+     ],
+     "atQ": 25.9
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "A big park nearby for jogging.",
-     "audio": "n2_25/q04.mp3?v=f199a77f"
+     "audio": "n2_25/q04.mp3?v=f199a77f",
+     "at": [
+      15.48,
+      20.29,
+      25.61,
+      27.34
+     ],
+     "atQ": 36.6
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 3,
      "why": "The plan to be discussed was cancelled.",
-     "audio": "n2_25/q05.mp3?v=86c305cf"
+     "audio": "n2_25/q05.mp3?v=86c305cf",
+     "at": [
+      15.46,
+      18.81,
+      24.88,
+      26.93
+     ],
+     "atQ": 36.09
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 4,
      "why": "To learn the basics so he can take over grandpa's restaurant.",
-     "audio": "n2_25/q06.mp3?v=f7d1e4d5"
+     "audio": "n2_25/q06.mp3?v=f7d1e4d5",
+     "at": [
+      15.48,
+      19.95,
+      21.91,
+      24.02
+     ],
+     "atQ": 31.14
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 3,
      "why": "Safe driving in the rain.",
-     "audio": "n2_25/q07.mp3?v=461a3d4b"
+     "audio": "n2_25/q07.mp3?v=461a3d4b",
+     "at": [
+      5.3
+     ],
+     "atQ": 42.34
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 1,
      "why": "Eat at least something in the morning.",
-     "audio": "n2_25/q08.mp3?v=7934c06b"
+     "audio": "n2_25/q08.mp3?v=7934c06b",
+     "at": [
+      5.17
+     ],
+     "atQ": 47.35
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 1,
      "why": "Asking for a day off: approve.",
-     "audio": "n2_25/q09.mp3?v=245d8395"
+     "audio": "n2_25/q09.mp3?v=245d8395",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 2,
      "why": "Lost my book: accept it.",
-     "audio": "n2_25/q10.mp3?v=e0c8864c"
+     "audio": "n2_25/q10.mp3?v=e0c8864c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "How was the size? Too big; ask for smaller.",
-     "audio": "n2_25/q11.mp3?v=5aff5240"
+     "audio": "n2_25/q11.mp3?v=5aff5240",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 3,
      "why": "It's cold: suggest tea.",
-     "audio": "n2_25/q12.mp3?v=10b38958"
+     "audio": "n2_25/q12.mp3?v=10b38958",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 3,
      "why": "Where to submit: tell them.",
-     "audio": "n2_25/q13.mp3?v=cb4fc77d"
+     "audio": "n2_25/q13.mp3?v=cb4fc77d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 2,
      "why": "Wait until called: OK.",
-     "audio": "n2_25/q14.mp3?v=56f53f05"
+     "audio": "n2_25/q14.mp3?v=56f53f05",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +532,15 @@
      ],
      "answer": 2,
      "why": "Inn meals are pricey; they'll cook curry together.",
-     "audio": "n2_25/q15.mp3?v=d75b42ce"
+     "audio": "n2_25/q15.mp3?v=d75b42ce",
+     "at": [
+      7.47,
+      13.46,
+      18.22,
+      29.73,
+      38.42
+     ],
+     "atQ": 45.29
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "Wants speed: the lightest shoe."
       }
      ],
-     "audio": "n2_25/q16.mp3?v=b21f2f72"
+     "audio": "n2_25/q16.mp3?v=b21f2f72",
+     "at": [
+      7.86,
+      30.2,
+      35.96
+     ]
     }
    ],
    "spoken": false

@@ -53,7 +53,17 @@
      ],
      "answer": 3,
      "why": "Repack first to avoid the fee, then come back to the counter; the spray is handled later at security.",
-     "audio": "n1_03/q01.mp3?v=ed8bc57a"
+     "audio": "n1_03/q01.mp3?v=ed8bc57a",
+     "at": [
+      11.8,
+      15.07,
+      15.89,
+      26.6,
+      32.04,
+      38.56,
+      39.77
+     ],
+     "atQ": 45.38
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 2,
      "why": "The factory was already asked; today he must tell the client the answer will come the day after tomorrow.",
-     "audio": "n1_03/q02.mp3?v=d5295a38"
+     "audio": "n1_03/q02.mp3?v=d5295a38",
+     "at": [
+      11.62,
+      15.27,
+      21.88,
+      26.87,
+      31.59,
+      41.26
+     ],
+     "atQ": 43.86
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 3,
      "why": "The notice is already up and the old flyer can be reused; she will visit elderly residents living alone.",
-     "audio": "n1_03/q03.mp3?v=b611d42e"
+     "audio": "n1_03/q03.mp3?v=b611d42e",
+     "at": [
+      10.58,
+      15.41,
+      25.2,
+      28.61,
+      38.54,
+      43.72
+     ],
+     "atQ": 50.18
     }
    ],
    "spoken": false
@@ -187,7 +215,16 @@
      ],
      "answer": 2,
      "why": "The photo must be from the last three months; he reused an old one.",
-     "audio": "n1_03/q04.mp3?v=91066dd4"
+     "audio": "n1_03/q04.mp3?v=91066dd4",
+     "at": [
+      17.64,
+      20.59,
+      28.91,
+      31.63,
+      40.4,
+      43.59
+     ],
+     "atQ": 49.22
     },
     {
      "tags": [
@@ -221,7 +258,14 @@
      ],
      "answer": 1,
      "why": "No decay, healthy gums; clenching in sleep wore the surface down.",
-     "audio": "n1_03/q05.mp3?v=e88057bc"
+     "audio": "n1_03/q05.mp3?v=e88057bc",
+     "at": [
+      15.19,
+      20.43,
+      24.8,
+      26.35
+     ],
+     "atQ": 39.64
     },
     {
      "tags": [
@@ -255,7 +299,14 @@
      ],
      "answer": 1,
      "why": "The young players could win without him: his role was done.",
-     "audio": "n1_03/q06.mp3?v=068b1c98"
+     "audio": "n1_03/q06.mp3?v=068b1c98",
+     "at": [
+      17.54,
+      21.58,
+      30.63,
+      32.16
+     ],
+     "atQ": 43.27
     }
    ],
    "spoken": false
@@ -285,7 +336,11 @@
      ],
      "answer": 1,
      "why": "Artificial forests weaken unless thinned; leaving them alone doesn't protect nature.",
-     "audio": "n1_03/q07.mp3?v=58c95797"
+     "audio": "n1_03/q07.mp3?v=58c95797",
+     "at": [
+      5.54
+     ],
+     "atQ": 59.19
     },
     {
      "tags": [
@@ -307,7 +362,11 @@
      ],
      "answer": 4,
      "why": "At-home evacuation is the default; stock at least three days of supplies.",
-     "audio": "n1_03/q08.mp3?v=94ec5cd2"
+     "audio": "n1_03/q08.mp3?v=94ec5cd2",
+     "at": [
+      6.07
+     ],
+     "atQ": 51.57
     }
    ],
    "spoken": true
@@ -334,7 +393,10 @@
      ],
      "answer": 2,
      "why": "私としたことが = unusual for me to make such a mistake.",
-     "audio": "n1_03/q09.mp3?v=fa072845"
+     "audio": "n1_03/q09.mp3?v=fa072845",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -353,7 +415,10 @@
      ],
      "answer": 2,
      "why": "行くには行くけど = I'll go, but…; accept that.",
-     "audio": "n1_03/q10.mp3?v=d5d12ec5"
+     "audio": "n1_03/q10.mp3?v=d5d12ec5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -372,7 +437,10 @@
      ],
      "answer": 3,
      "why": "Out of stock: ask when it will come in.",
-     "audio": "n1_03/q11.mp3?v=1b58dc3b"
+     "audio": "n1_03/q11.mp3?v=1b58dc3b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -391,7 +459,10 @@
      ],
      "answer": 1,
      "why": "とっくに = long ago, already done.",
-     "audio": "n1_03/q12.mp3?v=89094950"
+     "audio": "n1_03/q12.mp3?v=89094950",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -410,7 +481,10 @@
      ],
      "answer": 1,
      "why": "〜くれたっていいじゃない = you could at least have…; apologise and explain.",
-     "audio": "n1_03/q13.mp3?v=2e05da93"
+     "audio": "n1_03/q13.mp3?v=2e05da93",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -429,7 +503,10 @@
      ],
      "answer": 3,
      "why": "The person is away: ask for a call back.",
-     "audio": "n1_03/q14.mp3?v=713f4772"
+     "audio": "n1_03/q14.mp3?v=713f4772",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -483,7 +560,17 @@
      ],
      "answer": 4,
      "why": "No izakaya (non-drinkers), no weekday lunch (too long away): the Italian place after work.",
-     "audio": "n1_03/q15.mp3?v=b432dc82"
+     "audio": "n1_03/q15.mp3?v=b432dc82",
+     "at": [
+      7.3,
+      13.16,
+      22.27,
+      31.98,
+      40.89,
+      47.7,
+      58.63
+     ],
+     "atQ": 65.62
     }
    ],
    "spoken": true
@@ -540,7 +627,13 @@
        "why": "She wants a hot spring in the cold: Hokkaido."
       }
      ],
-     "audio": "n1_03/q16.mp3?v=79dd48f7"
+     "audio": "n1_03/q16.mp3?v=79dd48f7",
+     "at": [
+      6.84,
+      35.97,
+      42.72,
+      47.84
+     ]
     }
    ],
    "spoken": false

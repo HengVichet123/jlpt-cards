@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "まずは、車を道路の端に寄せてもらえますか — it's blocking traffic.",
-     "audio": "n1_10/q01.mp3?v=04a47c84"
+     "audio": "n1_10/q01.mp3?v=04a47c84",
+     "at": [
+      11.52,
+      13.22,
+      18.4,
+      25.37,
+      29.18,
+      38.59
+     ],
+     "atQ": 43.08
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "The map can be reused; before sending, have presenters check names and affiliations.",
-     "audio": "n1_10/q02.mp3?v=4f8b8e6b"
+     "audio": "n1_10/q02.mp3?v=4f8b8e6b",
+     "at": [
+      10.59,
+      14.45,
+      21.34,
+      27.11,
+      31.34,
+      41.63
+     ],
+     "atQ": 45.7
     },
     {
      "tags": [
@@ -133,7 +151,16 @@
      ],
      "answer": 3,
      "why": "The police report is done; the claim form comes by email; she'll look for the receipt first.",
-     "audio": "n1_10/q03.mp3?v=48f4bd0e"
+     "audio": "n1_10/q03.mp3?v=48f4bd0e",
+     "at": [
+      10.63,
+      14.59,
+      20.33,
+      27.62,
+      31.75,
+      41.52
+     ],
+     "atQ": 47.82
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 3,
      "why": "人を丸ごと診る医者になりたかった — knowing patients' lives.",
-     "audio": "n1_10/q04.mp3?v=f22608e7"
+     "audio": "n1_10/q04.mp3?v=f22608e7",
+     "at": [
+      16.69,
+      20.91,
+      25.81,
+      27.66
+     ],
+     "atQ": 40.36
     },
     {
      "tags": [
@@ -209,7 +243,14 @@
      ],
      "answer": 2,
      "why": "The container was too big to fit on shop shelves.",
-     "audio": "n1_10/q05.mp3?v=e8d841d1"
+     "audio": "n1_10/q05.mp3?v=e8d841d1",
+     "at": [
+      17.32,
+      22.44,
+      27.1,
+      29.44
+     ],
+     "atQ": 42.01
     },
     {
      "tags": [
@@ -243,7 +284,14 @@
      ],
      "answer": 2,
      "why": "The area has a high flood risk.",
-     "audio": "n1_10/q06.mp3?v=986b27fb"
+     "audio": "n1_10/q06.mp3?v=986b27fb",
+     "at": [
+      15.0,
+      19.86,
+      23.38,
+      25.14
+     ],
+     "atQ": 35.16
     }
    ],
    "spoken": false
@@ -273,7 +321,11 @@
      ],
      "answer": 1,
      "why": "Assign someone to argue the opposite so doubts can be voiced safely.",
-     "audio": "n1_10/q07.mp3?v=6ecf94c0"
+     "audio": "n1_10/q07.mp3?v=6ecf94c0",
+     "at": [
+      6.24
+     ],
+     "atQ": 51.04
     },
     {
      "tags": [
@@ -295,7 +347,11 @@
      ],
      "answer": 1,
      "why": "Small changes to your usual walk are enough.",
-     "audio": "n1_10/q08.mp3?v=a0531444"
+     "audio": "n1_10/q08.mp3?v=a0531444",
+     "at": [
+      5.08
+     ],
+     "atQ": 48.87
     }
    ],
    "spoken": true
@@ -322,7 +378,10 @@
      ],
      "answer": 3,
      "why": "首を縦に振る = to agree; it was approved surprisingly.",
-     "audio": "n1_10/q09.mp3?v=2735a229"
+     "audio": "n1_10/q09.mp3?v=2735a229",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -341,7 +400,10 @@
      ],
      "answer": 3,
      "why": "〜たところで = even if I did; offer to listen anyway.",
-     "audio": "n1_10/q10.mp3?v=5cd3fb66"
+     "audio": "n1_10/q10.mp3?v=5cd3fb66",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -360,7 +422,10 @@
      ],
      "answer": 2,
      "why": "A payment reminder: apologise and check immediately.",
-     "audio": "n1_10/q11.mp3?v=2802a307"
+     "audio": "n1_10/q11.mp3?v=2802a307",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -379,7 +444,10 @@
      ],
      "answer": 2,
      "why": "I'm not a child: say you can't help worrying.",
-     "audio": "n1_10/q12.mp3?v=ae884771"
+     "audio": "n1_10/q12.mp3?v=ae884771",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -398,7 +466,10 @@
      ],
      "answer": 1,
      "why": "Humbly redirect credit to the team.",
-     "audio": "n1_10/q13.mp3?v=8587bff7"
+     "audio": "n1_10/q13.mp3?v=8587bff7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -417,7 +488,10 @@
      ],
      "answer": 1,
      "why": "A change request: ask them to wait while you check.",
-     "audio": "n1_10/q14.mp3?v=5c443248"
+     "audio": "n1_10/q14.mp3?v=5c443248",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -467,7 +541,16 @@
      ],
      "answer": 4,
      "why": "Station building too expensive, suburbs inconvenient; the building one station away balances both.",
-     "audio": "n1_10/q15.mp3?v=8570e3d2"
+     "audio": "n1_10/q15.mp3?v=8570e3d2",
+     "at": [
+      6.66,
+      12.32,
+      28.5,
+      40.41,
+      46.75,
+      54.96
+     ],
+     "atQ": 61.78
     }
    ],
    "spoken": true
@@ -520,7 +603,12 @@
        "why": "Work from home with a computer: web design."
       }
      ],
-     "audio": "n1_10/q16.mp3?v=041b5634"
+     "audio": "n1_10/q16.mp3?v=041b5634",
+     "at": [
+      6.08,
+      28.94,
+      35.73
+     ]
     }
    ],
    "spoken": false

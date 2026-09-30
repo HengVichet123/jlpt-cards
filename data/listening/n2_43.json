@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "Business cards first; sales will email tomorrow.",
-     "audio": "n2_43/q01.mp3?v=35d874de"
+     "audio": "n2_43/q01.mp3?v=35d874de",
+     "at": [
+      9.9,
+      14.83,
+      17.63,
+      33.14,
+      35.69
+     ],
+     "atQ": 40.17
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 1,
      "why": "Headcount first.",
-     "audio": "n2_43/q02.mp3?v=971e7eaa"
+     "audio": "n2_43/q02.mp3?v=971e7eaa",
+     "at": [
+      11.13,
+      16.05,
+      22.46,
+      25.93,
+      30.6,
+      34.39
+     ],
+     "atQ": 37.87
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 4,
      "why": "Leave it now; bring the warranty at pick-up.",
-     "audio": "n2_43/q03.mp3?v=cef653ef"
+     "audio": "n2_43/q03.mp3?v=cef653ef",
+     "at": [
+      9.79,
+      16.62,
+      24.42,
+      30.69,
+      38.87
+     ],
+     "atQ": 44.13
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "See her friend before the move.",
-     "audio": "n2_43/q04.mp3?v=08b76052"
+     "audio": "n2_43/q04.mp3?v=08b76052",
+     "at": [
+      14.85,
+      20.32,
+      25.15,
+      26.98
+     ],
+     "atQ": 38.91
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Slow response.",
-     "audio": "n2_43/q05.mp3?v=b6c20c0c"
+     "audio": "n2_43/q05.mp3?v=b6c20c0c",
+     "at": [
+      17.25,
+      22.42,
+      26.34,
+      29.01
+     ],
+     "atQ": 40.79
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 3,
      "why": "Evening classes.",
-     "audio": "n2_43/q06.mp3?v=94f89ad6"
+     "audio": "n2_43/q06.mp3?v=94f89ad6",
+     "at": [
+      16.86
+     ],
+     "atQ": 43.21
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 2,
      "why": "Naturalistic exhibits.",
-     "audio": "n2_43/q07.mp3?v=cb72e08b"
+     "audio": "n2_43/q07.mp3?v=cb72e08b",
+     "at": [
+      5.79
+     ],
+     "atQ": 53.27
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 4,
      "why": "Take notes; they spark ideas.",
-     "audio": "n2_43/q08.mp3?v=521ffc46"
+     "audio": "n2_43/q08.mp3?v=521ffc46",
+     "at": [
+      5.59
+     ],
+     "atQ": 42.62
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 2,
      "why": "Asking if the room is free: yes.",
-     "audio": "n2_43/q09.mp3?v=b5aeb94b"
+     "audio": "n2_43/q09.mp3?v=b5aeb94b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Asked if finished: not yet.",
-     "audio": "n2_43/q10.mp3?v=6d04eda7"
+     "audio": "n2_43/q10.mp3?v=6d04eda7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 1,
      "why": "Payment method: answer.",
-     "audio": "n2_43/q11.mp3?v=cc4cbfa1"
+     "audio": "n2_43/q11.mp3?v=cc4cbfa1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Late due to trains: acknowledge.",
-     "audio": "n2_43/q12.mp3?v=23655ce6"
+     "audio": "n2_43/q12.mp3?v=23655ce6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Asked if done: forgot.",
-     "audio": "n2_43/q13.mp3?v=da61f6f5"
+     "audio": "n2_43/q13.mp3?v=da61f6f5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 3,
      "why": "Complaint about wait: apologise, check.",
-     "audio": "n2_43/q14.mp3?v=f64211a6"
+     "audio": "n2_43/q14.mp3?v=f64211a6",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 2,
      "why": "Helps cross-department cooperation.",
-     "audio": "n2_43/q15.mp3?v=c1278a1f"
+     "audio": "n2_43/q15.mp3?v=c1278a1f",
+     "at": [
+      7.26,
+      21.41,
+      26.67,
+      32.87,
+      42.21,
+      51.06
+     ],
+     "atQ": 58.34
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Strength training."
       }
      ],
-     "audio": "n2_43/q16.mp3?v=8b51c04e"
+     "audio": "n2_43/q16.mp3?v=8b51c04e",
+     "at": [
+      12.09,
+      34.45,
+      42.17,
+      47.46
+     ]
     }
    ],
    "spoken": false

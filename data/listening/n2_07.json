@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "先に書類を書いてしまいます — the explanation is at 3:00.",
-     "audio": "n2_07/q01.mp3?v=bd63745c"
+     "audio": "n2_07/q01.mp3?v=bd63745c",
+     "at": [
+      11.33,
+      13.22,
+      21.41,
+      26.11,
+      36.07,
+      42.58
+     ],
+     "atQ": 47.56
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 2,
      "why": "She must take lecture no. 3 before the driving practice.",
-     "audio": "n2_07/q02.mp3?v=dbb74a10"
+     "audio": "n2_07/q02.mp3?v=dbb74a10",
+     "at": [
+      12.26,
+      16.49,
+      24.57,
+      26.94,
+      35.3
+     ],
+     "atQ": 41.18
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "Saturday morning is full and 3 pm is too close: Friday evening after work.",
-     "audio": "n2_07/q03.mp3?v=9dd8f4d6"
+     "audio": "n2_07/q03.mp3?v=9dd8f4d6",
+     "at": [
+      9.77,
+      15.91,
+      23.19,
+      30.71,
+      38.38
+     ],
+     "atQ": 43.6
     }
    ],
    "spoken": false
@@ -171,7 +196,15 @@
      ],
      "answer": 1,
      "why": "Not the children: the upstairs washing machine at 1 am.",
-     "audio": "n2_07/q04.mp3?v=bdf6932c"
+     "audio": "n2_07/q04.mp3?v=bdf6932c",
+     "at": [
+      15.88,
+      20.93,
+      25.36,
+      27.45,
+      36.75
+     ],
+     "atQ": 43.49
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 3,
      "why": "The park banned drinking at night; crowds are the same every year.",
-     "audio": "n2_07/q05.mp3?v=4fa4a601"
+     "audio": "n2_07/q05.mp3?v=4fa4a601",
+     "at": [
+      16.32,
+      19.97,
+      27.1,
+      30.65
+     ],
+     "atQ": 38.73
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 3,
      "why": "She wants to see her younger child's school with her own eyes.",
-     "audio": "n2_07/q06.mp3?v=42187f3b"
+     "audio": "n2_07/q06.mp3?v=42187f3b",
+     "at": [
+      16.76,
+      21.79,
+      26.03,
+      27.89
+     ],
+     "atQ": 43.71
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 2,
      "why": "Discount tickets for elderly people who give up their licence, and its results.",
-     "audio": "n2_07/q07.mp3?v=7473d0b8"
+     "audio": "n2_07/q07.mp3?v=7473d0b8",
+     "at": [
+      5.12
+     ],
+     "atQ": 49.71
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 4,
      "why": "Reduce things first; think about storage afterwards.",
-     "audio": "n2_07/q08.mp3?v=1998f91b"
+     "audio": "n2_07/q08.mp3?v=1998f91b",
+     "at": [
+      5.97
+     ],
+     "atQ": 49.75
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 3,
      "why": "お電話が遠い = I can't hear you well; speak up and check.",
-     "audio": "n2_07/q09.mp3?v=ec5ccf59"
+     "audio": "n2_07/q09.mp3?v=ec5ccf59",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 1,
      "why": "Asked to keep the book longer: sure, take your time.",
-     "audio": "n2_07/q10.mp3?v=171363e2"
+     "audio": "n2_07/q10.mp3?v=171363e2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 3,
      "why": "召し上がる is honorific for the other person; you say いただきます.",
-     "audio": "n2_07/q11.mp3?v=72d75ed8"
+     "audio": "n2_07/q11.mp3?v=72d75ed8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 2,
      "why": "Information about the test range: acknowledge.",
-     "audio": "n2_07/q12.mp3?v=344529e8"
+     "audio": "n2_07/q12.mp3?v=344529e8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 1,
      "why": "Advice to take an umbrella: agree.",
-     "audio": "n2_07/q13.mp3?v=18aaba79"
+     "audio": "n2_07/q13.mp3?v=18aaba79",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 2,
      "why": "Greeted at a restaurant: よろしくお願いします.",
-     "audio": "n2_07/q14.mp3?v=2a0b9056"
+     "audio": "n2_07/q14.mp3?v=2a0b9056",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -467,7 +540,17 @@
      ],
      "answer": 4,
      "why": "The amusement park is too crowded in summer; they'll go to the sea near grandma's.",
-     "audio": "n2_07/q15.mp3?v=3717beb7"
+     "audio": "n2_07/q15.mp3?v=3717beb7",
+     "at": [
+      6.74,
+      10.09,
+      14.78,
+      23.63,
+      31.16,
+      33.47,
+      42.66
+     ],
+     "atQ": 48.95
     }
    ],
    "spoken": true
@@ -520,7 +603,12 @@
        "why": "An only child who likes moving: football teaches teamwork."
       }
      ],
-     "audio": "n2_07/q16.mp3?v=b77a5f50"
+     "audio": "n2_07/q16.mp3?v=b77a5f50",
+     "at": [
+      6.64,
+      27.55,
+      33.32
+     ]
     }
    ],
    "spoken": false

@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "Classify the free-text answers first.",
-     "audio": "n1_33/q01.mp3?v=ca24316d"
+     "audio": "n1_33/q01.mp3?v=ca24316d",
+     "at": [
+      12.24,
+      16.39,
+      22.13,
+      30.15,
+      34.67,
+      48.07
+     ],
+     "atQ": 50.54
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "Make the list; he'll book the inspection.",
-     "audio": "n1_33/q02.mp3?v=e5aba91a"
+     "audio": "n1_33/q02.mp3?v=e5aba91a",
+     "at": [
+      12.96,
+      17.98,
+      22.1,
+      37.51,
+      40.52
+     ],
+     "atQ": 44.73
     },
     {
      "tags": [
@@ -129,7 +146,16 @@
      ],
      "answer": 4,
      "why": "Toiletries and current medication; he doesn't wear glasses.",
-     "audio": "n1_33/q03.mp3?v=db7a160d"
+     "audio": "n1_33/q03.mp3?v=db7a160d",
+     "at": [
+      10.6,
+      20.08,
+      22.4,
+      35.26,
+      36.72,
+      39.71
+     ],
+     "atQ": 43.36
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "The middle, where he gets lost.",
-     "audio": "n1_33/q04.mp3?v=4b3301ad"
+     "audio": "n1_33/q04.mp3?v=4b3301ad",
+     "at": [
+      17.92,
+      23.78,
+      28.0,
+      29.87
+     ],
+     "atQ": 48.45
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 2,
      "why": "She wants to see the product launch through.",
-     "audio": "n1_33/q05.mp3?v=0a3f164b"
+     "audio": "n1_33/q05.mp3?v=0a3f164b",
+     "at": [
+      17.36,
+      23.44,
+      27.48,
+      29.35
+     ],
+     "atQ": 44.72
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 4,
      "why": "Rooftop gardens create meeting places.",
-     "audio": "n1_33/q06.mp3?v=ef0056d3"
+     "audio": "n1_33/q06.mp3?v=ef0056d3",
+     "at": [
+      17.84
+     ],
+     "atQ": 46.15
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 2,
      "why": "The same proverb can be understood in opposite ways.",
-     "audio": "n1_33/q07.mp3?v=076096f3"
+     "audio": "n1_33/q07.mp3?v=076096f3",
+     "at": [
+      5.18
+     ],
+     "atQ": 55.07
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 3,
      "why": "Rest is preparation for good work.",
-     "audio": "n1_33/q08.mp3?v=db1da638"
+     "audio": "n1_33/q08.mp3?v=db1da638",
+     "at": [
+      5.25
+     ],
+     "atQ": 54.18
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 1,
      "why": "An offer of help: politely decline.",
-     "audio": "n1_33/q09.mp3?v=70174cea"
+     "audio": "n1_33/q09.mp3?v=70174cea",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 1,
      "why": "Comfort after failure.",
-     "audio": "n1_33/q10.mp3?v=1580742e"
+     "audio": "n1_33/q10.mp3?v=1580742e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 2,
      "why": "Proposing a date: offer an alternative.",
-     "audio": "n1_33/q11.mp3?v=afec974f"
+     "audio": "n1_33/q11.mp3?v=afec974f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "A mistake pointed out: apologise and fix.",
-     "audio": "n1_33/q12.mp3?v=26261f02"
+     "audio": "n1_33/q12.mp3?v=26261f02",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 2,
      "why": "Asked for a wake-up call.",
-     "audio": "n1_33/q13.mp3?v=015a2939"
+     "audio": "n1_33/q13.mp3?v=015a2939",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 3,
      "why": "Retirement farewell: thank colleagues.",
-     "audio": "n1_33/q14.mp3?v=59acda18"
+     "audio": "n1_33/q14.mp3?v=59acda18",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +517,15 @@
      ],
      "answer": 1,
      "why": "Least ongoing cost: e-book lending.",
-     "audio": "n1_33/q15.mp3?v=7ae96c67"
+     "audio": "n1_33/q15.mp3?v=7ae96c67",
+     "at": [
+      8.2,
+      20.38,
+      32.52,
+      38.59,
+      54.93
+     ],
+     "atQ": 83.06
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Light breakfast with a view: top-floor café."
       }
      ],
-     "audio": "n1_33/q16.mp3?v=a04edb54"
+     "audio": "n1_33/q16.mp3?v=a04edb54",
+     "at": [
+      11.51,
+      37.46,
+      40.61,
+      47.09
+     ]
     }
    ],
    "spoken": false

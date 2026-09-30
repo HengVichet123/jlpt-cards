@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Wait for official figures; practise in the meantime.",
-     "audio": "n1_35/q01.mp3?v=83cdd7e0"
+     "audio": "n1_35/q01.mp3?v=83cdd7e0",
+     "at": [
+      12.04,
+      15.65,
+      24.19,
+      31.25,
+      40.65,
+      51.67
+     ],
+     "atQ": 54.39
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 4,
      "why": "Ask the professor in charge for a private session.",
-     "audio": "n1_35/q02.mp3?v=956e1f85"
+     "audio": "n1_35/q02.mp3?v=956e1f85",
+     "at": [
+      14.65,
+      20.1,
+      25.9,
+      29.4,
+      41.8
+     ],
+     "atQ": 45.13
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 2,
      "why": "Bring the filled-in form; no driving.",
-     "audio": "n1_35/q03.mp3?v=254deec9"
+     "audio": "n1_35/q03.mp3?v=254deec9",
+     "at": [
+      12.13,
+      15.14,
+      18.54,
+      22.44,
+      36.11
+     ],
+     "atQ": 39.7
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "Weather and humidity on the day.",
-     "audio": "n1_35/q04.mp3?v=64c97791"
+     "audio": "n1_35/q04.mp3?v=64c97791",
+     "at": [
+      18.02,
+      24.57,
+      30.09,
+      32.1
+     ],
+     "atQ": 50.21
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Hearing customers directly for future planning.",
-     "audio": "n1_35/q05.mp3?v=ab0b2ca1"
+     "audio": "n1_35/q05.mp3?v=ab0b2ca1",
+     "at": [
+      16.96,
+      22.53,
+      26.78,
+      28.39
+     ],
+     "atQ": 42.49
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 1,
      "why": "Shopkeepers' classes created personal ties.",
-     "audio": "n1_35/q06.mp3?v=dc9c412f"
+     "audio": "n1_35/q06.mp3?v=dc9c412f",
+     "at": [
+      18.02
+     ],
+     "atQ": 48.53
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 1,
      "why": "Moderate background noise helps; speech hurts.",
-     "audio": "n1_35/q07.mp3?v=fcff28d8"
+     "audio": "n1_35/q07.mp3?v=fcff28d8",
+     "at": [
+      5.25
+     ],
+     "atQ": 60.28
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 3,
      "why": "Employing young people to train future farmers.",
-     "audio": "n1_35/q08.mp3?v=6d2549f9"
+     "audio": "n1_35/q08.mp3?v=6d2549f9",
+     "at": [
+      6.38
+     ],
+     "atQ": 57.44
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 3,
      "why": "Colleague will stay late: say OK, don't overdo it.",
-     "audio": "n1_35/q09.mp3?v=0f0319d9"
+     "audio": "n1_35/q09.mp3?v=0f0319d9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 1,
      "why": "A housewarming gift: thank.",
-     "audio": "n1_35/q10.mp3?v=4ad3f3e6"
+     "audio": "n1_35/q10.mp3?v=4ad3f3e6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 2,
      "why": "Asked for a convenient day: give one.",
-     "audio": "n1_35/q11.mp3?v=1e0f6ef2"
+     "audio": "n1_35/q11.mp3?v=1e0f6ef2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 3,
      "why": "Needs more figures: promise to add data.",
-     "audio": "n1_35/q12.mp3?v=04b87906"
+     "audio": "n1_35/q12.mp3?v=04b87906",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Worried it's too spicy: reassure.",
-     "audio": "n1_35/q13.mp3?v=5c2dacf0"
+     "audio": "n1_35/q13.mp3?v=5c2dacf0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 1,
      "why": "Good news: congratulate.",
-     "audio": "n1_35/q14.mp3?v=9901dbaf"
+     "audio": "n1_35/q14.mp3?v=9901dbaf",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -443,7 +512,15 @@
      ],
      "answer": 2,
      "why": "The top complaint: same menu every day.",
-     "audio": "n1_35/q15.mp3?v=6fa74350"
+     "audio": "n1_35/q15.mp3?v=6fa74350",
+     "at": [
+      8.03,
+      26.1,
+      35.82,
+      44.01,
+      53.83
+     ],
+     "atQ": 60.38
     }
    ],
    "spoken": true
@@ -500,7 +577,13 @@
        "why": "To calm her mind: yoga."
       }
      ],
-     "audio": "n1_35/q16.mp3?v=ae0f2733"
+     "audio": "n1_35/q16.mp3?v=ae0f2733",
+     "at": [
+      11.58,
+      33.96,
+      39.57,
+      45.0
+     ]
     }
    ],
    "spoken": false

@@ -45,7 +45,15 @@
      ],
      "answer": 4,
      "why": "The card is handed in; fill in the questionnaire next.",
-     "audio": "n2_22/q01.mp3?v=8f6852f0"
+     "audio": "n2_22/q01.mp3?v=8f6852f0",
+     "at": [
+      10.98,
+      14.21,
+      16.27,
+      18.16,
+      28.85
+     ],
+     "atQ": 31.47
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 2,
      "why": "Print five more copies first, then call general affairs.",
-     "audio": "n2_22/q02.mp3?v=7d9a62ab"
+     "audio": "n2_22/q02.mp3?v=7d9a62ab",
+     "at": [
+      9.37,
+      12.79,
+      15.49,
+      20.14,
+      24.53,
+      29.28
+     ],
+     "atQ": 34.65
     },
     {
      "tags": [
@@ -121,7 +138,14 @@
      ],
      "answer": 1,
      "why": "Reshelve returned books; labelling can wait.",
-     "audio": "n2_22/q03.mp3?v=a071a5de"
+     "audio": "n2_22/q03.mp3?v=a071a5de",
+     "at": [
+      10.29,
+      14.5,
+      17.41,
+      24.52
+     ],
+     "atQ": 27.14
     }
    ],
    "spoken": false
@@ -163,7 +187,14 @@
      ],
      "answer": 2,
      "why": "He cooked the same dish every day for a week.",
-     "audio": "n2_22/q04.mp3?v=c4177c1c"
+     "audio": "n2_22/q04.mp3?v=c4177c1c",
+     "at": [
+      15.59,
+      22.26,
+      24.36,
+      27.64
+     ],
+     "atQ": 36.62
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 1,
      "why": "The building is being rebuilt.",
-     "audio": "n2_22/q05.mp3?v=0aea51a9"
+     "audio": "n2_22/q05.mp3?v=0aea51a9",
+     "at": [
+      16.25,
+      19.95,
+      22.72,
+      28.97
+     ],
+     "atQ": 32.54
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 1,
      "why": "They can stay with their daughter and see the grandchild.",
-     "audio": "n2_22/q06.mp3?v=d727f517"
+     "audio": "n2_22/q06.mp3?v=d727f517",
+     "at": [
+      14.52,
+      17.37,
+      21.23,
+      24.16
+     ],
+     "atQ": 31.05
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 3,
      "why": "Free bike lending for tourists.",
-     "audio": "n2_22/q07.mp3?v=97de42bb"
+     "audio": "n2_22/q07.mp3?v=97de42bb",
+     "at": [
+      5.04
+     ],
+     "atQ": 40.67
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 3,
      "why": "Don't aim for perfect; keep going a little.",
-     "audio": "n2_22/q08.mp3?v=214cb300"
+     "audio": "n2_22/q08.mp3?v=214cb300",
+     "at": [
+      5.3
+     ],
+     "atQ": 49.78
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "A call for you: thanks, coming.",
-     "audio": "n2_22/q09.mp3?v=730ac2f3"
+     "audio": "n2_22/q09.mp3?v=730ac2f3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 1,
      "why": "Apology: forgive.",
-     "audio": "n2_22/q10.mp3?v=e9d2ea2d"
+     "audio": "n2_22/q10.mp3?v=e9d2ea2d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 2,
      "why": "Use your points? Yes.",
-     "audio": "n2_22/q11.mp3?v=7281644f"
+     "audio": "n2_22/q11.mp3?v=7281644f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 1,
      "why": "Advice based on the forecast.",
-     "audio": "n2_22/q12.mp3?v=aafead53"
+     "audio": "n2_22/q12.mp3?v=aafead53",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Did you rest well? Yes, thanks.",
-     "audio": "n2_22/q13.mp3?v=70844b1f"
+     "audio": "n2_22/q13.mp3?v=70844b1f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 3,
      "why": "Pay at that window: understood.",
-     "audio": "n2_22/q14.mp3?v=3854f396"
+     "audio": "n2_22/q14.mp3?v=3854f396",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +522,15 @@
      ],
      "answer": 4,
      "why": "Fastest is too expensive, cheapest has no colour: mid-priced colour.",
-     "audio": "n2_22/q15.mp3?v=2ae82c7e"
+     "audio": "n2_22/q15.mp3?v=2ae82c7e",
+     "at": [
+      6.64,
+      12.14,
+      21.39,
+      27.72,
+      39.52
+     ],
+     "atQ": 48.77
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "After work: the night zoo."
       }
      ],
-     "audio": "n2_22/q16.mp3?v=3de4a2c0"
+     "audio": "n2_22/q16.mp3?v=3de4a2c0",
+     "at": [
+      6.01,
+      31.67,
+      35.89
+     ]
     }
    ],
    "spoken": false

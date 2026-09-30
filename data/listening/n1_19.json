@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Check with the carrier first; asking R&D depends on the answer.",
-     "audio": "n1_19/q01.mp3?v=1754325e"
+     "audio": "n1_19/q01.mp3?v=1754325e",
+     "at": [
+      11.16,
+      14.75,
+      17.76,
+      21.01,
+      26.06,
+      38.49
+     ],
+     "atQ": 42.26
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 3,
      "why": "The cane is lent; he arranges a bathroom handrail.",
-     "audio": "n1_19/q02.mp3?v=c21977f9"
+     "audio": "n1_19/q02.mp3?v=c21977f9",
+     "at": [
+      11.86,
+      16.62,
+      20.58,
+      34.09,
+      37.26
+     ],
+     "atQ": 42.38
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "The briefing at 2 comes first; key after, fee within the month.",
-     "audio": "n1_19/q03.mp3?v=cf777a03"
+     "audio": "n1_19/q03.mp3?v=cf777a03",
+     "at": [
+      12.17,
+      16.72,
+      23.28,
+      24.5,
+      33.09
+     ],
+     "atQ": 37.55
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "Talking until the subject relaxes before shooting.",
-     "audio": "n1_19/q04.mp3?v=53e2fa90"
+     "audio": "n1_19/q04.mp3?v=53e2fa90",
+     "at": [
+      16.15,
+      20.13,
+      24.44,
+      26.43
+     ],
+     "atQ": 38.86
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "Everyone reads materials and sends questions the day before.",
-     "audio": "n1_19/q05.mp3?v=824d17bf"
+     "audio": "n1_19/q05.mp3?v=824d17bf",
+     "at": [
+      17.56,
+      23.19,
+      27.76,
+      30.03
+     ],
+     "atQ": 45.26
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 2,
      "why": "He wants to watch his great-grandchild grow up.",
-     "audio": "n1_19/q06.mp3?v=55930817"
+     "audio": "n1_19/q06.mp3?v=55930817",
+     "at": [
+      15.1,
+      21.06,
+      25.36,
+      26.68
+     ],
+     "atQ": 35.84
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 1,
      "why": "Preventive maintenance of ageing infrastructure saves money.",
-     "audio": "n1_19/q07.mp3?v=4b40af23"
+     "audio": "n1_19/q07.mp3?v=4b40af23",
+     "at": [
+      5.77
+     ],
+     "atQ": 50.65
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 4,
      "why": "Use clear words like 要りません in important moments.",
-     "audio": "n1_19/q08.mp3?v=1c2ad376"
+     "audio": "n1_19/q08.mp3?v=1c2ad376",
+     "at": [
+      5.17
+     ],
+     "atQ": 48.9
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 1,
      "why": "An error pointed out: apologise and check.",
-     "audio": "n1_19/q09.mp3?v=16155760"
+     "audio": "n1_19/q09.mp3?v=16155760",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "Invitation: suggest a time.",
-     "audio": "n1_19/q10.mp3?v=2fa3149a"
+     "audio": "n1_19/q10.mp3?v=2fa3149a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "A courtesy visit: thank and invite in.",
-     "audio": "n1_19/q11.mp3?v=a8ac66c3"
+     "audio": "n1_19/q11.mp3?v=a8ac66c3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 3,
      "why": "Worried about you: explain.",
-     "audio": "n1_19/q12.mp3?v=239660b2"
+     "audio": "n1_19/q12.mp3?v=239660b2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 2,
      "why": "あとひと息 = almost there.",
-     "audio": "n1_19/q13.mp3?v=a0433557"
+     "audio": "n1_19/q13.mp3?v=a0433557",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "Offer to deliver: yes, please.",
-     "audio": "n1_19/q14.mp3?v=d2aa4613"
+     "audio": "n1_19/q14.mp3?v=d2aa4613",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 1,
      "why": "Overseas sales is full; planning needs a data analyst.",
-     "audio": "n1_19/q15.mp3?v=332f0e3c"
+     "audio": "n1_19/q15.mp3?v=332f0e3c",
+     "at": [
+      7.07,
+      12.11,
+      18.55,
+      23.35,
+      36.23
+     ],
+     "atQ": 44.75
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "Lots of vegetables for the family: the largest plot."
       }
      ],
-     "audio": "n1_19/q16.mp3?v=27bf23ec"
+     "audio": "n1_19/q16.mp3?v=27bf23ec",
+     "at": [
+      7.53,
+      28.6,
+      35.09
+     ]
     }
    ],
    "spoken": false

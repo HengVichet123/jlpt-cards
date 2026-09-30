@@ -53,7 +53,17 @@
      ],
      "answer": 2,
      "why": "Her licence shows the new address; she goes home for a bill with the old one.",
-     "audio": "n2_16/q01.mp3?v=80d7eadc"
+     "audio": "n2_16/q01.mp3?v=80d7eadc",
+     "at": [
+      10.22,
+      17.75,
+      23.83,
+      28.72,
+      37.55,
+      44.18,
+      49.97
+     ],
+     "atQ": 56.06
     },
     {
      "tags": [
@@ -87,7 +97,14 @@
      ],
      "answer": 1,
      "why": "Confirm the new phone number before ordering.",
-     "audio": "n2_16/q02.mp3?v=f12bae05"
+     "audio": "n2_16/q02.mp3?v=f12bae05",
+     "at": [
+      9.79,
+      14.02,
+      16.73,
+      23.39
+     ],
+     "atQ": 27.86
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "Talk with the child about which high school they want.",
-     "audio": "n2_16/q03.mp3?v=04d6ef57"
+     "audio": "n2_16/q03.mp3?v=04d6ef57",
+     "at": [
+      9.67,
+      14.34,
+      16.78,
+      24.8,
+      27.75
+     ],
+     "atQ": 33.17
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 4,
      "why": "She stares at a computer all day and wants hands-on making time.",
-     "audio": "n2_16/q04.mp3?v=2dad8bdd"
+     "audio": "n2_16/q04.mp3?v=2dad8bdd",
+     "at": [
+      15.27,
+      17.96,
+      22.39,
+      24.66
+     ],
+     "atQ": 34.61
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Fresh bread is baked several times a day.",
-     "audio": "n2_16/q05.mp3?v=d92da388"
+     "audio": "n2_16/q05.mp3?v=d92da388",
+     "at": [
+      17.92,
+      23.3,
+      26.9,
+      28.99
+     ],
+     "atQ": 36.66
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 4,
      "why": "The survey results to be discussed aren't ready.",
-     "audio": "n2_16/q06.mp3?v=abaadfdb"
+     "audio": "n2_16/q06.mp3?v=abaadfdb",
+     "at": [
+      14.85,
+      19.58,
+      23.87,
+      25.93
+     ],
+     "atQ": 36.8
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 3,
      "why": "Layer thin clothes to adjust to spring temperature swings.",
-     "audio": "n2_16/q07.mp3?v=7666e25d"
+     "audio": "n2_16/q07.mp3?v=7666e25d",
+     "at": [
+      5.05
+     ],
+     "atQ": 45.78
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 3,
      "why": "Specific praise helps people grow.",
-     "audio": "n2_16/q08.mp3?v=a13fc0b3"
+     "audio": "n2_16/q08.mp3?v=a13fc0b3",
+     "at": [
+      5.38
+     ],
+     "atQ": 44.6
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "Shall we take a break? Sure.",
-     "audio": "n2_16/q09.mp3?v=6d8c6881"
+     "audio": "n2_16/q09.mp3?v=6d8c6881",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Sorry I missed your call: no problem.",
-     "audio": "n2_16/q10.mp3?v=35fd056f"
+     "audio": "n2_16/q10.mp3?v=35fd056f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Do you have L? Sorry, only up to M.",
-     "audio": "n2_16/q11.mp3?v=2dc5ad2b"
+     "audio": "n2_16/q11.mp3?v=2dc5ad2b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "Leaving already? Yes, going early.",
-     "audio": "n2_16/q12.mp3?v=82527c17"
+     "audio": "n2_16/q12.mp3?v=82527c17",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 2,
      "why": "Meeting a client for the first time.",
-     "audio": "n2_16/q13.mp3?v=c40df12c"
+     "audio": "n2_16/q13.mp3?v=c40df12c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "Take after meals: understood.",
-     "audio": "n2_16/q14.mp3?v=fce3300f"
+     "audio": "n2_16/q14.mp3?v=fce3300f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 2,
      "why": "Underage students rule out an izakaya; the park depends on weather: a rented café.",
-     "audio": "n2_16/q15.mp3?v=45481abf"
+     "audio": "n2_16/q15.mp3?v=45481abf",
+     "at": [
+      8.0,
+      17.72,
+      21.49,
+      28.02,
+      36.37,
+      44.73
+     ],
+     "atQ": 50.88
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "Back pain: the firm mattress."
       }
      ],
-     "audio": "n2_16/q16.mp3?v=5cc9a487"
+     "audio": "n2_16/q16.mp3?v=5cc9a487",
+     "at": [
+      6.17,
+      28.0,
+      34.24
+     ]
     }
    ],
    "spoken": false

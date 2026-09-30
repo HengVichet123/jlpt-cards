@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Update the system pages in the materials.",
-     "audio": "n2_42/q01.mp3?v=8045d2bb"
+     "audio": "n2_42/q01.mp3?v=8045d2bb",
+     "at": [
+      10.19,
+      15.15,
+      19.47,
+      25.58,
+      29.06,
+      35.47
+     ],
+     "atQ": 39.41
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 3,
      "why": "The branch has it available.",
-     "audio": "n2_42/q02.mp3?v=b8cf5fa8"
+     "audio": "n2_42/q02.mp3?v=b8cf5fa8",
+     "at": [
+      9.63,
+      14.33,
+      21.2,
+      26.56,
+      34.64
+     ],
+     "atQ": 39.05
     },
     {
      "tags": [
@@ -129,7 +146,16 @@
      ],
      "answer": 3,
      "why": "She lost her gloves.",
-     "audio": "n2_42/q03.mp3?v=475aa189"
+     "audio": "n2_42/q03.mp3?v=475aa189",
+     "at": [
+      8.88,
+      14.52,
+      17.0,
+      23.01,
+      28.81,
+      37.39
+     ],
+     "atQ": 40.61
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "Job-hunting prep.",
-     "audio": "n2_42/q04.mp3?v=e329a8b7"
+     "audio": "n2_42/q04.mp3?v=e329a8b7",
+     "at": [
+      15.23,
+      20.74,
+      23.13,
+      27.14
+     ],
+     "atQ": 36.12
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 2,
      "why": "Electricity nearly doubled.",
-     "audio": "n2_42/q05.mp3?v=092a89d0"
+     "audio": "n2_42/q05.mp3?v=092a89d0",
+     "at": [
+      15.68,
+      19.84,
+      26.5,
+      31.17
+     ],
+     "atQ": 35.51
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 4,
      "why": "The station appeared in an anime film.",
-     "audio": "n2_42/q06.mp3?v=6b9f63e5"
+     "audio": "n2_42/q06.mp3?v=6b9f63e5",
+     "at": [
+      15.27
+     ],
+     "atQ": 40.69
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 1,
      "why": "Eat something in the morning.",
-     "audio": "n2_42/q07.mp3?v=f3b17610"
+     "audio": "n2_42/q07.mp3?v=f3b17610",
+     "at": [
+      4.89
+     ],
+     "atQ": 52.94
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 4,
      "why": "Cheap rents for young shop owners.",
-     "audio": "n2_42/q08.mp3?v=f7a4c931"
+     "audio": "n2_42/q08.mp3?v=f7a4c931",
+     "at": [
+      5.03
+     ],
+     "atQ": 46.62
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 3,
      "why": "Given souvenirs: thank.",
-     "audio": "n2_42/q09.mp3?v=c43f1d33"
+     "audio": "n2_42/q09.mp3?v=c43f1d33",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 2,
      "why": "Friend running late: acknowledge.",
-     "audio": "n2_42/q10.mp3?v=627ccf3c"
+     "audio": "n2_42/q10.mp3?v=627ccf3c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 1,
      "why": "Asked to try on: direct them.",
-     "audio": "n2_42/q11.mp3?v=f40e0bf0"
+     "audio": "n2_42/q11.mp3?v=f40e0bf0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "Asked if checked: not yet.",
-     "audio": "n2_42/q12.mp3?v=451c12c7"
+     "audio": "n2_42/q12.mp3?v=451c12c7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 2,
      "why": "Asked to help: agree.",
-     "audio": "n2_42/q13.mp3?v=8f9d7bfb"
+     "audio": "n2_42/q13.mp3?v=8f9d7bfb",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 1,
      "why": "Asked about health: explain.",
-     "audio": "n2_42/q14.mp3?v=8850ef47"
+     "audio": "n2_42/q14.mp3?v=8850ef47",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 1,
      "why": "Practical, unbreakable, school colours.",
-     "audio": "n2_42/q15.mp3?v=d491be82"
+     "audio": "n2_42/q15.mp3?v=d491be82",
+     "at": [
+      7.64,
+      22.83,
+      31.4,
+      40.52,
+      46.49,
+      48.82
+     ],
+     "atQ": 55.01
     }
    ],
    "spoken": true
@@ -508,7 +587,13 @@
        "why": "Local specialty beef."
       }
      ],
-     "audio": "n2_42/q16.mp3?v=699f06d7"
+     "audio": "n2_42/q16.mp3?v=699f06d7",
+     "at": [
+      11.45,
+      40.0,
+      46.31,
+      51.58
+     ]
     }
    ],
    "spoken": false

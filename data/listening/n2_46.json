@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Confirm the three undecided first.",
-     "audio": "n2_46/q01.mp3?v=4d44d8da"
+     "audio": "n2_46/q01.mp3?v=4d44d8da",
+     "at": [
+      10.19,
+      15.57,
+      19.81,
+      27.98,
+      34.84,
+      49.52
+     ],
+     "atQ": 51.66
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "Fill in the form first.",
-     "audio": "n2_46/q02.mp3?v=80a08a0a"
+     "audio": "n2_46/q02.mp3?v=80a08a0a",
+     "at": [
+      9.64,
+      13.13,
+      19.43,
+      21.77,
+      29.61
+     ],
+     "atQ": 32.1
     },
     {
      "tags": [
@@ -109,7 +126,11 @@
      ],
      "answer": 3,
      "why": "Lunch, bottle, umbrella; snacks optional.",
-     "audio": "n2_46/q03.mp3?v=ae941bc3"
+     "audio": "n2_46/q03.mp3?v=ae941bc3",
+     "at": [
+      10.69
+     ],
+     "atQ": 30.2
     }
    ],
    "spoken": false
@@ -151,7 +172,14 @@
      ],
      "answer": 4,
      "why": "Took in a neighbour's cat.",
-     "audio": "n2_46/q04.mp3?v=53b420a1"
+     "audio": "n2_46/q04.mp3?v=53b420a1",
+     "at": [
+      15.12,
+      19.67,
+      24.74,
+      27.97
+     ],
+     "atQ": 40.63
     },
     {
      "tags": [
@@ -185,7 +213,14 @@
      ],
      "answer": 1,
      "why": "The workers' greetings.",
-     "audio": "n2_46/q05.mp3?v=48be191c"
+     "audio": "n2_46/q05.mp3?v=48be191c",
+     "at": [
+      18.24,
+      24.06,
+      27.71,
+      31.62
+     ],
+     "atQ": 47.19
     },
     {
      "tags": [
@@ -207,7 +242,11 @@
      ],
      "answer": 2,
      "why": "Spread passengers across cars.",
-     "audio": "n2_46/q06.mp3?v=87f03f0e"
+     "audio": "n2_46/q06.mp3?v=87f03f0e",
+     "at": [
+      14.92
+     ],
+     "atQ": 46.16
     }
    ],
    "spoken": false
@@ -237,7 +276,11 @@
      ],
      "answer": 3,
      "why": "Rainy days as me-time.",
-     "audio": "n2_46/q07.mp3?v=6b56baec"
+     "audio": "n2_46/q07.mp3?v=6b56baec",
+     "at": [
+      5.02
+     ],
+     "atQ": 55.39
     },
     {
      "tags": [
@@ -259,7 +302,11 @@
      ],
      "answer": 2,
      "why": "Explore questions together.",
-     "audio": "n2_46/q08.mp3?v=0e2958cc"
+     "audio": "n2_46/q08.mp3?v=0e2958cc",
+     "at": [
+      6.02
+     ],
+     "atQ": 48.31
     }
    ],
    "spoken": true
@@ -286,7 +333,10 @@
      ],
      "answer": 2,
      "why": "Asked if booked: not yet.",
-     "audio": "n2_46/q09.mp3?v=fc162486"
+     "audio": "n2_46/q09.mp3?v=fc162486",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -305,7 +355,10 @@
      ],
      "answer": 1,
      "why": "Given a gift: thank.",
-     "audio": "n2_46/q10.mp3?v=13fe729d"
+     "audio": "n2_46/q10.mp3?v=13fe729d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -324,7 +377,10 @@
      ],
      "answer": 2,
      "why": "Bag offer: decline.",
-     "audio": "n2_46/q11.mp3?v=a62fe507"
+     "audio": "n2_46/q11.mp3?v=a62fe507",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -343,7 +399,10 @@
      ],
      "answer": 3,
      "why": "Request: accept.",
-     "audio": "n2_46/q12.mp3?v=3faff5c8"
+     "audio": "n2_46/q12.mp3?v=3faff5c8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -362,7 +421,10 @@
      ],
      "answer": 1,
      "why": "Told of a call: ask details.",
-     "audio": "n2_46/q13.mp3?v=ca2b3e16"
+     "audio": "n2_46/q13.mp3?v=ca2b3e16",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -381,7 +443,10 @@
      ],
      "answer": 3,
      "why": "Asked directions: give them.",
-     "audio": "n2_46/q14.mp3?v=17b7040b"
+     "audio": "n2_46/q14.mp3?v=17b7040b",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -431,7 +496,16 @@
      ],
      "answer": 1,
      "why": "New, low-cost, meet many books.",
-     "audio": "n2_46/q15.mp3?v=3bbcee60"
+     "audio": "n2_46/q15.mp3?v=3bbcee60",
+     "at": [
+      6.87,
+      23.38,
+      30.16,
+      39.22,
+      48.94,
+      51.22
+     ],
+     "atQ": 58.97
     }
    ],
    "spoken": true
@@ -488,7 +562,13 @@
        "why": "Sofa bed for guests."
       }
      ],
-     "audio": "n2_46/q16.mp3?v=05f3eef5"
+     "audio": "n2_46/q16.mp3?v=05f3eef5",
+     "at": [
+      9.87,
+      34.23,
+      37.97,
+      50.94
+     ]
     }
    ],
    "spoken": false

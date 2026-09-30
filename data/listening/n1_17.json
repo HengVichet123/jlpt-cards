@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "Ask the support department to summarise their service first.",
-     "audio": "n1_17/q01.mp3?v=d48c51b4"
+     "audio": "n1_17/q01.mp3?v=d48c51b4",
+     "at": [
+      9.8,
+      14.57,
+      18.13,
+      20.54,
+      26.91,
+      36.86
+     ],
+     "atQ": 42.17
     },
     {
      "tags": [
@@ -95,7 +104,17 @@
      ],
      "answer": 4,
      "why": "Different household: he needs a proxy form signed by his father first.",
-     "audio": "n1_17/q02.mp3?v=b2a666d3"
+     "audio": "n1_17/q02.mp3?v=b2a666d3",
+     "at": [
+      10.84,
+      13.64,
+      17.88,
+      22.52,
+      29.57,
+      34.9,
+      37.84
+     ],
+     "atQ": 43.42
     },
     {
      "tags": [
@@ -129,7 +148,14 @@
      ],
      "answer": 2,
      "why": "Print the poster and apply for posting permission by tomorrow.",
-     "audio": "n1_17/q03.mp3?v=687d6b4c"
+     "audio": "n1_17/q03.mp3?v=687d6b4c",
+     "at": [
+      11.66,
+      15.21,
+      18.69,
+      31.35
+     ],
+     "atQ": 36.12
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "Rising sea temperatures mean fish disappear.",
-     "audio": "n1_17/q04.mp3?v=470dbaa9"
+     "audio": "n1_17/q04.mp3?v=470dbaa9",
+     "at": [
+      15.15,
+      17.95,
+      23.23,
+      26.37
+     ],
+     "atQ": 37.18
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 4,
      "why": "Leave in one-hour units for short errands.",
-     "audio": "n1_17/q05.mp3?v=f098317f"
+     "audio": "n1_17/q05.mp3?v=f098317f",
+     "at": [
+      17.43,
+      21.86,
+      29.5,
+      31.01
+     ],
+     "atQ": 42.73
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 1,
      "why": "He wants to pass his skills to younger staff.",
-     "audio": "n1_17/q06.mp3?v=692b28fc"
+     "audio": "n1_17/q06.mp3?v=692b28fc",
+     "at": [
+      15.81,
+      21.0,
+      24.61,
+      27.42
+     ],
+     "atQ": 37.39
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 2,
      "why": "Encounters with locals make visitors want to return.",
-     "audio": "n1_17/q07.mp3?v=9dd886b2"
+     "audio": "n1_17/q07.mp3?v=9dd886b2",
+     "at": [
+      6.42
+     ],
+     "atQ": 48.19
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 3,
      "why": "Morning light sets the body clock for good sleep at night.",
-     "audio": "n1_17/q08.mp3?v=99eba69d"
+     "audio": "n1_17/q08.mp3?v=99eba69d",
+     "at": [
+      5.61
+     ],
+     "atQ": 41.66
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 2,
      "why": "決めかねる = can't decide alone; accept and wait.",
-     "audio": "n1_17/q09.mp3?v=37da7103"
+     "audio": "n1_17/q09.mp3?v=37da7103",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 2,
      "why": "You didn't have to come: I wanted to see you.",
-     "audio": "n1_17/q10.mp3?v=e2d9389c"
+     "audio": "n1_17/q10.mp3?v=e2d9389c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "Can you do something about the deadline? We'll try to adjust.",
-     "audio": "n1_17/q11.mp3?v=146fa018"
+     "audio": "n1_17/q11.mp3?v=146fa018",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 3,
      "why": "You were worried: apologise and explain.",
-     "audio": "n1_17/q12.mp3?v=35909af8"
+     "audio": "n1_17/q12.mp3?v=35909af8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 3,
      "why": "Comforted after a mistake: thank them.",
-     "audio": "n1_17/q13.mp3?v=4912628d"
+     "audio": "n1_17/q13.mp3?v=4912628d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 1,
      "why": "Full; write your name: ask how long.",
-     "audio": "n1_17/q14.mp3?v=b2a0035a"
+     "audio": "n1_17/q14.mp3?v=b2a0035a",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +532,15 @@
      ],
      "answer": 1,
      "why": "Germany takes too long to reach, Singapore has few contacts; Vietnam has their factory.",
-     "audio": "n1_17/q15.mp3?v=9fe494af"
+     "audio": "n1_17/q15.mp3?v=9fe494af",
+     "at": [
+      7.21,
+      12.01,
+      30.26,
+      42.05,
+      50.79
+     ],
+     "atQ": 56.97
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "Bad handwriting and wants calm focus: calligraphy."
       }
      ],
-     "audio": "n1_17/q16.mp3?v=9c691ba8"
+     "audio": "n1_17/q16.mp3?v=9c691ba8",
+     "at": [
+      7.26,
+      25.15,
+      30.94
+     ]
     }
    ],
    "spoken": false

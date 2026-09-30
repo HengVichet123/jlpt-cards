@@ -54,7 +54,17 @@
       "家庭・子ども"
      ],
      "why": "Bath first, before father comes home; kanji after.",
-     "audio": "n2_03/q01.mp3?v=e94f9532"
+     "audio": "n2_03/q01.mp3?v=e94f9532",
+     "at": [
+      8.56,
+      12.42,
+      16.27,
+      23.49,
+      26.75,
+      34.26,
+      36.13
+     ],
+     "atQ": 40.59
     },
     {
      "intro": "病院の受付で男の人と受付の人が話しています。男の人はこのあとまず何をしますか。",
@@ -100,7 +110,17 @@
       "病院・受付"
      ],
      "why": "Fill in the questionnaire first; no toilet before the urine test.",
-     "audio": "n2_03/q02.mp3?v=b7b4212b"
+     "audio": "n2_03/q02.mp3?v=b7b4212b",
+     "at": [
+      10.81,
+      14.69,
+      17.48,
+      19.28,
+      30.16,
+      33.56,
+      41.61
+     ],
+     "atQ": 45.51
     },
     {
      "intro": "電話で店の人と女の人が話しています。女の人はこのあと何をしなければなりませんか。",
@@ -143,7 +163,16 @@
       "電話・クレーム"
      ],
      "why": "Bring the cleaner and receipt to the shop; the box is not needed.",
-     "audio": "n2_03/q03.mp3?v=d1f667db"
+     "audio": "n2_03/q03.mp3?v=d1f667db",
+     "at": [
+      10.17,
+      14.35,
+      21.21,
+      26.73,
+      29.06,
+      39.28
+     ],
+     "atQ": 42.0
     }
    ],
    "spoken": false
@@ -191,7 +220,15 @@
       "友人・コンテスト"
      ],
      "why": "He didn't win, but a famous chef praised his soup.",
-     "audio": "n2_03/q04.mp3?v=489c0961"
+     "audio": "n2_03/q04.mp3?v=489c0961",
+     "at": [
+      14.0,
+      18.56,
+      25.14,
+      27.4,
+      38.99
+     ],
+     "atQ": 42.41
     },
     {
      "intro": "大学で女の学生と男の学生が話しています。女の学生はどうして留学をやめましたか。",
@@ -231,7 +268,15 @@
       "大学・留学"
      ],
      "why": "Money and English were fine; her grandmother is in hospital.",
-     "audio": "n2_03/q05.mp3?v=946a3a5c"
+     "audio": "n2_03/q05.mp3?v=946a3a5c",
+     "at": [
+      15.93,
+      21.26,
+      24.45,
+      27.43,
+      43.31
+     ],
+     "atQ": 45.84
     },
     {
      "intro": "会社で男の人と女の人が新しいオフィスについて話しています。男の人は新しいオフィスの何が不満だと言っていますか。",
@@ -269,7 +314,15 @@
       "会社・オフィス"
      ],
      "why": "Only two meeting rooms, so it's hard to book meetings.",
-     "audio": "n2_03/q06.mp3?v=a618fbe3"
+     "audio": "n2_03/q06.mp3?v=a618fbe3",
+     "at": [
+      17.9,
+      21.96,
+      28.29,
+      30.49,
+      39.92
+     ],
+     "atQ": 43.19
     }
    ],
    "spoken": false
@@ -299,7 +352,11 @@
       "テレビ・天気予報"
      ],
      "why": "Preventing heatstroke indoors: drink water, use the AC.",
-     "audio": "n2_03/q07.mp3?v=c900095e"
+     "audio": "n2_03/q07.mp3?v=c900095e",
+     "at": [
+      4.98
+     ],
+     "atQ": 51.84
     },
     {
      "intro": "市民講座で男の人が話しています。",
@@ -321,7 +378,11 @@
       "市民講座・家計簿"
      ],
      "why": "Keep going roughly rather than being exact.",
-     "audio": "n2_03/q08.mp3?v=1ef5d72a"
+     "audio": "n2_03/q08.mp3?v=1ef5d72a",
+     "at": [
+      5.16
+     ],
+     "atQ": 51.05
     }
    ],
    "spoken": true
@@ -348,7 +409,10 @@
       "友人・手作り"
      ],
      "why": "Offered cake: thank them and eat.",
-     "audio": "n2_03/q09.mp3?v=f1a40c94"
+     "audio": "n2_03/q09.mp3?v=f1a40c94",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -367,7 +431,10 @@
       "上司・日程調整"
      ],
      "why": "Asked to push the meeting back: check with the other side.",
-     "audio": "n2_03/q10.mp3?v=7c429bc7"
+     "audio": "n2_03/q10.mp3?v=7c429bc7",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -387,7 +454,10 @@
       "注意される"
      ],
      "why": "Told this is non-smoking: apologise and put it out.",
-     "audio": "n2_03/q11.mp3?v=4a5ec7f9"
+     "audio": "n2_03/q11.mp3?v=4a5ec7f9",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -407,7 +477,10 @@
       "お祝い"
      ],
      "why": "Passed the exam: congratulate.",
-     "audio": "n2_03/q12.mp3?v=3c528999"
+     "audio": "n2_03/q12.mp3?v=3c528999",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -426,7 +499,10 @@
       "道・確認"
      ],
      "why": "Not sure of the way: suggest checking the map.",
-     "audio": "n2_03/q13.mp3?v=2e5113c6"
+     "audio": "n2_03/q13.mp3?v=2e5113c6",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true

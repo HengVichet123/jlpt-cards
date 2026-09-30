@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "Fix the graph first, then copy.",
-     "audio": "n2_41/q01.mp3?v=7e0e45bb"
+     "audio": "n2_41/q01.mp3?v=7e0e45bb",
+     "at": [
+      10.21,
+      13.22,
+      17.17,
+      23.12,
+      25.61,
+      34.08
+     ],
+     "atQ": 36.56
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 4,
      "why": "Confirm with name and birthday here.",
-     "audio": "n2_41/q02.mp3?v=6a4312dd"
+     "audio": "n2_41/q02.mp3?v=6a4312dd",
+     "at": [
+      10.68,
+      14.68,
+      20.61,
+      26.28,
+      44.76
+     ],
+     "atQ": 49.44
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "System upload; student number in the filename.",
-     "audio": "n2_41/q03.mp3?v=fea5c6de"
+     "audio": "n2_41/q03.mp3?v=fea5c6de",
+     "at": [
+      9.88,
+      15.39,
+      20.77,
+      24.23,
+      30.6
+     ],
+     "atQ": 33.09
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "Pets not allowed now.",
-     "audio": "n2_41/q04.mp3?v=a0fa7c3f"
+     "audio": "n2_41/q04.mp3?v=a0fa7c3f",
+     "at": [
+      14.55,
+      20.04,
+      22.61,
+      24.66
+     ],
+     "atQ": 33.05
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "軽さ.",
-     "audio": "n2_41/q05.mp3?v=723d4ee3"
+     "audio": "n2_41/q05.mp3?v=723d4ee3",
+     "at": [
+      19.19,
+      23.88,
+      29.25,
+      32.79
+     ],
+     "atQ": 41.37
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 2,
      "why": "Baby took away her time.",
-     "audio": "n2_41/q06.mp3?v=8bddfe28"
+     "audio": "n2_41/q06.mp3?v=8bddfe28",
+     "at": [
+      15.32
+     ],
+     "atQ": 45.63
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 4,
      "why": "Repair keeps memories.",
-     "audio": "n2_41/q07.mp3?v=c57d9061"
+     "audio": "n2_41/q07.mp3?v=c57d9061",
+     "at": [
+      5.63
+     ],
+     "atQ": 44.82
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "Don't fear mistakes.",
-     "audio": "n2_41/q08.mp3?v=e737fbed"
+     "audio": "n2_41/q08.mp3?v=e737fbed",
+     "at": [
+      5.12
+     ],
+     "atQ": 50.78
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 2,
      "why": "Call transferred: thank.",
-     "audio": "n2_41/q09.mp3?v=c1aa04ba"
+     "audio": "n2_41/q09.mp3?v=c1aa04ba",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Shared opinion: agree.",
-     "audio": "n2_41/q10.mp3?v=9ff9f42e"
+     "audio": "n2_41/q10.mp3?v=9ff9f42e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 2,
      "why": "Out of stock: ask when.",
-     "audio": "n2_41/q11.mp3?v=3a193c9f"
+     "audio": "n2_41/q11.mp3?v=3a193c9f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Asked to stay: politely decline.",
-     "audio": "n2_41/q12.mp3?v=146113a9"
+     "audio": "n2_41/q12.mp3?v=146113a9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 3,
      "why": "Advised to take an umbrella: accept.",
-     "audio": "n2_41/q13.mp3?v=b8437247"
+     "audio": "n2_41/q13.mp3?v=b8437247",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 1,
      "why": "Warned of a misunderstanding: agree to rewrite.",
-     "audio": "n2_41/q14.mp3?v=bc48d885"
+     "audio": "n2_41/q14.mp3?v=bc48d885",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 2,
      "why": "Private room, on budget, walkable.",
-     "audio": "n2_41/q15.mp3?v=063f56e6"
+     "audio": "n2_41/q15.mp3?v=063f56e6",
+     "at": [
+      7.33,
+      26.29,
+      37.63,
+      43.68,
+      49.63,
+      51.96
+     ],
+     "atQ": 58.75
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Photography for the new camera."
       }
      ],
-     "audio": "n2_41/q16.mp3?v=3b62616b"
+     "audio": "n2_41/q16.mp3?v=3b62616b",
+     "at": [
+      10.81,
+      33.07,
+      45.69,
+      50.62
+     ]
     }
    ],
    "spoken": false

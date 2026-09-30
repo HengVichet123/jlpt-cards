@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "First consult the finance head; renegotiate only if refused.",
-     "audio": "n1_29/q01.mp3?v=1564b095"
+     "audio": "n1_29/q01.mp3?v=1564b095",
+     "at": [
+      12.37,
+      16.97,
+      33.82,
+      36.82,
+      49.66,
+      54.53,
+      72.51
+     ],
+     "atQ": 75.76
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 2,
      "why": "Transfer-in first; wait to be called.",
-     "audio": "n1_29/q02.mp3?v=aac12b8c"
+     "audio": "n1_29/q02.mp3?v=aac12b8c",
+     "at": [
+      10.44,
+      14.28,
+      18.98,
+      20.69,
+      29.46,
+      33.86
+     ],
+     "atQ": 50.92
     },
     {
      "tags": [
@@ -133,7 +152,15 @@
      ],
      "answer": 2,
      "why": "Fix the reference format before sending to the editing service.",
-     "audio": "n1_29/q03.mp3?v=b76eb143"
+     "audio": "n1_29/q03.mp3?v=b76eb143",
+     "at": [
+      11.66,
+      16.08,
+      22.35,
+      35.87,
+      39.08
+     ],
+     "atQ": 42.69
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 1,
      "why": "The courage to turn back.",
-     "audio": "n1_29/q04.mp3?v=ee67026e"
+     "audio": "n1_29/q04.mp3?v=ee67026e",
+     "at": [
+      16.53,
+      22.92,
+      28.26,
+      30.92
+     ],
+     "atQ": 48.18
     },
     {
      "tags": [
@@ -209,7 +243,14 @@
      ],
      "answer": 3,
      "why": "The purpose isn't clear.",
-     "audio": "n1_29/q05.mp3?v=c086f67a"
+     "audio": "n1_29/q05.mp3?v=c086f67a",
+     "at": [
+      17.34,
+      21.95,
+      26.99,
+      29.61
+     ],
+     "atQ": 46.76
     },
     {
      "tags": [
@@ -231,7 +272,11 @@
      ],
      "answer": 4,
      "why": "Alternative transport so people can give up licences.",
-     "audio": "n1_29/q06.mp3?v=31c9def3"
+     "audio": "n1_29/q06.mp3?v=31c9def3",
+     "at": [
+      18.64
+     ],
+     "atQ": 54.57
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 1,
      "why": "Loose ties bring information from other worlds.",
-     "audio": "n1_29/q07.mp3?v=263d5580"
+     "audio": "n1_29/q07.mp3?v=263d5580",
+     "at": [
+      5.51
+     ],
+     "atQ": 58.37
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 4,
      "why": "Repair passes family memories on.",
-     "audio": "n1_29/q08.mp3?v=75961575"
+     "audio": "n1_29/q08.mp3?v=75961575",
+     "at": [
+      5.78
+     ],
+     "atQ": 53.42
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 3,
      "why": "He offers to back her up: accept gratefully.",
-     "audio": "n1_29/q09.mp3?v=a5d66d7a"
+     "audio": "n1_29/q09.mp3?v=a5d66d7a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 2,
      "why": "Asked to borrow: say sure, no rush.",
-     "audio": "n1_29/q10.mp3?v=86f4dfab"
+     "audio": "n1_29/q10.mp3?v=86f4dfab",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "勉強する = give a discount.",
-     "audio": "n1_29/q11.mp3?v=38ce5692"
+     "audio": "n1_29/q11.mp3?v=38ce5692",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "An offer of help: thank her.",
-     "audio": "n1_29/q12.mp3?v=0062d2a5"
+     "audio": "n1_29/q12.mp3?v=0062d2a5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Worried about her back: reassure.",
-     "audio": "n1_29/q13.mp3?v=d39b81e8"
+     "audio": "n1_29/q13.mp3?v=d39b81e8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 1,
      "why": "A criticism: acknowledge and improve.",
-     "audio": "n1_29/q14.mp3?v=bca8718b"
+     "audio": "n1_29/q14.mp3?v=bca8718b",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +526,16 @@
      ],
      "answer": 3,
      "why": "Food stall needs two certified people; photos drew nobody.",
-     "audio": "n1_29/q15.mp3?v=bd2ac5d6"
+     "audio": "n1_29/q15.mp3?v=bd2ac5d6",
+     "at": [
+      8.25,
+      16.38,
+      37.2,
+      45.78,
+      57.42,
+      59.74
+     ],
+     "atQ": 66.58
     }
    ],
    "spoken": true
@@ -512,7 +592,13 @@
        "why": "Chinese exam prep."
       }
      ],
-     "audio": "n1_29/q16.mp3?v=1f2b1a5c"
+     "audio": "n1_29/q16.mp3?v=1f2b1a5c",
+     "at": [
+      9.27,
+      30.68,
+      37.04,
+      43.1
+     ]
     }
    ],
    "spoken": false

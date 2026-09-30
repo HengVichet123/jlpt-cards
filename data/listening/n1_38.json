@@ -45,7 +45,15 @@
      ],
      "answer": 4,
      "why": "A formal apology letter today; report later.",
-     "audio": "n1_38/q01.mp3?v=e954ccb6"
+     "audio": "n1_38/q01.mp3?v=e954ccb6",
+     "at": [
+      9.78,
+      13.46,
+      20.36,
+      31.46,
+      35.16
+     ],
+     "atQ": 41.66
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 1,
      "why": "Only the income certificate is missing.",
-     "audio": "n1_38/q02.mp3?v=c36f302b"
+     "audio": "n1_38/q02.mp3?v=c36f302b",
+     "at": [
+      11.88,
+      16.13,
+      25.42,
+      30.08,
+      39.38
+     ],
+     "atQ": 42.13
     },
     {
      "tags": [
@@ -117,7 +133,14 @@
      ],
      "answer": 3,
      "why": "Check allergies via the circular.",
-     "audio": "n1_38/q03.mp3?v=76b9990f"
+     "audio": "n1_38/q03.mp3?v=76b9990f",
+     "at": [
+      10.57,
+      15.53,
+      19.79,
+      30.0
+     ],
+     "atQ": 34.41
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 2,
      "why": "Plan for decades ahead.",
-     "audio": "n1_38/q04.mp3?v=79152a52"
+     "audio": "n1_38/q04.mp3?v=79152a52",
+     "at": [
+      17.25,
+      21.88,
+      26.61,
+      28.56
+     ],
+     "atQ": 46.02
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 2,
      "why": "Installing new machines.",
-     "audio": "n1_38/q05.mp3?v=636ae688"
+     "audio": "n1_38/q05.mp3?v=636ae688",
+     "at": [
+      16.41,
+      20.49,
+      24.32,
+      26.58
+     ],
+     "atQ": 41.57
     },
     {
      "tags": [
@@ -215,7 +252,11 @@
      ],
      "answer": 3,
      "why": "Enough sleep.",
-     "audio": "n1_38/q06.mp3?v=842ba74f"
+     "audio": "n1_38/q06.mp3?v=842ba74f",
+     "at": [
+      17.77
+     ],
+     "atQ": 41.68
     }
    ],
    "spoken": false
@@ -245,7 +286,11 @@
      ],
      "answer": 1,
      "why": "The carer's attention, not the music.",
-     "audio": "n1_38/q07.mp3?v=d24d32c5"
+     "audio": "n1_38/q07.mp3?v=d24d32c5",
+     "at": [
+      5.77
+     ],
+     "atQ": 52.45
     },
     {
      "tags": [
@@ -267,7 +312,11 @@
      ],
      "answer": 4,
      "why": "The library as a community hub.",
-     "audio": "n1_38/q08.mp3?v=ea070f4f"
+     "audio": "n1_38/q08.mp3?v=ea070f4f",
+     "at": [
+      5.89
+     ],
+     "atQ": 49.22
     }
    ],
    "spoken": true
@@ -294,7 +343,10 @@
      ],
      "answer": 2,
      "why": "Asked to read before tomorrow: agree.",
-     "audio": "n1_38/q09.mp3?v=4af2ff65"
+     "audio": "n1_38/q09.mp3?v=4af2ff65",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -313,7 +365,10 @@
      ],
      "answer": 1,
      "why": "Noticed a haircut: explain.",
-     "audio": "n1_38/q10.mp3?v=09174383"
+     "audio": "n1_38/q10.mp3?v=09174383",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -332,7 +387,10 @@
      ],
      "answer": 3,
      "why": "Asked to reconsider the quote: promise to consult.",
-     "audio": "n1_38/q11.mp3?v=89841257"
+     "audio": "n1_38/q11.mp3?v=89841257",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -351,7 +409,10 @@
      ],
      "answer": 3,
      "why": "Encouraged: thank.",
-     "audio": "n1_38/q12.mp3?v=efe3d1f4"
+     "audio": "n1_38/q12.mp3?v=efe3d1f4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -370,7 +431,10 @@
      ],
      "answer": 2,
      "why": "Hope for sunshine: agree.",
-     "audio": "n1_38/q13.mp3?v=d827d8b4"
+     "audio": "n1_38/q13.mp3?v=d827d8b4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -389,7 +453,10 @@
      ],
      "answer": 1,
      "why": "Thanked: thank back.",
-     "audio": "n1_38/q14.mp3?v=7f5dd813"
+     "audio": "n1_38/q14.mp3?v=7f5dd813",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -439,7 +506,16 @@
      ],
      "answer": 1,
      "why": "Executives know the company; no cost.",
-     "audio": "n1_38/q15.mp3?v=a1c2ff26"
+     "audio": "n1_38/q15.mp3?v=a1c2ff26",
+     "at": [
+      7.43,
+      27.41,
+      34.25,
+      40.79,
+      49.78,
+      58.36
+     ],
+     "atQ": 65.56
     }
    ],
    "spoken": true
@@ -496,7 +572,13 @@
        "why": "Wildlife in Africa."
       }
      ],
-     "audio": "n1_38/q16.mp3?v=59d9db50"
+     "audio": "n1_38/q16.mp3?v=59d9db50",
+     "at": [
+      10.41,
+      29.53,
+      35.71,
+      40.05
+     ]
     }
    ],
    "spoken": false

@@ -53,7 +53,17 @@
      ],
      "answer": 2,
      "why": "Printing already started; make a correction sticker.",
-     "audio": "n1_39/q01.mp3?v=c6bb136a"
+     "audio": "n1_39/q01.mp3?v=c6bb136a",
+     "at": [
+      12.85,
+      18.74,
+      23.8,
+      32.97,
+      34.88,
+      42.15,
+      49.2
+     ],
+     "atQ": 54.28
     },
     {
      "tags": [
@@ -87,7 +97,14 @@
      ],
      "answer": 1,
      "why": "Fix the graph text before timing.",
-     "audio": "n1_39/q02.mp3?v=e1787908"
+     "audio": "n1_39/q02.mp3?v=e1787908",
+     "at": [
+      11.25,
+      16.5,
+      23.99,
+      37.71
+     ],
+     "atQ": 41.21
     },
     {
      "tags": [
@@ -133,7 +150,17 @@
      ],
      "answer": 3,
      "why": "Child allowance first; she's past the deadline.",
-     "audio": "n1_39/q03.mp3?v=343f33d7"
+     "audio": "n1_39/q03.mp3?v=343f33d7",
+     "at": [
+      10.44,
+      16.04,
+      26.4,
+      28.58,
+      42.36,
+      48.09,
+      56.2
+     ],
+     "atQ": 61.9
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 3,
      "why": "Stop mid-sentence while it's going well.",
-     "audio": "n1_39/q04.mp3?v=91983934"
+     "audio": "n1_39/q04.mp3?v=91983934",
+     "at": [
+      18.54,
+      23.21,
+      31.01,
+      33.04
+     ],
+     "atQ": 50.0
     },
     {
      "tags": [
@@ -209,7 +243,14 @@
      ],
      "answer": 2,
      "why": "Didn't confirm requirements up front.",
-     "audio": "n1_39/q05.mp3?v=71e72541"
+     "audio": "n1_39/q05.mp3?v=71e72541",
+     "at": [
+      16.92,
+      20.65,
+      26.89,
+      41.48
+     ],
+     "atQ": 44.22
     },
     {
      "tags": [
@@ -231,7 +272,11 @@
      ],
      "answer": 4,
      "why": "Parents modelling reading.",
-     "audio": "n1_39/q06.mp3?v=229f87d6"
+     "audio": "n1_39/q06.mp3?v=229f87d6",
+     "at": [
+      18.07
+     ],
+     "atQ": 39.12
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 1,
      "why": "Greening as environmental infrastructure.",
-     "audio": "n1_39/q07.mp3?v=1f3e8490"
+     "audio": "n1_39/q07.mp3?v=1f3e8490",
+     "at": [
+      5.92
+     ],
+     "atQ": 58.6
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 1,
      "why": "Just listen to the end.",
-     "audio": "n1_39/q08.mp3?v=eadc0248"
+     "audio": "n1_39/q08.mp3?v=eadc0248",
+     "at": [
+      5.37
+     ],
+     "atQ": 52.46
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "Rush request: negotiate a time.",
-     "audio": "n1_39/q09.mp3?v=089304f6"
+     "audio": "n1_39/q09.mp3?v=089304f6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 3,
      "why": "Visit greeting: return the courtesy.",
-     "audio": "n1_39/q10.mp3?v=d602edf1"
+     "audio": "n1_39/q10.mp3?v=d602edf1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "Hear a positive rumour: react.",
-     "audio": "n1_39/q11.mp3?v=38f0a314"
+     "audio": "n1_39/q11.mp3?v=38f0a314",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 1,
      "why": "Offered some: accept.",
-     "audio": "n1_39/q12.mp3?v=21e3f59e"
+     "audio": "n1_39/q12.mp3?v=21e3f59e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 2,
      "why": "Error pointed out: fix it.",
-     "audio": "n1_39/q13.mp3?v=f2aa0aff"
+     "audio": "n1_39/q13.mp3?v=f2aa0aff",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 3,
      "why": "Asked about late nights: explain.",
-     "audio": "n1_39/q14.mp3?v=4faeb69c"
+     "audio": "n1_39/q14.mp3?v=4faeb69c",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -463,7 +534,18 @@
      ],
      "answer": 4,
      "why": "Retirees: time, money, read print, few rivals.",
-     "audio": "n1_39/q15.mp3?v=33bd9ba9"
+     "audio": "n1_39/q15.mp3?v=33bd9ba9",
+     "at": [
+      6.79,
+      17.28,
+      23.92,
+      33.81,
+      43.02,
+      48.75,
+      61.24,
+      68.83
+     ],
+     "atQ": 77.67
     }
    ],
    "spoken": true
@@ -532,7 +614,16 @@
        "why": "Dinosaur exhibit with his son."
       }
      ],
-     "audio": "n1_39/q16.mp3?v=d1573fb0"
+     "audio": "n1_39/q16.mp3?v=d1573fb0",
+     "at": [
+      9.98,
+      39.22,
+      47.99,
+      50.16,
+      54.69,
+      60.7,
+      65.47
+     ]
     }
    ],
    "spoken": false

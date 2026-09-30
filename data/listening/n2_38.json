@@ -53,7 +53,17 @@
      ],
      "answer": 4,
      "why": "Friday the 17th at 10 a.m.",
-     "audio": "n2_38/q01.mp3?v=b34577db"
+     "audio": "n2_38/q01.mp3?v=b34577db",
+     "at": [
+      10.12,
+      12.65,
+      27.45,
+      31.28,
+      41.13,
+      45.4,
+      51.7
+     ],
+     "atQ": 58.29
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 1,
      "why": "Check accounts' new figures first.",
-     "audio": "n2_38/q02.mp3?v=8033d24f"
+     "audio": "n2_38/q02.mp3?v=8033d24f",
+     "at": [
+      10.23,
+      15.06,
+      16.84,
+      26.03,
+      30.57,
+      35.41
+     ],
+     "atQ": 37.59
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 1,
      "why": "The supermarket closes first.",
-     "audio": "n2_38/q03.mp3?v=b170da15"
+     "audio": "n2_38/q03.mp3?v=b170da15",
+     "at": [
+      9.07,
+      13.44,
+      20.94,
+      23.78,
+      30.99,
+      43.22
+     ],
+     "atQ": 48.85
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 3,
      "why": "No sense of growth.",
-     "audio": "n2_38/q04.mp3?v=2548ca0d"
+     "audio": "n2_38/q04.mp3?v=2548ca0d",
+     "at": [
+      14.16,
+      19.62,
+      23.58,
+      26.06
+     ],
+     "atQ": 45.47
     },
     {
      "tags": [
@@ -213,7 +248,14 @@
      ],
      "answer": 1,
      "why": "Osaka's preparation was delayed.",
-     "audio": "n2_38/q05.mp3?v=380565a4"
+     "audio": "n2_38/q05.mp3?v=380565a4",
+     "at": [
+      15.24,
+      20.01,
+      25.72,
+      29.35
+     ],
+     "atQ": 41.87
     },
     {
      "tags": [
@@ -235,7 +277,11 @@
      ],
      "answer": 4,
      "why": "Everyday ingredients, under 15 minutes.",
-     "audio": "n2_38/q06.mp3?v=867db2b4"
+     "audio": "n2_38/q06.mp3?v=867db2b4",
+     "at": [
+      14.33
+     ],
+     "atQ": 39.31
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 3,
      "why": "Avoid screens before bed.",
-     "audio": "n2_38/q07.mp3?v=4da3beb5"
+     "audio": "n2_38/q07.mp3?v=4da3beb5",
+     "at": [
+      4.74
+     ],
+     "atQ": 46.27
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 2,
      "why": "Empty houses as kids' study spaces.",
-     "audio": "n2_38/q08.mp3?v=e76a8ba2"
+     "audio": "n2_38/q08.mp3?v=e76a8ba2",
+     "at": [
+      5.07
+     ],
+     "atQ": 47.19
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "Asked to hand papers to the manager.",
-     "audio": "n2_38/q09.mp3?v=f10d1bec"
+     "audio": "n2_38/q09.mp3?v=f10d1bec",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "Greeting after a long time.",
-     "audio": "n2_38/q10.mp3?v=589b3df5"
+     "audio": "n2_38/q10.mp3?v=589b3df5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 1,
      "why": "Take away? No, eat in.",
-     "audio": "n2_38/q11.mp3?v=dbb963fa"
+     "audio": "n2_38/q11.mp3?v=dbb963fa",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "Late: start without her.",
-     "audio": "n2_38/q12.mp3?v=b13ba656"
+     "audio": "n2_38/q12.mp3?v=b13ba656",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 3,
      "why": "Out of milk: offer to buy.",
-     "audio": "n2_38/q13.mp3?v=4ae8a7ed"
+     "audio": "n2_38/q13.mp3?v=4ae8a7ed",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 3,
      "why": "An apology: reassure.",
-     "audio": "n2_38/q14.mp3?v=4abc9791"
+     "audio": "n2_38/q14.mp3?v=4abc9791",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 2,
      "why": "Within budget, walkable, good for non-drinkers.",
-     "audio": "n2_38/q15.mp3?v=ce2e4b40"
+     "audio": "n2_38/q15.mp3?v=ce2e4b40",
+     "at": [
+      7.75,
+      20.77,
+      24.51,
+      31.73,
+      45.09
+     ],
+     "atQ": 54.43
     }
    ],
    "spoken": true
@@ -512,7 +592,13 @@
        "why": "Living alone: the small one."
       }
      ],
-     "audio": "n2_38/q16.mp3?v=a6ad33e0"
+     "audio": "n2_38/q16.mp3?v=a6ad33e0",
+     "at": [
+      10.05,
+      29.08,
+      33.23,
+      37.84
+     ]
     }
    ],
    "spoken": false

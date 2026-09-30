@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "The card can come later; write the form now.",
-     "audio": "n2_19/q01.mp3?v=e0374f3f"
+     "audio": "n2_19/q01.mp3?v=e0374f3f",
+     "at": [
+      11.39,
+      17.32,
+      23.72,
+      26.94,
+      33.48,
+      38.49,
+      45.64
+     ],
+     "atQ": 48.44
     },
     {
      "tags": [
@@ -87,7 +97,14 @@
      ],
      "answer": 4,
      "why": "Book the room first, then email.",
-     "audio": "n2_19/q02.mp3?v=e7b4b357"
+     "audio": "n2_19/q02.mp3?v=e7b4b357",
+     "at": [
+      9.5,
+      13.5,
+      17.29,
+      22.85
+     ],
+     "atQ": 27.81
     },
     {
      "tags": [
@@ -109,7 +126,11 @@
      ],
      "answer": 3,
      "why": "Lunch and a water bottle; rain gear is lent, sweets banned.",
-     "audio": "n2_19/q03.mp3?v=8324799e"
+     "audio": "n2_19/q03.mp3?v=8324799e",
+     "at": [
+      11.01
+     ],
+     "atQ": 32.79
     }
    ],
    "spoken": false
@@ -151,7 +172,14 @@
      ],
      "answer": 4,
      "why": "The dishes all took too long to make at home.",
-     "audio": "n2_19/q04.mp3?v=59002f5f"
+     "audio": "n2_19/q04.mp3?v=59002f5f",
+     "at": [
+      15.53,
+      20.01,
+      22.75,
+      24.89
+     ],
+     "atQ": 33.98
     },
     {
      "tags": [
@@ -185,7 +213,14 @@
      ],
      "answer": 2,
      "why": "You can microwave it without removing the lid.",
-     "audio": "n2_19/q05.mp3?v=d26af5f1"
+     "audio": "n2_19/q05.mp3?v=d26af5f1",
+     "at": [
+      16.04,
+      21.81,
+      28.01,
+      30.89
+     ],
+     "atQ": 37.19
     },
     {
      "tags": [
@@ -219,7 +254,14 @@
      ],
      "answer": 3,
      "why": "One friend is allergic to egg, and the cake has egg.",
-     "audio": "n2_19/q06.mp3?v=f40baa17"
+     "audio": "n2_19/q06.mp3?v=f40baa17",
+     "at": [
+      15.63,
+      18.97,
+      24.94,
+      27.87
+     ],
+     "atQ": 38.9
     }
    ],
    "spoken": false
@@ -249,7 +291,11 @@
      ],
      "answer": 2,
      "why": "Renting renovated empty houses cheaply to young people.",
-     "audio": "n2_19/q07.mp3?v=c3064051"
+     "audio": "n2_19/q07.mp3?v=c3064051",
+     "at": [
+      5.11
+     ],
+     "atQ": 43.32
     },
     {
      "tags": [
@@ -271,7 +317,11 @@
      ],
      "answer": 1,
      "why": "Fix the starting time and let habit do the work.",
-     "audio": "n2_19/q08.mp3?v=b245850c"
+     "audio": "n2_19/q08.mp3?v=b245850c",
+     "at": [
+      5.58
+     ],
+     "atQ": 48.04
     }
    ],
    "spoken": true
@@ -298,7 +348,10 @@
      ],
      "answer": 3,
      "why": "Is this seat free? Yes, please.",
-     "audio": "n2_19/q09.mp3?v=583001d0"
+     "audio": "n2_19/q09.mp3?v=583001d0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -317,7 +370,10 @@
      ],
      "answer": 1,
      "why": "Long time no see: fine, and you?",
-     "audio": "n2_19/q10.mp3?v=32daf5c0"
+     "audio": "n2_19/q10.mp3?v=32daf5c0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -336,7 +392,10 @@
      ],
      "answer": 1,
      "why": "May I try it on? The fitting room is over there.",
-     "audio": "n2_19/q11.mp3?v=be1086f0"
+     "audio": "n2_19/q11.mp3?v=be1086f0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -355,7 +414,10 @@
      ],
      "answer": 3,
      "why": "What do you want for dinner? Curry.",
-     "audio": "n2_19/q12.mp3?v=5a5b40c8"
+     "audio": "n2_19/q12.mp3?v=5a5b40c8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -374,7 +436,10 @@
      ],
      "answer": 2,
      "why": "目を通す = look over; agree.",
-     "audio": "n2_19/q13.mp3?v=31fe6e6c"
+     "audio": "n2_19/q13.mp3?v=31fe6e6c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -393,7 +458,10 @@
      ],
      "answer": 2,
      "why": "Remark on a delay: wonder why.",
-     "audio": "n2_19/q14.mp3?v=6e39bc3e"
+     "audio": "n2_19/q14.mp3?v=6e39bc3e",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -443,7 +511,16 @@
      ],
      "answer": 1,
      "why": "The 29th and 30th are taken; the 28th suits everyone.",
-     "audio": "n2_19/q15.mp3?v=04fd64d5"
+     "audio": "n2_19/q15.mp3?v=04fd64d5",
+     "at": [
+      6.83,
+      15.71,
+      23.16,
+      29.81,
+      35.55,
+      37.87
+     ],
+     "atQ": 44.6
     }
    ],
    "spoken": true
@@ -496,7 +573,12 @@
        "why": "Distant wild birds: the zoom camera."
       }
      ],
-     "audio": "n2_19/q16.mp3?v=dc6de0ca"
+     "audio": "n2_19/q16.mp3?v=dc6de0ca",
+     "at": [
+      6.87,
+      27.86,
+      33.07
+     ]
     }
    ],
    "spoken": false

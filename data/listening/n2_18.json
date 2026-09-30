@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "Fill in the form first; payment on return.",
-     "audio": "n2_18/q01.mp3?v=2c387100"
+     "audio": "n2_18/q01.mp3?v=2c387100",
+     "at": [
+      10.95,
+      13.33,
+      22.6,
+      24.68,
+      35.52
+     ],
+     "atQ": 38.14
     },
     {
      "tags": [
@@ -79,7 +87,14 @@
      ],
      "answer": 2,
      "why": "Print, staple and carry to the training room.",
-     "audio": "n2_18/q02.mp3?v=d14a1f2e"
+     "audio": "n2_18/q02.mp3?v=d14a1f2e",
+     "at": [
+      9.83,
+      13.65,
+      16.35,
+      24.26
+     ],
+     "atQ": 26.66
     },
     {
      "tags": [
@@ -117,7 +132,15 @@
      ],
      "answer": 4,
      "why": "Tuesday morning he has a meeting; Thursday at 4.",
-     "audio": "n2_18/q03.mp3?v=314a068e"
+     "audio": "n2_18/q03.mp3?v=314a068e",
+     "at": [
+      11.83,
+      15.08,
+      20.53,
+      25.06,
+      27.55
+     ],
+     "atQ": 31.42
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 3,
      "why": "Running gives him work ideas.",
-     "audio": "n2_18/q04.mp3?v=d2437d77"
+     "audio": "n2_18/q04.mp3?v=d2437d77",
+     "at": [
+      15.42,
+      20.91,
+      24.23,
+      27.35
+     ],
+     "atQ": 34.97
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 2,
      "why": "40 minutes' wait without warning.",
-     "audio": "n2_18/q05.mp3?v=d68bea64"
+     "audio": "n2_18/q05.mp3?v=d68bea64",
+     "at": [
+      14.2,
+      20.77,
+      24.0,
+      26.27
+     ],
+     "atQ": 36.88
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 1,
      "why": "Her friends all started dance lessons.",
-     "audio": "n2_18/q06.mp3?v=25af3426"
+     "audio": "n2_18/q06.mp3?v=25af3426",
+     "at": [
+      14.23,
+      18.67,
+      20.73,
+      23.29
+     ],
+     "atQ": 32.63
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 4,
      "why": "How to stay well when the seasons change.",
-     "audio": "n2_18/q07.mp3?v=99ecbf5d"
+     "audio": "n2_18/q07.mp3?v=99ecbf5d",
+     "at": [
+      4.52
+     ],
+     "atQ": 42.49
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 1,
      "why": "Pick three points and speak in your own words.",
-     "audio": "n2_18/q08.mp3?v=ee7498a1"
+     "audio": "n2_18/q08.mp3?v=ee7498a1",
+     "at": [
+      5.32
+     ],
+     "atQ": 46.25
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "Can I use the room? Yes, free until three.",
-     "audio": "n2_18/q09.mp3?v=38e8483a"
+     "audio": "n2_18/q09.mp3?v=38e8483a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 3,
      "why": "Receiving a souvenir: thank and ask.",
-     "audio": "n2_18/q10.mp3?v=f931c93b"
+     "audio": "n2_18/q10.mp3?v=f931c93b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 3,
      "why": "Separate bills, please.",
-     "audio": "n2_18/q11.mp3?v=6a1f15a7"
+     "audio": "n2_18/q11.mp3?v=6a1f15a7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 1,
      "why": "Advice to wear a coat: agree.",
-     "audio": "n2_18/q12.mp3?v=45205816"
+     "audio": "n2_18/q12.mp3?v=45205816",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 2,
      "why": "Thanks for helping: どういたしまして.",
-     "audio": "n2_18/q13.mp3?v=d31591cc"
+     "audio": "n2_18/q13.mp3?v=d31591cc",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 1,
      "why": "Can I stop off midway? Yes, show it at the gate.",
-     "audio": "n2_18/q14.mp3?v=1fc44b7b"
+     "audio": "n2_18/q14.mp3?v=1fc44b7b",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +517,15 @@
      ],
      "answer": 1,
      "why": "The teacher doesn't drink and some work evenings: lunch at the Italian place.",
-     "audio": "n2_18/q15.mp3?v=7f70bcfd"
+     "audio": "n2_18/q15.mp3?v=7f70bcfd",
+     "at": [
+      7.52,
+      17.48,
+      25.78,
+      37.44,
+      39.74
+     ],
+     "atQ": 46.98
     }
    ],
    "spoken": true
@@ -500,7 +578,12 @@
        "why": "Handmade accessories: the handmade market."
       }
      ],
-     "audio": "n2_18/q16.mp3?v=343dcf9c"
+     "audio": "n2_18/q16.mp3?v=343dcf9c",
+     "at": [
+      5.57,
+      29.04,
+      34.84
+     ]
     }
    ],
    "spoken": false

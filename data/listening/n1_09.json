@@ -45,7 +45,15 @@
      ],
      "answer": 2,
      "why": "Pyjamas can be rented; medicine comes on the day; the pledge form must be ready beforehand.",
-     "audio": "n1_09/q01.mp3?v=bcb27300"
+     "audio": "n1_09/q01.mp3?v=bcb27300",
+     "at": [
+      12.09,
+      17.59,
+      27.44,
+      29.89,
+      43.79
+     ],
+     "atQ": 46.25
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 2,
      "why": "The room is booked; the candidates must be told the time first.",
-     "audio": "n1_09/q02.mp3?v=5282560c"
+     "audio": "n1_09/q02.mp3?v=5282560c",
+     "at": [
+      11.08,
+      16.99,
+      20.13,
+      25.77,
+      30.77,
+      46.92
+     ],
+     "atQ": 49.38
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "Applications open in November; ask both companies for employment certificates now.",
-     "audio": "n1_09/q03.mp3?v=ae306826"
+     "audio": "n1_09/q03.mp3?v=ae306826",
+     "at": [
+      9.68,
+      13.25,
+      20.2,
+      23.32,
+      32.24
+     ],
+     "atQ": 38.06
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 4,
      "why": "The wide corridors create places for chance meetings; he thought about that most.",
-     "audio": "n1_09/q04.mp3?v=0d1f0571"
+     "audio": "n1_09/q04.mp3?v=0d1f0571",
+     "at": [
+      17.37,
+      21.37,
+      28.35,
+      31.88
+     ],
+     "atQ": 45.75
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "She can join product planning from the first year.",
-     "audio": "n1_09/q05.mp3?v=ea665fce"
+     "audio": "n1_09/q05.mp3?v=ea665fce",
+     "at": [
+      14.44,
+      19.46,
+      24.16,
+      26.01
+     ],
+     "atQ": 38.4
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 1,
      "why": "Customers are fine; they can't find part-time staff.",
-     "audio": "n1_09/q06.mp3?v=f15f2d9b"
+     "audio": "n1_09/q06.mp3?v=f15f2d9b",
+     "at": [
+      17.42,
+      21.45,
+      23.95,
+      33.29
+     ],
+     "atQ": 36.7
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 4,
      "why": "Policies can trigger unexpected behaviour and backfire.",
-     "audio": "n1_09/q07.mp3?v=4150a69d"
+     "audio": "n1_09/q07.mp3?v=4150a69d",
+     "at": [
+      5.48
+     ],
+     "atQ": 49.52
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 3,
      "why": "The time a letter takes is time spent thinking of the other person.",
-     "audio": "n1_09/q08.mp3?v=8e28b97a"
+     "audio": "n1_09/q08.mp3?v=8e28b97a",
+     "at": [
+      5.03
+     ],
+     "atQ": 43.46
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "委ねる = entrust; accept the responsibility.",
-     "audio": "n1_09/q09.mp3?v=c7956e42"
+     "audio": "n1_09/q09.mp3?v=c7956e42",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 1,
      "why": "A big compliment: modestly deflect.",
-     "audio": "n1_09/q10.mp3?v=c1c85f08"
+     "audio": "n1_09/q10.mp3?v=c1c85f08",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Asked which day suits: give a day and time.",
-     "audio": "n1_09/q11.mp3?v=37fc20be"
+     "audio": "n1_09/q11.mp3?v=37fc20be",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 3,
      "why": "Not on purpose: still, be careful.",
-     "audio": "n1_09/q12.mp3?v=afe87b7a"
+     "audio": "n1_09/q12.mp3?v=afe87b7a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 2,
      "why": "ご期待に沿えるよう = to live up to your expectations.",
-     "audio": "n1_09/q13.mp3?v=68496d52"
+     "audio": "n1_09/q13.mp3?v=68496d52",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "A compliment about your child: thank them.",
-     "audio": "n1_09/q14.mp3?v=35777671"
+     "audio": "n1_09/q14.mp3?v=35777671",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 1,
      "why": "Grandpa nearly fell on the bathroom step; they start with the most dangerous place.",
-     "audio": "n1_09/q15.mp3?v=35048b0a"
+     "audio": "n1_09/q15.mp3?v=35048b0a",
+     "at": [
+      6.06,
+      10.54,
+      20.29,
+      27.34,
+      31.36,
+      39.6
+     ],
+     "atQ": 45.8
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "High blood pressure, needs to rethink meals: the low-salt cooking course."
       }
      ],
-     "audio": "n1_09/q16.mp3?v=3ec2d172"
+     "audio": "n1_09/q16.mp3?v=3ec2d172",
+     "at": [
+      6.63,
+      25.24,
+      28.98
+     ]
     }
    ],
    "spoken": false

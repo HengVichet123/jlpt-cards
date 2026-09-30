@@ -45,7 +45,15 @@
      ],
      "answer": 4,
      "why": "While the old glasses are checked, she picks a frame.",
-     "audio": "n2_26/q01.mp3?v=c013cab6"
+     "audio": "n2_26/q01.mp3?v=c013cab6",
+     "at": [
+      10.14,
+      12.98,
+      20.3,
+      23.19,
+      33.07
+     ],
+     "atQ": 35.87
     },
     {
      "tags": [
@@ -79,7 +87,14 @@
      ],
      "answer": 1,
      "why": "Flights are arranged by general affairs; submit the trip request.",
-     "audio": "n2_26/q02.mp3?v=1ef5e217"
+     "audio": "n2_26/q02.mp3?v=1ef5e217",
+     "at": [
+      9.4,
+      12.89,
+      16.31,
+      26.68
+     ],
+     "atQ": 29.17
     },
     {
      "tags": [
@@ -101,7 +116,11 @@
      ],
      "answer": 2,
      "why": "Uniform and water bottle; lunch is provided.",
-     "audio": "n2_26/q03.mp3?v=feb43847"
+     "audio": "n2_26/q03.mp3?v=feb43847",
+     "at": [
+      11.02
+     ],
+     "atQ": 26.33
     }
    ],
    "spoken": false
@@ -143,7 +162,14 @@
      ],
      "answer": 1,
      "why": "Kneading dough lets her forget troubles.",
-     "audio": "n2_26/q04.mp3?v=a3530ae1"
+     "audio": "n2_26/q04.mp3?v=a3530ae1",
+     "at": [
+      15.38,
+      19.0,
+      21.47,
+      23.16
+     ],
+     "atQ": 32.35
     },
     {
      "tags": [
@@ -177,7 +203,14 @@
      ],
      "answer": 3,
      "why": "To reduce late shifts for staff health.",
-     "audio": "n2_26/q05.mp3?v=a28894f4"
+     "audio": "n2_26/q05.mp3?v=a28894f4",
+     "at": [
+      17.01,
+      22.1,
+      24.47,
+      33.42
+     ],
+     "atQ": 37.15
     },
     {
      "tags": [
@@ -211,7 +244,14 @@
      ],
      "answer": 4,
      "why": "Struggling to lead as club captain.",
-     "audio": "n2_26/q06.mp3?v=1018ea64"
+     "audio": "n2_26/q06.mp3?v=1018ea64",
+     "at": [
+      13.8,
+      18.07,
+      20.74,
+      22.95
+     ],
+     "atQ": 32.46
     }
    ],
    "spoken": false
@@ -241,7 +281,11 @@
      ],
      "answer": 1,
      "why": "Longer library hours and the result.",
-     "audio": "n2_26/q07.mp3?v=bcf5c702"
+     "audio": "n2_26/q07.mp3?v=bcf5c702",
+     "at": [
+      5.11
+     ],
+     "atQ": 39.66
     },
     {
      "tags": [
@@ -263,7 +307,11 @@
      ],
      "answer": 3,
      "why": "Lead with the conclusion, then the reasons.",
-     "audio": "n2_26/q08.mp3?v=d23d62e7"
+     "audio": "n2_26/q08.mp3?v=d23d62e7",
+     "at": [
+      5.38
+     ],
+     "atQ": 44.46
     }
    ],
    "spoken": true
@@ -290,7 +338,10 @@
      ],
      "answer": 1,
      "why": "A message: thanks.",
-     "audio": "n2_26/q09.mp3?v=9339a932"
+     "audio": "n2_26/q09.mp3?v=9339a932",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -309,7 +360,10 @@
      ],
      "answer": 1,
      "why": "Nervous about the test: encourage.",
-     "audio": "n2_26/q10.mp3?v=afb05202"
+     "audio": "n2_26/q10.mp3?v=afb05202",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -328,7 +382,10 @@
      ],
      "answer": 2,
      "why": "When to bring drinks: with the meal.",
-     "audio": "n2_26/q11.mp3?v=41b8da77"
+     "audio": "n2_26/q11.mp3?v=41b8da77",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -347,7 +404,10 @@
      ],
      "answer": 2,
      "why": "Dinner's nearly ready: go wash hands.",
-     "audio": "n2_26/q12.mp3?v=dc25a3f4"
+     "audio": "n2_26/q12.mp3?v=dc25a3f4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -366,7 +426,10 @@
      ],
      "answer": 3,
      "why": "Have you checked it? Sorry, doing it now.",
-     "audio": "n2_26/q13.mp3?v=e6111247"
+     "audio": "n2_26/q13.mp3?v=e6111247",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -385,7 +448,10 @@
      ],
      "answer": 3,
      "why": "Give the time.",
-     "audio": "n2_26/q14.mp3?v=e28a5219"
+     "audio": "n2_26/q14.mp3?v=e28a5219",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -435,7 +501,16 @@
      ],
      "answer": 2,
      "why": "The mother takes the kitchen.",
-     "audio": "n2_26/q15.mp3?v=3794f715"
+     "audio": "n2_26/q15.mp3?v=3794f715",
+     "at": [
+      6.48,
+      12.85,
+      15.09,
+      25.61,
+      31.79,
+      39.53
+     ],
+     "atQ": 45.73
     }
    ],
    "spoken": true
@@ -488,7 +563,12 @@
        "why": "An energetic dog: the big garden."
       }
      ],
-     "audio": "n2_26/q16.mp3?v=efe08637"
+     "audio": "n2_26/q16.mp3?v=efe08637",
+     "at": [
+      6.38,
+      28.57,
+      35.04
+     ]
     }
    ],
    "spoken": false

@@ -54,7 +54,17 @@
       "会社・企画書"
      ],
      "why": "Only the survey data must be updated; design waits, budget already checked.",
-     "audio": "n1_01/q01.mp3?v=481cf444"
+     "audio": "n1_01/q01.mp3?v=481cf444",
+     "at": [
+      9.86,
+      17.0,
+      18.6,
+      26.55,
+      29.96,
+      40.58,
+      43.17
+     ],
+     "atQ": 47.1
     },
     {
      "intro": "大学で女の学生が先生と話しています。女の学生は論文を提出する前に何をしなければなりませんか。",
@@ -96,7 +106,16 @@
       "大学・卒論"
      ],
      "why": "Consent forms must all be collected before submission; the abstract can come later.",
-     "audio": "n1_01/q02.mp3?v=ecd110c9"
+     "audio": "n1_01/q02.mp3?v=ecd110c9",
+     "at": [
+      12.07,
+      19.55,
+      27.23,
+      29.11,
+      38.59,
+      41.82
+     ],
+     "atQ": 48.34
     },
     {
      "intro": "イベント会社で男の人と女の人が話しています。女の人はまず何をしますか。",
@@ -134,7 +153,15 @@
       "会社・イベント準備"
      ],
      "why": "First ask the venue whether an estimate is OK.",
-     "audio": "n1_01/q03.mp3?v=84528dce"
+     "audio": "n1_01/q03.mp3?v=84528dce",
+     "at": [
+      9.65,
+      16.87,
+      22.78,
+      32.68,
+      37.88
+     ],
+     "atQ": 40.76
     }
    ],
    "spoken": false
@@ -176,7 +203,14 @@
       "インタビュー・作家"
      ],
      "why": "Thinking about what each character fears.",
-     "audio": "n1_01/q04.mp3?v=ff48066d"
+     "audio": "n1_01/q04.mp3?v=ff48066d",
+     "at": [
+      17.21,
+      21.24,
+      28.75,
+      31.72
+     ],
+     "atQ": 44.45
     },
     {
      "intro": "男の人と女の人が話しています。女の人が転職を決めたいちばんの理由は何ですか。",
@@ -214,7 +248,15 @@
       "友人・転職"
      ],
      "why": "Being involved from the planning stage was the deciding factor.",
-     "audio": "n1_01/q05.mp3?v=efa4553d"
+     "audio": "n1_01/q05.mp3?v=efa4553d",
+     "at": [
+      15.11,
+      20.45,
+      27.79,
+      29.68,
+      40.56
+     ],
+     "atQ": 42.97
     },
     {
      "intro": "市の担当者が、新しい図書館について説明しています。新しい図書館のいちばんの特徴は何ですか。",
@@ -236,7 +278,11 @@
       "市・図書館説明"
      ],
      "why": "The first floor becomes a space where people can talk.",
-     "audio": "n1_01/q06.mp3?v=2e93bead"
+     "audio": "n1_01/q06.mp3?v=2e93bead",
+     "at": [
+      16.48
+     ],
+     "atQ": 41.11
     }
    ],
    "spoken": false
@@ -266,7 +312,11 @@
       "大学・講義"
      ],
      "why": "Too many choices make people stop deciding: effect on buying.",
-     "audio": "n1_01/q07.mp3?v=38373060"
+     "audio": "n1_01/q07.mp3?v=38373060",
+     "at": [
+      5.07
+     ],
+     "atQ": 48.65
     },
     {
      "intro": "ラジオで女の人が話しています。",
@@ -288,7 +338,11 @@
       "ラジオ・働き方"
      ],
      "why": "Resting properly is part of work.",
-     "audio": "n1_01/q08.mp3?v=4efccf7c"
+     "audio": "n1_01/q08.mp3?v=4efccf7c",
+     "at": [
+      4.73
+     ],
+     "atQ": 46.81
     }
    ],
    "spoken": true
@@ -315,7 +369,10 @@
       "職場・トラブル"
      ],
      "why": "ただじゃすまない: it will be serious, so report now.",
-     "audio": "n1_01/q09.mp3?v=300059ac"
+     "audio": "n1_01/q09.mp3?v=300059ac",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -334,7 +391,10 @@
       "取引先・訪問"
      ],
      "why": "Visitor politely says they had business nearby anyway.",
-     "audio": "n1_01/q10.mp3?v=33ae05d4"
+     "audio": "n1_01/q10.mp3?v=33ae05d4",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -353,7 +413,10 @@
       "友人・店の評判"
      ],
      "why": "並ぶほどのことはない = not worth queuing for.",
-     "audio": "n1_01/q11.mp3?v=e762f00f"
+     "audio": "n1_01/q11.mp3?v=e762f00f",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -372,7 +435,10 @@
       "職場・言葉遣い"
      ],
      "why": "口のきき方がなってない = rude way of speaking.",
-     "audio": "n1_01/q12.mp3?v=36c46793"
+     "audio": "n1_01/q12.mp3?v=36c46793",
+     "at": [
+      0.0
+     ]
     },
     {
      "lines": [
@@ -391,7 +457,10 @@
       "職場・決定"
      ],
      "why": "一存にかかっている = depends on one person's decision.",
-     "audio": "n1_01/q13.mp3?v=5155bd28"
+     "audio": "n1_01/q13.mp3?v=5155bd28",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true

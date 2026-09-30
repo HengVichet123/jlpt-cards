@@ -53,7 +53,17 @@
      ],
      "answer": 3,
      "why": "Look for it first; if missing, write an explanation.",
-     "audio": "n1_31/q01.mp3?v=3d7b10fc"
+     "audio": "n1_31/q01.mp3?v=3d7b10fc",
+     "at": [
+      11.54,
+      16.41,
+      21.69,
+      24.3,
+      35.88,
+      40.33,
+      47.73
+     ],
+     "atQ": 50.19
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 2,
      "why": "Check the NDA status first; slides after.",
-     "audio": "n1_31/q02.mp3?v=9cf27430"
+     "audio": "n1_31/q02.mp3?v=9cf27430",
+     "at": [
+      12.77,
+      18.86,
+      22.75,
+      30.96,
+      36.01,
+      48.29
+     ],
+     "atQ": 50.39
     },
     {
      "tags": [
@@ -133,7 +152,15 @@
      ],
      "answer": 4,
      "why": "Fill in both forms now; the city files the health notice, fee later.",
-     "audio": "n1_31/q03.mp3?v=da276ddf"
+     "audio": "n1_31/q03.mp3?v=da276ddf",
+     "at": [
+      10.06,
+      15.21,
+      27.09,
+      30.25,
+      43.12
+     ],
+     "atQ": 47.94
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 1,
      "why": "The silence between notes.",
-     "audio": "n1_31/q04.mp3?v=c81303b0"
+     "audio": "n1_31/q04.mp3?v=c81303b0",
+     "at": [
+      17.48,
+      21.25,
+      29.51,
+      33.2
+     ],
+     "atQ": 52.63
     },
     {
      "tags": [
@@ -213,7 +247,15 @@
      ],
      "answer": 1,
      "why": "A big rush order means round-the-clock production.",
-     "audio": "n1_31/q05.mp3?v=2dc000a4"
+     "audio": "n1_31/q05.mp3?v=2dc000a4",
+     "at": [
+      16.19,
+      21.53,
+      27.37,
+      30.6,
+      42.73
+     ],
+     "atQ": 45.24
     },
     {
      "tags": [
@@ -235,7 +277,11 @@
      ],
      "answer": 1,
      "why": "Check the fridge before shopping.",
-     "audio": "n1_31/q06.mp3?v=bd46eb21"
+     "audio": "n1_31/q06.mp3?v=bd46eb21",
+     "at": [
+      18.14
+     ],
+     "atQ": 53.96
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 2,
      "why": "Losing dialects loses local knowledge; record them now.",
-     "audio": "n1_31/q07.mp3?v=a030bfe0"
+     "audio": "n1_31/q07.mp3?v=a030bfe0",
+     "at": [
+      5.16
+     ],
+     "atQ": 51.77
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 3,
      "why": "A leader supports the team's foundations.",
-     "audio": "n1_31/q08.mp3?v=6c7faf84"
+     "audio": "n1_31/q08.mp3?v=6c7faf84",
+     "at": [
+      5.29
+     ],
+     "atQ": 57.38
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "An urgent request: accept and ask the time.",
-     "audio": "n1_31/q09.mp3?v=6ddfa309"
+     "audio": "n1_31/q09.mp3?v=6ddfa309",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "Regret: comfort her.",
-     "audio": "n1_31/q10.mp3?v=4a7cb195"
+     "audio": "n1_31/q10.mp3?v=4a7cb195",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 1,
      "why": "A pressing request: promise to consult.",
-     "audio": "n1_31/q11.mp3?v=e7fb4b03"
+     "audio": "n1_31/q11.mp3?v=e7fb4b03",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 3,
      "why": "Praised: modestly credit others.",
-     "audio": "n1_31/q12.mp3?v=14751363"
+     "audio": "n1_31/q12.mp3?v=14751363",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 3,
      "why": "Dad promises fishing: excited.",
-     "audio": "n1_31/q13.mp3?v=d8231441"
+     "audio": "n1_31/q13.mp3?v=d8231441",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 1,
      "why": "An apology from a supplier: accept graciously.",
-     "audio": "n1_31/q14.mp3?v=15aed55e"
+     "audio": "n1_31/q14.mp3?v=15aed55e",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 4,
      "why": "Toilets were the biggest problem last time; easy to manage.",
-     "audio": "n1_31/q15.mp3?v=5852d60a"
+     "audio": "n1_31/q15.mp3?v=5852d60a",
+     "at": [
+      8.05,
+      16.61,
+      31.17,
+      38.76,
+      49.59
+     ],
+     "atQ": 58.19
     }
    ],
    "spoken": true
@@ -512,7 +592,13 @@
        "why": "The artist's thoughts: letters read aloud."
       }
      ],
-     "audio": "n1_31/q16.mp3?v=859f188c"
+     "audio": "n1_31/q16.mp3?v=859f188c",
+     "at": [
+      11.62,
+      35.67,
+      42.38,
+      49.93
+     ]
     }
    ],
    "spoken": false

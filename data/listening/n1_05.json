@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "The medical statement is done at home later; right now he writes his name and address on the form.",
-     "audio": "n1_05/q01.mp3?v=95548dcc"
+     "audio": "n1_05/q01.mp3?v=95548dcc",
+     "at": [
+      12.15,
+      17.22,
+      23.26,
+      28.57,
+      36.51,
+      38.31
+     ],
+     "atQ": 55.49
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "The movers do furniture and the washing machine; the AC stays. She must empty and unplug the fridge.",
-     "audio": "n1_05/q02.mp3?v=24808fbd"
+     "audio": "n1_05/q02.mp3?v=24808fbd",
+     "at": [
+      12.28,
+      17.27,
+      21.17,
+      32.38,
+      34.65,
+      46.89
+     ],
+     "atQ": 49.88
     },
     {
      "tags": [
@@ -133,7 +151,16 @@
      ],
      "answer": 2,
      "why": "まずは、お父さんの体を横向きにしてください. No medicine; the door comes after.",
-     "audio": "n1_05/q03.mp3?v=99d60545"
+     "audio": "n1_05/q03.mp3?v=99d60545",
+     "at": [
+      10.79,
+      14.51,
+      19.75,
+      23.32,
+      34.03,
+      37.41
+     ],
+     "atQ": 45.72
     }
    ],
    "spoken": false
@@ -163,7 +190,11 @@
      ],
      "answer": 3,
      "why": "何より大切にしているのは、水 — they care for the forest to return water to nature.",
-     "audio": "n1_05/q04.mp3?v=c794d2a2"
+     "audio": "n1_05/q04.mp3?v=c794d2a2",
+     "at": [
+      15.55
+     ],
+     "atQ": 39.49
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 4,
      "why": "Shape and colour are fine; the bottom is too thick and might crack.",
-     "audio": "n1_05/q05.mp3?v=1ac2b7e5"
+     "audio": "n1_05/q05.mp3?v=1ac2b7e5",
+     "at": [
+      17.34,
+      23.03,
+      26.42,
+      28.17
+     ],
+     "atQ": 40.87
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 1,
      "why": "The alumni list had his old address, so the news reached him the day after.",
-     "audio": "n1_05/q06.mp3?v=9a5579df"
+     "audio": "n1_05/q06.mp3?v=9a5579df",
+     "at": [
+      16.48,
+      20.14,
+      24.03,
+      27.21
+     ],
+     "atQ": 40.62
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 3,
      "why": "People overvalue what they already own (the endowment effect).",
-     "audio": "n1_05/q07.mp3?v=f6c99584"
+     "audio": "n1_05/q07.mp3?v=f6c99584",
+     "at": [
+      5.49
+     ],
+     "atQ": 45.43
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 4,
      "why": "Rural life has many duties, but through them she built mutual support; know both.",
-     "audio": "n1_05/q08.mp3?v=e481dbb2"
+     "audio": "n1_05/q08.mp3?v=e481dbb2",
+     "at": [
+      6.33
+     ],
+     "atQ": 58.06
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "お墨付き = official approval.",
-     "audio": "n1_05/q09.mp3?v=a68b3947"
+     "audio": "n1_05/q09.mp3?v=a68b3947",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 3,
      "why": "それにしても = even so, too slow; apologise.",
-     "audio": "n1_05/q10.mp3?v=444c7e0f"
+     "audio": "n1_05/q10.mp3?v=444c7e0f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "A difficult request: ask for time to check internally.",
-     "audio": "n1_05/q11.mp3?v=9a912f32"
+     "audio": "n1_05/q11.mp3?v=9a912f32",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "見た目はともかく = leaving looks aside, it tastes fine.",
-     "audio": "n1_05/q12.mp3?v=e584d23f"
+     "audio": "n1_05/q12.mp3?v=e584d23f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 1,
      "why": "A colleague is transferring: 寂しくなりますね.",
-     "audio": "n1_05/q13.mp3?v=69e02cff"
+     "audio": "n1_05/q13.mp3?v=69e02cff",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 3,
      "why": "つまらないものですが is a humble phrase: thank them.",
-     "audio": "n1_05/q14.mp3?v=4663c357"
+     "audio": "n1_05/q14.mp3?v=4663c357",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +526,16 @@
      ],
      "answer": 1,
      "why": "Rain is forecast and the river is risky; the mountain site has indoor lodging.",
-     "audio": "n1_05/q15.mp3?v=0e63d6c5"
+     "audio": "n1_05/q15.mp3?v=0e63d6c5",
+     "at": [
+      6.69,
+      12.46,
+      21.17,
+      30.6,
+      37.3,
+      43.68
+     ],
+     "atQ": 53.21
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "Solar panels and energy standards met: the eco-home discount type."
       }
      ],
-     "audio": "n1_05/q16.mp3?v=ee4c6180"
+     "audio": "n1_05/q16.mp3?v=ee4c6180",
+     "at": [
+      7.77,
+      38.98,
+      49.47
+     ]
     }
    ],
    "spoken": false

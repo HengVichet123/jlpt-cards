@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Finish the slides first.",
-     "audio": "n2_44/q01.mp3?v=921f2436"
+     "audio": "n2_44/q01.mp3?v=921f2436",
+     "at": [
+      10.15,
+      19.0,
+      20.86,
+      26.31,
+      37.33,
+      53.06
+     ],
+     "atQ": 57.4
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 1,
      "why": "Retake the photo downstairs.",
-     "audio": "n2_44/q02.mp3?v=23afc5c9"
+     "audio": "n2_44/q02.mp3?v=23afc5c9",
+     "at": [
+      9.76,
+      13.75,
+      22.78,
+      24.0,
+      34.65
+     ],
+     "atQ": 37.13
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 2,
      "why": "Print the booking.",
-     "audio": "n2_44/q03.mp3?v=c8b384e3"
+     "audio": "n2_44/q03.mp3?v=c8b384e3",
+     "at": [
+      9.89,
+      13.26,
+      17.45,
+      28.58,
+      30.88
+     ],
+     "atQ": 35.14
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 4,
      "why": "The park view.",
-     "audio": "n2_44/q04.mp3?v=58ac6ea1"
+     "audio": "n2_44/q04.mp3?v=58ac6ea1",
+     "at": [
+      15.54,
+      20.39,
+      25.36,
+      26.96
+     ],
+     "atQ": 36.01
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "Online ordering and delivery.",
-     "audio": "n2_44/q05.mp3?v=2b5f9884"
+     "audio": "n2_44/q05.mp3?v=2b5f9884",
+     "at": [
+      17.27,
+      21.03,
+      28.74,
+      31.41
+     ],
+     "atQ": 45.1
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 1,
      "why": "Bored in hospital.",
-     "audio": "n2_44/q06.mp3?v=0dd6f8bf"
+     "audio": "n2_44/q06.mp3?v=0dd6f8bf",
+     "at": [
+      14.19
+     ],
+     "atQ": 39.99
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 1,
      "why": "Cycling rules.",
-     "audio": "n2_44/q07.mp3?v=cb4f642b"
+     "audio": "n2_44/q07.mp3?v=cb4f642b",
+     "at": [
+      5.09
+     ],
+     "atQ": 49.11
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 4,
      "why": "Learning from failure.",
-     "audio": "n2_44/q08.mp3?v=333732aa"
+     "audio": "n2_44/q08.mp3?v=333732aa",
+     "at": [
+      5.59
+     ],
+     "atQ": 50.32
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 1,
      "why": "Machine jammed: offer to look.",
-     "audio": "n2_44/q09.mp3?v=e246ed8d"
+     "audio": "n2_44/q09.mp3?v=e246ed8d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Recognised: confirm.",
-     "audio": "n2_44/q10.mp3?v=4b06b044"
+     "audio": "n2_44/q10.mp3?v=4b06b044",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 3,
      "why": "Size request: check stock.",
-     "audio": "n2_44/q11.mp3?v=40f72568"
+     "audio": "n2_44/q11.mp3?v=40f72568",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 2,
      "why": "Postponement: acknowledge.",
-     "audio": "n2_44/q12.mp3?v=40e6011a"
+     "audio": "n2_44/q12.mp3?v=40e6011a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Asked about homework: nearly done.",
-     "audio": "n2_44/q13.mp3?v=20b9682b"
+     "audio": "n2_44/q13.mp3?v=20b9682b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 1,
      "why": "Compliment to the shop: thank.",
-     "audio": "n2_44/q14.mp3?v=182f7514"
+     "audio": "n2_44/q14.mp3?v=182f7514",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 3,
      "why": "More young families; easy setup.",
-     "audio": "n2_44/q15.mp3?v=7a6b1af2"
+     "audio": "n2_44/q15.mp3?v=7a6b1af2",
+     "at": [
+      7.23,
+      25.98,
+      37.3,
+      43.9,
+      50.05,
+      52.37
+     ],
+     "atQ": 59.06
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Intensive English."
       }
      ],
-     "audio": "n2_44/q16.mp3?v=1ee3f12e"
+     "audio": "n2_44/q16.mp3?v=1ee3f12e",
+     "at": [
+      11.3,
+      41.5,
+      49.19,
+      53.97
+     ]
     }
    ],
    "spoken": false

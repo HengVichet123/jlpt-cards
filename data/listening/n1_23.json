@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "The factory visit needs a week's notice: apply today.",
-     "audio": "n1_23/q01.mp3?v=d50d58fc"
+     "audio": "n1_23/q01.mp3?v=d50d58fc",
+     "at": [
+      12.03,
+      17.95,
+      20.81,
+      31.59,
+      34.22,
+      38.94
+     ],
+     "atQ": 42.59
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 2,
      "why": "No food after 9 pm the day before; water is fine.",
-     "audio": "n1_23/q02.mp3?v=7506c827"
+     "audio": "n1_23/q02.mp3?v=7506c827",
+     "at": [
+      11.61,
+      19.06,
+      21.27,
+      29.58,
+      33.39
+     ],
+     "atQ": 39.4
     },
     {
      "tags": [
@@ -121,7 +138,14 @@
      ],
      "answer": 3,
      "why": "Permission and lodging are done; write the interview questionnaire.",
-     "audio": "n1_23/q03.mp3?v=929d8992"
+     "audio": "n1_23/q03.mp3?v=929d8992",
+     "at": [
+      11.89,
+      15.93,
+      19.34,
+      33.15
+     ],
+     "atQ": 35.66
     }
    ],
    "spoken": false
@@ -163,7 +187,14 @@
      ],
      "answer": 3,
      "why": "Imagining the listener's face and feelings.",
-     "audio": "n1_23/q04.mp3?v=8f88c8d8"
+     "audio": "n1_23/q04.mp3?v=8f88c8d8",
+     "at": [
+      17.31,
+      22.28,
+      27.24,
+      29.52
+     ],
+     "atQ": 41.69
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 1,
      "why": "The manual is hard to understand.",
-     "audio": "n1_23/q05.mp3?v=54eada26"
+     "audio": "n1_23/q05.mp3?v=54eada26",
+     "at": [
+      18.67,
+      22.75,
+      24.85,
+      27.02
+     ],
+     "atQ": 37.93
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 1,
      "why": "To send handmade letters to distant grandchildren.",
-     "audio": "n1_23/q06.mp3?v=138f1bca"
+     "audio": "n1_23/q06.mp3?v=138f1bca",
+     "at": [
+      14.06,
+      18.81,
+      20.89,
+      22.73
+     ],
+     "atQ": 33.52
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 4,
      "why": "Confirmation bias and seeking opposing views.",
-     "audio": "n1_23/q07.mp3?v=f9108e86"
+     "audio": "n1_23/q07.mp3?v=f9108e86",
+     "at": [
+      5.49
+     ],
+     "atQ": 45.73
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 1,
      "why": "Open-ended play builds imagination and creativity.",
-     "audio": "n1_23/q08.mp3?v=6a0cd833"
+     "audio": "n1_23/q08.mp3?v=6a0cd833",
+     "at": [
+      5.56
+     ],
+     "atQ": 46.35
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 3,
      "why": "Look it over, no rush: I'll read it today.",
-     "audio": "n1_23/q09.mp3?v=2eb23f9d"
+     "audio": "n1_23/q09.mp3?v=2eb23f9d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 1,
      "why": "Asked for advice: sure, what's up?",
-     "audio": "n1_23/q10.mp3?v=35668ec7"
+     "audio": "n1_23/q10.mp3?v=35668ec7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 2,
      "why": "Returning a call: get to the point.",
-     "audio": "n1_23/q11.mp3?v=ec9bb152"
+     "audio": "n1_23/q11.mp3?v=ec9bb152",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "Thanks for lunch: you're welcome.",
-     "audio": "n1_23/q12.mp3?v=0aa6e601"
+     "audio": "n1_23/q12.mp3?v=0aa6e601",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Take your break first: OK.",
-     "audio": "n1_23/q13.mp3?v=0efe94e3"
+     "audio": "n1_23/q13.mp3?v=0efe94e3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 1,
      "why": "Enter the PIN.",
-     "audio": "n1_23/q14.mp3?v=7fbbb2e8"
+     "audio": "n1_23/q14.mp3?v=7fbbb2e8",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +522,15 @@
      ],
      "answer": 4,
      "why": "Walk to the shelter, with rest stops and helpers.",
-     "audio": "n1_23/q15.mp3?v=5bfb6bb1"
+     "audio": "n1_23/q15.mp3?v=5bfb6bb1",
+     "at": [
+      6.93,
+      16.46,
+      26.85,
+      34.03,
+      43.32
+     ],
+     "atQ": 51.25
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "Caregiving, shorter daily hours: short-time work."
       }
      ],
-     "audio": "n1_23/q16.mp3?v=93f05b79"
+     "audio": "n1_23/q16.mp3?v=93f05b79",
+     "at": [
+      8.31,
+      30.23,
+      36.24
+     ]
     }
    ],
    "spoken": false

@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "She'll do it herself, starting with the current registered domicile, then trace back.",
-     "audio": "n1_11/q01.mp3?v=7d6e9b83"
+     "audio": "n1_11/q01.mp3?v=7d6e9b83",
+     "at": [
+      12.03,
+      18.69,
+      25.14,
+      29.83,
+      38.94,
+      49.32
+     ],
+     "atQ": 56.15
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 4,
      "why": "No visa needed, tickets requested, the factory contact is away; the application is due today.",
-     "audio": "n1_11/q02.mp3?v=b38440dd"
+     "audio": "n1_11/q02.mp3?v=b38440dd",
+     "at": [
+      10.47,
+      13.99,
+      20.61,
+      24.14,
+      29.68,
+      34.91
+     ],
+     "atQ": 39.2
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 1,
      "why": "The vaccination copy can come later; he submits the form first.",
-     "audio": "n1_11/q03.mp3?v=08e6e074"
+     "audio": "n1_11/q03.mp3?v=08e6e074",
+     "at": [
+      10.79,
+      14.02,
+      21.09,
+      23.2,
+      31.28
+     ],
+     "atQ": 36.43
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 3,
      "why": "一番は…あの町の空気を残しておきたかった.",
-     "audio": "n1_11/q04.mp3?v=81a90563"
+     "audio": "n1_11/q04.mp3?v=81a90563",
+     "at": [
+      16.86,
+      20.93,
+      25.63,
+      28.23
+     ],
+     "atQ": 44.1
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 2,
      "why": "All meetings capped at 30 minutes.",
-     "audio": "n1_11/q05.mp3?v=740ae0a3"
+     "audio": "n1_11/q05.mp3?v=740ae0a3",
+     "at": [
+      17.18,
+      21.17,
+      27.02,
+      28.65
+     ],
+     "atQ": 37.47
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 1,
      "why": "Football practice is on the same day and he prefers football.",
-     "audio": "n1_11/q06.mp3?v=1a30e1cc"
+     "audio": "n1_11/q06.mp3?v=1a30e1cc",
+     "at": [
+      14.13,
+      18.79,
+      21.43,
+      24.08
+     ],
+     "atQ": 34.05
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 4,
      "why": "The mutual-help system 結い and how it is being revived today.",
-     "audio": "n1_11/q07.mp3?v=36971a51"
+     "audio": "n1_11/q07.mp3?v=36971a51",
+     "at": [
+      5.53
+     ],
+     "atQ": 49.74
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 2,
      "why": "You only find out by trying things in small ways.",
-     "audio": "n1_11/q08.mp3?v=ba2f0298"
+     "audio": "n1_11/q08.mp3?v=ba2f0298",
+     "at": [
+      5.03
+     ],
+     "atQ": 53.13
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 1,
      "why": "やってやれないことはない = if you try, you can do it; thank them.",
-     "audio": "n1_11/q09.mp3?v=ea58c4a5"
+     "audio": "n1_11/q09.mp3?v=ea58c4a5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 2,
      "why": "〜なら〜で: tell me early; promise to decide today.",
-     "audio": "n1_11/q10.mp3?v=b83e18f1"
+     "audio": "n1_11/q10.mp3?v=b83e18f1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 2,
      "why": "Accept the apology graciously.",
-     "audio": "n1_11/q11.mp3?v=28f13bde"
+     "audio": "n1_11/q11.mp3?v=28f13bde",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 1,
      "why": "Deflect praise of family members modestly.",
-     "audio": "n1_11/q12.mp3?v=db924f33"
+     "audio": "n1_11/q12.mp3?v=db924f33",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 3,
      "why": "Not urgent: say when you'll do it.",
-     "audio": "n1_11/q13.mp3?v=f9df9c0a"
+     "audio": "n1_11/q13.mp3?v=f9df9c0a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 3,
      "why": "Regular's order: yes, please.",
-     "audio": "n1_11/q14.mp3?v=99e3160f"
+     "audio": "n1_11/q14.mp3?v=99e3160f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -467,7 +540,17 @@
      ],
      "answer": 3,
      "why": "Hokkaido too expensive, stars unlikely in the rainy season: the old post town.",
-     "audio": "n1_11/q15.mp3?v=911d0eb5"
+     "audio": "n1_11/q15.mp3?v=911d0eb5",
+     "at": [
+      7.89,
+      14.73,
+      19.45,
+      24.96,
+      30.71,
+      40.52,
+      48.73
+     ],
+     "atQ": 55.04
     }
    ],
    "spoken": true
@@ -520,7 +603,12 @@
        "why": "Lives alone, wants a little at a time: monthly fruit."
       }
      ],
-     "audio": "n1_11/q16.mp3?v=27f441c8"
+     "audio": "n1_11/q16.mp3?v=27f441c8",
+     "at": [
+      6.74,
+      22.76,
+      29.15
+     ]
     }
    ],
    "spoken": false

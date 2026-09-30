@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Ask the client for the desired price and grounds in writing first.",
-     "audio": "n1_24/q01.mp3?v=7c5f2594"
+     "audio": "n1_24/q01.mp3?v=7c5f2594",
+     "at": [
+      12.17,
+      17.09,
+      22.59,
+      28.24,
+      38.65,
+      42.19
+     ],
+     "atQ": 47.89
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 4,
      "why": "The cash card is enough; fill in the form.",
-     "audio": "n1_24/q02.mp3?v=b97c40aa"
+     "audio": "n1_24/q02.mp3?v=b97c40aa",
+     "at": [
+      10.84,
+      15.43,
+      22.26,
+      25.64,
+      27.75,
+      30.3
+     ],
+     "atQ": 34.5
     },
     {
      "tags": [
@@ -125,7 +143,14 @@
      ],
      "answer": 3,
      "why": "Submit the grading method this week; the textbook can wait.",
-     "audio": "n1_24/q03.mp3?v=7a22d145"
+     "audio": "n1_24/q03.mp3?v=7a22d145",
+     "at": [
+      11.84,
+      15.7,
+      20.2,
+      30.52
+     ],
+     "atQ": 33.07
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 4,
      "why": "Respect for opponents, win or lose.",
-     "audio": "n1_24/q04.mp3?v=95b0f405"
+     "audio": "n1_24/q04.mp3?v=95b0f405",
+     "at": [
+      17.04,
+      21.99,
+      27.13,
+      30.24
+     ],
+     "atQ": 43.13
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Videos showing staff at work reassured applicants.",
-     "audio": "n1_24/q05.mp3?v=c2a6cdb4"
+     "audio": "n1_24/q05.mp3?v=c2a6cdb4",
+     "at": [
+      17.24,
+      21.64,
+      24.09,
+      26.85
+     ],
+     "atQ": 38.94
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 2,
      "why": "A renowned professor in her field is there.",
-     "audio": "n1_24/q06.mp3?v=cd01a3e0"
+     "audio": "n1_24/q06.mp3?v=cd01a3e0",
+     "at": [
+      14.89,
+      20.86,
+      24.23,
+      25.8
+     ],
+     "atQ": 34.51
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 3,
      "why": "Scarcity makes things seem more valuable; ads exploit it.",
-     "audio": "n1_24/q07.mp3?v=fcf0beff"
+     "audio": "n1_24/q07.mp3?v=fcf0beff",
+     "at": [
+      6.1
+     ],
+     "atQ": 44.85
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 1,
      "why": "Review before bed and sleep well.",
-     "audio": "n1_24/q08.mp3?v=76de8380"
+     "audio": "n1_24/q08.mp3?v=76de8380",
+     "at": [
+      4.51
+     ],
+     "atQ": 48.26
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 1,
      "why": "練られている = well thought out; thank them.",
-     "audio": "n1_24/q09.mp3?v=23dbe39f"
+     "audio": "n1_24/q09.mp3?v=23dbe39f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "Has work calmed down? Finally a bit.",
-     "audio": "n1_24/q10.mp3?v=47cebed3"
+     "audio": "n1_24/q10.mp3?v=47cebed3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Propose a time.",
-     "audio": "n1_24/q11.mp3?v=832da460"
+     "audio": "n1_24/q11.mp3?v=832da460",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 2,
      "why": "Don't worry about it: thank them.",
-     "audio": "n1_24/q12.mp3?v=760734d1"
+     "audio": "n1_24/q12.mp3?v=760734d1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Finish by tomorrow: I'll manage.",
-     "audio": "n1_24/q13.mp3?v=afb28a4d"
+     "audio": "n1_24/q13.mp3?v=afb28a4d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 3,
      "why": "Always sells out: ask to reserve.",
-     "audio": "n1_24/q14.mp3?v=324d71be"
+     "audio": "n1_24/q14.mp3?v=324d71be",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 1,
      "why": "Crowding is the issue; extend hours to spread lunch times.",
-     "audio": "n1_24/q15.mp3?v=f7dfd2c7"
+     "audio": "n1_24/q15.mp3?v=f7dfd2c7",
+     "at": [
+      6.55,
+      11.13,
+      24.68,
+      31.82,
+      39.21
+     ],
+     "atQ": 48.65
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "Loves seafood: Hokkaido food plan."
       }
      ],
-     "audio": "n1_24/q16.mp3?v=c96ef13e"
+     "audio": "n1_24/q16.mp3?v=c96ef13e",
+     "at": [
+      7.31,
+      32.0,
+      36.06
+     ]
     }
    ],
    "spoken": false

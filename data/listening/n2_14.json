@@ -41,7 +41,14 @@
      ],
      "answer": 4,
      "why": "Before going to the shampoo seat, put her coat and bag in the locker.",
-     "audio": "n2_14/q01.mp3?v=d121db83"
+     "audio": "n2_14/q01.mp3?v=d121db83",
+     "at": [
+      10.12,
+      12.0,
+      17.81,
+      29.13
+     ],
+     "atQ": 31.23
     },
     {
      "tags": [
@@ -75,7 +82,14 @@
      ],
      "answer": 4,
      "why": "Fix the graph numbers first; printing comes after.",
-     "audio": "n2_14/q02.mp3?v=8d38ef79"
+     "audio": "n2_14/q02.mp3?v=8d38ef79",
+     "at": [
+      9.0,
+      13.04,
+      14.71,
+      22.08
+     ],
+     "atQ": 25.75
     },
     {
      "tags": [
@@ -113,7 +127,15 @@
      ],
      "answer": 2,
      "why": "Add name, student number and a reference list; drop it in the post box by 5.",
-     "audio": "n2_14/q03.mp3?v=ac2fe6b6"
+     "audio": "n2_14/q03.mp3?v=ac2fe6b6",
+     "at": [
+      11.22,
+      14.27,
+      18.61,
+      20.29,
+      28.44
+     ],
+     "atQ": 31.02
     }
    ],
    "spoken": false
@@ -155,7 +177,14 @@
      ],
      "answer": 1,
      "why": "She wants to do for others what a neighbour did for her as a child.",
-     "audio": "n2_14/q04.mp3?v=e15e62b7"
+     "audio": "n2_14/q04.mp3?v=e15e62b7",
+     "at": [
+      15.38,
+      19.19,
+      22.46,
+      24.52
+     ],
+     "atQ": 34.81
     },
     {
      "tags": [
@@ -189,7 +218,14 @@
      ],
      "answer": 2,
      "why": "They raised part-timers' wages to attract staff.",
-     "audio": "n2_14/q05.mp3?v=6ecd2dec"
+     "audio": "n2_14/q05.mp3?v=6ecd2dec",
+     "at": [
+      15.6,
+      19.55,
+      21.94,
+      31.67
+     ],
+     "atQ": 35.4
     },
     {
      "tags": [
@@ -223,7 +259,14 @@
      ],
      "answer": 1,
      "why": "Seeing the children playing happily in the river.",
-     "audio": "n2_14/q06.mp3?v=0ceb9a19"
+     "audio": "n2_14/q06.mp3?v=0ceb9a19",
+     "at": [
+      15.32,
+      20.24,
+      25.68,
+      27.82
+     ],
+     "atQ": 38.19
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 3,
      "why": "Check the emergency bag every year so it stays usable.",
-     "audio": "n2_14/q07.mp3?v=07fc1abe"
+     "audio": "n2_14/q07.mp3?v=07fc1abe",
+     "at": [
+      5.04
+     ],
+     "atQ": 50.24
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "Know when you focus best and do important work then.",
-     "audio": "n2_14/q08.mp3?v=1e5df10d"
+     "audio": "n2_14/q08.mp3?v=1e5df10d",
+     "at": [
+      5.37
+     ],
+     "atQ": 53.17
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 3,
      "why": "Can you carry it alone? It's heavy, could you help?",
-     "audio": "n2_14/q09.mp3?v=fc5e7438"
+     "audio": "n2_14/q09.mp3?v=fc5e7438",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 1,
      "why": "Congratulated: thank them.",
-     "audio": "n2_14/q10.mp3?v=2045df0a"
+     "audio": "n2_14/q10.mp3?v=2045df0a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 3,
      "why": "Is that all? Yes, that's all.",
-     "audio": "n2_14/q11.mp3?v=ccaaf4a0"
+     "audio": "n2_14/q11.mp3?v=ccaaf4a0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Dad will be late: let's eat first.",
-     "audio": "n2_14/q12.mp3?v=e319146f"
+     "audio": "n2_14/q12.mp3?v=e319146f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Asking for an update: explain the status.",
-     "audio": "n2_14/q13.mp3?v=e794fda5"
+     "audio": "n2_14/q13.mp3?v=e794fda5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 2,
      "why": "Offered vegetables: accept with thanks.",
-     "audio": "n2_14/q14.mp3?v=366dd4e1"
+     "audio": "n2_14/q14.mp3?v=366dd4e1",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 3,
      "why": "A lost-and-found box at general affairs, disposed of after a week.",
-     "audio": "n2_14/q15.mp3?v=abfeb313"
+     "audio": "n2_14/q15.mp3?v=abfeb313",
+     "at": [
+      4.81,
+      16.64,
+      24.29,
+      36.7,
+      40.12,
+      48.06
+     ],
+     "atQ": 56.19
     }
    ],
    "spoken": true
@@ -500,7 +578,12 @@
        "why": "She wants to hold and stroke it: the rabbit."
       }
      ],
-     "audio": "n2_14/q16.mp3?v=88987154"
+     "audio": "n2_14/q16.mp3?v=88987154",
+     "at": [
+      7.36,
+      34.09,
+      38.99
+     ]
     }
    ],
    "spoken": false

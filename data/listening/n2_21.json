@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "Email her address so they can send the watch.",
-     "audio": "n2_21/q01.mp3?v=8b78b801"
+     "audio": "n2_21/q01.mp3?v=8b78b801",
+     "at": [
+      10.17,
+      14.38,
+      20.03,
+      29.43,
+      31.97,
+      41.23
+     ],
+     "atQ": 45.62
     },
     {
      "tags": [
@@ -83,7 +92,14 @@
      ],
      "answer": 1,
      "why": "The expense claim is due tomorrow; the report this week.",
-     "audio": "n2_21/q02.mp3?v=c3cbd378"
+     "audio": "n2_21/q02.mp3?v=c3cbd378",
+     "at": [
+      10.79,
+      15.04,
+      16.92,
+      23.95
+     ],
+     "atQ": 28.26
     },
     {
      "tags": [
@@ -117,7 +133,14 @@
      ],
      "answer": 4,
      "why": "Message the ten who haven't paid, today.",
-     "audio": "n2_21/q03.mp3?v=abde8707"
+     "audio": "n2_21/q03.mp3?v=abde8707",
+     "at": [
+      11.47,
+      14.76,
+      18.65,
+      26.32
+     ],
+     "atQ": 29.76
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 2,
      "why": "He wants to play at his daughter's wedding.",
-     "audio": "n2_21/q04.mp3?v=3adeefd7"
+     "audio": "n2_21/q04.mp3?v=3adeefd7",
+     "at": [
+      15.53,
+      20.71,
+      24.02,
+      25.36
+     ],
+     "atQ": 33.79
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 4,
      "why": "She misheard the phone order.",
-     "audio": "n2_21/q05.mp3?v=182bec9b"
+     "audio": "n2_21/q05.mp3?v=182bec9b",
+     "at": [
+      15.29,
+      18.97,
+      22.68,
+      24.79
+     ],
+     "atQ": 35.17
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 2,
      "why": "Stay home, cook together and eat in the garden.",
-     "audio": "n2_21/q06.mp3?v=1761627d"
+     "audio": "n2_21/q06.mp3?v=1761627d",
+     "at": [
+      13.95,
+      18.09,
+      22.12,
+      24.24
+     ],
+     "atQ": 32.87
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 1,
      "why": "Water is precious; save it in small ways.",
-     "audio": "n2_21/q07.mp3?v=da3aa406"
+     "audio": "n2_21/q07.mp3?v=da3aa406",
+     "at": [
+      5.04
+     ],
+     "atQ": 45.08
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 3,
      "why": "Early mornings give time for yourself.",
-     "audio": "n2_21/q08.mp3?v=59b9dc98"
+     "audio": "n2_21/q08.mp3?v=59b9dc98",
+     "at": [
+      5.36
+     ],
+     "atQ": 43.11
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 3,
      "why": "Asked to carry something: sure.",
-     "audio": "n2_21/q09.mp3?v=4dc76ade"
+     "audio": "n2_21/q09.mp3?v=4dc76ade",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 2,
      "why": "Summer plans: going to Hokkaido.",
-     "audio": "n2_21/q10.mp3?v=199538f2"
+     "audio": "n2_21/q10.mp3?v=199538f2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 2,
      "why": "Order confirmed: yes, please.",
-     "audio": "n2_21/q11.mp3?v=97f2f541"
+     "audio": "n2_21/q11.mp3?v=97f2f541",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "Call grandma back: OK.",
-     "audio": "n2_21/q12.mp3?v=04342ea9"
+     "audio": "n2_21/q12.mp3?v=04342ea9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "What time is the meeting? Two o'clock.",
-     "audio": "n2_21/q13.mp3?v=f422838b"
+     "audio": "n2_21/q13.mp3?v=f422838b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 1,
      "why": "Give directions.",
-     "audio": "n2_21/q14.mp3?v=a93df6ef"
+     "audio": "n2_21/q14.mp3?v=a93df6ef",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 1,
      "why": "Many don't like spicy food; the Japanese restaurant has a banquet room.",
-     "audio": "n2_21/q15.mp3?v=a1af40a3"
+     "audio": "n2_21/q15.mp3?v=a1af40a3",
+     "at": [
+      7.43,
+      10.58,
+      19.66,
+      27.11,
+      32.21,
+      40.57
+     ],
+     "atQ": 47.84
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "Likes machines, wants to build something that moves: robots."
       }
      ],
-     "audio": "n2_21/q16.mp3?v=ad36cf2a"
+     "audio": "n2_21/q16.mp3?v=ad36cf2a",
+     "at": [
+      6.28,
+      26.37,
+      34.79
+     ]
     }
    ],
    "spoken": false

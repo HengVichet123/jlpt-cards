@@ -45,7 +45,15 @@
      ],
      "answer": 1,
      "why": "Ask departments to nominate speakers first; the email comes after.",
-     "audio": "n1_20/q01.mp3?v=8f762464"
+     "audio": "n1_20/q01.mp3?v=8f762464",
+     "at": [
+      11.12,
+      14.81,
+      19.78,
+      30.76,
+      35.02
+     ],
+     "atQ": 42.2
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 2,
      "why": "She decides to fill in the form first, then take the photo.",
-     "audio": "n1_20/q02.mp3?v=8ec78ed9"
+     "audio": "n1_20/q02.mp3?v=8ec78ed9",
+     "at": [
+      10.37,
+      12.91,
+      19.69,
+      24.93,
+      36.12
+     ],
+     "atQ": 43.27
     },
     {
      "tags": [
@@ -125,7 +141,16 @@
      ],
      "answer": 2,
      "why": "Focus each slide's message; the count will fall naturally.",
-     "audio": "n1_20/q03.mp3?v=2279cfad"
+     "audio": "n1_20/q03.mp3?v=2279cfad",
+     "at": [
+      11.83,
+      15.44,
+      17.61,
+      26.01,
+      27.8,
+      39.31
+     ],
+     "atQ": 41.72
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "The local spring water is most important.",
-     "audio": "n1_20/q04.mp3?v=869c005b"
+     "audio": "n1_20/q04.mp3?v=869c005b",
+     "at": [
+      16.85,
+      20.68,
+      26.07,
+      28.83
+     ],
+     "atQ": 41.04
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "She wants to be part of launching a new business.",
-     "audio": "n1_20/q05.mp3?v=4ae22fa2"
+     "audio": "n1_20/q05.mp3?v=4ae22fa2",
+     "at": [
+      16.21,
+      19.6,
+      23.61,
+      25.29
+     ],
+     "atQ": 34.24
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 4,
      "why": "The dark road from the station at night.",
-     "audio": "n1_20/q06.mp3?v=0dc483fa"
+     "audio": "n1_20/q06.mp3?v=0dc483fa",
+     "at": [
+      16.52,
+      21.14,
+      27.12,
+      29.17
+     ],
+     "atQ": 41.45
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 1,
      "why": "Trees share nutrients via underground fungal networks.",
-     "audio": "n1_20/q07.mp3?v=c09f1f23"
+     "audio": "n1_20/q07.mp3?v=c09f1f23",
+     "at": [
+      5.52
+     ],
+     "atQ": 50.85
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 3,
      "why": "Break big goals into small daily steps.",
-     "audio": "n1_20/q08.mp3?v=f933e126"
+     "audio": "n1_20/q08.mp3?v=f933e126",
+     "at": [
+      5.06
+     ],
+     "atQ": 43.5
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 3,
      "why": "異論はない = no objection; agree.",
-     "audio": "n1_20/q09.mp3?v=a858fc6c"
+     "audio": "n1_20/q09.mp3?v=a858fc6c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "An apology: accept and share the blame.",
-     "audio": "n1_20/q10.mp3?v=a2313ad4"
+     "audio": "n1_20/q10.mp3?v=a2313ad4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 1,
      "why": "A price negotiation: ask what they have in mind.",
-     "audio": "n1_20/q11.mp3?v=10385ee5"
+     "audio": "n1_20/q11.mp3?v=10385ee5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 2,
      "why": "A lift to the station: sure, what time?",
-     "audio": "n1_20/q12.mp3?v=fb0385f2"
+     "audio": "n1_20/q12.mp3?v=fb0385f2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Praise: thank them and credit help.",
-     "audio": "n1_20/q13.mp3?v=9ca1459d"
+     "audio": "n1_20/q13.mp3?v=9ca1459d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 3,
      "why": "20% off: decide to buy.",
-     "audio": "n1_20/q14.mp3?v=2557f1ea"
+     "audio": "n1_20/q14.mp3?v=2557f1ea",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 3,
      "why": "Counter seats are hard for grandma; the riverside place has tatami rooms and sushi.",
-     "audio": "n1_20/q15.mp3?v=4f7d2477"
+     "audio": "n1_20/q15.mp3?v=4f7d2477",
+     "at": [
+      7.44,
+      12.79,
+      20.63,
+      27.38,
+      36.76
+     ],
+     "atQ": 39.09
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "Average grades but she volunteers locally."
       }
      ],
-     "audio": "n1_20/q16.mp3?v=ae88b687"
+     "audio": "n1_20/q16.mp3?v=ae88b687",
+     "at": [
+      7.46,
+      28.25,
+      34.0
+     ]
     }
    ],
    "spoken": false

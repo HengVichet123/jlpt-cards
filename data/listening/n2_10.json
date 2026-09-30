@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "Take the free replacement bus from the station front to the next station.",
-     "audio": "n2_10/q01.mp3?v=a7f14a76"
+     "audio": "n2_10/q01.mp3?v=a7f14a76",
+     "at": [
+      9.9,
+      16.21,
+      25.11,
+      28.31,
+      36.07
+     ],
+     "atQ": 40.25
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 4,
      "why": "Copies are done, desks set; check the mics and place the handouts.",
-     "audio": "n2_10/q02.mp3?v=7bdb068b"
+     "audio": "n2_10/q02.mp3?v=7bdb068b",
+     "at": [
+      9.9,
+      13.12,
+      15.65,
+      23.68,
+      25.57,
+      32.06
+     ],
+     "atQ": 34.51
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 3,
      "why": "Someone reserved it: return it and reserve it again.",
-     "audio": "n2_10/q03.mp3?v=92605254"
+     "audio": "n2_10/q03.mp3?v=92605254",
+     "at": [
+      9.92,
+      15.21,
+      28.34,
+      31.58,
+      38.0
+     ],
+     "atQ": 42.51
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 1,
      "why": "Her mother lives alone nearby.",
-     "audio": "n2_10/q04.mp3?v=eb695706"
+     "audio": "n2_10/q04.mp3?v=eb695706",
+     "at": [
+      15.98,
+      18.56,
+      23.33,
+      25.68
+     ],
+     "atQ": 33.1
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "Practice and stamina were fine; nobody called out to each other.",
-     "audio": "n2_10/q05.mp3?v=f7daf972"
+     "audio": "n2_10/q05.mp3?v=f7daf972",
+     "at": [
+      17.02,
+      21.97,
+      27.07,
+      29.78
+     ],
+     "atQ": 37.98
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 1,
      "why": "The walls are thin; she hears the neighbours.",
-     "audio": "n2_10/q06.mp3?v=1d4cf02c"
+     "audio": "n2_10/q06.mp3?v=1d4cf02c",
+     "at": [
+      14.82,
+      17.72,
+      20.17,
+      30.03
+     ],
+     "atQ": 35.91
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 2,
      "why": "Growing easy vegetables on a balcony.",
-     "audio": "n2_10/q07.mp3?v=a71b34f0"
+     "audio": "n2_10/q07.mp3?v=a71b34f0",
+     "at": [
+      4.98
+     ],
+     "atQ": 46.38
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 4,
      "why": "More important than speaking slowly is pausing before key points.",
-     "audio": "n2_10/q08.mp3?v=c231ee63"
+     "audio": "n2_10/q08.mp3?v=c231ee63",
+     "at": [
+      5.38
+     ],
+     "atQ": 48.98
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 2,
      "why": "Asking for leave: approve and ask how many days.",
-     "audio": "n2_10/q09.mp3?v=0d71ec69"
+     "audio": "n2_10/q09.mp3?v=0d71ec69",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 1,
      "why": "Someone offers to pay: thank them.",
-     "audio": "n2_10/q10.mp3?v=86837f91"
+     "audio": "n2_10/q10.mp3?v=86837f91",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 3,
      "why": "Asked for a bigger size: go and check.",
-     "audio": "n2_10/q11.mp3?v=0c440760"
+     "audio": "n2_10/q11.mp3?v=0c440760",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 2,
      "why": "A comment about overeating: accept and say you'll be careful.",
-     "audio": "n2_10/q12.mp3?v=dde5073c"
+     "audio": "n2_10/q12.mp3?v=dde5073c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "An offer of help: thank them.",
-     "audio": "n2_10/q13.mp3?v=3dcb62f0"
+     "audio": "n2_10/q13.mp3?v=3dcb62f0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 3,
      "why": "Does this train stop at Shinjuku? Answer with the train type.",
-     "audio": "n2_10/q14.mp3?v=00050098"
+     "audio": "n2_10/q14.mp3?v=00050098",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 2,
      "why": "A restaurant is expensive for ten, a home too small: the community hall room.",
-     "audio": "n2_10/q15.mp3?v=6e9dff51"
+     "audio": "n2_10/q15.mp3?v=6e9dff51",
+     "at": [
+      7.32,
+      13.42,
+      23.2,
+      31.57,
+      43.04,
+      45.36
+     ],
+     "atQ": 51.56
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "On a diet: the lowest-calorie vegetable bento."
       }
      ],
-     "audio": "n2_10/q16.mp3?v=aa095257"
+     "audio": "n2_10/q16.mp3?v=aa095257",
+     "at": [
+      7.07,
+      29.26,
+      37.01
+     ]
     }
    ],
    "spoken": false

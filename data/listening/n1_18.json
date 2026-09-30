@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "First inspect all stock from the same day; shipping and cause come after.",
-     "audio": "n1_18/q01.mp3?v=b2a48875"
+     "audio": "n1_18/q01.mp3?v=b2a48875",
+     "at": [
+      11.44,
+      15.71,
+      17.96,
+      25.81,
+      30.66,
+      37.6
+     ],
+     "atQ": 41.61
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 2,
      "why": "The manager distributes the notice; she keeps a record of the noise.",
-     "audio": "n1_18/q02.mp3?v=f1531d7e"
+     "audio": "n1_18/q02.mp3?v=f1531d7e",
+     "at": [
+      10.64,
+      14.7,
+      18.26,
+      21.0,
+      36.29
+     ],
+     "atQ": 39.69
     },
     {
      "tags": [
@@ -121,7 +138,14 @@
      ],
      "answer": 3,
      "why": "Request quotes from two or more suppliers this week.",
-     "audio": "n1_18/q03.mp3?v=cd861556"
+     "audio": "n1_18/q03.mp3?v=cd861556",
+     "at": [
+      10.02,
+      15.84,
+      19.21,
+      31.57
+     ],
+     "atQ": 34.0
     }
    ],
    "spoken": false
@@ -163,7 +187,14 @@
      ],
      "answer": 1,
      "why": "Selling everything made that day, the same day.",
-     "audio": "n1_18/q04.mp3?v=833a1c55"
+     "audio": "n1_18/q04.mp3?v=833a1c55",
+     "at": [
+      16.13,
+      19.61,
+      24.82,
+      27.48
+     ],
+     "atQ": 39.13
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 4,
      "why": "No boundary between work and private life.",
-     "audio": "n1_18/q05.mp3?v=fc459497"
+     "audio": "n1_18/q05.mp3?v=fc459497",
+     "at": [
+      17.76,
+      21.67,
+      25.75,
+      28.31
+     ],
+     "atQ": 36.48
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 1,
      "why": "A professor he has long wanted to study under.",
-     "audio": "n1_18/q06.mp3?v=2ccfdf43"
+     "audio": "n1_18/q06.mp3?v=2ccfdf43",
+     "at": [
+      14.68,
+      20.6,
+      23.21,
+      25.0
+     ],
+     "atQ": 33.55
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 4,
      "why": "True innovation comes from observing behaviour, not asking.",
-     "audio": "n1_18/q07.mp3?v=e9fac5c3"
+     "audio": "n1_18/q07.mp3?v=e9fac5c3",
+     "at": [
+      5.47
+     ],
+     "atQ": 44.9
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 2,
      "why": "Review fixed monthly costs once for lasting savings.",
-     "audio": "n1_18/q08.mp3?v=618794fc"
+     "audio": "n1_18/q08.mp3?v=618794fc",
+     "at": [
+      5.47
+     ],
+     "atQ": 55.77
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 1,
      "why": "Advice to rely on others: agree.",
-     "audio": "n1_18/q09.mp3?v=3c986ac2"
+     "audio": "n1_18/q09.mp3?v=3c986ac2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 3,
      "why": "Unsure rumour: it was open yesterday.",
-     "audio": "n1_18/q10.mp3?v=7c7a4e89"
+     "audio": "n1_18/q10.mp3?v=7c7a4e89",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "A positive response: thank them.",
-     "audio": "n1_18/q11.mp3?v=dfb39633"
+     "audio": "n1_18/q11.mp3?v=dfb39633",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 3,
      "why": "How many times must I say it? Apologise.",
-     "audio": "n1_18/q12.mp3?v=99b97542"
+     "audio": "n1_18/q12.mp3?v=99b97542",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 2,
      "why": "Approve and ask for a handover.",
-     "audio": "n1_18/q13.mp3?v=064e2eac"
+     "audio": "n1_18/q13.mp3?v=064e2eac",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 2,
      "why": "Reservation confirmed: よろしくお願いします.",
-     "audio": "n1_18/q14.mp3?v=e331f4a4"
+     "audio": "n1_18/q14.mp3?v=e331f4a4",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +522,15 @@
      ],
      "answer": 1,
      "why": "Hobby features weren't read before; department introductions chosen.",
-     "audio": "n1_18/q15.mp3?v=4b8d9174"
+     "audio": "n1_18/q15.mp3?v=4b8d9174",
+     "at": [
+      7.44,
+      17.25,
+      23.58,
+      30.31,
+      38.4
+     ],
+     "atQ": 45.8
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "Wants to paddle on water: the canoeing lake."
       }
      ],
-     "audio": "n1_18/q16.mp3?v=609d1d57"
+     "audio": "n1_18/q16.mp3?v=609d1d57",
+     "at": [
+      5.2,
+      24.48,
+      29.48
+     ]
     }
    ],
    "spoken": false

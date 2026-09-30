@@ -45,7 +45,15 @@
      ],
      "answer": 3,
      "why": "Secure the three managers' schedules first.",
-     "audio": "n1_37/q01.mp3?v=ee142711"
+     "audio": "n1_37/q01.mp3?v=ee142711",
+     "at": [
+      11.1,
+      15.11,
+      19.13,
+      28.85,
+      34.96
+     ],
+     "atQ": 42.48
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 1,
      "why": "Changed to before New Year: Dec 28.",
-     "audio": "n1_37/q02.mp3?v=13314408"
+     "audio": "n1_37/q02.mp3?v=13314408",
+     "at": [
+      11.16,
+      17.82,
+      30.46,
+      33.18,
+      43.9
+     ],
+     "atQ": 46.53
     },
     {
      "tags": [
@@ -121,7 +137,15 @@
      ],
      "answer": 2,
      "why": "Knee exercises twice daily; walks later.",
-     "audio": "n1_37/q03.mp3?v=51865881"
+     "audio": "n1_37/q03.mp3?v=51865881",
+     "at": [
+      10.87,
+      16.69,
+      18.91,
+      25.4,
+      27.34
+     ],
+     "atQ": 35.51
     }
    ],
    "spoken": false
@@ -163,7 +187,14 @@
      ],
      "answer": 4,
      "why": "The weight in the hand.",
-     "audio": "n1_37/q04.mp3?v=bae344cb"
+     "audio": "n1_37/q04.mp3?v=bae344cb",
+     "at": [
+      18.22,
+      21.47,
+      25.71,
+      27.34
+     ],
+     "atQ": 45.11
     },
     {
      "tags": [
@@ -197,7 +228,14 @@
      ],
      "answer": 2,
      "why": "Not enough fruit because of the weather.",
-     "audio": "n1_37/q05.mp3?v=5bef6fca"
+     "audio": "n1_37/q05.mp3?v=5bef6fca",
+     "at": [
+      16.67,
+      22.68,
+      25.46,
+      28.02
+     ],
+     "atQ": 40.48
     },
     {
      "tags": [
@@ -219,7 +257,11 @@
      ],
      "answer": 1,
      "why": "Cheap shop spaces let young people start businesses.",
-     "audio": "n1_37/q06.mp3?v=d6d98f79"
+     "audio": "n1_37/q06.mp3?v=d6d98f79",
+     "at": [
+      18.07
+     ],
+     "atQ": 40.81
     }
    ],
    "spoken": false
@@ -249,7 +291,11 @@
      ],
      "answer": 1,
      "why": "Sip regularly before you're thirsty.",
-     "audio": "n1_37/q07.mp3?v=5a838520"
+     "audio": "n1_37/q07.mp3?v=5a838520",
+     "at": [
+      4.67
+     ],
+     "atQ": 50.01
     },
     {
      "tags": [
@@ -271,7 +317,11 @@
      ],
      "answer": 3,
      "why": "Language changes; choosing fitting words matters.",
-     "audio": "n1_37/q08.mp3?v=a49ff226"
+     "audio": "n1_37/q08.mp3?v=a49ff226",
+     "at": [
+      5.49
+     ],
+     "atQ": 49.76
     }
    ],
    "spoken": true
@@ -298,7 +348,10 @@
      ],
      "answer": 2,
      "why": "An urgent request: accept.",
-     "audio": "n1_37/q09.mp3?v=de58e5ad"
+     "audio": "n1_37/q09.mp3?v=de58e5ad",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -317,7 +370,10 @@
      ],
      "answer": 1,
      "why": "News of a move: ask where.",
-     "audio": "n1_37/q10.mp3?v=4958cd2e"
+     "audio": "n1_37/q10.mp3?v=4958cd2e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -336,7 +392,10 @@
      ],
      "answer": 3,
      "why": "Thanks after a meeting: thank back.",
-     "audio": "n1_37/q11.mp3?v=c753d4ee"
+     "audio": "n1_37/q11.mp3?v=c753d4ee",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -355,7 +414,10 @@
      ],
      "answer": 1,
      "why": "Concern: accept.",
-     "audio": "n1_37/q12.mp3?v=b96f3bb6"
+     "audio": "n1_37/q12.mp3?v=b96f3bb6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -374,7 +436,10 @@
      ],
      "answer": 2,
      "why": "No dinner needed: acknowledge.",
-     "audio": "n1_37/q13.mp3?v=f9c2f738"
+     "audio": "n1_37/q13.mp3?v=f9c2f738",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -393,7 +458,10 @@
      ],
      "answer": 3,
      "why": "An apology for an error: ask for the fixed version.",
-     "audio": "n1_37/q14.mp3?v=3888178b"
+     "audio": "n1_37/q14.mp3?v=3888178b",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -443,7 +511,16 @@
      ],
      "answer": 4,
      "why": "Least disruption, modest rent rise.",
-     "audio": "n1_37/q15.mp3?v=1105cf64"
+     "audio": "n1_37/q15.mp3?v=1105cf64",
+     "at": [
+      6.62,
+      18.68,
+      29.42,
+      43.01,
+      55.0,
+      57.32
+     ],
+     "atQ": 63.8
     }
    ],
    "spoken": true
@@ -500,7 +577,13 @@
        "why": "Old merchant houses."
       }
      ],
-     "audio": "n1_37/q16.mp3?v=23f5611e"
+     "audio": "n1_37/q16.mp3?v=23f5611e",
+     "at": [
+      11.22,
+      32.62,
+      37.05,
+      42.7
+     ]
     }
    ],
    "spoken": false

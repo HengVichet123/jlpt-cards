@@ -45,7 +45,15 @@
      ],
      "answer": 4,
      "why": "A signature is fine without a seal; first fill in the form.",
-     "audio": "n2_08/q01.mp3?v=87813bb0"
+     "audio": "n2_08/q01.mp3?v=87813bb0",
+     "at": [
+      11.02,
+      12.96,
+      18.68,
+      22.29,
+      34.01
+     ],
+     "atQ": 36.49
     },
     {
      "tags": [
@@ -91,7 +99,17 @@
      ],
      "answer": 2,
      "why": "Leave the memo on the manager's desk; the manager will call back.",
-     "audio": "n2_08/q02.mp3?v=64e98b2c"
+     "audio": "n2_08/q02.mp3?v=64e98b2c",
+     "at": [
+      9.89,
+      12.27,
+      19.67,
+      24.73,
+      26.61,
+      29.28,
+      31.46
+     ],
+     "atQ": 38.91
     },
     {
      "tags": [
@@ -113,7 +131,11 @@
      ],
      "answer": 2,
      "why": "Write the survey and drop it in the box where trays are returned.",
-     "audio": "n2_08/q03.mp3?v=ab2d155f"
+     "audio": "n2_08/q03.mp3?v=ab2d155f",
+     "at": [
+      11.03
+     ],
+     "atQ": 34.87
     }
    ],
    "spoken": false
@@ -159,7 +181,15 @@
      ],
      "answer": 3,
      "why": "She wants to focus on English tests for studying abroad.",
-     "audio": "n2_08/q04.mp3?v=2b7218bc"
+     "audio": "n2_08/q04.mp3?v=2b7218bc",
+     "at": [
+      16.2,
+      19.04,
+      24.29,
+      26.29,
+      34.73
+     ],
+     "atQ": 38.27
     },
     {
      "tags": [
@@ -197,7 +227,15 @@
      ],
      "answer": 1,
      "why": "Her child's school meeting was set for that day.",
-     "audio": "n2_08/q05.mp3?v=8b789cab"
+     "audio": "n2_08/q05.mp3?v=8b789cab",
+     "at": [
+      15.83,
+      21.59,
+      24.43,
+      32.56,
+      36.86
+     ],
+     "atQ": 40.28
     },
     {
      "tags": [
@@ -231,7 +269,14 @@
      ],
      "answer": 4,
      "why": "It's written small at the bottom of the menu; nobody notices it.",
-     "audio": "n2_08/q06.mp3?v=5c0594e2"
+     "audio": "n2_08/q06.mp3?v=5c0594e2",
+     "at": [
+      16.05,
+      22.05,
+      28.82,
+      30.99
+     ],
+     "atQ": 40.39
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 3,
      "why": "Over 200 hours a year; he used commuting time to study and passed.",
-     "audio": "n2_08/q07.mp3?v=cae3dcaa"
+     "audio": "n2_08/q07.mp3?v=cae3dcaa",
+     "at": [
+      5.09
+     ],
+     "atQ": 52.45
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 1,
      "why": "Real contact with nature gives what books and videos can't.",
-     "audio": "n2_08/q08.mp3?v=fccd1e31"
+     "audio": "n2_08/q08.mp3?v=fccd1e31",
+     "at": [
+      5.31
+     ],
+     "atQ": 54.75
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 3,
      "why": "Asked to stay late: agree and ask until when.",
-     "audio": "n2_08/q09.mp3?v=8601f6cb"
+     "audio": "n2_08/q09.mp3?v=8601f6cb",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 1,
      "why": "A friend cancels: そっか、また今度.",
-     "audio": "n2_08/q10.mp3?v=91754645"
+     "audio": "n2_08/q10.mp3?v=91754645",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 2,
      "why": "Offered a sample: accept with thanks.",
-     "audio": "n2_08/q11.mp3?v=185ef189"
+     "audio": "n2_08/q11.mp3?v=185ef189",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "An offer to copy: accept and say how many.",
-     "audio": "n2_08/q12.mp3?v=30b4b37a"
+     "audio": "n2_08/q12.mp3?v=30b4b37a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Greeted at home: ただいま plus a reason.",
-     "audio": "n2_08/q13.mp3?v=5a905b37"
+     "audio": "n2_08/q13.mp3?v=5a905b37",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 1,
      "why": "Hand it over: はい、どうぞ.",
-     "audio": "n2_08/q14.mp3?v=dad77e12"
+     "audio": "n2_08/q14.mp3?v=dad77e12",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +526,16 @@
      ],
      "answer": 1,
      "why": "Narrow road and a new driver; rent a big car for the two camping trips.",
-     "audio": "n2_08/q15.mp3?v=7f26c762"
+     "audio": "n2_08/q15.mp3?v=7f26c762",
+     "at": [
+      6.27,
+      12.61,
+      23.34,
+      32.52,
+      41.23,
+      53.49
+     ],
+     "atQ": 62.37
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "She wants to make something to take home: washi making."
       }
      ],
-     "audio": "n2_08/q16.mp3?v=28fc3e36"
+     "audio": "n2_08/q16.mp3?v=28fc3e36",
+     "at": [
+      7.76,
+      33.36,
+      38.79
+     ]
     }
    ],
    "spoken": false

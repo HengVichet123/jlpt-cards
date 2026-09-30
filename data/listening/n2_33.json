@@ -53,7 +53,17 @@
      ],
      "answer": 2,
      "why": "Make the patient card first, then book online.",
-     "audio": "n2_33/q01.mp3?v=d1b33894"
+     "audio": "n2_33/q01.mp3?v=d1b33894",
+     "at": [
+      11.05,
+      15.9,
+      22.15,
+      25.59,
+      35.82,
+      38.83,
+      49.32
+     ],
+     "atQ": 51.86
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 1,
      "why": "Only the room changed.",
-     "audio": "n2_33/q02.mp3?v=4ce88444"
+     "audio": "n2_33/q02.mp3?v=4ce88444",
+     "at": [
+      11.32,
+      15.56,
+      18.67,
+      30.38,
+      33.55,
+      38.68
+     ],
+     "atQ": 40.81
     },
     {
      "tags": [
@@ -117,7 +136,11 @@
      ],
      "answer": 2,
      "why": "Maths worksheets are submitted online.",
-     "audio": "n2_33/q03.mp3?v=7abaa7b7"
+     "audio": "n2_33/q03.mp3?v=7abaa7b7",
+     "at": [
+      9.88
+     ],
+     "atQ": 38.56
     }
    ],
    "spoken": false
@@ -159,7 +182,14 @@
      ],
      "answer": 1,
      "why": "High blood pressure: he wants to control salt.",
-     "audio": "n2_33/q04.mp3?v=1056df77"
+     "audio": "n2_33/q04.mp3?v=1056df77",
+     "at": [
+      15.33,
+      19.4,
+      22.0,
+      24.71
+     ],
+     "atQ": 37.22
     },
     {
      "tags": [
@@ -193,7 +223,14 @@
      ],
      "answer": 4,
      "why": "Adjustable height for standing work.",
-     "audio": "n2_33/q05.mp3?v=519c2a2b"
+     "audio": "n2_33/q05.mp3?v=519c2a2b",
+     "at": [
+      17.03,
+      21.3,
+      30.44,
+      32.72
+     ],
+     "atQ": 45.55
     },
     {
      "tags": [
@@ -215,7 +252,11 @@
      ],
      "answer": 1,
      "why": "Sturdy against strong wind.",
-     "audio": "n2_33/q06.mp3?v=74eee174"
+     "audio": "n2_33/q06.mp3?v=74eee174",
+     "at": [
+      14.46
+     ],
+     "atQ": 43.39
     }
    ],
    "spoken": false
@@ -245,7 +286,11 @@
      ],
      "answer": 3,
      "why": "Leave buffer time between plans.",
-     "audio": "n2_33/q07.mp3?v=267aab43"
+     "audio": "n2_33/q07.mp3?v=267aab43",
+     "at": [
+      5.19
+     ],
+     "atQ": 48.63
     },
     {
      "tags": [
@@ -267,7 +312,11 @@
      ],
      "answer": 3,
      "why": "Farm-experience tours for city families are popular.",
-     "audio": "n2_33/q08.mp3?v=eef87b7d"
+     "audio": "n2_33/q08.mp3?v=eef87b7d",
+     "at": [
+      5.1
+     ],
+     "atQ": 51.99
     }
    ],
    "spoken": true
@@ -294,7 +343,10 @@
      ],
      "answer": 1,
      "why": "The copier is jammed again: offer to check.",
-     "audio": "n2_33/q09.mp3?v=b10f6b52"
+     "audio": "n2_33/q09.mp3?v=b10f6b52",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -313,7 +365,10 @@
      ],
      "answer": 1,
      "why": "Given a present: thank.",
-     "audio": "n2_33/q10.mp3?v=1c40aeef"
+     "audio": "n2_33/q10.mp3?v=1c40aeef",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -332,7 +387,10 @@
      ],
      "answer": 2,
      "why": "Asked for a bigger size: go and check.",
-     "audio": "n2_33/q11.mp3?v=a7d53df1"
+     "audio": "n2_33/q11.mp3?v=a7d53df1",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -351,7 +409,10 @@
      ],
      "answer": 2,
      "why": "Can't stay: explain and offer an alternative.",
-     "audio": "n2_33/q12.mp3?v=27e33d60"
+     "audio": "n2_33/q12.mp3?v=27e33d60",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -370,7 +431,10 @@
      ],
      "answer": 3,
      "why": "Checking whether to take an umbrella.",
-     "audio": "n2_33/q13.mp3?v=43e9e277"
+     "audio": "n2_33/q13.mp3?v=43e9e277",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -389,7 +453,10 @@
      ],
      "answer": 3,
      "why": "Offered souvenirs: thank.",
-     "audio": "n2_33/q14.mp3?v=7b3347a1"
+     "audio": "n2_33/q14.mp3?v=7b3347a1",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +514,18 @@
      ],
      "answer": 4,
      "why": "\"Choco\" is the neighbour's dog, \"Cookie\" too long.",
-     "audio": "n2_33/q15.mp3?v=22692acb"
+     "audio": "n2_33/q15.mp3?v=22692acb",
+     "at": [
+      6.98,
+      10.89,
+      22.27,
+      29.12,
+      33.57,
+      37.84,
+      46.45,
+      48.77
+     ],
+     "atQ": 54.97
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Send the bag ahead to the hotel: 2F counter."
       }
      ],
-     "audio": "n2_33/q16.mp3?v=3d218235"
+     "audio": "n2_33/q16.mp3?v=3d218235",
+     "at": [
+      7.06,
+      49.2,
+      55.05,
+      61.12
+     ]
     }
    ],
    "spoken": false

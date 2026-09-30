@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "The back of the form is blank; fill it in first.",
-     "audio": "n2_17/q01.mp3?v=c62b9c2b"
+     "audio": "n2_17/q01.mp3?v=c62b9c2b",
+     "at": [
+      11.61,
+      15.7,
+      17.61,
+      23.37,
+      26.36,
+      37.32
+     ],
+     "atQ": 39.92
     },
     {
      "tags": [
@@ -83,7 +92,14 @@
      ],
      "answer": 1,
      "why": "No edits; send it as is today.",
-     "audio": "n2_17/q02.mp3?v=5c7a1a1d"
+     "audio": "n2_17/q02.mp3?v=5c7a1a1d",
+     "at": [
+      9.46,
+      13.17,
+      18.31,
+      25.91
+     ],
+     "atQ": 29.65
     },
     {
      "tags": [
@@ -125,7 +141,16 @@
      ],
      "answer": 4,
      "why": "She'll ask at the counter first.",
-     "audio": "n2_17/q03.mp3?v=5d7c0611"
+     "audio": "n2_17/q03.mp3?v=5d7c0611",
+     "at": [
+      11.23,
+      14.55,
+      17.32,
+      24.45,
+      29.3,
+      34.57
+     ],
+     "atQ": 39.84
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 2,
      "why": "He's taking over his family's inn.",
-     "audio": "n2_17/q04.mp3?v=a121369d"
+     "audio": "n2_17/q04.mp3?v=a121369d",
+     "at": [
+      15.07,
+      18.85,
+      23.69,
+      25.65
+     ],
+     "atQ": 32.76
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 3,
      "why": "A nearby event was rained off and people came in.",
-     "audio": "n2_17/q05.mp3?v=055a538f"
+     "audio": "n2_17/q05.mp3?v=055a538f",
+     "at": [
+      15.67,
+      20.72,
+      24.98,
+      26.31
+     ],
+     "atQ": 35.57
     },
     {
      "tags": [
@@ -235,7 +274,14 @@
      ],
      "answer": 2,
      "why": "Next year the child starts school, 40 minutes' walk away.",
-     "audio": "n2_17/q06.mp3?v=a5e5fab6"
+     "audio": "n2_17/q06.mp3?v=a5e5fab6",
+     "at": [
+      14.01,
+      20.57,
+      23.97,
+      28.72
+     ],
+     "atQ": 35.21
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 1,
      "why": "A home book delivery service for the elderly.",
-     "audio": "n2_17/q07.mp3?v=982631ae"
+     "audio": "n2_17/q07.mp3?v=982631ae",
+     "at": [
+      5.11
+     ],
+     "atQ": 41.76
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 4,
      "why": "Record what you spend time on; you may not lack time.",
-     "audio": "n2_17/q08.mp3?v=4dec8711"
+     "audio": "n2_17/q08.mp3?v=4dec8711",
+     "at": [
+      5.25
+     ],
+     "atQ": 60.45
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 3,
      "why": "Not going home yet? Almost done.",
-     "audio": "n2_17/q09.mp3?v=fb05b390"
+     "audio": "n2_17/q09.mp3?v=fb05b390",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 3,
      "why": "Did you make it? Yes, mum taught me.",
-     "audio": "n2_17/q10.mp3?v=d333b7de"
+     "audio": "n2_17/q10.mp3?v=d333b7de",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 1,
      "why": "Choose a seat.",
-     "audio": "n2_17/q11.mp3?v=74240dce"
+     "audio": "n2_17/q11.mp3?v=74240dce",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 1,
      "why": "Buy bread on the way: sure, how many?",
-     "audio": "n2_17/q12.mp3?v=68026c61"
+     "audio": "n2_17/q12.mp3?v=68026c61",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 2,
      "why": "Recovered? Yes, thank you.",
-     "audio": "n2_17/q13.mp3?v=bc68fc4e"
+     "audio": "n2_17/q13.mp3?v=bc68fc4e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 2,
      "why": "Submit by tomorrow: understood.",
-     "audio": "n2_17/q14.mp3?v=d52375f2"
+     "audio": "n2_17/q14.mp3?v=d52375f2",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -459,7 +531,16 @@
      ],
      "answer": 3,
      "why": "Flowers can't go abroad; a light message album is chosen.",
-     "audio": "n2_17/q15.mp3?v=5c87e9ab"
+     "audio": "n2_17/q15.mp3?v=5c87e9ab",
+     "at": [
+      6.18,
+      13.12,
+      17.99,
+      26.03,
+      34.77,
+      37.09
+     ],
+     "atQ": 43.29
     }
    ],
    "spoken": true
@@ -512,7 +593,12 @@
        "why": "Long-distance cycling: the sports bike."
       }
      ],
-     "audio": "n2_17/q16.mp3?v=fb79d7d8"
+     "audio": "n2_17/q16.mp3?v=fb79d7d8",
+     "at": [
+      7.63,
+      28.39,
+      34.07
+     ]
     }
    ],
    "spoken": false

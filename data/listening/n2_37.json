@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "Fill in the form first.",
-     "audio": "n2_37/q01.mp3?v=e4a0b7dc"
+     "audio": "n2_37/q01.mp3?v=e4a0b7dc",
+     "at": [
+      10.17,
+      13.05,
+      30.35,
+      37.4,
+      46.14,
+      49.01
+     ],
+     "atQ": 59.52
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "Ask reception to call when the guest arrives.",
-     "audio": "n2_37/q02.mp3?v=3eec2fdd"
+     "audio": "n2_37/q02.mp3?v=3eec2fdd",
+     "at": [
+      10.2,
+      14.63,
+      17.09,
+      27.66,
+      29.81,
+      38.72
+     ],
+     "atQ": 41.67
     },
     {
      "tags": [
@@ -113,7 +131,11 @@
      ],
      "answer": 1,
      "why": "A mat for the parents' area; drinks are sold on site.",
-     "audio": "n2_37/q03.mp3?v=3df043ed"
+     "audio": "n2_37/q03.mp3?v=3df043ed",
+     "at": [
+      10.36
+     ],
+     "atQ": 47.64
     }
    ],
    "spoken": false
@@ -155,7 +177,14 @@
      ],
      "answer": 2,
      "why": "Too cold.",
-     "audio": "n2_37/q04.mp3?v=fb8e6a59"
+     "audio": "n2_37/q04.mp3?v=fb8e6a59",
+     "at": [
+      15.53,
+      20.65,
+      24.0,
+      27.22
+     ],
+     "atQ": 38.94
     },
     {
      "tags": [
@@ -185,7 +214,13 @@
      ],
      "answer": 1,
      "why": "He asks when he doesn't understand.",
-     "audio": "n2_37/q05.mp3?v=a1943ac5"
+     "audio": "n2_37/q05.mp3?v=a1943ac5",
+     "at": [
+      17.75,
+      20.98,
+      26.59
+     ],
+     "atQ": 41.42
     },
     {
      "tags": [
@@ -207,7 +242,11 @@
      ],
      "answer": 4,
      "why": "A different menu every day.",
-     "audio": "n2_37/q06.mp3?v=8c0db8e0"
+     "audio": "n2_37/q06.mp3?v=8c0db8e0",
+     "at": [
+      14.89
+     ],
+     "atQ": 40.07
     }
    ],
    "spoken": false
@@ -237,7 +276,11 @@
      ],
      "answer": 2,
      "why": "Reduce your stuff first.",
-     "audio": "n2_37/q07.mp3?v=592d03a2"
+     "audio": "n2_37/q07.mp3?v=592d03a2",
+     "at": [
+      5.98
+     ],
+     "atQ": 58.47
     },
     {
      "tags": [
@@ -259,7 +302,11 @@
      ],
      "answer": 3,
      "why": "Weekdays only, until 9 p.m.",
-     "audio": "n2_37/q08.mp3?v=2f48b803"
+     "audio": "n2_37/q08.mp3?v=2f48b803",
+     "at": [
+      5.09
+     ],
+     "atQ": 47.52
     }
    ],
    "spoken": true
@@ -286,7 +333,10 @@
      ],
      "answer": 3,
      "why": "Offered help: accept.",
-     "audio": "n2_37/q09.mp3?v=adf1fcce"
+     "audio": "n2_37/q09.mp3?v=adf1fcce",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -305,7 +355,10 @@
      ],
      "answer": 3,
      "why": "Invited: accept and offer to bring something.",
-     "audio": "n2_37/q10.mp3?v=b5b17b11"
+     "audio": "n2_37/q10.mp3?v=b5b17b11",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -324,7 +377,10 @@
      ],
      "answer": 1,
      "why": "Asked where batteries are: answer.",
-     "audio": "n2_37/q11.mp3?v=7abb6678"
+     "audio": "n2_37/q11.mp3?v=7abb6678",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -343,7 +399,10 @@
      ],
      "answer": 2,
      "why": "A request to postpone: agree.",
-     "audio": "n2_37/q12.mp3?v=30f7b2e7"
+     "audio": "n2_37/q12.mp3?v=30f7b2e7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -362,7 +421,10 @@
      ],
      "answer": 2,
      "why": "Checking the weather: answer.",
-     "audio": "n2_37/q13.mp3?v=527f3cd5"
+     "audio": "n2_37/q13.mp3?v=527f3cd5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -381,7 +443,10 @@
      ],
      "answer": 1,
      "why": "Thanked for helping: modest reply.",
-     "audio": "n2_37/q14.mp3?v=6323ca96"
+     "audio": "n2_37/q14.mp3?v=6323ca96",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -435,7 +500,17 @@
      ],
      "answer": 4,
      "why": "Same amount, lower-calorie food.",
-     "audio": "n2_37/q15.mp3?v=e97b2e02"
+     "audio": "n2_37/q15.mp3?v=e97b2e02",
+     "at": [
+      6.04,
+      9.38,
+      12.12,
+      21.25,
+      28.32,
+      41.42,
+      43.75
+     ],
+     "atQ": 50.71
     }
    ],
    "spoken": true
@@ -492,7 +567,13 @@
        "why": "Winery tour."
       }
      ],
-     "audio": "n2_37/q16.mp3?v=8da36bee"
+     "audio": "n2_37/q16.mp3?v=8da36bee",
+     "at": [
+      10.2,
+      26.83,
+      31.39,
+      38.34
+     ]
     }
    ],
    "spoken": false

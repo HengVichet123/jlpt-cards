@@ -49,7 +49,16 @@
      ],
      "answer": 4,
      "why": "Wait for the hospital's call, then come back for a new instruction sheet.",
-     "audio": "n1_26/q01.mp3?v=622778d7"
+     "audio": "n1_26/q01.mp3?v=622778d7",
+     "at": [
+      11.56,
+      18.2,
+      28.78,
+      31.64,
+      49.06,
+      53.23
+     ],
+     "atQ": 56.5
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 4,
      "why": "Check the price fix is in the Japanese version before ordering translation.",
-     "audio": "n1_26/q02.mp3?v=2ccb2a01"
+     "audio": "n1_26/q02.mp3?v=2ccb2a01",
+     "at": [
+      9.74,
+      14.39,
+      21.17,
+      29.19,
+      32.37,
+      49.44
+     ],
+     "atQ": 51.84
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 2,
      "why": "Cut the detailed procedure slides; keep prior work.",
-     "audio": "n1_26/q03.mp3?v=3ba9596c"
+     "audio": "n1_26/q03.mp3?v=3ba9596c",
+     "at": [
+      13.15,
+      20.87,
+      28.19,
+      42.93,
+      47.2
+     ],
+     "atQ": 51.99
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 3,
      "why": "Rhythm of the original is his top concern.",
-     "audio": "n1_26/q04.mp3?v=762ddf9f"
+     "audio": "n1_26/q04.mp3?v=762ddf9f",
+     "at": [
+      17.58,
+      22.86,
+      29.94,
+      33.3
+     ],
+     "atQ": 52.11
     },
     {
      "tags": [
@@ -209,7 +242,15 @@
      ],
      "answer": 1,
      "why": "A rival already launched something similar.",
-     "audio": "n1_26/q05.mp3?v=1d841259"
+     "audio": "n1_26/q05.mp3?v=1d841259",
+     "at": [
+      16.89,
+      23.78,
+      29.27,
+      33.26,
+      43.73
+     ],
+     "atQ": 47.01
     },
     {
      "tags": [
@@ -231,7 +272,11 @@
      ],
      "answer": 3,
      "why": "Half of parents have no one to consult: isolation.",
-     "audio": "n1_26/q06.mp3?v=4843fc9f"
+     "audio": "n1_26/q06.mp3?v=4843fc9f",
+     "at": [
+      16.09
+     ],
+     "atQ": 48.17
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 2,
      "why": "Green space as practical infrastructure, not decoration.",
-     "audio": "n1_26/q07.mp3?v=ef288c50"
+     "audio": "n1_26/q07.mp3?v=ef288c50",
+     "at": [
+      4.86
+     ],
+     "atQ": 54.56
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 1,
      "why": "Often it's care for the situation, not an admission of fault.",
-     "audio": "n1_26/q08.mp3?v=f3969f12"
+     "audio": "n1_26/q08.mp3?v=f3969f12",
+     "at": [
+      5.98
+     ],
+     "atQ": 68.62
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "Praised: it was worth the effort.",
-     "audio": "n1_26/q09.mp3?v=e7f2477f"
+     "audio": "n1_26/q09.mp3?v=e7f2477f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 3,
      "why": "A hard request: say you'll check and reply.",
-     "audio": "n1_26/q10.mp3?v=1e58e84d"
+     "audio": "n1_26/q10.mp3?v=1e58e84d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 1,
      "why": "He stops midway: press him to say it.",
-     "audio": "n1_26/q11.mp3?v=332aada7"
+     "audio": "n1_26/q11.mp3?v=332aada7",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 3,
      "why": "Concern about a new post: thank and reassure.",
-     "audio": "n1_26/q12.mp3?v=eee93972"
+     "audio": "n1_26/q12.mp3?v=eee93972",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 1,
      "why": "Scolded: apologise and start now.",
-     "audio": "n1_26/q13.mp3?v=3181692b"
+     "audio": "n1_26/q13.mp3?v=3181692b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 2,
      "why": "猫の手も借りたい = extremely busy; offer help.",
-     "audio": "n1_26/q14.mp3?v=92aae4c4"
+     "audio": "n1_26/q14.mp3?v=92aae4c4",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +522,15 @@
      ],
      "answer": 1,
      "why": "Panels go unread; demos leave dead time; staff for hands-on is available.",
-     "audio": "n1_26/q15.mp3?v=798e481a"
+     "audio": "n1_26/q15.mp3?v=798e481a",
+     "at": [
+      6.71,
+      31.05,
+      42.53,
+      51.94,
+      64.89
+     ],
+     "atQ": 76.21
     }
    ],
    "spoken": true
@@ -508,7 +587,13 @@
        "why": "Wants to open a shop in the countryside: interviews with people who did."
       }
      ],
-     "audio": "n1_26/q16.mp3?v=8906d22e"
+     "audio": "n1_26/q16.mp3?v=8906d22e",
+     "at": [
+      11.21,
+      40.19,
+      47.61,
+      57.43
+     ]
     }
    ],
    "spoken": false

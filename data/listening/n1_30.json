@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "She changed jobs, so the new employer's certificate replaces the tax slip; no guarantor.",
-     "audio": "n1_30/q01.mp3?v=58b0bb70"
+     "audio": "n1_30/q01.mp3?v=58b0bb70",
+     "at": [
+      12.19,
+      16.53,
+      28.12,
+      32.96,
+      43.07,
+      48.39
+     ],
+     "atQ": 55.91
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 3,
      "why": "Check with legal first, then send.",
-     "audio": "n1_30/q02.mp3?v=2afe925b"
+     "audio": "n1_30/q02.mp3?v=2afe925b",
+     "at": [
+      11.09,
+      16.41,
+      21.87,
+      30.94,
+      39.28,
+      47.3
+     ],
+     "atQ": 53.55
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 2,
      "why": "A week before the end of the month: the 24th.",
-     "audio": "n1_30/q03.mp3?v=8bfc644d"
+     "audio": "n1_30/q03.mp3?v=8bfc644d",
+     "at": [
+      12.69,
+      17.33,
+      26.71,
+      28.83,
+      44.54
+     ],
+     "atQ": 47.02
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 4,
      "why": "Listening to what the user wants to do.",
-     "audio": "n1_30/q04.mp3?v=905fa0b9"
+     "audio": "n1_30/q04.mp3?v=905fa0b9",
+     "at": [
+      18.04,
+      21.9,
+      26.75,
+      29.98
+     ],
+     "atQ": 50.71
     },
     {
      "tags": [
@@ -209,7 +242,15 @@
      ],
      "answer": 1,
      "why": "The partner firm changed course.",
-     "audio": "n1_30/q05.mp3?v=28dfae7f"
+     "audio": "n1_30/q05.mp3?v=28dfae7f",
+     "at": [
+      16.06,
+      21.74,
+      25.89,
+      27.48,
+      38.26
+     ],
+     "atQ": 41.03
     },
     {
      "tags": [
@@ -231,7 +272,11 @@
      ],
      "answer": 1,
      "why": "Lack of experience reading long texts through.",
-     "audio": "n1_30/q06.mp3?v=f60b698f"
+     "audio": "n1_30/q06.mp3?v=f60b698f",
+     "at": [
+      17.76
+     ],
+     "atQ": 54.94
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 2,
      "why": "Forest soil stores water; neglected forests lose it.",
-     "audio": "n1_30/q07.mp3?v=b7d3f4f4"
+     "audio": "n1_30/q07.mp3?v=b7d3f4f4",
+     "at": [
+      5.63
+     ],
+     "atQ": 49.47
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 4,
      "why": "An apology must explain what, why and prevention.",
-     "audio": "n1_30/q08.mp3?v=81cef48d"
+     "audio": "n1_30/q08.mp3?v=81cef48d",
+     "at": [
+      6.6
+     ],
+     "atQ": 57.09
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "Pressed for a status: promise an answer today.",
-     "audio": "n1_30/q09.mp3?v=c09c04c2"
+     "audio": "n1_30/q09.mp3?v=c09c04c2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 3,
      "why": "Complimented and asked where: thank and answer.",
-     "audio": "n1_30/q10.mp3?v=8519de28"
+     "audio": "n1_30/q10.mp3?v=8519de28",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 3,
      "why": "Asked to keep it secret: promise.",
-     "audio": "n1_30/q11.mp3?v=35d68fea"
+     "audio": "n1_30/q11.mp3?v=35d68fea",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 2,
      "why": "Encouraged: thank her.",
-     "audio": "n1_30/q12.mp3?v=dbf53488"
+     "audio": "n1_30/q12.mp3?v=dbf53488",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 1,
      "why": "Asked for a lift: ask what time.",
-     "audio": "n1_30/q13.mp3?v=bc0098d0"
+     "audio": "n1_30/q13.mp3?v=bc0098d0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 1,
      "why": "A polite no: accept graciously.",
-     "audio": "n1_30/q14.mp3?v=6e44c3fc"
+     "audio": "n1_30/q14.mp3?v=6e44c3fc",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +526,16 @@
      ],
      "answer": 3,
      "why": "It fits the goal of cross-department conversation and was most requested.",
-     "audio": "n1_30/q15.mp3?v=0b3f2429"
+     "audio": "n1_30/q15.mp3?v=0b3f2429",
+     "at": [
+      8.14,
+      25.57,
+      33.92,
+      43.19,
+      52.22,
+      59.68
+     ],
+     "atQ": 67.43
     }
    ],
    "spoken": true
@@ -512,7 +592,13 @@
        "why": "Worried about fees: scholarship consultation."
       }
      ],
-     "audio": "n1_30/q16.mp3?v=50ea9f0b"
+     "audio": "n1_30/q16.mp3?v=50ea9f0b",
+     "at": [
+      12.58,
+      32.15,
+      40.13,
+      48.64
+     ]
     }
    ],
    "spoken": false

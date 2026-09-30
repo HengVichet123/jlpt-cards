@@ -53,7 +53,17 @@
      ],
      "answer": 4,
      "why": "He decides: 先に申込書を書いてから、写真を撮りに行きます.",
-     "audio": "n1_07/q01.mp3?v=1edff732"
+     "audio": "n1_07/q01.mp3?v=1edff732",
+     "at": [
+      11.05,
+      13.43,
+      16.14,
+      19.8,
+      24.68,
+      26.71,
+      37.85
+     ],
+     "atQ": 44.29
     },
     {
      "tags": [
@@ -91,7 +101,15 @@
      ],
      "answer": 1,
      "why": "Slides stay; she must trim her talk and rehearse within 15 minutes. He prints.",
-     "audio": "n1_07/q02.mp3?v=6c9a28c6"
+     "audio": "n1_07/q02.mp3?v=6c9a28c6",
+     "at": [
+      12.08,
+      15.93,
+      19.71,
+      30.24,
+      33.43
+     ],
+     "atQ": 37.8
     },
     {
      "tags": [
@@ -133,7 +151,16 @@
      ],
      "answer": 2,
      "why": "Registration first; booking and piano fee come after.",
-     "audio": "n1_07/q03.mp3?v=60eec51b"
+     "audio": "n1_07/q03.mp3?v=60eec51b",
+     "at": [
+      11.02,
+      16.04,
+      21.74,
+      23.38,
+      33.6,
+      36.39
+     ],
+     "atQ": 42.04
     }
    ],
    "spoken": false
@@ -175,7 +202,14 @@
      ],
      "answer": 3,
      "why": "Terms can be looked up, grammar gets easier; jokes don't cross cultures.",
-     "audio": "n1_07/q04.mp3?v=757cf07a"
+     "audio": "n1_07/q04.mp3?v=757cf07a",
+     "at": [
+      16.78,
+      23.27,
+      29.63,
+      30.5
+     ],
+     "atQ": 45.39
     },
     {
      "tags": [
@@ -209,7 +243,14 @@
      ],
      "answer": 1,
      "why": "She wants him to remember rubbish days himself, without being told.",
-     "audio": "n1_07/q05.mp3?v=370c436e"
+     "audio": "n1_07/q05.mp3?v=370c436e",
+     "at": [
+      13.92,
+      16.71,
+      22.31,
+      23.38
+     ],
+     "atQ": 35.22
     },
     {
      "tags": [
@@ -231,7 +272,11 @@
      ],
      "answer": 4,
      "why": "Weather and preparation were fine; part of the riverbank collapsed.",
-     "audio": "n1_07/q06.mp3?v=2e1fc67b"
+     "audio": "n1_07/q06.mp3?v=2e1fc67b",
+     "at": [
+      14.93
+     ],
+     "atQ": 37.22
     }
    ],
    "spoken": false
@@ -261,7 +306,11 @@
      ],
      "answer": 3,
      "why": "Babies hear all sounds, then the brain narrows to the sounds of its language.",
-     "audio": "n1_07/q07.mp3?v=1691a7e1"
+     "audio": "n1_07/q07.mp3?v=1691a7e1",
+     "at": [
+      5.49
+     ],
+     "atQ": 49.65
     },
     {
      "tags": [
@@ -283,7 +332,11 @@
      ],
      "answer": 1,
      "why": "Small things for a long time, within your means, without strain.",
-     "audio": "n1_07/q08.mp3?v=43fe046f"
+     "audio": "n1_07/q08.mp3?v=43fe046f",
+     "at": [
+      6.33
+     ],
+     "atQ": 63.4
     }
    ],
    "spoken": true
@@ -310,7 +363,10 @@
      ],
      "answer": 2,
      "why": "Concern about your colour: explain and reassure.",
-     "audio": "n1_07/q09.mp3?v=715664ac"
+     "audio": "n1_07/q09.mp3?v=715664ac",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -329,7 +385,10 @@
      ],
      "answer": 1,
      "why": "一番乗り = first to arrive; explain why you come early.",
-     "audio": "n1_07/q10.mp3?v=f6a4bc17"
+     "audio": "n1_07/q10.mp3?v=f6a4bc17",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -348,7 +407,10 @@
      ],
      "answer": 3,
      "why": "Details are left to you: accept and promise to report.",
-     "audio": "n1_07/q11.mp3?v=ed496f17"
+     "audio": "n1_07/q11.mp3?v=ed496f17",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -367,7 +429,10 @@
      ],
      "answer": 1,
      "why": "Haggling: politely refuse further discount.",
-     "audio": "n1_07/q12.mp3?v=98c75a98"
+     "audio": "n1_07/q12.mp3?v=98c75a98",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -386,7 +451,10 @@
      ],
      "answer": 3,
      "why": "Reminded of a promise: apologise and explain.",
-     "audio": "n1_07/q13.mp3?v=8bf74e2b"
+     "audio": "n1_07/q13.mp3?v=8bf74e2b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -405,7 +473,10 @@
      ],
      "answer": 2,
      "why": "Standard thanks for meeting: respond with the same courtesy.",
-     "audio": "n1_07/q14.mp3?v=b8f1ace7"
+     "audio": "n1_07/q14.mp3?v=b8f1ace7",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +526,16 @@
      ],
      "answer": 2,
      "why": "Cameras are costly and slow, patrols hard with elderly residents; the city pays for more streetlights.",
-     "audio": "n1_07/q15.mp3?v=945c090b"
+     "audio": "n1_07/q15.mp3?v=945c090b",
+     "at": [
+      7.53,
+      15.67,
+      21.74,
+      27.26,
+      43.23,
+      51.18
+     ],
+     "atQ": 58.23
     }
    ],
    "spoken": true
@@ -508,7 +588,12 @@
        "why": "He has a dog: pets allowed and a park nearby."
       }
      ],
-     "audio": "n1_07/q16.mp3?v=0e8004c3"
+     "audio": "n1_07/q16.mp3?v=0e8004c3",
+     "at": [
+      6.59,
+      25.3,
+      31.64
+     ]
     }
    ],
    "spoken": false

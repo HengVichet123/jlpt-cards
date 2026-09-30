@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "Room first; eight chairs.",
-     "audio": "n2_45/q01.mp3?v=2b11bf1f"
+     "audio": "n2_45/q01.mp3?v=2b11bf1f",
+     "at": [
+      10.25,
+      16.34,
+      19.45,
+      26.12,
+      29.4,
+      41.07
+     ],
+     "atQ": 43.18
     },
     {
      "tags": [
@@ -87,7 +96,15 @@
      ],
      "answer": 2,
      "why": "Copy the needed pages.",
-     "audio": "n2_45/q02.mp3?v=c604bce1"
+     "audio": "n2_45/q02.mp3?v=c604bce1",
+     "at": [
+      10.89,
+      19.13,
+      23.59,
+      28.43,
+      35.62
+     ],
+     "atQ": 42.04
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 4,
      "why": "Fill in the delivery slip.",
-     "audio": "n2_45/q03.mp3?v=443fa55a"
+     "audio": "n2_45/q03.mp3?v=443fa55a",
+     "at": [
+      10.05,
+      13.86,
+      19.62,
+      24.16,
+      31.89
+     ],
+     "atQ": 34.49
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 3,
      "why": "Training for a marathon.",
-     "audio": "n2_45/q04.mp3?v=0908e8a2"
+     "audio": "n2_45/q04.mp3?v=0908e8a2",
+     "at": [
+      15.29,
+      20.05,
+      22.08,
+      25.77
+     ],
+     "atQ": 36.85
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 1,
      "why": "No materials beforehand.",
-     "audio": "n2_45/q05.mp3?v=4fc88270"
+     "audio": "n2_45/q05.mp3?v=4fc88270",
+     "at": [
+      17.39,
+      24.4,
+      27.35,
+      30.17
+     ],
+     "atQ": 41.51
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 3,
      "why": "Wind-resistant.",
-     "audio": "n2_45/q06.mp3?v=efcd2854"
+     "audio": "n2_45/q06.mp3?v=efcd2854",
+     "at": [
+      14.5
+     ],
+     "atQ": 40.24
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 4,
      "why": "Morning walks help in many ways.",
-     "audio": "n2_45/q07.mp3?v=d65f7293"
+     "audio": "n2_45/q07.mp3?v=d65f7293",
+     "at": [
+      4.46
+     ],
+     "atQ": 48.23
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 1,
      "why": "City leases empty homes cheaply.",
-     "audio": "n2_45/q08.mp3?v=aa2a2891"
+     "audio": "n2_45/q08.mp3?v=aa2a2891",
+     "at": [
+      5.1
+     ],
+     "atQ": 52.89
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 1,
      "why": "Offered a callback: accept.",
-     "audio": "n2_45/q09.mp3?v=1fb00f2c"
+     "audio": "n2_45/q09.mp3?v=1fb00f2c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Invitation: accept.",
-     "audio": "n2_45/q10.mp3?v=286be6a4"
+     "audio": "n2_45/q10.mp3?v=286be6a4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 3,
      "why": "Point card: no.",
-     "audio": "n2_45/q11.mp3?v=78dbacb6"
+     "audio": "n2_45/q11.mp3?v=78dbacb6",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 1,
      "why": "Thanked: you're welcome.",
-     "audio": "n2_45/q12.mp3?v=9e280f9c"
+     "audio": "n2_45/q12.mp3?v=9e280f9c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Lost keys: tell her where.",
-     "audio": "n2_45/q13.mp3?v=e87ada45"
+     "audio": "n2_45/q13.mp3?v=e87ada45",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 2,
      "why": "Haggling: politely decline.",
-     "audio": "n2_45/q14.mp3?v=0036c0dc"
+     "audio": "n2_45/q14.mp3?v=0036c0dc",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +516,16 @@
      ],
      "answer": 2,
      "why": "Everyone can relax regardless of age.",
-     "audio": "n2_45/q15.mp3?v=ea84f66c"
+     "audio": "n2_45/q15.mp3?v=ea84f66c",
+     "at": [
+      7.06,
+      20.21,
+      27.87,
+      39.01,
+      45.44,
+      47.75
+     ],
+     "atQ": 54.09
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "Compact for living alone."
       }
      ],
-     "audio": "n2_45/q16.mp3?v=37df64c6"
+     "audio": "n2_45/q16.mp3?v=37df64c6",
+     "at": [
+      10.34,
+      29.44,
+      35.33,
+      39.53
+     ]
     }
    ],
    "spoken": false

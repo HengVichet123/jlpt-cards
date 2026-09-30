@@ -53,7 +53,17 @@
      ],
      "answer": 4,
      "why": "The application form must be submitted today; the tax slip can come later and the guarantor form after screening.",
-     "audio": "n1_02/q01.mp3?v=68c2b316"
+     "audio": "n1_02/q01.mp3?v=68c2b316",
+     "at": [
+      10.85,
+      14.11,
+      17.32,
+      28.1,
+      31.9,
+      44.98,
+      47.75
+     ],
+     "atQ": 53.93
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 1,
      "why": "The man handles the website notice with PR; she answers the customers first.",
-     "audio": "n1_02/q02.mp3?v=e0f538df"
+     "audio": "n1_02/q02.mp3?v=e0f538df",
+     "at": [
+      9.79,
+      14.85,
+      19.46,
+      23.93,
+      27.16,
+      39.88
+     ],
+     "atQ": 42.35
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 2,
      "why": "The slide count is fine; she must note on the slide that the conditions were changed.",
-     "audio": "n1_02/q03.mp3?v=6aa5ccbc"
+     "audio": "n1_02/q03.mp3?v=6aa5ccbc",
+     "at": [
+      11.39,
+      16.89,
+      21.28,
+      32.22,
+      35.93,
+      42.37
+     ],
+     "atQ": 45.71
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 3,
      "why": "He decided before his father collapsed: if no one makes it, the family's taste will disappear.",
-     "audio": "n1_02/q04.mp3?v=7274ef1e"
+     "audio": "n1_02/q04.mp3?v=7274ef1e",
+     "at": [
+      15.58,
+      18.34,
+      23.74,
+      26.1
+     ],
+     "atQ": 44.52
     },
     {
      "tags": [
@@ -221,7 +256,16 @@
      ],
      "answer": 1,
      "why": "それよりも首の筋肉がかなり硬く…姿勢が続くと、首に負担がかかって.",
-     "audio": "n1_02/q05.mp3?v=9150a0b3"
+     "audio": "n1_02/q05.mp3?v=9150a0b3",
+     "at": [
+      15.99,
+      20.81,
+      31.21,
+      32.26,
+      46.57,
+      48.99
+     ],
+     "atQ": 59.03
     },
     {
      "tags": [
@@ -259,7 +303,15 @@
      ],
      "answer": 2,
      "why": "Not the typhoon: her mother has a neighbourhood association errand that day.",
-     "audio": "n1_02/q06.mp3?v=e2a0bfd4"
+     "audio": "n1_02/q06.mp3?v=e2a0bfd4",
+     "at": [
+      14.96,
+      18.16,
+      23.41,
+      29.34,
+      36.06
+     ],
+     "atQ": 41.15
     }
    ],
    "spoken": false
@@ -289,7 +341,11 @@
      ],
      "answer": 3,
      "why": "つまり…周りにあるものと比べて判断している.",
-     "audio": "n1_02/q07.mp3?v=10bf308b"
+     "audio": "n1_02/q07.mp3?v=10bf308b",
+     "at": [
+      4.82
+     ],
+     "atQ": 45.99
     },
     {
      "tags": [
@@ -311,7 +367,11 @@
      ],
      "answer": 4,
      "why": "まずは気持ちを受け止めて…そのうえで一緒に考える.",
-     "audio": "n1_02/q08.mp3?v=164844d4"
+     "audio": "n1_02/q08.mp3?v=164844d4",
+     "at": [
+      4.5
+     ],
+     "atQ": 55.6
     }
    ],
    "spoken": true
@@ -338,7 +398,10 @@
      ],
      "answer": 3,
      "why": "君にしては上出来 = good, for you: accept the (slightly backhanded) praise.",
-     "audio": "n1_02/q09.mp3?v=0fe7b81d"
+     "audio": "n1_02/q09.mp3?v=0fe7b81d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -357,7 +420,10 @@
      ],
      "answer": 2,
      "why": "言わんこっちゃない = I told you so; apologise for not listening.",
-     "audio": "n1_02/q10.mp3?v=7d09ef9c"
+     "audio": "n1_02/q10.mp3?v=7d09ef9c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -376,7 +442,10 @@
      ],
      "answer": 1,
      "why": "話を通す = get approval / let someone know in advance.",
-     "audio": "n1_02/q11.mp3?v=7c0ef603"
+     "audio": "n1_02/q11.mp3?v=7c0ef603",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -395,7 +464,10 @@
      ],
      "answer": 1,
      "why": "高いとは言えない = can't be called expensive, so it's good value.",
-     "audio": "n1_02/q12.mp3?v=d71806c5"
+     "audio": "n1_02/q12.mp3?v=d71806c5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -414,7 +486,10 @@
      ],
      "answer": 2,
      "why": "A polite complaint about noise: apologise.",
-     "audio": "n1_02/q13.mp3?v=46a35d65"
+     "audio": "n1_02/q13.mp3?v=46a35d65",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -433,7 +508,10 @@
      ],
      "answer": 3,
      "why": "〜なら〜で = if that's the case, at least tell me early; apologise.",
-     "audio": "n1_02/q14.mp3?v=03059d55"
+     "audio": "n1_02/q14.mp3?v=03059d55",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -491,7 +569,18 @@
      ],
      "answer": 1,
      "why": "Massage chair (bad with machines) and trip (bad legs) are rejected; all agree on monthly flowers.",
-     "audio": "n1_02/q15.mp3?v=3b31c33f"
+     "audio": "n1_02/q15.mp3?v=3b31c33f",
+     "at": [
+      7.24,
+      14.3,
+      20.05,
+      27.39,
+      31.42,
+      37.75,
+      47.21,
+      56.47
+     ],
+     "atQ": 64.04
     }
    ],
    "spoken": true
@@ -548,7 +637,13 @@
        "why": "Not mornings, wants to talk with people, and eating together sounds fun."
       }
      ],
-     "audio": "n1_02/q16.mp3?v=672856ff"
+     "audio": "n1_02/q16.mp3?v=672856ff",
+     "at": [
+      6.96,
+      40.62,
+      49.62,
+      59.86
+     ]
     }
    ],
    "spoken": false

@@ -45,7 +45,15 @@
      ],
      "answer": 2,
      "why": "Fill in the form first, leave the bags, then sightsee.",
-     "audio": "n2_34/q01.mp3?v=bcecb7e6"
+     "audio": "n2_34/q01.mp3?v=bcecb7e6",
+     "at": [
+      10.85,
+      14.73,
+      27.0,
+      30.22,
+      47.05
+     ],
+     "atQ": 50.19
     },
     {
      "tags": [
@@ -83,7 +91,15 @@
      ],
      "answer": 1,
      "why": "Systems staff are out till noon; redo the slides first.",
-     "audio": "n2_34/q02.mp3?v=05b7752b"
+     "audio": "n2_34/q02.mp3?v=05b7752b",
+     "at": [
+      9.67,
+      17.59,
+      19.79,
+      23.25,
+      38.33
+     ],
+     "atQ": 46.35
     },
     {
      "tags": [
@@ -129,7 +145,17 @@
      ],
      "answer": 4,
      "why": "Onions are at home; potatoes added; pork.",
-     "audio": "n2_34/q03.mp3?v=33e28064"
+     "audio": "n2_34/q03.mp3?v=33e28064",
+     "at": [
+      8.47,
+      14.75,
+      17.38,
+      22.63,
+      24.05,
+      29.49,
+      32.18
+     ],
+     "atQ": 36.1
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 2,
      "why": "Walking to work, an hour a day.",
-     "audio": "n2_34/q04.mp3?v=6f3bc646"
+     "audio": "n2_34/q04.mp3?v=6f3bc646",
+     "at": [
+      14.36,
+      17.4,
+      19.91,
+      22.8
+     ],
+     "atQ": 35.37
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 3,
      "why": "Joint research abroad.",
-     "audio": "n2_34/q05.mp3?v=3fe7407f"
+     "audio": "n2_34/q05.mp3?v=3fe7407f",
+     "at": [
+      16.75,
+      21.4,
+      24.22,
+      26.71
+     ],
+     "atQ": 43.97
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 1,
      "why": "Weekend farmers' market.",
-     "audio": "n2_34/q06.mp3?v=84a8f0fa"
+     "audio": "n2_34/q06.mp3?v=84a8f0fa",
+     "at": [
+      14.93
+     ],
+     "atQ": 41.51
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 3,
      "why": "Kids need good sleep habits.",
-     "audio": "n2_34/q07.mp3?v=6a0c6b03"
+     "audio": "n2_34/q07.mp3?v=6a0c6b03",
+     "at": [
+      4.89
+     ],
+     "atQ": 53.83
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 1,
      "why": "A rent subsidy brought new shops.",
-     "audio": "n2_34/q08.mp3?v=d57c3965"
+     "audio": "n2_34/q08.mp3?v=d57c3965",
+     "at": [
+      5.08
+     ],
+     "atQ": 53.39
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "Asked to check: agree.",
-     "audio": "n2_34/q09.mp3?v=82aad4d8"
+     "audio": "n2_34/q09.mp3?v=82aad4d8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 2,
      "why": "Told to go in first: agree.",
-     "audio": "n2_34/q10.mp3?v=4461b3ac"
+     "audio": "n2_34/q10.mp3?v=4461b3ac",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 3,
      "why": "Together or separate bill.",
-     "audio": "n2_34/q11.mp3?v=20eb5ff0"
+     "audio": "n2_34/q11.mp3?v=20eb5ff0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "A leave request: approve.",
-     "audio": "n2_34/q12.mp3?v=87c60347"
+     "audio": "n2_34/q12.mp3?v=87c60347",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "Grandma called: ask what about.",
-     "audio": "n2_34/q13.mp3?v=bd20afd3"
+     "audio": "n2_34/q13.mp3?v=bd20afd3",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 1,
      "why": "An apology: accept with a word of caution.",
-     "audio": "n2_34/q14.mp3?v=ff7f431d"
+     "audio": "n2_34/q14.mp3?v=ff7f431d",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 4,
      "why": "Hotel too pricey; izakaya too small.",
-     "audio": "n2_34/q15.mp3?v=a2e675cc"
+     "audio": "n2_34/q15.mp3?v=a2e675cc",
+     "at": [
+      6.68,
+      21.79,
+      29.55,
+      39.88,
+      45.96,
+      48.28
+     ],
+     "atQ": 55.04
     }
    ],
    "spoken": true
@@ -508,7 +587,13 @@
        "why": "Local fish cuisine."
       }
      ],
-     "audio": "n2_34/q16.mp3?v=b591cc79"
+     "audio": "n2_34/q16.mp3?v=b591cc79",
+     "at": [
+      10.43,
+      31.54,
+      38.33,
+      43.0
+     ]
     }
    ],
    "spoken": false

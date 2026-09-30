@@ -49,7 +49,16 @@
      ],
      "answer": 2,
      "why": "Rough headcount this week for the room size; seating a week before, final numbers three days before.",
-     "audio": "n1_13/q01.mp3?v=73bff510"
+     "audio": "n1_13/q01.mp3?v=73bff510",
+     "at": [
+      11.05,
+      16.13,
+      25.49,
+      32.89,
+      38.3,
+      47.69
+     ],
+     "atQ": 53.35
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "The boss chases the division; he first reviews last year's questions.",
-     "audio": "n1_13/q02.mp3?v=b2c633c5"
+     "audio": "n1_13/q02.mp3?v=b2c633c5",
+     "at": [
+      9.82,
+      13.78,
+      20.79,
+      31.21,
+      32.9,
+      39.32
+     ],
+     "atQ": 41.9
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 3,
      "why": "Documents are ready and he has thought about the use; he must tell his referee the date.",
-     "audio": "n1_13/q03.mp3?v=07ec664f"
+     "audio": "n1_13/q03.mp3?v=07ec664f",
+     "at": [
+      12.39,
+      17.63,
+      23.7,
+      25.58,
+      34.91
+     ],
+     "atQ": 39.52
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 2,
      "why": "Losses always have a reason; facing them makes the difference.",
-     "audio": "n1_13/q04.mp3?v=57322c6c"
+     "audio": "n1_13/q04.mp3?v=57322c6c",
+     "at": [
+      16.84,
+      21.89,
+      27.03,
+      29.54
+     ],
+     "atQ": 42.89
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 1,
      "why": "Whether they could explain what they learned from failure.",
-     "audio": "n1_13/q05.mp3?v=e9ca75d3"
+     "audio": "n1_13/q05.mp3?v=e9ca75d3",
+     "at": [
+      18.6,
+      24.94,
+      31.36,
+      33.36
+     ],
+     "atQ": 46.86
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 4,
      "why": "だからこそ、元気なうちに、本人と一緒に何を残すか決めたい.",
-     "audio": "n1_13/q06.mp3?v=c35ae84d"
+     "audio": "n1_13/q06.mp3?v=c35ae84d",
+     "at": [
+      16.22,
+      20.78,
+      25.0,
+      29.82
+     ],
+     "atQ": 39.14
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 3,
      "why": "Sakoku was controlled exchange through limited windows, not total isolation.",
-     "audio": "n1_13/q07.mp3?v=7f84ff5d"
+     "audio": "n1_13/q07.mp3?v=7f84ff5d",
+     "at": [
+      5.5
+     ],
+     "atQ": 48.83
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 1,
      "why": "Be short and specific about what was wrong and what to do next.",
-     "audio": "n1_13/q08.mp3?v=3bfa7012"
+     "audio": "n1_13/q08.mp3?v=3bfa7012",
+     "at": [
+      5.65
+     ],
+     "atQ": 49.87
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 3,
      "why": "甲斐あって = the effort paid off.",
-     "audio": "n1_13/q09.mp3?v=05db205c"
+     "audio": "n1_13/q09.mp3?v=05db205c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 3,
      "why": "ここだけの話 = keep it between us.",
-     "audio": "n1_13/q10.mp3?v=76c4b9ed"
+     "audio": "n1_13/q10.mp3?v=76c4b9ed",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 1,
      "why": "The price won't get approved: offer to reconsider it.",
-     "audio": "n1_13/q11.mp3?v=f9c475a2"
+     "audio": "n1_13/q11.mp3?v=f9c475a2",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 2,
      "why": "Watch the kids for a bit: sure, how long?",
-     "audio": "n1_13/q12.mp3?v=b08fea4c"
+     "audio": "n1_13/q12.mp3?v=b08fea4c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 1,
      "why": "Might be postponed: ask to be told when decided.",
-     "audio": "n1_13/q13.mp3?v=7fab247b"
+     "audio": "n1_13/q13.mp3?v=7fab247b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 2,
      "why": "When is the next delivery? Give a date.",
-     "audio": "n1_13/q14.mp3?v=5f2238e0"
+     "audio": "n1_13/q14.mp3?v=5f2238e0",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -467,7 +540,17 @@
      ],
      "answer": 4,
      "why": "Too many cafés, a haunted house takes too much prep: a photo exhibition.",
-     "audio": "n1_13/q15.mp3?v=fb88ce02"
+     "audio": "n1_13/q15.mp3?v=fb88ce02",
+     "at": [
+      7.44,
+      10.73,
+      16.39,
+      22.04,
+      29.85,
+      41.05,
+      43.37
+     ],
+     "atQ": 49.56
     }
    ],
    "spoken": true
@@ -520,7 +603,12 @@
        "why": "Interested in old times, the restored classic: the black-and-white film."
       }
      ],
-     "audio": "n1_13/q16.mp3?v=d1ccbf27"
+     "audio": "n1_13/q16.mp3?v=d1ccbf27",
+     "at": [
+      6.26,
+      28.2,
+      33.42
+     ]
     }
    ],
    "spoken": false

@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "The partner has no account yet: draft the application first.",
-     "audio": "n1_28/q01.mp3?v=c89b3a1e"
+     "audio": "n1_28/q01.mp3?v=c89b3a1e",
+     "at": [
+      12.41,
+      16.85,
+      19.22,
+      25.86,
+      32.48,
+      42.71
+     ],
+     "atQ": 47.25
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 1,
      "why": "She'll phone the design team first.",
-     "audio": "n1_28/q02.mp3?v=f44e8bbc"
+     "audio": "n1_28/q02.mp3?v=f44e8bbc",
+     "at": [
+      12.39,
+      17.41,
+      26.27,
+      28.33,
+      32.76,
+      42.17
+     ],
+     "atQ": 48.77
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 2,
      "why": "Daily seated leg raises; no walking yet, visits weekly.",
-     "audio": "n1_28/q03.mp3?v=2e886d90"
+     "audio": "n1_28/q03.mp3?v=2e886d90",
+     "at": [
+      11.44,
+      18.62,
+      21.58,
+      32.26,
+      33.86
+     ],
+     "atQ": 40.97
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 4,
      "why": "The family's daily routine; light follows from that.",
-     "audio": "n1_28/q04.mp3?v=d98918fc"
+     "audio": "n1_28/q04.mp3?v=d98918fc",
+     "at": [
+      17.97,
+      23.86,
+      30.07,
+      32.89
+     ],
+     "atQ": 52.35
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 4,
      "why": "He wants to see the project through.",
-     "audio": "n1_28/q05.mp3?v=4016c503"
+     "audio": "n1_28/q05.mp3?v=4016c503",
+     "at": [
+      16.68,
+      22.33,
+      26.09,
+      28.35
+     ],
+     "atQ": 44.13
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 3,
      "why": "A place where people meet and learn together.",
-     "audio": "n1_28/q06.mp3?v=d485fb2e"
+     "audio": "n1_28/q06.mp3?v=d485fb2e",
+     "at": [
+      17.52
+     ],
+     "atQ": 56.56
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 1,
      "why": "They combine sun, stars and magnetism.",
-     "audio": "n1_28/q07.mp3?v=b9561654"
+     "audio": "n1_28/q07.mp3?v=b9561654",
+     "at": [
+      5.53
+     ],
+     "atQ": 53.56
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 2,
      "why": "Evaluate results, not hours.",
-     "audio": "n1_28/q08.mp3?v=ce696bf5"
+     "audio": "n1_28/q08.mp3?v=ce696bf5",
+     "at": [
+      5.99
+     ],
+     "atQ": 60.96
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "He's already briefed them: thank him.",
-     "audio": "n1_28/q09.mp3?v=492ee630"
+     "audio": "n1_28/q09.mp3?v=492ee630",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 1,
      "why": "A lift offered: accept graciously.",
-     "audio": "n1_28/q10.mp3?v=9f4ec578"
+     "audio": "n1_28/q10.mp3?v=9f4ec578",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 3,
      "why": "A drop-in visit: welcome him.",
-     "audio": "n1_28/q11.mp3?v=0796eac9"
+     "audio": "n1_28/q11.mp3?v=0796eac9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 2,
      "why": "Surprised he succeeded: agree and be modest.",
-     "audio": "n1_28/q12.mp3?v=a4a70999"
+     "audio": "n1_28/q12.mp3?v=a4a70999",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "An old saying scolding lying down after eating.",
-     "audio": "n1_28/q13.mp3?v=878d8a2d"
+     "audio": "n1_28/q13.mp3?v=878d8a2d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 3,
      "why": "Invitation declined: say maybe next time.",
-     "audio": "n1_28/q14.mp3?v=3991ef6e"
+     "audio": "n1_28/q14.mp3?v=3991ef6e",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -447,7 +517,15 @@
      ],
      "answer": 3,
      "why": "They need ready-to-work people: hire experienced staff.",
-     "audio": "n1_28/q15.mp3?v=c367c0eb"
+     "audio": "n1_28/q15.mp3?v=c367c0eb",
+     "at": [
+      7.44,
+      28.3,
+      43.04,
+      54.67,
+      60.81
+     ],
+     "atQ": 71.17
     }
    ],
    "spoken": true
@@ -504,7 +582,13 @@
        "why": "He wants to make something: craft workshops."
       }
      ],
-     "audio": "n1_28/q16.mp3?v=54e7f358"
+     "audio": "n1_28/q16.mp3?v=54e7f358",
+     "at": [
+      11.35,
+      32.79,
+      39.16,
+      43.52
+     ]
     }
    ],
    "spoken": false

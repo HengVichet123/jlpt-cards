@@ -49,7 +49,16 @@
      ],
      "answer": 1,
      "why": "Get the latest numbers first.",
-     "audio": "n1_42/q01.mp3?v=e9228067"
+     "audio": "n1_42/q01.mp3?v=e9228067",
+     "at": [
+      10.2,
+      15.52,
+      20.24,
+      30.04,
+      33.76,
+      51.71
+     ],
+     "atQ": 55.98
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 2,
      "why": "Essay by email three days before.",
-     "audio": "n1_42/q02.mp3?v=23719490"
+     "audio": "n1_42/q02.mp3?v=23719490",
+     "at": [
+      12.04,
+      17.39,
+      21.79,
+      35.44,
+      38.47,
+      45.58
+     ],
+     "atQ": 48.05
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 4,
      "why": "Book the test upstairs first.",
-     "audio": "n1_42/q03.mp3?v=0e11bbfe"
+     "audio": "n1_42/q03.mp3?v=0e11bbfe",
+     "at": [
+      10.0,
+      15.61,
+      19.07,
+      27.77,
+      31.83
+     ],
+     "atQ": 44.06
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "The courage to turn back.",
-     "audio": "n1_42/q04.mp3?v=00a5d30d"
+     "audio": "n1_42/q04.mp3?v=00a5d30d",
+     "at": [
+      16.58,
+      23.49,
+      28.43,
+      32.4
+     ],
+     "atQ": 49.72
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 3,
      "why": "Hot tea launched in summer.",
-     "audio": "n1_42/q05.mp3?v=01a9555a"
+     "audio": "n1_42/q05.mp3?v=01a9555a",
+     "at": [
+      17.89,
+      22.07,
+      28.04,
+      30.64
+     ],
+     "atQ": 41.16
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 1,
      "why": "Less free outdoor play.",
-     "audio": "n1_42/q06.mp3?v=1d2001c3"
+     "audio": "n1_42/q06.mp3?v=1d2001c3",
+     "at": [
+      18.62
+     ],
+     "atQ": 47.38
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 3,
      "why": "Reviving old houses.",
-     "audio": "n1_42/q07.mp3?v=753f77be"
+     "audio": "n1_42/q07.mp3?v=753f77be",
+     "at": [
+      4.94
+     ],
+     "atQ": 50.29
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 2,
      "why": "Showing weakness builds trust.",
-     "audio": "n1_42/q08.mp3?v=f7ffbae7"
+     "audio": "n1_42/q08.mp3?v=f7ffbae7",
+     "at": [
+      6.71
+     ],
+     "atQ": 51.75
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "Sick child: grant leave.",
-     "audio": "n1_42/q09.mp3?v=ece7233f"
+     "audio": "n1_42/q09.mp3?v=ece7233f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 1,
      "why": "Congratulated: thank.",
-     "audio": "n1_42/q10.mp3?v=7e812c3c"
+     "audio": "n1_42/q10.mp3?v=7e812c3c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 1,
      "why": "Thanked for visiting: return thanks.",
-     "audio": "n1_42/q11.mp3?v=34a5a279"
+     "audio": "n1_42/q11.mp3?v=34a5a279",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "Asked what's wrong: explain.",
-     "audio": "n1_42/q12.mp3?v=fbcec903"
+     "audio": "n1_42/q12.mp3?v=fbcec903",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 2,
      "why": "Asked to add detail: agree.",
-     "audio": "n1_42/q13.mp3?v=8a8fbb4c"
+     "audio": "n1_42/q13.mp3?v=8a8fbb4c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 3,
      "why": "New neighbour: welcome.",
-     "audio": "n1_42/q14.mp3?v=aaa3fb84"
+     "audio": "n1_42/q14.mp3?v=aaa3fb84",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 4,
      "why": "Foreign-language app; lasting.",
-     "audio": "n1_42/q15.mp3?v=a1550966"
+     "audio": "n1_42/q15.mp3?v=a1550966",
+     "at": [
+      5.74,
+      25.86,
+      33.19,
+      43.55,
+      56.6,
+      58.92
+     ],
+     "atQ": 66.36
     }
    ],
    "spoken": true
@@ -508,7 +587,13 @@
        "why": "Classics with commentary."
       }
      ],
-     "audio": "n1_42/q16.mp3?v=4275f668"
+     "audio": "n1_42/q16.mp3?v=4275f668",
+     "at": [
+      10.08,
+      39.83,
+      44.5,
+      52.91
+     ]
     }
    ],
    "spoken": false

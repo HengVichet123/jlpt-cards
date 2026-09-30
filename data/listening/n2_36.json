@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "She found the temporary password; change it first.",
-     "audio": "n2_36/q01.mp3?v=57e3e590"
+     "audio": "n2_36/q01.mp3?v=57e3e590",
+     "at": [
+      11.3,
+      20.0,
+      23.31,
+      30.23,
+      47.06,
+      51.71,
+      59.25
+     ],
+     "atQ": 67.02
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 3,
      "why": "11 + 1 for the absent chief + 2 spares.",
-     "audio": "n2_36/q02.mp3?v=e9c15f49"
+     "audio": "n2_36/q02.mp3?v=e9c15f49",
+     "at": [
+      12.17,
+      15.21,
+      20.59,
+      23.06,
+      30.09,
+      34.11
+     ],
+     "atQ": 36.6
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 2,
      "why": "She already picked candidates; he chooses the hotel.",
-     "audio": "n2_36/q03.mp3?v=f32342b4"
+     "audio": "n2_36/q03.mp3?v=f32342b4",
+     "at": [
+      10.22,
+      13.74,
+      16.53,
+      22.79,
+      30.44,
+      36.25
+     ],
+     "atQ": 39.39
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 3,
      "why": "A break from screens, working with his hands.",
-     "audio": "n2_36/q04.mp3?v=5b75ed79"
+     "audio": "n2_36/q04.mp3?v=5b75ed79",
+     "at": [
+      14.26,
+      18.83,
+      21.45,
+      26.17
+     ],
+     "atQ": 41.13
     },
     {
      "tags": [
@@ -213,7 +248,14 @@
      ],
      "answer": 4,
      "why": "Shelved below eye level.",
-     "audio": "n2_36/q05.mp3?v=c93fb562"
+     "audio": "n2_36/q05.mp3?v=c93fb562",
+     "at": [
+      16.38,
+      21.2,
+      25.58,
+      28.37
+     ],
+     "atQ": 50.56
     },
     {
      "tags": [
@@ -235,7 +277,11 @@
      ],
      "answer": 4,
      "why": "Homestays with villagers.",
-     "audio": "n2_36/q06.mp3?v=f6e3be6d"
+     "audio": "n2_36/q06.mp3?v=f6e3be6d",
+     "at": [
+      15.23
+     ],
+     "atQ": 40.41
     }
    ],
    "spoken": false
@@ -265,7 +311,11 @@
      ],
      "answer": 1,
      "why": "Ask \"what will you do next time?\" instead of \"why?\".",
-     "audio": "n2_36/q07.mp3?v=26a2db13"
+     "audio": "n2_36/q07.mp3?v=26a2db13",
+     "at": [
+      5.96
+     ],
+     "atQ": 58.08
     },
     {
      "tags": [
@@ -287,7 +337,11 @@
      ],
      "answer": 1,
      "why": "Bikes banned on some busy sidewalks.",
-     "audio": "n2_36/q08.mp3?v=3b626d7d"
+     "audio": "n2_36/q08.mp3?v=3b626d7d",
+     "at": [
+      5.05
+     ],
+     "atQ": 48.66
     }
    ],
    "spoken": true
@@ -314,7 +368,10 @@
      ],
      "answer": 1,
      "why": "Good news: pleased.",
-     "audio": "n2_36/q09.mp3?v=5b1902e5"
+     "audio": "n2_36/q09.mp3?v=5b1902e5",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -333,7 +390,10 @@
      ],
      "answer": 2,
      "why": "Asked if finished: not yet.",
-     "audio": "n2_36/q10.mp3?v=8e07a88b"
+     "audio": "n2_36/q10.mp3?v=8e07a88b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -352,7 +412,10 @@
      ],
      "answer": 2,
      "why": "Guest arrives with a booking: seat him.",
-     "audio": "n2_36/q11.mp3?v=84247543"
+     "audio": "n2_36/q11.mp3?v=84247543",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -371,7 +434,10 @@
      ],
      "answer": 3,
      "why": "Late because of trains: understand.",
-     "audio": "n2_36/q12.mp3?v=ec726ad4"
+     "audio": "n2_36/q12.mp3?v=ec726ad4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -390,7 +456,10 @@
      ],
      "answer": 1,
      "why": "Asked what's for dinner.",
-     "audio": "n2_36/q13.mp3?v=539ad6dd"
+     "audio": "n2_36/q13.mp3?v=539ad6dd",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -409,7 +478,10 @@
      ],
      "answer": 3,
      "why": "Leaving work: お疲れさまでした.",
-     "audio": "n2_36/q14.mp3?v=78c7b303"
+     "audio": "n2_36/q14.mp3?v=78c7b303",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -455,7 +527,15 @@
      ],
      "answer": 2,
      "why": "Needs colour and must fit: C.",
-     "audio": "n2_36/q15.mp3?v=1bf35d00"
+     "audio": "n2_36/q15.mp3?v=1bf35d00",
+     "at": [
+      6.64,
+      19.04,
+      26.36,
+      35.5,
+      47.57
+     ],
+     "atQ": 54.35
     }
    ],
    "spoken": true
@@ -512,7 +592,13 @@
        "why": "He wants to cook: cooking class."
       }
      ],
-     "audio": "n2_36/q16.mp3?v=949ee444"
+     "audio": "n2_36/q16.mp3?v=949ee444",
+     "at": [
+      8.55,
+      30.63,
+      38.3,
+      44.67
+     ]
     }
    ],
    "spoken": false

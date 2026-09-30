@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "Choose from the registered list first, then get a quote, then apply.",
-     "audio": "n1_27/q01.mp3?v=0987e721"
+     "audio": "n1_27/q01.mp3?v=0987e721",
+     "at": [
+      10.89,
+      15.96,
+      24.3,
+      26.9,
+      34.93,
+      37.44,
+      44.89
+     ],
+     "atQ": 48.99
     },
     {
      "tags": [
@@ -99,7 +109,17 @@
      ],
      "answer": 2,
      "why": "The boss talks to the CEO; she asks the magazine for the questions.",
-     "audio": "n1_27/q02.mp3?v=2478994f"
+     "audio": "n1_27/q02.mp3?v=2478994f",
+     "at": [
+      10.32,
+      18.37,
+      21.54,
+      28.57,
+      36.2,
+      38.65,
+      49.84
+     ],
+     "atQ": 52.24
     },
     {
      "tags": [
@@ -145,7 +165,17 @@
      ],
      "answer": 1,
      "why": "Score valid, reference requested: the study plan is what's left.",
-     "audio": "n1_27/q03.mp3?v=42aa1b0f"
+     "audio": "n1_27/q03.mp3?v=42aa1b0f",
+     "at": [
+      12.61,
+      19.14,
+      23.42,
+      25.55,
+      35.09,
+      41.76,
+      46.62
+     ],
+     "atQ": 49.18
     }
    ],
    "spoken": false
@@ -187,7 +217,14 @@
      ],
      "answer": 2,
      "why": "They trust recipes too much instead of tasting.",
-     "audio": "n1_27/q04.mp3?v=f1b29083"
+     "audio": "n1_27/q04.mp3?v=f1b29083",
+     "at": [
+      17.91,
+      21.91,
+      27.9,
+      31.1
+     ],
+     "atQ": 50.45
     },
     {
      "tags": [
@@ -221,7 +258,14 @@
      ],
      "answer": 4,
      "why": "The decisive factor: no room for the new production line.",
-     "audio": "n1_27/q05.mp3?v=aa436585"
+     "audio": "n1_27/q05.mp3?v=aa436585",
+     "at": [
+      15.43,
+      21.81,
+      26.03,
+      30.42
+     ],
+     "atQ": 39.55
     },
     {
      "tags": [
@@ -243,7 +287,11 @@
      ],
      "answer": 4,
      "why": "Seeing Earth from outside changes how people think.",
-     "audio": "n1_27/q06.mp3?v=68b5d8b8"
+     "audio": "n1_27/q06.mp3?v=68b5d8b8",
+     "at": [
+      17.82
+     ],
+     "atQ": 51.74
     }
    ],
    "spoken": false
@@ -273,7 +321,11 @@
      ],
      "answer": 3,
      "why": "Late coffee spoils sleep, causing the next day's sleepiness.",
-     "audio": "n1_27/q07.mp3?v=73f08a21"
+     "audio": "n1_27/q07.mp3?v=73f08a21",
+     "at": [
+      4.7
+     ],
+     "atQ": 61.69
     },
     {
      "tags": [
@@ -295,7 +347,11 @@
      ],
      "answer": 3,
      "why": "Making stations community spaces brought riders back.",
-     "audio": "n1_27/q08.mp3?v=e328c644"
+     "audio": "n1_27/q08.mp3?v=e328c644",
+     "at": [
+      6.03
+     ],
+     "atQ": 56.55
     }
    ],
    "spoken": true
@@ -322,7 +378,10 @@
      ],
      "answer": 1,
      "why": "A request for time: say yes and ask.",
-     "audio": "n1_27/q09.mp3?v=333de31f"
+     "audio": "n1_27/q09.mp3?v=333de31f",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -341,7 +400,10 @@
      ],
      "answer": 3,
      "why": "Thanks for visiting: thank them back.",
-     "audio": "n1_27/q10.mp3?v=6eb0778c"
+     "audio": "n1_27/q10.mp3?v=6eb0778c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -360,7 +422,10 @@
      ],
      "answer": 3,
      "why": "Asked the result: missed by two points.",
-     "audio": "n1_27/q11.mp3?v=b7e7f46c"
+     "audio": "n1_27/q11.mp3?v=b7e7f46c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -379,7 +444,10 @@
      ],
      "answer": 2,
      "why": "An apology: accept graciously.",
-     "audio": "n1_27/q12.mp3?v=60c24c14"
+     "audio": "n1_27/q12.mp3?v=60c24c14",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -398,7 +466,10 @@
      ],
      "answer": 2,
      "why": "つまらないものですが = polite gift formula.",
-     "audio": "n1_27/q13.mp3?v=9b997f96"
+     "audio": "n1_27/q13.mp3?v=9b997f96",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -417,7 +488,10 @@
      ],
      "answer": 1,
      "why": "見送る = pass on (the idea).",
-     "audio": "n1_27/q14.mp3?v=3b3c17bd"
+     "audio": "n1_27/q14.mp3?v=3b3c17bd",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -463,7 +537,15 @@
      ],
      "answer": 1,
      "why": "Stalls for kids bring in young families; concert too costly.",
-     "audio": "n1_27/q15.mp3?v=c074b152"
+     "audio": "n1_27/q15.mp3?v=c074b152",
+     "at": [
+      7.72,
+      24.05,
+      32.28,
+      41.07,
+      58.19
+     ],
+     "atQ": 67.58
     }
    ],
    "spoken": true
@@ -520,7 +602,13 @@
        "why": "Lowest premium, covers only long stays."
       }
      ],
-     "audio": "n1_27/q16.mp3?v=19005ba0"
+     "audio": "n1_27/q16.mp3?v=19005ba0",
+     "at": [
+      12.22,
+      40.53,
+      46.23,
+      56.89
+     ]
     }
    ],
    "spoken": false

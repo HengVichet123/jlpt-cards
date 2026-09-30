@@ -53,7 +53,17 @@
      ],
      "answer": 1,
      "why": "His licence is in the car; he has no health card on him.",
-     "audio": "n2_27/q01.mp3?v=1359b1f9"
+     "audio": "n2_27/q01.mp3?v=1359b1f9",
+     "at": [
+      10.04,
+      16.2,
+      24.92,
+      28.93,
+      48.1,
+      53.9,
+      57.36
+     ],
+     "atQ": 63.85
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 3,
      "why": "Upload on the site, as a PDF named with her student number.",
-     "audio": "n2_27/q02.mp3?v=9e50af32"
+     "audio": "n2_27/q02.mp3?v=9e50af32",
+     "at": [
+      11.05,
+      15.84,
+      21.55,
+      25.51,
+      34.95,
+      38.14
+     ],
+     "atQ": 44.37
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 4,
      "why": "First get the new price list from sales; then fix and order.",
-     "audio": "n2_27/q03.mp3?v=63992177"
+     "audio": "n2_27/q03.mp3?v=63992177",
+     "at": [
+      12.86,
+      17.45,
+      22.82,
+      29.57,
+      32.97,
+      45.91
+     ],
+     "atQ": 48.44
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 1,
      "why": "Naming is the hardest: seasonal and unique.",
-     "audio": "n2_27/q04.mp3?v=1c582e82"
+     "audio": "n2_27/q04.mp3?v=1c582e82",
+     "at": [
+      18.45,
+      25.56,
+      33.11,
+      35.29
+     ],
+     "atQ": 53.65
     },
     {
      "tags": [
@@ -217,7 +252,15 @@
      ],
      "answer": 2,
      "why": "Lessons clash with Saturday matches.",
-     "audio": "n2_27/q05.mp3?v=074b489e"
+     "audio": "n2_27/q05.mp3?v=074b489e",
+     "at": [
+      14.71,
+      21.14,
+      24.02,
+      27.45,
+      38.44
+     ],
+     "atQ": 45.39
     },
     {
      "tags": [
@@ -259,7 +302,16 @@
      ],
      "answer": 3,
      "why": "Moving season: collection is two weeks away at the earliest.",
-     "audio": "n2_27/q06.mp3?v=0c3514b4"
+     "audio": "n2_27/q06.mp3?v=0c3514b4",
+     "at": [
+      16.95,
+      23.41,
+      30.35,
+      33.83,
+      42.28,
+      45.23
+     ],
+     "atQ": 52.78
     }
    ],
    "spoken": false
@@ -289,7 +341,11 @@
      ],
      "answer": 1,
      "why": "Main point: water only when dry, then generously.",
-     "audio": "n2_27/q07.mp3?v=cf2e4b0f"
+     "audio": "n2_27/q07.mp3?v=cf2e4b0f",
+     "at": [
+      5.56
+     ],
+     "atQ": 56.28
     },
     {
      "tags": [
@@ -311,7 +367,11 @@
      ],
      "answer": 4,
      "why": "Chat leads to ideas and early problem-spotting; make time for it online.",
-     "audio": "n2_27/q08.mp3?v=f140cb2b"
+     "audio": "n2_27/q08.mp3?v=f140cb2b",
+     "at": [
+      5.46
+     ],
+     "atQ": 57.17
     }
    ],
    "spoken": true
@@ -338,7 +398,10 @@
      ],
      "answer": 3,
      "why": "目を通す = look over; he asks her to read it.",
-     "audio": "n2_27/q09.mp3?v=70861689"
+     "audio": "n2_27/q09.mp3?v=70861689",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -357,7 +420,10 @@
      ],
      "answer": 2,
      "why": "An invitation: accept and ask where.",
-     "audio": "n2_27/q10.mp3?v=10326d22"
+     "audio": "n2_27/q10.mp3?v=10326d22",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -376,7 +442,10 @@
      ],
      "answer": 1,
      "why": "A late notice: understand, take care.",
-     "audio": "n2_27/q11.mp3?v=bc5c7f4e"
+     "audio": "n2_27/q11.mp3?v=bc5c7f4e",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -395,7 +464,10 @@
      ],
      "answer": 3,
      "why": "切らしている = out of stock.",
-     "audio": "n2_27/q12.mp3?v=952ac8ae"
+     "audio": "n2_27/q12.mp3?v=952ac8ae",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -414,7 +486,10 @@
      ],
      "answer": 1,
      "why": "Praised: modest reply.",
-     "audio": "n2_27/q13.mp3?v=1b2375f0"
+     "audio": "n2_27/q13.mp3?v=1b2375f0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -433,7 +508,10 @@
      ],
      "answer": 2,
      "why": "手が離せない = busy; she asks him to get the door.",
-     "audio": "n2_27/q14.mp3?v=84d0380f"
+     "audio": "n2_27/q14.mp3?v=84d0380f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -491,7 +569,18 @@
      ],
      "answer": 2,
      "why": "They need a room and a working projector: the mountain centre.",
-     "audio": "n2_27/q15.mp3?v=ac90caf9"
+     "audio": "n2_27/q15.mp3?v=ac90caf9",
+     "at": [
+      7.44,
+      17.1,
+      28.96,
+      38.02,
+      47.8,
+      52.36,
+      62.3,
+      64.62
+     ],
+     "atQ": 71.76
     }
    ],
    "spoken": true
@@ -548,7 +637,13 @@
        "why": "Crab and salmon roe: the Hokkaido fair on the 7th."
       }
      ],
-     "audio": "n2_27/q16.mp3?v=8b05820a"
+     "audio": "n2_27/q16.mp3?v=8b05820a",
+     "at": [
+      7.01,
+      40.27,
+      46.83,
+      52.21
+     ]
     }
    ],
    "spoken": false

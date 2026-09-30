@@ -53,7 +53,17 @@
      ],
      "answer": 3,
      "why": "Check if the restaurant can change the menu.",
-     "audio": "n1_40/q01.mp3?v=05c65411"
+     "audio": "n1_40/q01.mp3?v=05c65411",
+     "at": [
+      10.64,
+      16.92,
+      20.96,
+      28.83,
+      33.39,
+      45.65,
+      50.77
+     ],
+     "atQ": 54.2
     },
     {
      "tags": [
@@ -91,7 +101,15 @@
      ],
      "answer": 1,
      "why": "Finish the experiment before the move.",
-     "audio": "n1_40/q02.mp3?v=dcd86088"
+     "audio": "n1_40/q02.mp3?v=dcd86088",
+     "at": [
+      10.92,
+      15.29,
+      19.46,
+      30.89,
+      35.35
+     ],
+     "atQ": 44.92
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 4,
      "why": "Meds are required; insurance card needed again.",
-     "audio": "n1_40/q03.mp3?v=0e38a4fb"
+     "audio": "n1_40/q03.mp3?v=0e38a4fb",
+     "at": [
+      11.25,
+      21.27,
+      23.61,
+      40.75,
+      45.47
+     ],
+     "atQ": 53.06
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 1,
      "why": "Reading leftovers taught him customers' tastes.",
-     "audio": "n1_40/q04.mp3?v=bccf3542"
+     "audio": "n1_40/q04.mp3?v=bccf3542",
+     "at": [
+      17.52,
+      20.99,
+      27.64,
+      31.41
+     ],
+     "atQ": 50.08
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 1,
      "why": "Pre-read materials.",
-     "audio": "n1_40/q05.mp3?v=2b77f0aa"
+     "audio": "n1_40/q05.mp3?v=2b77f0aa",
+     "at": [
+      18.04,
+      23.63,
+      33.73,
+      37.71
+     ],
+     "atQ": 42.33
     },
     {
      "tags": [
@@ -227,7 +267,11 @@
      ],
      "answer": 3,
      "why": "Social ties.",
-     "audio": "n1_40/q06.mp3?v=1560561f"
+     "audio": "n1_40/q06.mp3?v=1560561f",
+     "at": [
+      16.06
+     ],
+     "atQ": 38.43
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 2,
      "why": "Language change is natural.",
-     "audio": "n1_40/q07.mp3?v=49415f25"
+     "audio": "n1_40/q07.mp3?v=49415f25",
+     "at": [
+      5.22
+     ],
+     "atQ": 49.91
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 2,
      "why": "Neighbours save lives.",
-     "audio": "n1_40/q08.mp3?v=7001a595"
+     "audio": "n1_40/q08.mp3?v=7001a595",
+     "at": [
+      5.85
+     ],
+     "atQ": 52.28
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 2,
      "why": "Missing stamp: fix it.",
-     "audio": "n1_40/q09.mp3?v=5f8d0e00"
+     "audio": "n1_40/q09.mp3?v=5f8d0e00",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 3,
      "why": "Rumour check: confirm with reason.",
-     "audio": "n1_40/q10.mp3?v=cd869900"
+     "audio": "n1_40/q10.mp3?v=cd869900",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 1,
      "why": "Asking for a manager: reply for the office.",
-     "audio": "n1_40/q11.mp3?v=0ab924bf"
+     "audio": "n1_40/q11.mp3?v=0ab924bf",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "Asked after health: reassure.",
-     "audio": "n1_40/q12.mp3?v=7c6b1674"
+     "audio": "n1_40/q12.mp3?v=7c6b1674",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "Praised: thank.",
-     "audio": "n1_40/q13.mp3?v=9de3db3d"
+     "audio": "n1_40/q13.mp3?v=9de3db3d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 2,
      "why": "Neighbour apologising: reassure.",
-     "audio": "n1_40/q14.mp3?v=c22ad57f"
+     "audio": "n1_40/q14.mp3?v=c22ad57f",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 4,
      "why": "Roof, showers, 5 minutes away.",
-     "audio": "n1_40/q15.mp3?v=058baa21"
+     "audio": "n1_40/q15.mp3?v=058baa21",
+     "at": [
+      8.08,
+      25.01,
+      38.07,
+      47.33,
+      54.77,
+      64.39
+     ],
+     "atQ": 71.47
     }
    ],
    "spoken": true
@@ -512,7 +591,14 @@
        "why": "Light cordless for stairs."
       }
      ],
-     "audio": "n1_40/q16.mp3?v=0c170e95"
+     "audio": "n1_40/q16.mp3?v=0c170e95",
+     "at": [
+      10.21,
+      34.84,
+      41.11,
+      49.76,
+      55.3
+     ]
     }
    ],
    "spoken": false

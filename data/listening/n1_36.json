@@ -45,7 +45,15 @@
      ],
      "answer": 1,
      "why": "Explain the over-limit taxi fare.",
-     "audio": "n1_36/q01.mp3?v=704971bb"
+     "audio": "n1_36/q01.mp3?v=704971bb",
+     "at": [
+      11.59,
+      17.15,
+      19.96,
+      34.52,
+      39.27
+     ],
+     "atQ": 46.39
     },
     {
      "tags": [
@@ -87,7 +95,16 @@
      ],
      "answer": 4,
      "why": "Hotels are scarce: book first.",
-     "audio": "n1_36/q02.mp3?v=59bafff8"
+     "audio": "n1_36/q02.mp3?v=59bafff8",
+     "at": [
+      11.1,
+      14.64,
+      19.58,
+      29.76,
+      33.26,
+      38.36
+     ],
+     "atQ": 40.84
     },
     {
      "tags": [
@@ -125,7 +142,15 @@
      ],
      "answer": 1,
      "why": "She'll gather sign-ups via notices.",
-     "audio": "n1_36/q03.mp3?v=48466f57"
+     "audio": "n1_36/q03.mp3?v=48466f57",
+     "at": [
+      12.58,
+      18.38,
+      21.91,
+      34.52,
+      39.58
+     ],
+     "atQ": 41.99
     }
    ],
    "spoken": false
@@ -167,7 +192,14 @@
      ],
      "answer": 2,
      "why": "The rhythm when read aloud.",
-     "audio": "n1_36/q04.mp3?v=a774358d"
+     "audio": "n1_36/q04.mp3?v=a774358d",
+     "at": [
+      18.84,
+      23.86,
+      26.75,
+      30.48
+     ],
+     "atQ": 44.82
     },
     {
      "tags": [
@@ -201,7 +233,14 @@
      ],
      "answer": 4,
      "why": "Customers moved online.",
-     "audio": "n1_36/q05.mp3?v=61b70b9a"
+     "audio": "n1_36/q05.mp3?v=61b70b9a",
+     "at": [
+      15.47,
+      20.84,
+      27.11,
+      28.89
+     ],
+     "atQ": 54.87
     },
     {
      "tags": [
@@ -223,7 +262,11 @@
      ],
      "answer": 3,
      "why": "Letting children choose their own books.",
-     "audio": "n1_36/q06.mp3?v=14f17715"
+     "audio": "n1_36/q06.mp3?v=14f17715",
+     "at": [
+      17.94
+     ],
+     "atQ": 45.88
     }
    ],
    "spoken": false
@@ -253,7 +296,11 @@
      ],
      "answer": 1,
      "why": "Gut health affects body and mind.",
-     "audio": "n1_36/q07.mp3?v=ebc73f1e"
+     "audio": "n1_36/q07.mp3?v=ebc73f1e",
+     "at": [
+      4.65
+     ],
+     "atQ": 50.52
     },
     {
      "tags": [
@@ -275,7 +322,11 @@
      ],
      "answer": 2,
      "why": "Balance tourism with residents' lives.",
-     "audio": "n1_36/q08.mp3?v=f6ffb287"
+     "audio": "n1_36/q08.mp3?v=f6ffb287",
+     "at": [
+      5.95
+     ],
+     "atQ": 60.1
     }
    ],
    "spoken": true
@@ -302,7 +353,10 @@
      ],
      "answer": 1,
      "why": "Asked to review today: agree.",
-     "audio": "n1_36/q09.mp3?v=5fec65a4"
+     "audio": "n1_36/q09.mp3?v=5fec65a4",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -321,7 +375,10 @@
      ],
      "answer": 3,
      "why": "Asked about plans: not yet.",
-     "audio": "n1_36/q10.mp3?v=99068081"
+     "audio": "n1_36/q10.mp3?v=99068081",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -340,7 +397,10 @@
      ],
      "answer": 3,
      "why": "Asking for Tanaka: he's in a meeting.",
-     "audio": "n1_36/q11.mp3?v=9b254417"
+     "audio": "n1_36/q11.mp3?v=9b254417",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -359,7 +419,10 @@
      ],
      "answer": 2,
      "why": "Praise from above: credit the team.",
-     "audio": "n1_36/q12.mp3?v=5f778031"
+     "audio": "n1_36/q12.mp3?v=5f778031",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -378,7 +441,10 @@
      ],
      "answer": 2,
      "why": "Asked for a lift: agree.",
-     "audio": "n1_36/q13.mp3?v=ece5327d"
+     "audio": "n1_36/q13.mp3?v=ece5327d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -397,7 +463,10 @@
      ],
      "answer": 1,
      "why": "A supplier apologises: accept with a note.",
-     "audio": "n1_36/q14.mp3?v=21be4195"
+     "audio": "n1_36/q14.mp3?v=21be4195",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -443,7 +512,15 @@
      ],
      "answer": 3,
      "why": "It can start right away using community halls.",
-     "audio": "n1_36/q15.mp3?v=90f8f095"
+     "audio": "n1_36/q15.mp3?v=90f8f095",
+     "at": [
+      8.52,
+      29.58,
+      40.39,
+      51.88,
+      65.69
+     ],
+     "atQ": 73.44
     }
    ],
    "spoken": true
@@ -500,7 +577,13 @@
        "why": "Hands-on pottery workshop."
       }
      ],
-     "audio": "n1_36/q16.mp3?v=8bb1bd9e"
+     "audio": "n1_36/q16.mp3?v=8bb1bd9e",
+     "at": [
+      11.49,
+      31.89,
+      38.53,
+      43.79
+     ]
     }
    ],
    "spoken": false

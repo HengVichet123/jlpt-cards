@@ -53,7 +53,17 @@
      ],
      "answer": 4,
      "why": "Compile a dated record of all exchanges; the lawyer will send the formal letter.",
-     "audio": "n1_15/q01.mp3?v=273b6fad"
+     "audio": "n1_15/q01.mp3?v=273b6fad",
+     "at": [
+      11.26,
+      15.08,
+      16.97,
+      18.74,
+      27.39,
+      29.87,
+      42.22
+     ],
+     "atQ": 44.55
     },
     {
      "tags": [
@@ -95,7 +105,16 @@
      ],
      "answer": 3,
      "why": "Before the meeting, list the off-spec part numbers and send them.",
-     "audio": "n1_15/q02.mp3?v=3e1bd069"
+     "audio": "n1_15/q02.mp3?v=3e1bd069",
+     "at": [
+      9.38,
+      13.2,
+      14.41,
+      23.96,
+      28.77,
+      37.91
+     ],
+     "atQ": 42.06
     },
     {
      "tags": [
@@ -137,7 +156,16 @@
      ],
      "answer": 2,
      "why": "Registration and abstract are done; the travel grant is due Friday.",
-     "audio": "n1_15/q03.mp3?v=5be7bec8"
+     "audio": "n1_15/q03.mp3?v=5be7bec8",
+     "at": [
+      11.42,
+      15.33,
+      19.86,
+      24.81,
+      26.86,
+      34.42
+     ],
+     "atQ": 36.83
     }
    ],
    "spoken": false
@@ -179,7 +207,14 @@
      ],
      "answer": 2,
      "why": "Players listening to each other creates one piece of music.",
-     "audio": "n1_15/q04.mp3?v=8e01edca"
+     "audio": "n1_15/q04.mp3?v=8e01edca",
+     "at": [
+      15.73,
+      22.59,
+      28.25,
+      31.03
+     ],
+     "atQ": 43.56
     },
     {
      "tags": [
@@ -213,7 +248,14 @@
      ],
      "answer": 1,
      "why": "A five-minute morning share of plans and problems.",
-     "audio": "n1_15/q05.mp3?v=1ad41120"
+     "audio": "n1_15/q05.mp3?v=1ad41120",
+     "at": [
+      18.11,
+      22.24,
+      25.69,
+      27.68
+     ],
+     "atQ": 40.67
     },
     {
      "tags": [
@@ -247,7 +289,14 @@
      ],
      "answer": 3,
      "why": "Greeting neighbours; he talks to fewer people since retiring.",
-     "audio": "n1_15/q06.mp3?v=2537c697"
+     "audio": "n1_15/q06.mp3?v=2537c697",
+     "at": [
+      14.55,
+      18.94,
+      21.5,
+      23.56
+     ],
+     "atQ": 34.59
     }
    ],
    "spoken": false
@@ -277,7 +326,11 @@
      ],
      "answer": 4,
      "why": "The brain consolidates learning during sleep.",
-     "audio": "n1_15/q07.mp3?v=9ca87b46"
+     "audio": "n1_15/q07.mp3?v=9ca87b46",
+     "at": [
+      5.28
+     ],
+     "atQ": 48.07
     },
     {
      "tags": [
@@ -299,7 +352,11 @@
      ],
      "answer": 1,
      "why": "Write a shopping list and buy nothing else.",
-     "audio": "n1_15/q08.mp3?v=c8f0c8a8"
+     "audio": "n1_15/q08.mp3?v=c8f0c8a8",
+     "at": [
+      5.02
+     ],
+     "atQ": 49.36
     }
    ],
    "spoken": true
@@ -326,7 +383,10 @@
      ],
      "answer": 3,
      "why": "Concern about budget: agree to review.",
-     "audio": "n1_15/q09.mp3?v=26476bf8"
+     "audio": "n1_15/q09.mp3?v=26476bf8",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -345,7 +405,10 @@
      ],
      "answer": 2,
      "why": "Still busy? Yes, things haven't settled.",
-     "audio": "n1_15/q10.mp3?v=24ea9e60"
+     "audio": "n1_15/q10.mp3?v=24ea9e60",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -364,7 +427,10 @@
      ],
      "answer": 2,
      "why": "Asked who you are: introduce yourself.",
-     "audio": "n1_15/q11.mp3?v=3d092a2a"
+     "audio": "n1_15/q11.mp3?v=3d092a2a",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -383,7 +449,10 @@
      ],
      "answer": 1,
      "why": "Don't trouble yourself: it's just a small token.",
-     "audio": "n1_15/q12.mp3?v=3d8e865d"
+     "audio": "n1_15/q12.mp3?v=3d8e865d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -402,7 +471,10 @@
      ],
      "answer": 1,
      "why": "Can you attend? Yes, for now.",
-     "audio": "n1_15/q13.mp3?v=fb94b2db"
+     "audio": "n1_15/q13.mp3?v=fb94b2db",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -421,7 +493,10 @@
      ],
      "answer": 3,
      "why": "A free item from the shop: thank them.",
-     "audio": "n1_15/q14.mp3?v=e88227df"
+     "audio": "n1_15/q14.mp3?v=e88227df",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -471,7 +546,16 @@
      ],
      "answer": 1,
      "why": "No long travel; a family photo first, then the dinner.",
-     "audio": "n1_15/q15.mp3?v=761113bd"
+     "audio": "n1_15/q15.mp3?v=761113bd",
+     "at": [
+      7.7,
+      11.79,
+      19.94,
+      24.78,
+      31.84,
+      42.11
+     ],
+     "atQ": 50.19
     }
    ],
    "spoken": true
@@ -524,7 +608,12 @@
        "why": "Bad with machines, wants basics: computer basics."
       }
      ],
-     "audio": "n1_15/q16.mp3?v=9f6f2391"
+     "audio": "n1_15/q16.mp3?v=9f6f2391",
+     "at": [
+      5.5,
+      28.62,
+      32.93
+     ]
     }
    ],
    "spoken": false

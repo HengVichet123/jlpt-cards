@@ -49,7 +49,16 @@
      ],
      "answer": 3,
      "why": "Printing takes three days, so get the text approved by the director first.",
-     "audio": "n1_14/q01.mp3?v=ef947c00"
+     "audio": "n1_14/q01.mp3?v=ef947c00",
+     "at": [
+      11.69,
+      16.04,
+      21.05,
+      23.12,
+      26.27,
+      36.84
+     ],
+     "atQ": 41.36
     },
     {
      "tags": [
@@ -91,7 +100,16 @@
      ],
      "answer": 2,
      "why": "Justify the doubled ad budget with expected sales figures.",
-     "audio": "n1_14/q02.mp3?v=a35a7fe9"
+     "audio": "n1_14/q02.mp3?v=a35a7fe9",
+     "at": [
+      10.29,
+      13.83,
+      15.23,
+      22.54,
+      27.06,
+      34.41
+     ],
+     "atQ": 36.83
     },
     {
      "tags": [
@@ -129,7 +147,15 @@
      ],
      "answer": 1,
      "why": "The admission letter has arrived; next the bank balance certificate, then the embassy.",
-     "audio": "n1_14/q03.mp3?v=b6518f3a"
+     "audio": "n1_14/q03.mp3?v=b6518f3a",
+     "at": [
+      12.02,
+      16.74,
+      26.27,
+      28.56,
+      43.02
+     ],
+     "atQ": 48.05
     }
    ],
    "spoken": false
@@ -171,7 +197,14 @@
      ],
      "answer": 4,
      "why": "The courage to turn back; getting home safely matters most.",
-     "audio": "n1_14/q04.mp3?v=df78691c"
+     "audio": "n1_14/q04.mp3?v=df78691c",
+     "at": [
+      15.62,
+      23.06,
+      27.11,
+      29.24
+     ],
+     "atQ": 39.16
     },
     {
      "tags": [
@@ -205,7 +238,14 @@
      ],
      "answer": 1,
      "why": "They had no senior to consult and struggled alone.",
-     "audio": "n1_14/q05.mp3?v=5b798a18"
+     "audio": "n1_14/q05.mp3?v=5b798a18",
+     "at": [
+      17.6,
+      23.72,
+      27.04,
+      29.32
+     ],
+     "atQ": 41.05
     },
     {
      "tags": [
@@ -239,7 +279,14 @@
      ],
      "answer": 2,
      "why": "At home all day after retiring, she wanted to make something lasting.",
-     "audio": "n1_14/q06.mp3?v=56f3843c"
+     "audio": "n1_14/q06.mp3?v=56f3843c",
+     "at": [
+      14.46,
+      18.45,
+      21.5,
+      23.38
+     ],
+     "atQ": 35.4
     }
    ],
    "spoken": false
@@ -269,7 +316,11 @@
      ],
      "answer": 4,
      "why": "Microplastics return to us through fish; stop plastic reaching the sea.",
-     "audio": "n1_14/q07.mp3?v=6aaa24bd"
+     "audio": "n1_14/q07.mp3?v=6aaa24bd",
+     "at": [
+      6.28
+     ],
+     "atQ": 47.1
     },
     {
      "tags": [
@@ -291,7 +342,11 @@
      ],
      "answer": 3,
      "why": "Not skill; the time listening to a loved one's voice matters.",
-     "audio": "n1_14/q08.mp3?v=12785cf4"
+     "audio": "n1_14/q08.mp3?v=12785cf4",
+     "at": [
+      5.1
+     ],
+     "atQ": 41.51
     }
    ],
    "spoken": true
@@ -318,7 +373,10 @@
      ],
      "answer": 3,
      "why": "〜っこない = no way it will work; ask for advice.",
-     "audio": "n1_14/q09.mp3?v=2ebf2179"
+     "audio": "n1_14/q09.mp3?v=2ebf2179",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -337,7 +395,10 @@
      ],
      "answer": 1,
      "why": "やまやま = really want to, but can't.",
-     "audio": "n1_14/q10.mp3?v=9340af0d"
+     "audio": "n1_14/q10.mp3?v=9340af0d",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -356,7 +417,10 @@
      ],
      "answer": 2,
      "why": "Thanks for accommodating: glad to help.",
-     "audio": "n1_14/q11.mp3?v=1fb07a8c"
+     "audio": "n1_14/q11.mp3?v=1fb07a8c",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -375,7 +439,10 @@
      ],
      "answer": 3,
      "why": "今さら = too late now; apologise.",
-     "audio": "n1_14/q12.mp3?v=05cc2479"
+     "audio": "n1_14/q12.mp3?v=05cc2479",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -394,7 +461,10 @@
      ],
      "answer": 2,
      "why": "にしては上出来 = good for a first attempt.",
-     "audio": "n1_14/q13.mp3?v=e9b9af73"
+     "audio": "n1_14/q13.mp3?v=e9b9af73",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -413,7 +483,10 @@
      ],
      "answer": 1,
      "why": "Booked out that day: ask for another date.",
-     "audio": "n1_14/q14.mp3?v=d8f4e0c4"
+     "audio": "n1_14/q14.mp3?v=d8f4e0c4",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -463,7 +536,16 @@
      ],
      "answer": 1,
      "why": "TV and influencers are expensive; free samples in stores spread by word of mouth.",
-     "audio": "n1_14/q15.mp3?v=1622f27b"
+     "audio": "n1_14/q15.mp3?v=1622f27b",
+     "at": [
+      7.5,
+      13.48,
+      23.63,
+      31.45,
+      39.4,
+      50.57
+     ],
+     "atQ": 57.84
     }
    ],
    "spoken": true
@@ -516,7 +598,12 @@
        "why": "Old tools like her grandmother's: the old-life course."
       }
      ],
-     "audio": "n1_14/q16.mp3?v=00e99662"
+     "audio": "n1_14/q16.mp3?v=00e99662",
+     "at": [
+      7.54,
+      34.32,
+      40.19
+     ]
     }
    ],
    "spoken": false

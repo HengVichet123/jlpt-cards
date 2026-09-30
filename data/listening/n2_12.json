@@ -45,7 +45,15 @@
      ],
      "answer": 1,
      "why": "Back up the data before handing the phone over.",
-     "audio": "n2_12/q01.mp3?v=d10c538c"
+     "audio": "n2_12/q01.mp3?v=d10c538c",
+     "at": [
+      10.83,
+      16.2,
+      23.23,
+      26.56,
+      36.15
+     ],
+     "atQ": 41.38
     },
     {
      "tags": [
@@ -79,7 +87,14 @@
      ],
      "answer": 4,
      "why": "Show it to the manager before emailing everyone.",
-     "audio": "n2_12/q02.mp3?v=a973958d"
+     "audio": "n2_12/q02.mp3?v=a973958d",
+     "at": [
+      10.36,
+      13.89,
+      16.22,
+      25.54
+     ],
+     "atQ": 29.18
     },
     {
      "tags": [
@@ -113,7 +128,14 @@
      ],
      "answer": 1,
      "why": "まず、古くなった野菜を棚から下ろして.",
-     "audio": "n2_12/q03.mp3?v=519f1d19"
+     "audio": "n2_12/q03.mp3?v=519f1d19",
+     "at": [
+      10.94,
+      15.24,
+      18.1,
+      30.2
+     ],
+     "atQ": 32.6
     }
    ],
    "spoken": false
@@ -155,7 +177,14 @@
      ],
      "answer": 2,
      "why": "一番は、仕事のことを忘れられるから.",
-     "audio": "n2_12/q04.mp3?v=697fb4ac"
+     "audio": "n2_12/q04.mp3?v=697fb4ac",
+     "at": [
+      15.12,
+      18.21,
+      22.1,
+      24.91
+     ],
+     "atQ": 35.73
     },
     {
      "tags": [
@@ -193,7 +222,15 @@
      ],
      "answer": 4,
      "why": "She stayed with an elderly woman who felt ill at the station.",
-     "audio": "n2_12/q05.mp3?v=228fc858"
+     "audio": "n2_12/q05.mp3?v=228fc858",
+     "at": [
+      15.61,
+      18.56,
+      20.89,
+      22.85,
+      31.95
+     ],
+     "atQ": 35.65
     },
     {
      "tags": [
@@ -227,7 +264,14 @@
      ],
      "answer": 1,
      "why": "A day off from all housework.",
-     "audio": "n2_12/q06.mp3?v=61adae91"
+     "audio": "n2_12/q06.mp3?v=61adae91",
+     "at": [
+      14.12,
+      17.85,
+      20.15,
+      22.49
+     ],
+     "atQ": 31.12
     }
    ],
    "spoken": false
@@ -257,7 +301,11 @@
      ],
      "answer": 2,
      "why": "Sunny morning, but storms in the afternoon: be prepared.",
-     "audio": "n2_12/q07.mp3?v=899bba9e"
+     "audio": "n2_12/q07.mp3?v=899bba9e",
+     "at": [
+      5.3
+     ],
+     "atQ": 44.23
     },
     {
      "tags": [
@@ -279,7 +327,11 @@
      ],
      "answer": 3,
      "why": "Children copy adults; read in front of them.",
-     "audio": "n2_12/q08.mp3?v=dad6b5d3"
+     "audio": "n2_12/q08.mp3?v=dad6b5d3",
+     "at": [
+      5.89
+     ],
+     "atQ": 47.78
     }
    ],
    "spoken": true
@@ -306,7 +358,10 @@
      ],
      "answer": 3,
      "why": "The meeting has started: apologise and go.",
-     "audio": "n2_12/q09.mp3?v=1efcef06"
+     "audio": "n2_12/q09.mp3?v=1efcef06",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -325,7 +380,10 @@
      ],
      "answer": 1,
      "why": "Asked to lend money: ask how much.",
-     "audio": "n2_12/q10.mp3?v=f85baf5b"
+     "audio": "n2_12/q10.mp3?v=f85baf5b",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -344,7 +402,10 @@
      ],
      "answer": 2,
      "why": "When to deliver: give a time.",
-     "audio": "n2_12/q11.mp3?v=1cbf45e0"
+     "audio": "n2_12/q11.mp3?v=1cbf45e0",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -363,7 +424,10 @@
      ],
      "answer": 3,
      "why": "Told to clean your room: agree.",
-     "audio": "n2_12/q12.mp3?v=19ac0dc9"
+     "audio": "n2_12/q12.mp3?v=19ac0dc9",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -382,7 +446,10 @@
      ],
      "answer": 1,
      "why": "Thanked for help: glad to be useful.",
-     "audio": "n2_12/q13.mp3?v=53515914"
+     "audio": "n2_12/q13.mp3?v=53515914",
+     "at": [
+      0.0
+     ]
     },
     {
      "tags": [
@@ -401,7 +468,10 @@
      ],
      "answer": 2,
      "why": "A 30-minute wait: accept.",
-     "audio": "n2_12/q14.mp3?v=417fa790"
+     "audio": "n2_12/q14.mp3?v=417fa790",
+     "at": [
+      0.0
+     ]
     }
    ],
    "spoken": true
@@ -451,7 +521,16 @@
      ],
      "answer": 3,
      "why": "The 1st clashes with sports day, the 2nd may rain: the 3rd Sunday.",
-     "audio": "n2_12/q15.mp3?v=3ad4b3f3"
+     "audio": "n2_12/q15.mp3?v=3ad4b3f3",
+     "at": [
+      7.21,
+      11.6,
+      25.96,
+      30.3,
+      39.49,
+      41.77
+     ],
+     "atQ": 48.65
     }
    ],
    "spoken": true
@@ -504,7 +583,12 @@
        "why": "She hates the cold: the warm southern island."
       }
      ],
-     "audio": "n2_12/q16.mp3?v=0edd3f63"
+     "audio": "n2_12/q16.mp3?v=0edd3f63",
+     "at": [
+      6.88,
+      32.33,
+      36.51
+     ]
     }
    ],
    "spoken": false
