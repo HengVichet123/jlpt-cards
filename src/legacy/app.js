@@ -1,4 +1,5 @@
 import { store, K, migrate } from "../data/store";
+import { St } from "../app/state";
 import * as SRS from "../practice/srs";
 import * as Sess from "../practice/sessions";
 import { createElement } from "react";
@@ -83,7 +84,7 @@ function hl(text,targets){
 
 // v154: all saved data goes through src/data/store.ts (same keys, same behaviour)
 /* v155+: React screens. Same key = updated in place, so the page-slide flags are reset here (innerHTML did that before). */
-function showScreen(key, node){ if(renderScreen($("#list"), key, node)){ NAV_SAME = false; NAV_DIR = "fwd"; SWIPE_FROM = 0; } }
+function showScreen(key, node){ if(renderScreen($("#list"), key, node)){ St.NAV_SAME = false; St.NAV_DIR = "fwd"; St.SWIPE_FROM = 0; } }
 const tr = t => (isJa() && jaText(t)) || t;   // app text in Japanese-only mode (what jaWalk does to plain pages)
 
 
@@ -91,24 +92,9 @@ const tr = t => (isJa() && jaText(t)) || t;   // app text in Japanese-only mode 
    GLOBAL STATE
    ========================================================= */
 
-let INDEX = [];
 
-let DATA = null;
 
-let TAB =
-  new URLSearchParams(location.search)
-    .get("tab")
-  ||
-  store.get(
-    "jc:tab",
-    "words"
-  );
 
-let ONLY_WEAK =
-  store.get(
-    "jc:weak",
-    false
-  );
 
 
 /* =========================================================
@@ -117,7 +103,7 @@ let ONLY_WEAK =
 
 function dotsKey(type,no){
 
-  return `jc:dots:${DATA.level}:${type}:${no}`;
+  return `jc:dots:${St.DATA.level}:${type}:${no}`;
 
 }
 
@@ -592,7 +578,7 @@ function card(
 
 
 /* =========================================================
-   PLAYGROUND DATA
+   PLAYGROUND St.DATA
    ========================================================= */
 
 const PG = {
@@ -603,7 +589,7 @@ const PG = {
 
 /* v156: review rules, undo and sessions live in src/practice/ (srs.ts, sessions.ts) */
 const pgCanUndo = () => SRS.canUndo(pgState().sid);
-function pgUndo(){ if(SRS.undo(pgState().sid)){ NAV_SAME = true; renderPG(); } }
+function pgUndo(){ if(SRS.undo(pgState().sid)){ St.NAV_SAME = true; renderPG(); } }
 function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the running card
   SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
   SRS.rate(lvl, type, no, m);
@@ -636,7 +622,7 @@ async function pgPoolLoad(level){
 
 
   // all lesson files of the level in parallel (was one-by-one: ~30 round trips in a row on a phone)
-  const files = INDEX.filter(i => i.level === level);
+  const files = St.INDEX.filter(i => i.level === level);
   const got = await Promise.all(files.map(x =>
     fetch(`data/${x.id}.json`, {cache:"no-cache"})   // revalidate: card updates show up right away
       .then(r => r.json()).then(d => [x, d]).catch(() => null)));
@@ -658,10 +644,9 @@ async function pgPoolLoad(level){
 
 
 /* Sections: N1/N2 words grouped by meaning (分類語彙表), like chapters in a textbook */
-let SECTIONS = null;
 async function loadSections(){
-  if(!SECTIONS){ try{ SECTIONS = await (await fetch("data/sections.json", {cache:"no-cache"})).json(); }catch(e){ SECTIONS = {N1:[], N2:[]}; } }
-  return SECTIONS;
+  if(!St.SECTIONS){ try{ St.SECTIONS = await (await fetch("data/sections.json", {cache:"no-cache"})).json(); }catch(e){ St.SECTIONS = {N1:[], N2:[]}; } }
+  return St.SECTIONS;
 }
 /* Pre-learn readings: a real text + the list of our cards it uses */
 const READINGS = {};
@@ -684,9 +669,8 @@ function sessResume(id){
   const se = sessList().find(x => x.id === id); if(!se) return;
   const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id});
   store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
-  PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+  St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
-let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null, SESS_ALL = false;   // SESS_ALL: Continue list expanded   // on the New session page? which row is being renamed? last deleted (for Undo)
 const sessName = Sess.name;
 const sessDay = () => { const d = new Date(); return `${d.getMonth() + 1}/${d.getDate()}`; };
 function sessAutoName(title){ const st = pgState();
@@ -699,7 +683,7 @@ function pgStartWith(ids, label){
   if(!ids.length) return;
   const st = pgState(); Object.assign(st, {level: "ALL", from: "all", ids, sid: "s" + Date.now()});
   sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
-  store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
+  store.set("jc:pg", st); St.PG_NEW = false; St.SESS_EDIT = null; St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
 const sessCounts = Sess.counts;
 function pgSheetClose(instant){
@@ -712,7 +696,7 @@ function pgDockLift(){   // move the bottom dock out of #list (page transitions 
   document.querySelectorAll("body > .pg-dock").forEach(d => d.remove());
   const d = $("#list .pg-dock"); if(d) document.body.appendChild(d);
 }
-function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); if(PG_RUNNING || CURRENT !== "playground") pgSheetClose(true); }
+function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); if(St.PG_RUNNING || St.CURRENT !== "playground") pgSheetClose(true); }
 function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
 async function pgNew(name = ""){   // level and card counts are saved as they are tapped (jc:pg)
 
@@ -810,11 +794,11 @@ async function pgNew(name = ""){   // level and card counts are saved as they ar
   let label = isJa() ? "全カード" : "All cards";
   if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
   if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
-  st.sid = "s" + Date.now(); PG_NEW = false; SESS_EDIT = null;
+  st.sid = "s" + Date.now(); St.PG_NEW = false; St.SESS_EDIT = null;
   const nm = name;
   if(st.ids.length) sessSave({id: st.sid, name: nm, start: Date.now(), at: Date.now(), label: sessAutoName(label === (isJa() ? "全カード" : "All cards") ? null : label), level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
   store.set("jc:pg", st);
-  PG_RUNNING = true;
+  St.PG_RUNNING = true;
 
   renderPG();
 
@@ -830,7 +814,7 @@ async function renderPG(){
 
   document.body.classList.toggle(
     "playing",
-    PLAY && PG_RUNNING
+    St.PLAY && St.PG_RUNNING
   );
 
 
@@ -848,9 +832,9 @@ async function renderPG(){
     PG.now();
 
 
-  if(!PG_RUNNING){
+  if(!St.PG_RUNNING){
 
-    DATA = {
+    St.DATA = {
       level:st.level
     };
 
@@ -877,21 +861,21 @@ async function renderPG(){
       if(!st.section || !lvls.includes(st.section.split("-")[0])){ st.section = (S[lvls[0]][0] || {}).id; store.set("jc:pg", st); }
       sections = lvls.map(lv => ({lv, items: S[lv].map((s, i) => ({id: s.id, label: `${i + 1}. ${s.name}${s.en ? ` (${s.en})` : ""} · ${secSeen(lv, s)}/${s.words.length}`}))}));
     }
-    const redraw = () => { NAV_SAME = true; renderPG(); };
+    const redraw = () => { St.NAV_SAME = true; renderPG(); };
     const saveSt = f => { const cur = pgState(); f(cur); store.set("jc:pg", cur); redraw(); };
     $("#count").textContent = `Practice · ${st.level}`;
     $("#pageTitle").textContent = "Practice";
     showScreen("pg-home", createElement(PracticeHome, {   // v157: Practice home is a React screen (src/screens/PracticeHome.tsx)
-      ja: isJa(), tr, calm: calmMotion(), sheetOpen: PG_NEW, origin: PG_RETURN ? PG_RETURN.label : null,
+      ja: isJa(), tr, calm: calmMotion(), sheetOpen: St.PG_NEW, origin: St.PG_RETURN ? St.PG_RETURN.label : null,
       sheet: {level: st.level, from: st.from || "all", hasReading: !!st.reading, n: {...st.n},
-        newLeft: PG_NEW ? {words: newLeft("words"), kanji: newLeft("kanji"), grammar: newLeft("grammar")} : {words: 0, kanji: 0, grammar: 0},
+        newLeft: St.PG_NEW ? {words: newLeft("words"), kanji: newLeft("kanji"), grammar: newLeft("grammar")} : {words: 0, kanji: 0, grammar: 0},
         sections, section: st.section,
         reading: inRead ? {title: rdInfo.title, words: rdInfo.words.length, kanji: rdInfo.kanji.length, grammar: rdInfo.grammar.length} : null,
         placeholder: sessAutoName(inRead ? rdInfo.title : null)},
-      onOrigin: () => PG_RETURN && PG_RETURN.go(),
+      onOrigin: () => St.PG_RETURN && St.PG_RETURN.go(),
       onResume: id => sessResume(id),
       onQuick: async () => pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`),
-      onSheet: open => { PG_NEW = open; SESS_EDIT = null; if(open || !PG_RETURN) redraw(); },   // closing from Cards/a section leaves Practice instead
+      onSheet: open => { St.PG_NEW = open; St.SESS_EDIT = null; if(open || !St.PG_RETURN) redraw(); },   // closing from Cards/a section leaves Practice instead
       onLevel: l => saveSt(c => { c.level = l; }),
       onFrom: f => saveSt(c => { c.from = f; }),
       onSection: id => saveSt(c => { c.section = id; }),
@@ -952,7 +936,7 @@ async function renderPG(){
   }
 
 
-  DATA = {
+  St.DATA = {
     level:st.level
   };
 
@@ -1006,7 +990,7 @@ async function renderPG(){
     live: live.length, later: later.length, canUndo: !!pgCanUndo(),
     onRate: m => pgRate(current[0], current[1], current[2].no, m),
     onUndo: pgUndo,
-    onExit: () => { PG_RUNNING = false; renderPG(); },
+    onExit: () => { St.PG_RUNNING = false; renderPG(); },
   }));
 
 
@@ -1085,34 +1069,32 @@ function bestVoice(){   // the saved choice, else the most natural-sounding Japa
     vs.find(v => /natural|neural|online|enhanced|premium|siri/i.test(v.name)) ||
     vs.find(v => /google/i.test(v.name)) || vs.find(v => /kyoko|o-ren|nanami|haruka/i.test(v.name)) || vs[0] || null;
 }
-let KEEP_SETTINGS = false;   // true while the page under the Settings sheet is redrawn (language switch)
-let SETTINGS_CLOSING = false;
 /* v160: Settings is React (src/screens/Settings.tsx): a sheet over the page (gear) or its own page */
 function settingsProps(){
   return {ja: isJa(), tr, version: APP_VERSION, theme: store.get("jc:theme", "auto"), lang: store.get("jc:lang", "en"),
     answer: store.get("jc:answer", "full"), sound: soundOn(), fam: store.get("jc:showfam", false),
     onTheme: v => { store.set("jc:theme", v); applyTheme(); drawSettings(); },
     onLang: v => { store.set("jc:lang", v);
-      if(hasOverlay("settings")){ NAV_SAME = true; KEEP_SETTINGS = true; pick(CURRENT); KEEP_SETTINGS = false; applyLang(); drawSettings(); return; }
+      if(hasOverlay("settings")){ St.NAV_SAME = true; St.KEEP_SETTINGS = true; pick(St.CURRENT); St.KEEP_SETTINGS = false; applyLang(); drawSettings(); return; }
       if(v === "en"){ pick("settings"); applyLang(); } else { applyLang(); drawSettings(); } },
     onAnswer: v => { store.set("jc:answer", v); drawSettings(); },
     onSound: on => store.set("jc:sound", on),
     onFam: on => { store.set("jc:showfam", on); document.body.classList.toggle("showfam", on); }};
 }
 function drawSettings(){
-  if(hasOverlay("settings")) renderOverlay("settings", createElement(SettingsSheet, {...settingsProps(), calm: calmMotion(), closing: SETTINGS_CLOSING, onClose: () => closeSettingsSheet()}));
-  else if(CURRENT === "settings") showScreen("settings", createElement(SettingsPanel, settingsProps()));
+  if(hasOverlay("settings")) renderOverlay("settings", createElement(SettingsSheet, {...settingsProps(), calm: calmMotion(), closing: St.SETTINGS_CLOSING, onClose: () => closeSettingsSheet()}));
+  else if(St.CURRENT === "settings") showScreen("settings", createElement(SettingsPanel, settingsProps()));
 }
 function openSettingsSheet(){   // Settings = a card sliding in from the right, Home nudged aside behind it
   if(hasOverlay("settings")) return;
-  SETTINGS_CLOSING = false;
+  St.SETTINGS_CLOSING = false;
   renderOverlay("settings", createElement(SettingsSheet, {...settingsProps(), calm: calmMotion(), closing: false, onClose: () => closeSettingsSheet()}));
 }
 function closeSettingsSheet(instant){
   if(!hasOverlay("settings")) return;
   if(instant || calmMotion()){ document.body.classList.remove("sheet-open"); removeOverlay("settings"); return; }
-  SETTINGS_CLOSING = true; drawSettings();
-  setTimeout(() => { SETTINGS_CLOSING = false; removeOverlay("settings"); }, 320);
+  St.SETTINGS_CLOSING = true; drawSettings();
+  setTimeout(() => { St.SETTINGS_CLOSING = false; removeOverlay("settings"); }, 320);
 }
 function renderSettings(){
   document.body.classList.remove("playing");
@@ -1158,11 +1140,11 @@ async function renderComplete(){
   if(!PG.pool[LVL]) $("#list").innerHTML = `<p class="loading-note">Loading ${LVL} cards…</p>`;   // never look frozen
   const pool =
     await pgPool(LVL);
-  if(CURRENT !== "complete") return;   // user left while it was loading
+  if(St.CURRENT !== "complete") return;   // user left while it was loading
 
 
   showScreen("complete", createElement(CompleteList, {   // v161: React (src/screens/Lists.tsx); tabs are switched by the app-wide .tab handler
-    tr, level: LVL, tab: TAB, pool, html: (t, c) => miniFor(t, c, c.level),
+    tr, level: LVL, tab: St.TAB, pool, html: (t, c) => miniFor(t, c, c.level),
     onLevel: l => { store.set("jc:clevel", l); renderComplete(); }}));
   $("#count").textContent = "Complete list";
 }
@@ -1225,10 +1207,8 @@ function flipCard(card, open){
   } else move();
 }
 
-let CARD_LVL = null;
 
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
-let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
 
 const SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//OEwAAAAAAAAAAAAEluZm8AAAAPAAAACQAABCAARUVFRUVFRUVFRUVdXV1dXV1dXV1dXXR0dHR0dHR0dHR0i4uLi4uLi4uLi4uioqKioqKioqKiorq6urq6urq6urq60dHR0dHR0dHR0dHo6Ojo6Ojo6Ojo6P//////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQD8AAAAAAAAAQgDea3ZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//NExAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExFMAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKYAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
 try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}   // iPhone: play even with the silent switch on
@@ -1237,21 +1217,20 @@ function unlockAudio(){ removeEventListener("touchend", unlockAudio); removeEven
   if(PLAYER.src) return; PLAYER.src = SILENT; PLAYER.play().then(() => PLAYER.pause()).catch(() => {}); }
 addEventListener("touchend", unlockAudio, {passive: true}); addEventListener("click", unlockAudio);
 const soundOn = () => store.get("jc:sound", true);
-let SAY_ON = null;   // the speaker icon currently playing (shown in the accent color)
-const sayOff = () => { if(SAY_ON){ SAY_ON.classList.remove("playing"); SAY_ON = null; } };
+const sayOff = () => { if(St.SAY_ON){ St.SAY_ON.classList.remove("playing"); St.SAY_ON = null; } };
 PLAYER.addEventListener("ended", sayOff); PLAYER.addEventListener("pause", sayOff);
 function soundNote(msg){   // only when every way of playing failed, so the cause can be reported
   let n = $("#soundNote"); if(!n){ n = document.createElement("div"); n.id = "soundNote"; n.className = "sound-note"; document.body.appendChild(n); }
   n.textContent = msg; n.hidden = false; clearTimeout(n._t); n._t = setTimeout(() => n.hidden = true, 6000);
 }
-fetch("data/audio/map.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : {}).then(m => AUDIO_MAP = m).catch(() => AUDIO_MAP = {});
+fetch("data/audio/map.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : {}).then(m => St.AUDIO_MAP = m).catch(() => St.AUDIO_MAP = {});
 const speaker = () => "nanami";   // one voice for everything (keeps the app small as content grows)
 function speak(text){
-  try{ if(AUDIO_NOW) AUDIO_NOW.pause(); }catch(e){}
-  const sp = speaker(), key = sp !== "device" && AUDIO_MAP && AUDIO_MAP[text];
+  try{ if(St.AUDIO_NOW) St.AUDIO_NOW.pause(); }catch(e){}
+  const sp = speaker(), key = sp !== "device" && St.AUDIO_MAP && St.AUDIO_MAP[text];
   if(key){
-    try{ if(AUDIO_NOW) AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
-    const url = `data/audio/${sp}/${key}.mp3`, a = PLAYER; AUDIO_NOW = a;
+    try{ if(St.AUDIO_NOW) St.AUDIO_NOW.pause(); speechSynthesis.cancel(); }catch(e){}
+    const url = `data/audio/${sp}/${key}.mp3`, a = PLAYER; St.AUDIO_NOW = a;
     try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
     a.src = url;
     a.play().catch(err1 =>   // route 2: load the whole file into memory and play it from there
@@ -1276,12 +1255,11 @@ const sayIcon = text => `<span class="say say-i" role="button" tabindex="0" data
 const sayBtn = text => `<button class="say" type="button" data-say="${esc(text)}" aria-label="Play sound">🔊</button>`;
 
 /* ---------- Novels ---------- */
-let NOVELS = null;
 async function renderNovels(){
   document.body.classList.remove("playing");
-  try{ NOVELS = NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
+  try{ St.NOVELS = St.NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
-  showScreen("movies", createElement(MovieList, {items: NOVELS}));   // v163: React (src/screens/Movies.tsx)
+  showScreen("movies", createElement(MovieList, {items: St.NOVELS}));   // v163: React (src/screens/Movies.tsx)
 }
 async function renderNovel(id){
   let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
@@ -1290,11 +1268,11 @@ async function renderNovel(id){
   showScreen("novel-" + id, createElement(Novel, {st, ja: isJa(), tr, deps: MOVIE_DEPS,   // v163: React + src/movies/player.ts
     onBack: () => { stopStory(); $("#pageTitle").textContent = "Movies"; renderNovels(); }}));
 }
-const MOVIE_DEPS = {audioMap: () => AUDIO_MAP, speak: t => speak(t), speakDevice: t => speakDevice(t), soundOn: () => soundOn(), calm: () => calmMotion(), ja: () => isJa()};
+const MOVIE_DEPS = {audioMap: () => St.AUDIO_MAP, speak: t => speak(t), speakDevice: t => speakDevice(t), soundOn: () => soundOn(), calm: () => calmMotion(), ja: () => isJa()};
 function renderTheatre(st){   // a novel as a film (src/screens/Movies.tsx + src/movies/player.ts)
-  document.body.classList.add("cinema"); NAV_SAME = true;
+  document.body.classList.add("cinema"); St.NAV_SAME = true;
   showScreen("film-" + st.id, createElement(Theatre, {st, ja: isJa(), cc: store.get("jc:cc", true), en: store.get("jc:thEn", true), deps: MOVIE_DEPS,
-    onExit: () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; NAV_DIR = "back"; renderNovels(); }}));
+    onExit: () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; St.NAV_DIR = "back"; renderNovels(); }}));
 }
 addEventListener("keydown", e => { if(!document.body.classList.contains("cinema") || e.target.closest("input,textarea")) return;
   if(e.key === " "){ e.preventDefault(); $(".th-play") && $(".th-play").click(); }
@@ -1310,29 +1288,28 @@ const loadScript = src => new Promise((ok, bad) => {
   const el = document.createElement("script"); el.src = src; el.dataset.src = src; el.onload = ok; el.onerror = bad;
   document.head.appendChild(el);
 });
-let SCENE_DIR = "scenes";   // Scenes = flat pictures; Explorer = zoomable places (data/explore)
 async function renderScenes(){
   document.body.classList.remove("playing");
-  let list; try{ list = await (await fetch(`data/${SCENE_DIR}/index.json`, {cache:"no-cache"})).json(); }
+  let list; try{ list = await (await fetch(`data/${St.SCENE_DIR}/index.json`, {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load scenes.</div>`; return; }
-  $("#pageTitle").textContent = SCENE_DIR === "photos" ? "Photos" : "Scenes";
-  showScreen("scenes-" + SCENE_DIR, createElement(SceneList, {items: list}));   // v165: React (src/screens/Scenes.tsx)
+  $("#pageTitle").textContent = St.SCENE_DIR === "photos" ? "Photos" : "Scenes";
+  showScreen("scenes-" + St.SCENE_DIR, createElement(SceneList, {items: list}));   // v165: React (src/screens/Scenes.tsx)
 }
 async function renderScene(id, arrive){
   let sc, svg;
   try{
-    sc = await (await fetch(`data/${SCENE_DIR}/${id}.json`, {cache:"no-cache"})).json();
+    sc = await (await fetch(`data/${St.SCENE_DIR}/${id}.json`, {cache:"no-cache"})).json();
     if(sc.photo){   // real photo + invisible tap boxes, drawn as an SVG so labels/Show all work the same
       const [W, H] = sc.size;
       svg = `<svg viewBox="0 0 ${W} ${H}" class="photo-scene" role="img" aria-label="${esc(sc.titleEn)}">
-        <image href="data/${SCENE_DIR}/${sc.photo}" width="${W}" height="${H}"/>
+        <image href="data/${St.SCENE_DIR}/${sc.photo}" width="${W}" height="${H}"/>
         ${Object.entries(sc.items).filter(([k,v]) => v.box).map(([k,v]) => `<g class="spot" data-id="${k}"><rect class="hit" x="${v.box[0]}" y="${v.box[1]}" width="${v.box[2]}" height="${v.box[3]}" rx="${W/100}"/></g>`).join("")}</svg>`;
     }
-    else svg = await (await fetch(`data/${SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
+    else svg = await (await fetch(`data/${St.SCENE_DIR}/${sc.svg}`, {cache:"no-cache"})).text();
   }catch(e){ return; }
   $("#pageTitle").textContent = sc.title;
-  if(sc.parent){ try{ const par = await (await fetch(`data/${SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
-  const dir = SCENE_DIR;
+  if(sc.parent){ try{ const par = await (await fetch(`data/${St.SCENE_DIR}/${sc.parent}.json`, {cache:"no-cache"})).json(); $("#pageTitle").textContent = `${par.title} › ${sc.title}`; }catch(e){} }
+  const dir = St.SCENE_DIR;
   showScreen(`scene-${dir}-${id}`, createElement(Scene, {id, sc, svg: svg || "", dir, arrive: arrive || null, wordsOpen: store.get("jc:scenewords", true),   // v165: React + src/scenes/scene.ts
     parentItems: async () => (await (await fetch(`data/${dir}/${sc.parent}.json`, {cache:"no-cache"})).json()).items,
     deps: {speak, sayBtn, version: APP_VERSION, loadScript,
@@ -1398,12 +1375,12 @@ function shortAnswer(t, c, html){   // Settings → Answer: Short = reveal only 
   return html.slice(0, i) + `<div class="back back-short">${peekFor(t, c)}</div></div>`;
 }
 function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
-  MINI.reg.set(miniKey(t, lv, c.no), c); CARD_LVL = lv;
+  MINI.reg.set(miniKey(t, lv, c.no), c); St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
   return html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>";
 }
 function fullFor(t, c, lv){
-  CARD_LVL = lv;
+  St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
   return (html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`);
 }
@@ -1417,7 +1394,7 @@ document.addEventListener("click", e => {
     word._t = now; }
   if(word && soundOn()){ const cd = word.closest(".card"), c = cd && MINI.reg.get(miniKey(cd.dataset.mt, cd.dataset.mlv, cd.dataset.no));
     const text = (c && c.word) || (cd && cd.dataset.type === "words" ? word.textContent.trim() : "");
-    if(text && AUDIO_MAP && AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
+    if(text && St.AUDIO_MAP && St.AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
   const m = e.target.closest(".list-card[data-mt]:not(.open)");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
@@ -1442,7 +1419,7 @@ async function renderSection(id){
     tr, name: s.name, en: s.en, meta: `${lv} · section ${idx + 1} · ${cards.length} words`, cardsHtml: cards.map(c => miniCard(c, lv)).join(""),
     onBack: () => renderSections(),
     onStudy: () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
-      const name = s.name; pick("playground"); PG_NEW = true; PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); }}));
+      const name = s.name; pick("playground"); St.PG_NEW = true; St.PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); }}));
 }
 
 /* ---------- Pre-learn reading page ---------- */
@@ -1462,7 +1439,7 @@ async function renderPrelearn(id){
     onBack: () => renderReader(id),
     onStudy: () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
       cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
-      pick("playground"); PG_NEW = true; PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); }}));
+      pick("playground"); St.PG_NEW = true; St.PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); }}));
 
 }
 
@@ -1507,8 +1484,7 @@ async function renderPictures(){
 const picTile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
       <span class="pic-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span>
       <b>${esc(x.ja)}</b><span>${esc(x.en.replace(" (いらすとや)", ""))} · ${x.count}</span></button>`;
-let EXTRA_IDX = null;
-async function extraIdx(){ if(!EXTRA_IDX){ try{ EXTRA_IDX = await (await fetch("data/pictures/extra/index.json", {cache:"no-cache"})).json(); }catch(e){ EXTRA_IDX = []; } } return EXTRA_IDX; }
+async function extraIdx(){ if(!St.EXTRA_IDX){ try{ St.EXTRA_IDX = await (await fetch("data/pictures/extra/index.json", {cache:"no-cache"})).json(); }catch(e){ St.EXTRA_IDX = []; } } return St.EXTRA_IDX; }
 async function extraThemes(){ const I = await extraIdx(), m = new Map();
   for(const x of I){ const t = m.get(x.theme) || {theme: x.theme, themeEn: x.themeEn, count: 0, cover: x.cover}; t.count += x.count; m.set(x.theme, t); }
   return [...m.values()]; }
@@ -1535,7 +1511,7 @@ async function renderTestList(kind){
   $("#pageTitle").textContent = K0.title;
   const draw = () => showScreen("tl-" + kind, createElement(TestList, {kind, idx: L, level: lv, tr, back: K0.back,
     credit: v.length ? "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)" : "",
-    onLevel: l => { lv = l; store.set(key, l); NAV_SAME = true; draw(); },
+    onLevel: l => { lv = l; store.set(key, l); St.NAV_SAME = true; draw(); },
     onOpen: id => renderTest(kind, id),
     onBack: () => { renderReading(); scrollTo(0, 0); }}));
   draw();
@@ -1591,18 +1567,16 @@ function picView(C, W, clean){   // v164: React viewer (src/screens/Pictures.tsx
 }
 
 /* ---------- Reading ---------- */
-let STORIES = null;
 /* Reading = a library: shelves of books, every book works the same (learn cards -> read -> tap a word) */
 const SHELVES = [["article","記事","Articles","記"],["news","ニュース","News","報"],["novel","小説","Novels","小"],["story","物語","Short stories","物"],["literature","文学","Literature","文"]];
 /* 文庫本 look: paper covers in slightly different tones; colour only on the spine + mark (muted traditional colours) */
 const SPINE = {article:"#3A4F6B", news:"#66683A", novel:"#7A3E3E", story:"#3E3B38"};   // 藍 / 鶯 / 小豆 / 墨
 const PAPER = ["var(--pp1)","var(--pp2)","var(--pp3)","var(--pp4)"];
-let READ_INDEX = null;
 async function readIndex(){
-  if(!READ_INDEX){ try{ READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ READ_INDEX = []; } }
+  if(!St.READ_INDEX){ try{ St.READ_INDEX = await (await fetch("data/readings/index.json", {cache:"no-cache"})).json(); }catch(e){ St.READ_INDEX = []; } }
   // News: newest first (by publish date); other shelves keep their order
-  READ_INDEX.sort((a, b) => (a.shelf === "news" && b.shelf === "news") ? (b.date || "").localeCompare(a.date || "") : 0);
-  return READ_INDEX;
+  St.READ_INDEX.sort((a, b) => (a.shelf === "news" && b.shelf === "news") ? (b.date || "").localeCompare(a.date || "") : 0);
+  return St.READ_INDEX;
 }
 function bookHTML(x){
   const mins = Math.max(1, Math.round(x.chars / 400));
@@ -1616,7 +1590,7 @@ function bookHTML(x){
 }
 async function renderReading(){
   document.body.classList.remove("playing");
-  READ_INDEX = null; const RD = await readIndex();
+  St.READ_INDEX = null; const RD = await readIndex();
   $("#pageTitle").textContent = "Reading";
   let order = 0;
   const draw = () => showScreen("reading", createElement(ReadingHome, {   // v162: React (src/screens/Reading.tsx)
@@ -1715,26 +1689,23 @@ function famBar(lvl, t, no){
 
 function dotsOrButtons(type,no){
 
-  if(!PLAY)
-    return famBar(CARD_LVL || (DATA && DATA.level), type, no);
+  if(!St.PLAY)
+    return famBar(St.CARD_LVL || (St.DATA && St.DATA.level), type, no);
 
   return "";
 
 }
 
 
-let PLAY = false, CURRENT = "home";
 
-let PG_RUNNING = false;
-let PG_RETURN = null;   // {label, go}: where Practice goes back to when it was opened from a reading or a section
-function leavePracticeTo(id, render){ pgDockDrop(); PLAY = false; PG_RUNNING = false; CURRENT = id; document.body.classList.remove("playing");
-  document.querySelector(".tabs").hidden = true; const r = PG_RETURN; PG_RETURN = null; render(); }
+function leavePracticeTo(id, render){ pgDockDrop(); St.PLAY = false; St.PG_RUNNING = false; St.CURRENT = id; document.body.classList.remove("playing");
+  document.querySelector(".tabs").hidden = true; const r = St.PG_RETURN; St.PG_RETURN = null; render(); }
 
 
 setInterval(
   () => {
 
-    if(PLAY && document.querySelector("#list .play-empty"))   // only the "come back later" screen; never reset a card on screen
+    if(St.PLAY && document.querySelector("#list .play-empty"))   // only the "come back later" screen; never reset a card on screen
       renderPG();
 
   },
@@ -1754,32 +1725,32 @@ function render(){
       el =>
         el.classList.toggle(
           "on",
-          el.dataset.t === TAB
+          el.dataset.t === St.TAB
         )
     );
 
 
   $("#filter").textContent =
-    ONLY_WEAK
+    St.ONLY_WEAK
       ? "Weak only"
       : "All";
 
 
   $("#filter").classList.toggle(
     "on",
-    ONLY_WEAK
+    St.ONLY_WEAK
   );
 
 
-  if(!DATA)
+  if(!St.DATA)
     return;
 
 
   let items =
-    DATA[TAB];
+    St.DATA[St.TAB];
 
 
-  if(ONLY_WEAK){
+  if(St.ONLY_WEAK){
 
     items =
       items.filter(
@@ -1787,7 +1758,7 @@ function render(){
           store
             .get(
               dotsKey(
-                TAB,
+                St.TAB,
                 c.no
               ),
               [0,0,0]
@@ -1803,7 +1774,7 @@ function render(){
     words:wordCard,
     kanji:kanjiCard,
     grammar:grammarCard
-  }[TAB];
+  }[St.TAB];
 
 
   $("#list").innerHTML =
@@ -1823,7 +1794,7 @@ function render(){
 
 
   $("#count").textContent =
-    `${DATA.level} Day ${DATA.day} · ${items.length} cards`;
+    `${St.DATA.level} Day ${St.DATA.day} · ${items.length} cards`;
 
 }
 
@@ -1837,7 +1808,7 @@ document.addEventListener(
   e => {
 
     const say = e.target.closest(".say");
-    if(say){ e.stopPropagation(); sayOff(); speak(say.dataset.say); if(say.classList.contains("say-i") && PLAYER.src && !PLAYER.src.startsWith("data:")){ SAY_ON = say; say.classList.add("playing"); } return; }
+    if(say){ e.stopPropagation(); sayOff(); speak(say.dataset.say); if(say.classList.contains("say-i") && PLAYER.src && !PLAYER.src.startsWith("data:")){ St.SAY_ON = say; say.classList.add("playing"); } return; }
 
     const scene = e.target.closest("[data-scene]");
     if(scene){ renderScene(scene.dataset.scene); window.scrollTo(0,0); return; }
@@ -2035,17 +2006,17 @@ document.addEventListener(
 
     if(tab){
 
-      TAB =
+      St.TAB =
         tab.dataset.t;
 
 
       store.set(
         "jc:tab",
-        TAB
+        St.TAB
       );
 
 
-      if(CURRENT === "complete"){ NAV_SAME = true; renderComplete(); }
+      if(St.CURRENT === "complete"){ St.NAV_SAME = true; renderComplete(); }
       else render();
 
 
@@ -2065,16 +2036,15 @@ $("#famToggle").onclick = () => {
   $("#famToggle").setAttribute("aria-pressed", on);
 };
 /* one back link in the header: goes to the page's parent (its hidden [data-back] button), else Home */
-$("#goHome").onclick = () => { NAV_DIR = "back"; const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
+$("#goHome").onclick = () => { St.NAV_DIR = "back"; const b = $("#list [data-back]"); if(b){ b.click(); scrollTo(0, 0); return; } store.set("jc:lesson","home"); pick("home"); };
 const syncBack = () => { const b = $("#list [data-back]"); $("#goHome").textContent = "‹ " + (b ? b.dataset.back : "Home"); };
 new MutationObserver(() => { syncBack(); syncHeaderAction(); }).observe($("#list"), {childList: true});
 /* page swap: every full page change goes through #list.innerHTML; the old page eases out while the new one eases in.
    Forward = new page from the right; back (header back / swipe) = from the left. */
-let NAV_DIR = "fwd", SWIPE_FROM = 0, NAV_SAME = false;   // NAV_SAME: same page redrawn in place, no page transition
 (() => {
   const LIST = $("#list"), d = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
   Object.defineProperty(LIST, "innerHTML", {get(){ return d.get.call(this); }, set(v){
-    const dir = NAV_DIR, from = SWIPE_FROM, same = NAV_SAME; NAV_DIR = "fwd"; SWIPE_FROM = 0; NAV_SAME = false;
+    const dir = St.NAV_DIR, from = St.SWIPE_FROM, same = St.NAV_SAME; St.NAV_DIR = "fwd"; St.SWIPE_FROM = 0; St.NAV_SAME = false;
     const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && (had.classList.contains("play-screen") || !!had.querySelector(":scope > .play-screen")));
     if(calmMotion() || !had || practice || same){ d.set.call(this, v); return; }
     const r = LIST.getBoundingClientRect(), ghost = LIST.cloneNode(true);
@@ -2106,7 +2076,7 @@ applyLang();
   const inRun = () => document.body.classList.contains("playing") && !!$("#pgBack");   // Practice run: swipe right = Exit
   const inFilm = () => document.body.classList.contains("cinema") && !!$(".th-exit");      // Movies: swipe right = Exit to the Movies list
   addEventListener("touchstart", e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); drag = false; dx = 0;
-    ok = e.touches.length === 1 && CURRENT !== "home" && (inRun() || inFilm() || (!$("#top").hidden && !document.body.classList.contains("cinema") && !e.target.closest(".play-screen"))) &&
+    ok = e.touches.length === 1 && St.CURRENT !== "home" && (inRun() || inFilm() || (!$("#top").hidden && !document.body.classList.contains("cinema") && !e.target.closest(".play-screen"))) &&
       !e.target.closest(".pv-track,.home-rail,input,select,textarea,.sec-rows.sorting,.reader,.seg,.th-seek,.pg-sheet"); }, {passive: true});
   addEventListener("touchmove", e => { if(!ok) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
     if(!drag){ if(Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)){ ok = false; return; } if(dx > 14 && dx > Math.abs(dy) * 1.4) drag = true; else return; }
@@ -2115,9 +2085,9 @@ applyLang();
   addEventListener("touchend", () => { if(!ok || !drag){ ok = false; return; } ok = false;
     const v = dx / Math.max(1, Date.now() - t0), go = dx > innerWidth * .25 || (v > .4 && dx > 50);
     const l = L();
-    if(go && inRun()){ NAV_DIR = "back"; $("#pgBack").click(); return; }
+    if(go && inRun()){ St.NAV_DIR = "back"; $("#pgBack").click(); return; }
     if(go && inFilm()){ $(".th-exit").click(); return; }
-    if(go){ NAV_DIR = "back"; $("#goHome").click(); }
+    if(go){ St.NAV_DIR = "back"; $("#goHome").click(); }
   }, {passive: true});
 })();
 
@@ -2129,13 +2099,13 @@ applyLang();
 $("#filter").onclick =
   () => {
 
-    ONLY_WEAK =
-      !ONLY_WEAK;
+    St.ONLY_WEAK =
+      !St.ONLY_WEAK;
 
 
     store.set(
       "jc:weak",
-      ONLY_WEAK
+      St.ONLY_WEAK
     );
 
 
@@ -2160,7 +2130,7 @@ $("#lesson").onchange =
         "jc:returnLesson",
         store.get(
           "jc:lesson",
-          INDEX[0]?.id || ""
+          St.INDEX[0]?.id || ""
         )
       );
 
@@ -2185,20 +2155,20 @@ $("#lesson").onchange =
    ========================================================= */
 
 function pick(id){
-  pgDockDrop(); pgSheetClose(true); if(!KEEP_SETTINGS) closeSettingsSheet(true); document.body.classList.remove("cinema");
-  if(id !== "playground") PG_RETURN = null;
-  PG_NEW = false; SESS_EDIT = null;
+  pgDockDrop(); pgSheetClose(true); if(!St.KEEP_SETTINGS) closeSettingsSheet(true); document.body.classList.remove("cinema");
+  if(id !== "playground") St.PG_RETURN = null;
+  St.PG_NEW = false; St.SESS_EDIT = null;
   if(typeof stopStory === "function" && STORY.cont) stopStory();
 
-  PLAY =
+  St.PLAY =
     id === "playground";
 
-  PG_RUNNING = false;
-  CURRENT = id;
+  St.PG_RUNNING = false;
+  St.CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
   const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
-  const lessonName = (INDEX.find(x => x.id === id) || {});
+  const lessonName = (St.INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
   $("#top").hidden = id === "home";
@@ -2210,7 +2180,7 @@ function pick(id){
   document.body.classList.toggle("showfam", showFam);
   $("#famToggle").setAttribute("aria-pressed", showFam);
 
-  if(PLAY)
+  if(St.PLAY)
     renderPG();
 
   else if(id === "home")
@@ -2229,7 +2199,7 @@ function pick(id){
     renderNovels();
 
   else if(id === "scenes"){
-    SCENE_DIR = "scenes"; renderScenes(); }
+    St.SCENE_DIR = "scenes"; renderScenes(); }
 
   else if(id === "sections")
     renderSections();
@@ -2250,10 +2220,10 @@ function pick(id){
     renderVocabTests();
 
   else if(id === "photos"){
-    SCENE_DIR = "photos"; renderScenes(); }
+    St.SCENE_DIR = "photos"; renderScenes(); }
 
   else if(id === "explore"){
-    SCENE_DIR = "explore";
+    St.SCENE_DIR = "explore";
     fetch("data/explore/index.json", {cache:"no-cache"}).then(r => r.json()).then(x => renderScene(x.start)).catch(() => {}); }
 
   else
@@ -2279,7 +2249,7 @@ async function load(id){
       );
 
 
-    DATA =
+    St.DATA =
       await r.json();
 
 
@@ -2316,7 +2286,7 @@ async function load(id){
 
   try{
 
-    INDEX =
+    St.INDEX =
       await (
         await fetch(
           "data/index.json",
@@ -2353,7 +2323,7 @@ async function load(id){
     </option>
 
     ${
-      INDEX
+      St.INDEX
         .map(
           x =>
             `<option value="${x.id}">
