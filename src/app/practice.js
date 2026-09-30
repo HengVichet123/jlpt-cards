@@ -48,9 +48,9 @@ export const pgCanUndo = () => SRS.canUndo(pgState().sid);
 export function pgUndo(){ if(SRS.undo(pgState().sid)){ St.NAV_SAME = true; renderPG(); } }
 export function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the running card
   SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
-  SRS.rate(lvl, type, no, m);
-  if(m === SRS.EASY) Sess.markDone([lvl, type, no]);
-  if(m === SRS.EASY && pgState().sid === "plan:mistakes")   // known now: off the Quiz mistakes list
+  const p = SRS.rate(lvl, type, no, m);   // v178: Anki scheduling (Again / Hard / Good / Easy)
+  if(p.state === "review") Sess.markDone([lvl, type, no]);   // graduated: done for this session
+  if(p.state === "review" && pgState().sid === "plan:mistakes")   // known now: off the Exam mistakes list
     store.set("jc:mistakes", store.get("jc:mistakes", []).filter(([l, t, n]) => !(l === lvl && t === type && n === no)));
   renderPG();
 }
@@ -377,6 +377,7 @@ export async function renderPG(){
       ).dueAt || 0;
 
 
+    if(due > now && due - now >= 86400000) continue;   // v178: reviewed cards scheduled days ahead are not part of this run
     (
       due <= now
         ? live
@@ -441,7 +442,8 @@ export async function renderPG(){
   showScreen("pg-run", createElement(PracticeRun, {   // v158: the run screen is React (src/screens/PracticeRun.tsx); the card is the shared card HTML
     ja: isJa(), tr, calm: calmMotion(),
     card: current ? {key: `${current[0]}:${current[1]}:${current[2].no}:${current[2].__n = (current[2].__n || 0) + 1}`, level: current[0], type: current[1], no: current[2].no,
-      html: shortAnswer(current[1], current[2], make[current[1]](current[2])).replace('<div class="card ', '<div class="card play-card ')} : null,
+      html: shortAnswer(current[1], current[2], make[current[1]](current[2])).replace('<div class="card ', '<div class="card play-card '),
+      when: SRS.previews(current[0], current[1], current[2].no)} : null,
     live: live.length, later: later.length, canUndo: !!pgCanUndo(),
     onRate: m => pgRate(current[0], current[1], current[2].no, m),
     onUndo: pgUndo,

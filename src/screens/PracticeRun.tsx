@@ -1,13 +1,13 @@
 /* Practice run: one card at a time, Again / Hard / Easy, undo, count, Exit.
    The card itself is the app's card HTML (shared with Complete list); its taps (flip, sound, double-tap) are the app's. */
 import { useLayoutEffect, useRef } from "react";
-import { AGAIN, HARD, EASY } from "../practice/srs";
+import { BUTTONS } from "../practice/srs";
 
 export type PracticeRunProps = {
   ja: boolean;
   tr: (s: string) => string;
   calm: boolean;
-  card: { key: string; level: string; type: string; no: number; html: string } | null;   // null = session complete
+  card: { key: string; level: string; type: string; no: number; html: string; when: Record<number, string> } | null;   // null = session complete
   live: number; later: number;
   canUndo: boolean;
   onRate: (minutes: number) => void;
@@ -20,7 +20,6 @@ const UNDO = (
     <path d="M9 14 4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
   </svg>
 );
-const RATINGS: [number, string, string][] = [[AGAIN, "Again", "3 min"], [HARD, "Hard", "10 min"], [EASY, "Easy", "1 day"]];
 
 export function PracticeRun(p: PracticeRunProps) {
   const stage = useRef<HTMLDivElement>(null);
@@ -45,11 +44,11 @@ export function PracticeRun(p: PracticeRunProps) {
       </div>
       {p.card && <>
         <div className="play-ratings" data-level={p.card.level} data-type={p.card.type} data-no={p.card.no}>
-          {RATINGS.map(([m, name, when]) => (
-            <button key={m} data-m={m} onClick={() => p.onRate(m)}>{p.tr(name)}<span>{p.tr(when)}</span></button>
+          {BUTTONS.map(([m, name]) => (   // Anki: each button shows when the card comes back
+            <button key={m} data-m={m} onClick={() => p.onRate(m)}>{p.tr(name)}<span>{p.card!.when[m]}</span></button>
           ))}
         </div>
-        <div className="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy · Z undo</div>
+        <div className="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Good · 4 Easy · Z undo</div>
       </>}
     </div>
   );

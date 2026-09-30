@@ -42,6 +42,10 @@ export function markDone(ref: CardRef): void {
 export function counts(se: Session, now = Date.now()): { n: number; l: number; d: number } {
   const done = new Set(se.done || []); let n = 0, l = 0, d = 0;
   for (const r of se.ids) { if (done.has(key(r))) continue;
-    const p = profile(r[0], r[1], r[2]); if (!p.reviews) n++; else if ((p.dueAt || 0) > now) l++; else d++; }
+    // Anki's columns: New = never studied; Learn = in learning steps (due within the day); Due = review cards whose day has come
+    const p = profile(r[0], r[1], r[2]);
+    if (!p.reviews || p.state === "new") n++;
+    else if (p.state === "learning" || p.state === "relearning") { if ((p.dueAt || 0) - now < 86400000) l++; }
+    else if ((p.dueAt || 0) <= now) d++; }
   return { n, l, d };
 }

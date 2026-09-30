@@ -517,7 +517,7 @@ addEventListener("keydown", e => {
     (hit || card).dispatchEvent(new MouseEvent("click", {bubbles:true}));
     return;
   }
-  const m = {"1":"3", "2":"10", "3":"1440"}[e.key];
+  const m = {"1":"1", "2":"2", "3":"3", "4":"4"}[e.key];   // Again / Hard / Good / Easy
   const btn = m && document.querySelector(`.play-ratings button[data-m="${m}"]`);
   if(btn){ e.preventDefault(); btn.click(); }
 });

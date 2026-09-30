@@ -4,7 +4,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import * as Sess from "../practice/sessions";
-import { profile } from "../practice/srs";
+import { profile, status, settings } from "../practice/srs";
+import * as SRS from "../practice/srs";
 import { useBodyHost } from "../react/float";
 import type { Session } from "../practice/sessions";
 
@@ -118,9 +119,9 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
 
   return (<>
     <div className="deck-table"><div className="deck-head" aria-hidden="true"><span className="dh-name">{p.tr("Sessions")}</span><span>New</span><span>Learn</span><span>Due</span></div>
-      <ul className="deck-list"><PlanItems p={p} />{rows.length ? <li className="own-sep" aria-hidden="true" /> : null}{rows}</ul></div>
-    {all.length > SHOW && <button type="button" className="sess-more" aria-expanded={showAll} onClick={() => setShowAll(!showAll)}>
-      {showAll ? (p.ja ? "閉じる" : "Show less") : (p.ja ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>}
+      <ul className="deck-list"><PlanItems p={p} />{rows.length ? <li className="own-sep" aria-hidden="true" /> : null}{rows}
+        {all.length > SHOW && <li className="plan-li"><button type="button" className="deck more plan-fold" aria-expanded={showAll} onClick={() => setShowAll(!showAll)}>
+          <span className="deck-name">{showAll ? p.tr("Show less") : `… ${all.length - SHOW} ${p.tr("more")}`}</span></button></li>}</ul></div>
   </>);
 }
 
@@ -128,10 +129,11 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
 type Stat = { m: number; l: number; s: number; u: number };
 const STATUS: [keyof Stat, string, string][] = [["m", "Mastered", "st-m"], ["l", "Learning", "st-l"], ["s", "Struggling", "st-s"], ["u", "Not seen", "st-u"]];
 function statOf(ids: import("../practice/srs").CardRef[]): Record<string, Stat> {
+  const set = settings();
   const out: Record<string, Stat> = { all: { m: 0, l: 0, s: 0, u: 0 }, words: { m: 0, l: 0, s: 0, u: 0 }, kanji: { m: 0, l: 0, s: 0, u: 0 }, grammar: { m: 0, l: 0, s: 0, u: 0 } };
   for (const [lv, t, no] of ids) {
-    const pr = profile(lv, t, no);
-    const k: keyof Stat = !pr.reviews ? "u" : pr.familiarity >= 4 ? "m" : pr.incorrect >= 2 && pr.familiarity <= 1 ? "s" : "l";
+    const st = status(profile(lv, t, no), set);   // Anki: mature = mastered, leech = struggling
+    const k: keyof Stat = st === "new" ? "u" : st === "mature" ? "m" : st === "leech" ? "s" : "l";
     out.all[k]++; out[t][k]++;
   }
   return out;
@@ -238,6 +240,45 @@ function Sheet({ p, closing, onClose, host }: { p: PracticeHomeProps; closing: b
   </>, host);
 }
 
+/* ---------------- Edit: the scheduling numbers (Anki's deck options) ---------------- */
+function EditSheet({ p, closing, onClose, host }: { p: PracticeHomeProps; closing: boolean; onClose: () => void; host: HTMLElement }) {
+  const [s, setS] = useState(SRS.settings()), x0 = useRef<number | null>(null);
+  useEffect(() => {
+    if (closing) { document.body.classList.remove("sheet-open"); return; }
+    const a = requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+    return () => cancelAnimationFrame(a);
+  }, [closing]);
+  useEffect(() => () => document.body.classList.remove("sheet-open"), []);
+  const put = (patch: Partial<SRS.Settings>) => { const next = { ...s, ...patch }; setS(next); SRS.saveSettings(next); };
+  const list = (v: string) => v.split(/[\s,]+/).map(Number).filter(n => n > 0);
+  const num = (id: string, label: string, sub: string, value: number, set: (n: number) => void, step = 1) => (
+    <div className="srs-row"><label htmlFor={id}>{p.tr(label)}<small>{p.tr(sub)}</small></label>
+      <input id={id} type="number" inputMode="decimal" min={0} step={step} value={value} onChange={e => { const n = +e.target.value; if (n > 0) set(n); }} /></div>);
+  const steps = (id: string, label: string, sub: string, value: number[], set: (a: number[]) => void) => (
+    <div className="srs-row"><label htmlFor={id}>{p.tr(label)}<small>{p.tr(sub)}</small></label>
+      <input id={id} type="text" inputMode="numeric" defaultValue={value.join(" ")} onBlur={e => { const a = list(e.target.value); if (a.length) set(a); }} /></div>);
+  return createPortal(<>
+    <div className="pg-scrim" onClick={onClose} />
+    <aside className="pg-sheet" role="dialog" aria-modal="true" aria-label="Edit"
+      onTouchStart={e => { x0.current = e.touches[0].clientX; }}
+      onTouchEnd={e => { if (x0.current !== null && e.changedTouches[0].clientX - x0.current > 80) onClose(); x0.current = null; }}>
+      <div className="pg-sheet-head"><button type="button" className="pg-sheet-x" aria-label="Close" onClick={onClose}>‹</button><b>{p.tr("Edit")}</b></div>
+      <div className="pg-sheet-body flag-body"><div className="srs-form" key={JSON.stringify(s.steps) + s.relearn.join()}>
+        {steps("srsSteps", "Learning steps", "minutes, e.g. 1 10", s.steps, a => put({ steps: a }))}
+        {num("srsGrad", "Graduating interval", "days after the last step (Good)", s.gradIvl, n => put({ gradIvl: n }))}
+        {num("srsEasy", "Easy interval", "days when a new card is Easy", s.easyIvl, n => put({ easyIvl: n }))}
+        {steps("srsRelearn", "Relearning steps", "minutes after Again on a known card", s.relearn, a => put({ relearn: a }))}
+        {num("srsEase", "Starting ease", "%: Good multiplies the interval by this", Math.round(s.ease0 * 100), n => put({ ease0: n / 100 }), 10)}
+        {num("srsBonus", "Easy bonus", "%: extra on Easy", Math.round(s.easyBonus * 100), n => put({ easyBonus: n / 100 }), 5)}
+        {num("srsHard", "Hard interval", "%: Hard multiplies the interval by this", Math.round(s.hardIvl * 100), n => put({ hardIvl: n / 100 }), 5)}
+        {num("srsLeech", "Struggling after", "times Again on a known card (Anki's leech)", s.leech, n => put({ leech: n }))}
+        {num("srsMature", "Mastered from", "days between reviews (Anki's mature)", s.mature, n => put({ mature: n }))}
+        <button type="button" className="srs-reset" onClick={() => { SRS.resetSettings(); setS(SRS.settings()); }}>{p.tr("Reset to Anki defaults")}</button>
+      </div></div>
+    </aside>
+  </>, host);
+}
+
 /* ---------------- screen ---------------- */
 export function PracticeHome(p: PracticeHomeProps) {
   const host = useBodyHost();
@@ -245,7 +286,10 @@ export function PracticeHome(p: PracticeHomeProps) {
   const [closing, setClosing] = useState(false);
   useEffect(() => { if (p.sheetOpen) { setOpen(true); setClosing(false); } }, [p.sheetOpen]);
 
-  const openSheet = () => p.onSheet(true);   // the app computes the sheet's numbers, then opens it (sheetOpen)
+  const openSheet = () => p.onSheet(true);
+  const [editOpen, setEditOpen] = useState(false), [editClosing, setEditClosing] = useState(false);
+  const closeEdit = () => { if (p.calm) { document.body.classList.remove("sheet-open"); setEditOpen(false); p.onChanged(); return; }
+    setEditClosing(true); setTimeout(() => { setEditOpen(false); setEditClosing(false); p.onChanged(); }, 320); };   // the app computes the sheet's numbers, then opens it (sheetOpen)
   const closeSheet = () => {
     p.onSheet(false);
     if (p.origin) { setOpen(false); p.onOrigin(); return; }   // came from Cards / a section: leaving the sheet goes back there
@@ -260,10 +304,11 @@ export function PracticeHome(p: PracticeHomeProps) {
       <div className="pg-actions">   {/* v176: a fixed row in the page, above the sessions (no floating dock) */}
         <button type="button" className="pg-act" onClick={p.onQuick}>{p.ja ? "クイック10" : "Quick 10"}</button>
         <button type="button" className="pg-act main" onClick={openSheet}>{p.ja ? "新規" : "New session"}</button>
-        <button type="button" className="pg-act">{p.ja ? "ランダム" : "Random"}</button>
+        <button type="button" className="pg-act" onClick={() => { setEditClosing(false); setEditOpen(true); }}>{p.tr("Edit")}</button>
       </div>
       <Ledger p={p} onOpenSheet={openSheet} />
     </section>
     {open && <Sheet p={p} closing={closing} onClose={closeSheet} host={host} />}
+    {editOpen && <EditSheet p={p} closing={editClosing} onClose={closeEdit} host={host} />}
   </>);
 }
