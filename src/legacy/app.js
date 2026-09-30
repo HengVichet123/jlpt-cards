@@ -5,6 +5,8 @@ import { createElement } from "react";
 import { renderScreen } from "../react/mount";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
+import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
+import { TestList, ReadTest, VocabTest, ListenTest } from "../screens/Tests";
 import { Home } from "../screens/Home";
 migrate();
 
@@ -13,7 +15,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v158";
+const APP_VERSION = "v159";
 
 
 /* =========================================================
@@ -1337,7 +1339,7 @@ let CARD_LVL = null;
 
 /* ---------- Sound: the phone's Japanese voice (offline, no files) ---------- */
 let AUDIO_MAP = null, AUDIO_NOW = null, VOICES = [];
-const PLAYER = new Audio(); PLAYER.preload = "auto"; PLAYER.setAttribute("playsinline", "");
+
 const SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//OEwAAAAAAAAAAAAEluZm8AAAAPAAAACQAABCAARUVFRUVFRUVFRUVdXV1dXV1dXV1dXXR0dHR0dHR0dHR0i4uLi4uLi4uLi4uioqKioqKioqKiorq6urq6urq6urq60dHR0dHR0dHR0dHo6Ojo6Ojo6Ojo6P//////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQD8AAAAAAAAAQgDea3ZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//NExAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExFMAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKYAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
 try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}   // iPhone: play even with the silent switch on
 // iPhone: an audio element may only play after a tap has "unlocked" it once with a real sound
@@ -1527,8 +1529,8 @@ addEventListener("keydown", e => { if(!document.body.classList.contains("cinema"
   else if(e.key === "ArrowLeft") $(".th-prev") && $(".th-prev").click();
   else if(e.key === "Escape") $(".th-exit") && $(".th-exit").click(); });
 function stopStory(){ STORY.cont = false; try{ PLAYER.pause(); PLAYER.onended = null; speechSynthesis.cancel(); }catch(e){} if(STORY.stopUI) STORY.stopUI(); }
-const PLAY_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>';
-const PAUSE_ICO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
+
+
 
 /* ---------- Scenes: learn words through pictures ---------- */
 const loadScript = src => new Promise((ok, bad) => {
@@ -2032,205 +2034,35 @@ async function renderExtraTheme(theme){   // one theme's extra sessions (150 pic
 /* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
 /* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
-const quizKey = K.quiz;
-function quizLoad(kind, id, fresh){ const v = store.get(quizKey(kind, id), null);   // saved shape must match (tests can be edited)
-  const same = Array.isArray(v) && v.length === fresh.length && v.every((x, k) => Array.isArray(fresh[k]) ? Array.isArray(x) && x.length === fresh[k].length : typeof x === "number");
-  return same ? v : fresh; }
-const quizSave = (kind, id, picked) => store.set(quizKey(kind, id), picked);
-const quizClear = (kind, id) => store.remove(quizKey(kind, id));
-const quizStart = screens => { const k = screens.findIndex(a => a.some(x => !x)); return k < 0 ? Math.max(0, screens.length - 1) : k; };
-const quizOver = picked => picked.flat().some(Boolean) ? `<button type="button" class="q-over" id="qOver">Start over</button>` : "";
-function testList({kind, title, idx, credit, open}){
-  const levels = [...new Set(idx.map(t => t.level))].sort(), key = "jc:tlv:" + kind;
-  let lv = store.get(key, levels.includes("N1") ? "N1" : levels[0]);
-  if(!levels.includes(lv)) lv = levels[0];
-  const draw = () => {
-    const L = idx.filter(t => t.level === lv);
-    const state = t => store.get(`jc:${kind}:${t.id}`, null) ? "done" : store.get(`jc:seen:${kind}:${t.id}`, 0) ? "seen" : "new";   // opened once = seen; finished = done
-    const tried = L.filter(t => state(t) !== "new").length;
-    $("#list").innerHTML = `<section class="tl">
-      <div class="tl-top">${levels.length > 1 ? `<div class="tl-lv" role="tablist">${levels.map(l => `<button type="button" role="tab" aria-selected="${l === lv}" data-lv="${l}">${l}</button>`).join("")}</div>` : ""}
-        <span class="tl-count" aria-label="${tried} of ${L.length} opened">${tried} / ${L.length}</span></div>
-      <ol class="tl-rows">${L.map((t, i) => { const r = store.get(`jc:${kind}:${t.id}`, null), st = state(t);
-        return `<li><button type="button" class="tl-row ${st}" data-test="${t.id}"><span class="tl-no">${i + 1}</span><span class="tl-t"><b>${esc(t.scenes && t.scenes.length ? t.scenes.slice(0, 4).join("・") : t.title)}</b><small>${t.count} questions</small></span>${r ? `<span class="tl-best">${r.best}/${t.count}</span>` : ""}</button></li>`; }).join("")}</ol>
-      <p class="lsn-note">Original questions in the JLPT formats, not official test material.</p>${credit ? `<details class="tl-credit"><summary>Voice credits</summary><p class="lsn-note">${esc(credit)}</p></details>` : ""}</section>`;
-    $("#list").querySelectorAll(".tl-lv [data-lv]").forEach(b => b.onclick = () => { lv = b.dataset.lv; store.set(key, lv); NAV_SAME = true; draw(); });
-    $("#list").querySelectorAll("[data-test]").forEach(b => b.onclick = () => { store.set(`jc:seen:${kind}:${b.dataset.test}`, Date.now()); open(b.dataset.test); scrollTo(0, 0); });
-  };
-  $("#pageTitle").textContent = title;
+/* v159: tests are React screens (src/screens/Tests.tsx); answers/scores in src/tests/quiz.ts */
+const TEST_KINDS = {
+  lsn: {title: "Listening", index: "data/listening/index.json", back: null},
+  rdt: {title: "Reading tests", index: "data/readtests/index.json", back: "Reading"},
+  voc: {title: "Vocab & Grammar", index: "data/vocabtests/index.json", back: null},
+};
+async function renderTestList(kind){
+  const K0 = TEST_KINDS[kind];
+  let L = []; try{ L = await (await fetch(K0.index, {cache:"no-cache"})).json(); }catch(e){}
+  const levels = [...new Set(L.map(t => t.level))].sort(), key = "jc:tlv:" + kind;
+  let lv = store.get(key, levels.includes("N1") ? "N1" : levels[0]); if(!levels.includes(lv)) lv = levels[0];
+  const v = kind === "lsn" ? [...new Set(L.flatMap(t => t.voices || []))].sort() : [];
+  $("#pageTitle").textContent = K0.title;
+  const draw = () => showScreen("tl-" + kind, createElement(TestList, {kind, idx: L, level: lv, tr, back: K0.back,
+    credit: v.length ? "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)" : "",
+    onLevel: l => { lv = l; store.set(key, l); NAV_SAME = true; draw(); },
+    onOpen: id => renderTest(kind, id),
+    onBack: () => { renderReading(); scrollTo(0, 0); }}));
   draw();
 }
-async function renderListening(){
-  let L = []; try{ L = await (await fetch("data/listening/index.json", {cache:"no-cache"})).json(); }catch(e){}
-  const v = [...new Set(L.flatMap(t => t.voices || []))].sort();
-  testList({kind: "lsn", title: "Listening", idx: L, open: renderListenTest,
-    credit: v.length ? "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)" : ""});
+const renderListening = () => renderTestList("lsn"), renderReadTests = () => renderTestList("rdt"), renderVocabTests = () => renderTestList("voc");
+async function renderTest(kind, id){
+  const dir = {lsn: "listening", rdt: "readtests", voc: "vocabtests"}[kind];
+  const T = await (await fetch(`data/${dir}/${id}.json`, {cache:"no-cache"})).json();
+  const C = {lsn: ListenTest, rdt: ReadTest, voc: VocabTest}[kind];
+  showScreen(`test-${kind}-${id}`, createElement(C, {id, T, tr, setTitle: t => { $("#pageTitle").textContent = t; },
+    onBack: () => renderTestList(kind)}));
 }
-/* ---------- Reading tests: JLPT reading formats. One passage (or set of texts) per screen with its questions ---------- */
-async function renderReadTests(){
-  let L = []; try{ L = await (await fetch("data/readtests/index.json", {cache:"no-cache"})).json(); }catch(e){}
-  testList({kind: "rdt", title: "Reading tests", idx: L, open: renderReadTest});
-  const bk = document.createElement("button"); bk.className = "nav-btn"; bk.dataset.back = "Reading"; bk.textContent = "Back";
-  bk.onclick = () => { renderReading(); scrollTo(0, 0); }; $(".tl").prepend(bk);
-}
-function rdBody(t){   // paragraphs; "■ " = heading; lines starting with "|" = a table (first row = header)
-  const out = [], lines = t.split("\n"); let tb = [];
-  const flush = () => { if(!tb.length) return;
-    const rows = tb.map(l => l.replace(/^\||\|$/g, "").split("|").map(c => c.trim()));
-    out.push(`<div class="rd-tbl"><table>${rows.map((r, i) => `<tr>${r.map(c => i ? `<td>${esc(c)}</td>` : `<th>${esc(c)}</th>`).join("")}</tr>`).join("")}</table></div>`); tb = []; };
-  for(const l of lines){
-    if(/^\|/.test(l)){ tb.push(l); continue; } flush();
-    if(!l.trim()) continue;
-    out.push(/^■/.test(l) ? `<h4>${esc(l.replace(/^■\s*/, ""))}</h4>` : `<p>${esc(l)}</p>`);
-  }
-  flush(); return out.join("");
-}
-async function renderReadTest(id){
-  const T = await (await fetch(`data/readtests/${id}.json`, {cache:"no-cache"})).json();
-  const S = []; T.parts.forEach(pt => pt.items.forEach((it, i) => S.push({...it, part: pt, no: i + 1})));
-  const nQ = S.reduce((n, x) => n + x.questions.length, 0);
-  const picked = quizLoad("rdt", id, S.map(x => new Array(x.questions.length).fill(0))); let i = quizStart(picked);
-  const draw = () => {
-    if(i >= S.length) return done();
-    const it = S[i], P = picked[i], all = P.every(Boolean);
-    $("#pageTitle").textContent = T.level + " 読解";
-    $("#list").innerHTML = `<section class="rdt">
-      <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
-      <div class="lsn-head"><b>${esc(it.part.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${S.length}</span></div>
-      ${it.texts.map(x => `<article class="rd-text">${x.label ? `<span class="rd-lab">${esc(x.label)}</span>` : ""}${x.title ? `<h3>${esc(x.title)}</h3>` : ""}${rdBody(x.body)}</article>`).join("")}
-      ${it.questions.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span>${esc(q.q)}</p>
-        <ol class="lsn-opts">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${P[k] ? (m + 1 === q.answer ? " right" : m + 1 === P[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${P[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${esc(o)}</span></button></li>`).join("")}</ol>
-        ${P[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
-      <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="rdNext">${i + 1 < S.length ? (all ? "Next" : "Skip") : "See result"}</button>
-    </section>`;
-    document.querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; P[+b.dataset.k] = +b.dataset.m; quizSave("rdt", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
-    if($("#qOver")) $("#qOver").onclick = () => { quizClear("rdt", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    $("#rdNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    $("#rdBack").onclick = () => renderReadTests();
-  };
-  const done = () => {
-    let right = 0; S.forEach((it, k) => it.questions.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
-    const skipped = picked.flat().filter(x => !x).length, key = "jc:rdt:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("rdt", id);
-    $("#list").innerHTML = `<section class="lsn lsn-done">
-      <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
-      <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
-      <ul class="lsn-parts">${T.parts.map(pt => { let a = 0, n = 0; S.forEach((it, k) => { if(it.part === pt) it.questions.forEach((q, m) => { n++; if(picked[k][m] === q.answer) a++; }); });
-        return `<li><span>${esc(pt.ja)}</span><b>${a} / ${n}</b></li>`; }).join("")}</ul>
-      <button type="button" class="lsn-next" id="rdAgain">Try again</button></section>`;
-    $("#rdBack").onclick = () => renderReadTests();
-    $("#rdAgain").onclick = () => { picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); };
-  };
-  draw();
-}
-/* ---------- 文字・語彙 tests: one section per screen (its instruction + all its questions). ［word］ = underlined ---------- */
-async function renderVocabTests(){
-  let L = []; try{ L = await (await fetch("data/vocabtests/index.json", {cache:"no-cache"})).json(); }catch(e){}
-  testList({kind: "voc", title: "Vocab & Grammar", idx: L, open: renderVocabTest});
-}
-const vocMark = t => esc(t).replace(/［(.+?)］/g, '<u class="voc-u">$1</u>').replace(/＿＿/g, '<span class="voc-bl"></span>').replace(/★/g, '<span class="voc-bl voc-star">★</span>');
-async function renderVocabTest(id){
-  const T = await (await fetch(`data/vocabtests/${id}.json`, {cache:"no-cache"})).json();
-  const P = T.parts, picked = quizLoad("voc", id, P.map(p => new Array(p.items.length).fill(0))); let i = quizStart(picked);
-  const nQ = P.reduce((n, p) => n + p.items.length, 0);
-  const draw = () => {
-    if(i >= P.length) return done();
-    const pt = P[i], A = picked[i], all = A.every(Boolean);
-    $("#pageTitle").textContent = T.level + " 言語知識";
-    $("#list").innerHTML = `<section class="rdt voc">
-      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
-      <div class="lsn-head"><b>${esc(pt.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${P.length}</span></div>
-      ${pt.instr ? `<p class="voc-instr">${esc(pt.instr)}</p>` : ""}
-      ${pt.text ? `<article class="rd-text voc-text">${pt.text.split("\n").filter(Boolean).map(l => `<p>${vocMark(l)}</p>`).join("")}</article>` : ""}
-      ${pt.items.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span><span>${vocMark(q.q)}</span></p>
-        <ol class="lsn-opts${pt.key !== "yoho" && q.options.every(o => o.length <= 9) ? " voc-grid" : ""}">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${A[k] ? (m + 1 === q.answer ? " right" : m + 1 === A[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${A[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${vocMark(o)}</span></button></li>`).join("")}</ol>
-        ${A[k] && q.full ? `<p class="voc-full">${esc(q.full)}</p>` : ""}${A[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
-      <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="vcNext">${i + 1 < P.length ? (all ? "Next" : "Skip") : "See result"}</button>
-    </section>`;
-    $("#list").querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; A[+b.dataset.k] = +b.dataset.m; quizSave("voc", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
-    if($("#qOver")) $("#qOver").onclick = () => { quizClear("voc", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    $("#vcNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    $("#vcBack").onclick = () => renderVocabTests();
-  };
-  const done = () => {
-    let right = 0; P.forEach((pt, k) => pt.items.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
-    const skipped = picked.flat().filter(x => !x).length, key = "jc:voc:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("voc", id);
-    $("#list").innerHTML = `<section class="lsn lsn-done">
-      <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
-      <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
-      <ul class="lsn-parts">${P.map((pt, k) => `<li><span>${esc(pt.ja)}</span><b>${pt.items.filter((q, m) => picked[k][m] === q.answer).length} / ${pt.items.length}</b></li>`).join("")}</ul>
-      <button type="button" class="lsn-next" id="vcAgain">Try again</button></section>`;
-    $("#vcBack").onclick = () => renderVocabTests();
-    $("#vcAgain").onclick = () => { picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); };
-  };
-  draw();
-}
-async function renderListenTest(id){
-  const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
-  const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => q.sub ? q.sub.forEach((x, j) => Q.push({...q, ...x, part: pt, no: i + 1, subNo: j + 1})) : Q.push({...q, part: pt, no: i + 1})));
-  const picked = quizLoad("lsn", id, new Array(Q.length).fill(0)); let i = quizStart(picked.map(x => [x])), scriptOpen = false;
-  const SPK = {F: "女", F2: "女", M: "男", M2: "男", N: ""};
-  const line = (t, cls, body) => t == null ? `<p class="${cls}">${body}</p>` : `<button type="button" class="lsn-line ${cls}" data-t="${t}">${body}</button>`;
-  const draw = () => {
-    if(i >= Q.length) return done();
-    const q = Q[i], ans = picked[i];
-    $("#pageTitle").textContent = T.title;
-    $("#list").innerHTML = `<section class="lsn lsn-pad">
-      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
-      <div class="lsn-head"><b>${esc(q.part.ja)}</b>${quizOver(picked)}<span>${q.no}番${q.subNo ? ` 質問${q.subNo}` : ""} · ${i + 1} / ${Q.length}</span></div>
-      <div class="lsn-player">
-        <button type="button" class="lsn-play" id="lsnPlay" aria-label="Play">${PLAY_ICO}</button>
-        <div class="lsn-bar"><i id="lsnBar"></i></div>
-      </div>
-      ${q.part.spoken && !ans ? `<p class="lsn-hear">Answers are only heard. Pick a number.</p>` : ""}
-      <ol class="lsn-opts${q.part.spoken && !ans ? " lsn-nums" : ""}">${q.options.map((o, k) => `<li><button type="button" class="lsn-opt${ans ? (k + 1 === q.answer ? " right" : k + 1 === ans ? " wrong" : "") : ""}" data-k="${k + 1}" ${ans ? "disabled" : ""}><span class="lsn-n">${k + 1}</span>${q.part.spoken && !ans ? "" : `<span>${esc(o)}</span>`}</button></li>`).join("")}</ol>
-      ${ans && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}
-      <details class="lsn-script" id="lsnScript"${scriptOpen ? " open" : ""}><summary>Script</summary><div class="lsn-body">
-        ${q.intro ? line(0, "lsn-nar", esc(q.intro)) : ""}
-        ${q.lines.map(([spk, t], k) => line(q.at ? q.at[k] : null, "", `${SPK[spk] ? `<b>${SPK[spk]}：</b>` : ""}${esc(t)}`)).join("")}
-        ${q.question ? line(q.subNo ? null : q.atQ, "lsn-nar", esc(q.question)) : ""}</div></details>
-      <div class="pg-dock lsn-dock"><div class="pg-dock-in lsn-nav">${i ? `<button type="button" id="lsnPrev" aria-label="Previous question">‹ Previous</button>` : ""}
-        <button type="button" class="main" id="lsnNext">${i + 1 < Q.length ? "Next" : "See result"}</button></div></div>
-    </section>`;
-    pgDockLift();
-    const play = $("#lsnPlay"), bar = $("#lsnBar");
-    const setIco = on => { play.innerHTML = on ? PAUSE_ICO : PLAY_ICO; play.setAttribute("aria-label", on ? "Pause" : "Play"); };
-    const lines = [...document.querySelectorAll(".lsn-line")];
-    const mark = () => { const now = PLAYER.dataset.q === q.audio && !PLAYER.paused ? PLAYER.currentTime + 0.05 : -1;   // the line being spoken
-      const cur = lines.filter(b => +b.dataset.t <= now).pop(); lines.forEach(b => b.classList.toggle("on", b === cur)); };
-    const start = at => {
-      if(PLAYER.dataset.q !== q.audio){ PLAYER.src = `data/listening/${q.audio}`; PLAYER.dataset.q = q.audio; }
-      PLAYER.onended = () => { setIco(false); bar.style.width = "100%"; mark(); };
-      PLAYER.ontimeupdate = () => { if(PLAYER.dataset.q === q.audio && PLAYER.duration) bar.style.width = `${PLAYER.currentTime / PLAYER.duration * 100}%`; mark(); };
-      if(at != null){ if(PLAYER.readyState >= 1) PLAYER.currentTime = at; else PLAYER.addEventListener("loadedmetadata", () => { PLAYER.currentTime = at; }, {once: true}); }   // iPhone ignores a seek before metadata
-      PLAYER.play().then(() => { setIco(true); mark(); }).catch(() => {});
-    };
-    play.onclick = () => { if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); mark(); return; } start(); };
-    lines.forEach(b => b.onclick = () => start(+b.dataset.t));
-    $("#lsnScript").ontoggle = e => { scriptOpen = e.target.open; };
-    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; picked[i] = +b.dataset.k; quizSave("lsn", id, picked); PLAYER.pause(); NAV_SAME = true; draw(); scrollTo(0, y); });
-    if($("#qOver")) $("#qOver").onclick = () => { PLAYER.pause(); quizClear("lsn", id); picked.fill(0); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    const go = d => { PLAYER.pause(); i += d; NAV_SAME = true; draw(); scrollTo(0, 0); };
-    $("#lsnNext").onclick = () => go(1);
-    if($("#lsnPrev")) $("#lsnPrev").onclick = () => go(-1);
-    $("#lsnBack").onclick = () => { PLAYER.pause(); PLAYER.ontimeupdate = null; pgDockDrop(); renderListening(); };
-  };
-  const done = () => {
-    pgDockDrop();
-    const right = Q.filter((q, k) => picked[k] === q.answer).length, key = "jc:lsn:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("lsn", id);
-    $("#list").innerHTML = `<section class="lsn lsn-done">
-      <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
-      <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>${picked.filter(x => !x).length ? `<p class="lsn-skipped">${picked.filter(x => !x).length} skipped</p>` : ""}
-      <ul class="lsn-parts">${T.parts.map(pt => { const idx = Q.map((q, k) => [q, k]).filter(([q]) => q.part === pt);
-        return `<li><span>${esc(pt.ja)}</span><b>${idx.filter(([q, k]) => picked[k] === q.answer).length} / ${idx.length}</b></li>`; }).join("")}</ul>
-      <button type="button" class="lsn-next" id="lsnAgain">Try again</button></section>`;
-    $("#lsnBack").onclick = () => renderListening();
-    $("#lsnAgain").onclick = () => { picked.fill(0); i = 0; NAV_SAME = true; draw(); };
-  };
-  draw();
-}
+const renderReadTest = id => renderTest("rdt", id), renderVocabTest = id => renderTest("voc", id), renderListenTest = id => renderTest("lsn", id);
 async function renderIllust(){   // いらすとや: one row per topic, sessions scroll sideways (words with pictures)
   document.body.classList.remove("playing");
   let idx = [], ext = [];

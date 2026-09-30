@@ -4,6 +4,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import * as Sess from "../practice/sessions";
+import { useBodyHost } from "../react/float";
 import type { Session } from "../practice/sessions";
 
 type CardKind = "words" | "kanji" | "grammar";
@@ -36,13 +37,7 @@ const TOOL = <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
 const BIN = <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>;
 const SHOW = 6;
 
-/** A wrapper <div> in <body> for this screen's floating parts (dock, sheet), removed with the screen.
-    Not a direct <body> child on purpose: the app's page switcher clears "body > .pg-dock". */
-function useBodyHost(): HTMLElement {
-  const [el] = useState(() => { const d = document.createElement("div"); d.className = "rx-float"; return d; });
-  useLayoutEffect(() => { document.body.appendChild(el); return () => el.remove(); }, [el]);
-  return el;
-}
+
 
 function Num({ v, c }: { v: number; c: string }) {
   return <span className={`deck-n ${c}${v ? "" : " zero"}`}>{v}</span>;
