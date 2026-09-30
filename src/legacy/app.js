@@ -1,4 +1,7 @@
 import { store, K, migrate } from "../data/store";
+import { createElement } from "react";
+import { mountScreen } from "../react/mount";
+import { Home } from "../screens/Home";
 migrate();
 
 
@@ -6,7 +9,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v154";
+const APP_VERSION = "v155";
 
 
 /* =========================================================
@@ -1482,47 +1485,7 @@ function renderHome(){
   );
 
 
-  $("#list").innerHTML = `
-
-    <section class="home">
-
-      <h1>
-        記憶の宮殿
-      </h1>
-
-
-      <p class="home-goal">${isJa() ? "選んだことを、いろいろな方法で身につける場所。" : "What you choose to learn, learned every way."}</p>
-      <button class="home-gear" type="button" data-home="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4Z"/></svg></button>
-
-
-      <h2 class="home-h">Study</h2>
-      <div class="core core-4">
-        <button class="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>${dueLine()}</span></button>
-        <button class="cover cover-read" data-home="reading"><i>読</i><b>Reading</b><span>Learn, then read</span></button>
-        <button class="cover cover-list" data-home="listening"><i>聴</i><b>Listening</b><span>Tests with audio</span></button>
-        <button class="cover cover-all" data-home="vocab"><i>語</i><b>Vocab &amp; Grammar</b><span>言語知識 tests</span></button>
-      </div>
-
-      <h2 class="home-h">Library</h2>
-      <div class="side">
-        <button class="side-tile" data-home="complete"><i>覧</i><b>Complete list</b></button>
-        <button class="side-tile" data-home="novels"><i>映</i><b>Movies</b></button>
-        <button class="side-tile" data-home="pictures"><i>図</i><b>Pictures</b></button>
-        <button class="side-tile" data-home="illust"><i>描</i><b>Illustrations</b></button>
-        <button class="side-tile" data-home="sections"><i>節</i><b>Sections</b></button>
-        <button class="side-tile" data-home="useit"><i>使</i><b>Use it</b></button>
-        <button class="side-tile" data-home="scenes"><i>絵</i><b>Scenes</b></button>
-        <button class="side-tile" data-home="photos"><i>写</i><b>Photos</b></button>
-        <button class="side-tile" data-home="explore"><i>探</i><b>Explorer</b></button>
-        <button class="side-tile soon" disabled><i>商</i><b>Business</b></button>
-      </div>
-
-
-
-
-    </section>
-
-  `;
+  mountScreen($("#list"), createElement(Home, {ja: isJa(), due: dueLine()}));   // v155: Home is a React screen (src/screens/Home.tsx)
 
 
   $("#count").textContent =

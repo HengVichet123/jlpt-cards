@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from "vite";
 import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
 import { cpSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -17,7 +18,7 @@ const copyStatic = (): Plugin => ({
 
 export default defineConfig({
   base: "/jmp/",
-  plugins: [tailwindcss(), copyStatic()],
+  plugins: [react(), tailwindcss(), copyStatic()],
   build: { outDir: "dist", emptyOutDir: true, target: "es2020" },
   server: { host: true },
 });
