@@ -1,4 +1,6 @@
 import { store, K, migrate } from "../data/store";
+import * as SRS from "../practice/srs";
+import * as Sess from "../practice/sessions";
 import { createElement } from "react";
 import { mountScreen } from "../react/mount";
 import { Home } from "../screens/Home";
@@ -9,7 +11,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v155";
+const APP_VERSION = "v156";
 
 
 /* =========================================================
@@ -583,46 +585,11 @@ const PG = {
 };
 
 
-/* Undo in a practice run: each rating saves what it changes (card profile, due time, session) so it can be put back */
-const PG_UNDO = [];
-function pgSnap(lvl, t, no){
-  const keys = [profileKey(lvl, t, no), pgKey(lvl, t, no), "jc:sessions"], snap = {sid: pgState().sid, v: {}};
-  for(const k of keys) snap.v[k] = store.raw(k);
-  PG_UNDO.push(snap); if(PG_UNDO.length > 30) PG_UNDO.shift();
-}
-const pgCanUndo = () => PG_UNDO.length && PG_UNDO[PG_UNDO.length - 1].sid === pgState().sid;
-function pgUndo(){
-  if(!pgCanUndo()) return;
-  const snap = PG_UNDO.pop();
-  for(const [k, v] of Object.entries(snap.v)) store.setRaw(k, v);
-  NAV_SAME = true; renderPG();
-}
+/* v156: review rules, undo and sessions live in src/practice/ (srs.ts, sessions.ts) */
+const pgCanUndo = () => SRS.canUndo(pgState().sid);
+function pgUndo(){ if(SRS.undo(pgState().sid)){ NAV_SAME = true; renderPG(); } }
 const pgKey = K.due, profileKey = K.profile;
-
-
-function pgProfile(lvl,t,no){
-
-  const oldDue =
-    store.get(
-      pgKey(lvl,t,no),
-      null
-    );
-
-
-  return store.get(
-    profileKey(lvl,t,no),
-
-    {
-      familiarity:0,
-      reviews:0,
-      correct:0,
-      incorrect:0,
-      dueAt:oldDue || 0
-    }
-
-  );
-
-}
+const pgProfile = SRS.profile;
 
 
 const PG_LOADING = {};
@@ -682,27 +649,7 @@ async function loadReading(id){
 }
 const secSeen = (lvl, s) => s.words.filter(no => pgProfile(lvl, "words", no).reviews).length;
 
-function pgState(){
-
-  return store.get(
-    "jc:pg",
-
-    {
-      level:"ALL",
-
-      n:{
-        words:10,
-        kanji:5,
-        grammar:2
-      },
-
-      ids:[]
-
-    }
-
-  );
-
-}
+const pgState = Sess.state;
 
 
 /* =========================================================
@@ -710,16 +657,7 @@ function pgState(){
    ========================================================= */
 
 /* Saved sessions (this device): every started Practice is kept until all its cards are done, so it can be continued */
-const SESS_MAX = 30;
-const sessList = () => store.get("jc:sessions", []);
-const sessTodo = se => se.ids.filter(([lvl, t, no]) => !(se.done || []).includes(`${lvl}:${t}:${no}`));   // Easy = done for this session
-const sessLeft = se => sessTodo(se).length;
-function sessDone(lvl, t, no){ const st = pgState(), se = st.sid && sessList().find(x => x.id === st.sid);
-  if(se){ se.done = [...new Set([...(se.done || []), `${lvl}:${t}:${no}`])]; se.at = Date.now(); sessSave(se); } }
-function sessOpen(){ return sessList().filter(se => sessLeft(se) > 0); }
-function sessSave(se){ const all = sessList(), i = all.findIndex(x => x.id === se.id); if(i >= 0) all[i] = se; else all.unshift(se);
-  all.sort((a, b) => (b.at || 0) - (a.at || 0)); store.set("jc:sessions", all.slice(0, SESS_MAX)); }
-function sessDrop(id){ store.set("jc:sessions", sessList().filter(x => x.id !== id)); }
+const sessList = Sess.list, sessTodo = Sess.todo, sessOpen = Sess.open, sessSave = Sess.save, sessDrop = Sess.drop;
 function sessResume(id){
   const se = sessList().find(x => x.id === id); if(!se) return;
   const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id});
@@ -727,15 +665,11 @@ function sessResume(id){
   PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
 let PG_NEW = false, SESS_EDIT = null, SESS_UNDO = null, SESS_ALL = false;   // SESS_ALL: Continue list expanded   // on the New session page? which row is being renamed? last deleted (for Undo)
-const sessName = se => se.name || se.label;
+const sessName = Sess.name;
 const sessDay = () => { const d = new Date(); return `${d.getMonth() + 1}/${d.getDate()}`; };
 function sessAutoName(title){ const st = pgState();
   return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${sessDay()}`; }
-function pgDueIds(){   // every card whose review time has come (jc:due:<lvl>:<type>:<no>)
-  const ids = [], now = Date.now();
-  for(const k of store.keys("jc:due:")) if(+store.raw(k) <= now){ const [, , lvl, t, no] = k.split(":"); ids.push([lvl, t, +no]); }
-  return ids.slice(0, 50);
-}
+const pgDueIds = () => SRS.dueIds(50);
 async function pgQuickIds(n){ const pool = await pgPool("ALL"), ids = [];
   for(const c of pool.words){ if(!pgProfile(c.level, "words", c.no).reviews){ ids.push([c.level, "words", c.no]); if(ids.length >= n) break; } }
   return ids; }
@@ -745,12 +679,7 @@ function pgStartWith(ids, label){
   sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
   store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
-function sessCounts(se){   // Anki-style: New = never reviewed, Learn = seen but coming back soon, Due = review time has come
-  const done = new Set(se.done || []), now = Date.now(); let n = 0, l = 0, d = 0;
-  for(const [lvl, t, no] of se.ids){ if(done.has(`${lvl}:${t}:${no}`)) continue;
-    const p = pgProfile(lvl, t, no); if(!p.reviews) n++; else if((p.dueAt || 0) > now) l++; else d++; }
-  return {n, l, d};
-}
+const sessCounts = Sess.counts;
 function pgSheet(html){   // New session = a card sliding in from the right; the Practice list is nudged aside behind it
   let sh = $("#pgSheet");
   if(!html){ pgSheetClose(); return; }
@@ -1467,15 +1396,12 @@ function renderSettings(target){
   try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings" || (target && target.isConnected)) draw(); }; }catch(e){}
 }
 function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
-  let due = 0, later = 0; const now = Date.now();
-  for(const k of store.keys("jc:due:")){ const t = +store.raw(k); if(t <= now) due++; else later++; }
+  const {due, later} = SRS.dueCounts();
   return due ? `${due} card${due === 1 ? "" : "s"} ready to review` : later ? `Next review ${nextDueIn()}` : "Start with new cards";
 }
 function nextDueIn(){
-  let min = Infinity; const now = Date.now();
-  for(const k of store.keys("jc:due:")){ const t = +store.raw(k); if(t > now && t < min) min = t; }
-  const m = Math.round((min - now) / 60000);
-  return !isFinite(min) ? "soon" : m < 60 ? `in ${m} min` : m < 1440 ? `in ${Math.round(m / 60)} h` : `in ${Math.round(m / 1440)} d`;
+  const m = SRS.minutesToNext();
+  return !isFinite(m) ? "soon" : m < 60 ? `in ${m} min` : m < 1440 ? `in ${Math.round(m / 60)} h` : `in ${Math.round(m / 1440)} d`;
 }
 function renderHome(){
   prefetchPools();
@@ -2956,73 +2882,10 @@ document.addEventListener(
         +box.dataset.no;
 
 
-      const p =
-        pgProfile(
-          lvl,
-          type,
-          no
-        );
-
-
-      const m =
-        +pb.dataset.m;
-
-      pgSnap(lvl, type, no);
-      p.reviews += 1;
-
-
-      if(m === 3){
-
-        p.incorrect += 1;
-
-        p.familiarity =
-          Math.max(
-            0,
-            p.familiarity - 1
-          );
-
-      }else{
-
-        p.correct += 1;
-
-        p.familiarity =
-          Math.min(
-            5,
-            p.familiarity +
-            (
-              m === 1440
-                ? 2
-                : 1
-            )
-          );
-
-      }
-
-
-      p.dueAt =
-        PG.now() +
-        m * 60000;
-
-
-      store.set(
-        profileKey(
-          lvl,
-          type,
-          no
-        ),
-        p
-      );
-
-
-      store.set(
-        pgKey(
-          lvl,
-          type,
-          no
-        ),
-        p.dueAt
-      );
-      if(m === 1440) sessDone(lvl, type, no);
+      const m = +pb.dataset.m;
+      SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
+      SRS.rate(lvl, type, no, m);
+      if(m === SRS.EASY) Sess.markDone([lvl, type, no]);
 
 
       renderPG();
