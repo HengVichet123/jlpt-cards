@@ -2224,3 +2224,4 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 /* v180: filter and back-to-top share the header spot: filter at the top of the page, back-to-top once scrolled down */
 .bar-end:has(.to-top.on) .hdr-icon{display:none}
 .bar-end:has(.hdr-icon) .to-top:not(.on){display:none}
+.complete-section h2.cl-title .bm-btn{margin:0 -8px 0 auto}   /* v181: bookmark at the right end of the title row */

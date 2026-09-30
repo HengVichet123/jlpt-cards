@@ -120,8 +120,8 @@ export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" 
       <div className="tabs tabs-in" role="tablist">{([["words", "語", "Words"], ["kanji", "字", "Kanji"], ["grammar", "文", "Grammar"]] as const).map(([t, j, l]) =>
         <div key={t} className={`tab${t === p.tab ? " on" : ""}`} data-t={t} role="tab" tabIndex={0} aria-selected={t === p.tab}><span className="jp">{j}</span>{p.tr(l)}</div>)}</div>
       <section className="complete-section">
-        <h2 className="cl-title"><button type="button" className="bm-btn" aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => { setClosing(false); setOpen(true); }}>{BM_ICON}</button>
-          {p.tr(L) + " "}<span className="stat">{p.pool[p.tab].length}</span></h2>
+        <h2 className="cl-title">{p.tr(L) + " "}<span className="stat">{p.pool[p.tab].length}</span>
+          <button type="button" className="bm-btn" aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => { setClosing(false); setOpen(true); }}>{BM_ICON}</button></h2>
         <div className="complete-cards"><CardPages key={p.level + p.tab + (p.day || "") + (p.jump ? p.jump.n : "")} cards={p.pool[p.tab]} html={c => p.html(p.tab, c)} sentinel={more} atLeast={at} /></div>
         <div className="complete-more" aria-hidden="true" ref={more} />
       </section>
