@@ -363,10 +363,13 @@ new MutationObserver(() => { syncBack(); syncHeaderAction(); }).observe($("#list
     Object.assign(ghost.style, {position:"fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", margin:"0", pointerEvents:"none", zIndex:"0", transform:""});
     document.body.appendChild(ghost);
     d.set.call(this, v);
-    const w = Math.min(innerWidth, 900), out = dir === "back" ? w * .35 : -w * .18, inn = dir === "back" ? -w * .12 : w * .22;
-    ghost.animate([{transform:`translateX(${from}px)`, opacity:1},{transform:`translateX(${dir === "back" ? Math.max(from, out) : out}px)`, opacity:0}],
-      {duration:360, easing:"cubic-bezier(.4,0,.2,1)", fill:"forwards"}).onfinish = () => ghost.remove();
-    LIST.animate([{transform:`translateX(${inn}px)`, opacity:0},{transform:"none", opacity:1}], {duration:440, delay:40, easing:"cubic-bezier(.2,.8,.2,1)", fill:"backwards"});
+    // v168: a calm crossfade instead of a big slide: the old page fades out fast, the new one fades in with a small glide
+    // (16 px in the direction of travel). Small moves also keep the page from ever being wider than the screen,
+    // which made iPhone zoom out for a moment ("small, then resized to fit").
+    const inn = dir === "back" ? -16 : 16;
+    ghost.animate([{transform:`translateX(${from}px)`, opacity:1},{transform:`translateX(${from + (dir === "back" ? 24 : -8)}px)`, opacity:0}],
+      {duration:170, easing:"ease-out", fill:"forwards"}).onfinish = () => ghost.remove();
+    LIST.animate([{transform:`translateX(${inn}px)`, opacity:0},{transform:"none", opacity:1}], {duration:280, delay:60, easing:"cubic-bezier(.2,.8,.2,1)", fill:"backwards"});
   }});
 })();
 new MutationObserver(ms => {   // Practice: a new card pops in and stays put

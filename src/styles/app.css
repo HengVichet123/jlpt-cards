@@ -2075,3 +2075,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .card.bm-flash{animation:bmflash 1.6s ease-out}
 @media (prefers-reduced-motion: reduce){ .card.bm-flash{animation:none;box-shadow:0 0 0 3px var(--shu)} }
 .bm-open svg path{fill:var(--shu)}
+
+/* v168: never let anything make the page wider than the screen (iPhone zooms out to fit, then back) */
+html{overflow-x:hidden}   /* on html only: it applies to the window, so the sticky header and page scrolling keep working */
+@supports (overflow-x:clip){ html,body{overflow-x:clip} }
