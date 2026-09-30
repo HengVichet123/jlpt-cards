@@ -546,6 +546,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_40",
+  "title": "N1 言語知識 模擬テスト 40",
+  "titleEn": "N1 vocabulary and grammar test 40",
+  "level": "N1",
+  "scenes": [
+   "妥結",
+   "滞納",
+   "干渉",
+   "円滑",
+   "潮"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1074,6 +1088,20 @@
    "彫刻",
    "占う",
    "醜い"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_39",
+  "title": "N2 言語知識 模擬テスト 39",
+  "titleEn": "N2 vocabulary and grammar test 39",
+  "level": "N2",
+  "scenes": [
+   "溶岩",
+   "険しかった",
+   "潜って",
+   "孝行",
+   "血圧"
   ],
   "count": 54
  }
