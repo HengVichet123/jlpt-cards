@@ -4,6 +4,7 @@ import * as Sess from "../practice/sessions";
 import { createElement } from "react";
 import { renderScreen } from "../react/mount";
 import { PracticeHome } from "../screens/PracticeHome";
+import { PracticeRun } from "../screens/PracticeRun";
 import { Home } from "../screens/Home";
 migrate();
 
@@ -12,7 +13,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v157";
+const APP_VERSION = "v158";
 
 
 /* =========================================================
@@ -592,6 +593,12 @@ const PG = {
 /* v156: review rules, undo and sessions live in src/practice/ (srs.ts, sessions.ts) */
 const pgCanUndo = () => SRS.canUndo(pgState().sid);
 function pgUndo(){ if(SRS.undo(pgState().sid)){ NAV_SAME = true; renderPG(); } }
+function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the running card
+  SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
+  SRS.rate(lvl, type, no, m);
+  if(m === SRS.EASY) Sess.markDone([lvl, type, no]);
+  renderPG();
+}
 const pgKey = K.due, profileKey = K.profile;
 const pgProfile = SRS.profile;
 
@@ -980,125 +987,16 @@ async function renderPG(){
   ];
 
 
-  const cardHTML =
-    current
-
-      ? shortAnswer(current[1], current[2], make[current[1]](
-          current[2]
-        )).replace(
-          '<div class="card ',
-          '<div class="card play-card '
-        )
-
-      : `
-
-        <div class="play-empty">
-
-          <h2>
-            Session complete
-          </h2>
-
-          <p>
-            All cards are resting.
-          </p>
-
-        </div>
-
-      `;
-
-
-  const ratings =
-    current
-
-      ? `
-
-        <div
-          class="play-ratings"
-          data-level="${current[0]}"
-          data-type="${current[1]}"
-          data-no="${current[2].no}"
-        >
-
-          <button data-m="3">
-
-            Again
-
-            <span>
-              3 min
-            </span>
-
-          </button>
-
-
-          <button data-m="10">
-
-            Hard
-
-            <span>
-              10 min
-            </span>
-
-          </button>
-
-
-          <button data-m="1440">
-
-            Easy
-
-            <span>
-              1 day
-            </span>
-
-          </button>
-
-        </div>
-        <div class="kbd-hint">Space flip · 1 Again · 2 Hard · 3 Easy · Z undo</div>
-
-      `
-
-      : "";
-
-
-  const queue = `<div class="play-queue"><span><b>${live.length}</b> to go</span>${later.length ? `<span class="pq-later">${later.length} coming back</span>` : ""}</div>`;
-
-
-  $("#list").innerHTML = `
-
-    <div class="play-screen">
-
-      <div class="play-bar pg-bottom">
-        <div class="play-top">${queue}<button type="button" class="pg-undo" id="pgUndo" aria-label="Undo last answer" ${pgCanUndo() ? "" : "disabled"}><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
-        <button class="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
-      </div>
-
-
-      <div class="play-stage">
-
-        ${cardHTML}
-
-      </div>
-
-
-      ${ratings}
-
-    </div>
-
-  `;
-
-
-  $("#count").textContent =
-    `Practice · ${st.level}`;
-
-
-  if($("#pgUndo")) $("#pgUndo").onclick = pgUndo;
-  $("#pgBack").onclick =
-    () => {
-
-      PG_RUNNING = false;
-
-      renderPG();
-
-    };
+  $("#count").textContent = `Practice · ${st.level}`;
+  showScreen("pg-run", createElement(PracticeRun, {   // v158: the run screen is React (src/screens/PracticeRun.tsx); the card is the shared card HTML
+    ja: isJa(), tr, calm: calmMotion(),
+    card: current ? {key: `${current[0]}:${current[1]}:${current[2].no}:${current[2].__n = (current[2].__n || 0) + 1}`, level: current[0], type: current[1], no: current[2].no,
+      html: shortAnswer(current[1], current[2], make[current[1]](current[2])).replace('<div class="card ', '<div class="card play-card ')} : null,
+    live: live.length, later: later.length, canUndo: !!pgCanUndo(),
+    onRate: m => pgRate(current[0], current[1], current[2].no, m),
+    onUndo: pgUndo,
+    onExit: () => { PG_RUNNING = false; renderPG(); },
+  }));
 
 
   document.body.classList.remove("clean");
@@ -2689,45 +2587,6 @@ document.addEventListener(
     if(story){ renderStory(story.dataset.story); window.scrollTo(0,0); return; }
 
 
-    /* ---------- Playground rating ---------- */
-
-    const pb =
-      e.target.closest(
-        ".play-ratings button"
-      );
-
-
-    if(pb){
-
-      const box =
-        pb.parentElement;
-
-
-      const lvl =
-        box.dataset.level;
-
-
-      const type =
-        box.dataset.type;
-
-
-      const no =
-        +box.dataset.no;
-
-
-      const m = +pb.dataset.m;
-      SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
-      SRS.rate(lvl, type, no, m);
-      if(m === SRS.EASY) Sess.markDone([lvl, type, no]);
-
-
-      renderPG();
-
-      return;
-
-    }
-
-
     /* ---------- Dots ---------- */
 
     const dot =
@@ -2952,7 +2811,7 @@ let NAV_DIR = "fwd", SWIPE_FROM = 0, NAV_SAME = false;   // NAV_SAME: same page 
   const LIST = $("#list"), d = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
   Object.defineProperty(LIST, "innerHTML", {get(){ return d.get.call(this); }, set(v){
     const dir = NAV_DIR, from = SWIPE_FROM, same = NAV_SAME; NAV_DIR = "fwd"; SWIPE_FROM = 0; NAV_SAME = false;
-    const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && had.classList.contains("play-screen"));
+    const had = LIST.firstElementChild, practice = document.body.classList.contains("playing") || /play-screen/.test(v) || (had && had.classList && (had.classList.contains("play-screen") || !!had.querySelector(":scope > .play-screen")));
     if(calmMotion() || !had || practice || same){ d.set.call(this, v); return; }
     const r = LIST.getBoundingClientRect(), ghost = LIST.cloneNode(true);
     ghost.removeAttribute("id"); ghost.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
