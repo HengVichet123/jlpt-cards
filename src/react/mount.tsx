@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { flushSync } from "react-dom";
 
-let current: { root: Root; host: HTMLElement } | null = null;
+let current: { root: Root; host: HTMLElement; key: string } | null = null;
 
 function unmountCurrent() {
   if (!current) return;
@@ -22,13 +22,22 @@ function watch(list: HTMLElement) {
     .observe(list, { childList: true });
 }
 
+/** Show a React screen in #list. Same `key` as the screen already there = update it in place
+    (keeps its state, no page slide) and return true; otherwise replace the page (with the slide). */
+export function renderScreen(list: HTMLElement, key: string, node: ReactNode): boolean {
+  if (current && current.key === key && list.contains(current.host)) {
+    const r = current.root; flushSync(() => r.render(node)); return true;
+  }
+  mountScreen(list, node, key); return false;
+}
+
 /** Replace the page content with a React screen. Draws synchronously, like innerHTML did. */
-export function mountScreen(list: HTMLElement, node: ReactNode): void {
+export function mountScreen(list: HTMLElement, node: ReactNode, key = ""): void {
   unmountCurrent();
   list.innerHTML = '<div class="rx-screen"></div>';   // through innerHTML on purpose: the app's page-slide animation hooks it
   const host = list.firstElementChild as HTMLElement;
   watch(list);
   const root = createRoot(host);
-  current = { root, host };
+  current = { root, host, key };
   flushSync(() => root.render(node));
 }

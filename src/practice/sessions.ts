@@ -28,6 +28,8 @@ export function save(se: Session): void {
   all.sort((a, b) => (b.at || 0) - (a.at || 0));
   store.set(K.sessions, all.slice(0, MAX));
 }
+/** Write the whole list as is (rename / undo delete keep the current order). */
+export const saveAll = (all: Session[]) => store.set(K.sessions, all);
 export const drop = (id: string) => store.set(K.sessions, list().filter(x => x.id !== id));
 
 /** Mark a card done in the running session (after Easy). */

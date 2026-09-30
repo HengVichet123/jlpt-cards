@@ -2,7 +2,8 @@ import { store, K, migrate } from "../data/store";
 import * as SRS from "../practice/srs";
 import * as Sess from "../practice/sessions";
 import { createElement } from "react";
-import { mountScreen } from "../react/mount";
+import { renderScreen } from "../react/mount";
+import { PracticeHome } from "../screens/PracticeHome";
 import { Home } from "../screens/Home";
 migrate();
 
@@ -11,7 +12,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v156";
+const APP_VERSION = "v157";
 
 
 /* =========================================================
@@ -69,6 +70,9 @@ function hl(text,targets){
    ========================================================= */
 
 // v154: all saved data goes through src/data/store.ts (same keys, same behaviour)
+/* v155+: React screens. Same key = updated in place, so the page-slide flags are reset here (innerHTML did that before). */
+function showScreen(key, node){ if(renderScreen($("#list"), key, node)){ NAV_SAME = false; NAV_DIR = "fwd"; SWIPE_FROM = 0; } }
+const tr = t => (isJa() && jaText(t)) || t;   // app text in Japanese-only mode (what jaWalk does to plain pages)
 
 
 /* =========================================================
@@ -680,25 +684,6 @@ function pgStartWith(ids, label){
   store.set("jc:pg", st); PG_NEW = false; SESS_EDIT = null; PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
 const sessCounts = Sess.counts;
-function pgSheet(html){   // New session = a card sliding in from the right; the Practice list is nudged aside behind it
-  let sh = $("#pgSheet");
-  if(!html){ pgSheetClose(); return; }
-  if(!sh){
-    document.body.insertAdjacentHTML("beforeend", `<div id="pgScrim" class="pg-scrim"></div><aside id="pgSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="New session">
-      <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="pgSheetX" aria-label="Close">‹</button><b>${isJa() ? "新しいセッション" : "New session"}</b></div>
-      <div class="pg-sheet-body play-setup"></div></aside>`);
-    sh = $("#pgSheet");
-    const close = () => { PG_NEW = false;   // opened from Cards / a section: leaving the sheet = going back there (v147: the scrim covered the header back link, so one tap only closed the sheet)
-      if(PG_RETURN){ pgSheetClose(true); NAV_DIR = "back"; PG_RETURN.go(); } else pgSheetClose(); };
-    $("#pgScrim").onclick = close; $("#pgSheetX").onclick = close;
-    let x0 = null;   // swipe right closes it
-    sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
-    sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
-    requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
-  }
-  sh.querySelector(".pg-sheet-body").innerHTML = html;
-  if(isJa()) jaWalk(sh);
-}
 function pgSheetClose(instant){
   const sh = $("#pgSheet"), sc = $("#pgScrim"); if(!sh) return;
   document.body.classList.remove("sheet-open");
@@ -710,97 +695,11 @@ function pgDockLift(){   // move the bottom dock out of #list (page transitions 
   const d = $("#list .pg-dock"); if(d) document.body.appendChild(d);
 }
 function pgDockDrop(){ document.querySelectorAll("body > .pg-dock").forEach(d => d.remove()); if(PG_RUNNING || CURRENT !== "playground") pgSheetClose(true); }
-function pgHome(){
-  const has = sessOpen().length > 0;
-  const ghost = `<div class="deck-table"><div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div><ul class="deck-list">${
-    [1, 2, 3].map(i => `<li><button type="button" class="deck ghost" data-act="new" aria-label="Empty. Start a new session"><span class="deck-name">${isJa() ? "空のセッション" : "Empty session"}</span><span class="deck-n">0</span><span class="deck-n">0</span><span class="deck-n">0</span></button></li>`).join("")}</ul></div>`;
-  return `${has || SESS_UNDO ? sessLedger() : ghost}
-    <div class="pg-dock"><div class="pg-dock-in">
-      <button type="button" class="pg-act" data-act="quick">${isJa() ? "クイック10" : "Quick 10"}</button>
-      <button type="button" class="pg-act main" data-act="new">${isJa() ? "新規" : "New session"}</button>
-      <button type="button" class="pg-act" data-act="random">${isJa() ? "ランダム" : "Random"}</button>
-    </div></div>`;
-}
-function sessLedger(){
-  const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), SHOW = 6, hidden = Math.max(0, all.length - SHOW);
-  const editing = false, vis = SESS_ALL ? all : all.filter((se, i) => i < SHOW || se.id === SESS_EDIT);
-  const num = (v, c) => `<span class="deck-n ${c}${v ? "" : " zero"}">${v}</span>`;
-  const TOOL = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z M14 6l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>';
-  const rows = vis.map(se => {   // one row at a time is renamed, in place, from its own tool icon
-    const c = sessCounts(se);
-    if(se.id === SESS_EDIT) return `<li class="renaming" data-sid="${se.id}"><div class="deck"><span class="deck-name" contenteditable="plaintext-only" spellcheck="false" enterkeyhint="done" aria-label="Session name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</div><button type="button" class="deck-tool deck-bin" aria-label="Delete ${esc(sessName(se))}"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></button></li>`;
-    return `<li><button type="button" class="deck" data-sid="${se.id}" aria-label="${esc(sessName(se))}: ${c.n} new, ${c.l} learning, ${c.d} due"><span class="deck-name">${esc(sessName(se))}</span>${num(c.n, "new")}${num(c.l, "learn")}${num(c.d, "due")}</button><button type="button" class="deck-tool" data-edit="${se.id}" aria-label="Rename ${esc(sessName(se))}">${TOOL}</button></li>`; });
-  if(SESS_UNDO) rows.splice(Math.min(SESS_UNDO.at, rows.length), 0, `<li class="sess-undo" role="status"><span>“${esc(sessName(SESS_UNDO.se))}” deleted</span><button type="button" class="sess-undo-btn">Undo</button></li>`);
-  return `<div class="deck-table${editing ? " editing" : ""}">${editing ? "" : `<div class="deck-head" aria-hidden="true"><span class="dh-name">Sessions</span><span>New</span><span>Learn</span><span>Due</span></div>`}
-    <ul class="deck-list">${rows.join("")}</ul></div>${hidden && !editing ? `<button type="button" class="sess-more" aria-expanded="${SESS_ALL}">${SESS_ALL ? (isJa() ? "閉じる" : "Show less") : (isJa() ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>` : ""}`;
-}
-function sessRedraw(){ NAV_SAME = true; return renderPG(); }
-function sessSaveNames(){ document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
-  const se = sessList().find(x => x.id === li.dataset.sid); if(!se) return; const v = li.querySelector("input").value.trim();
-  const nm = !v || v === se.label ? "" : v; if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }); }
-function sessWire(){
-  document.querySelectorAll(".deck[data-sid]").forEach(b => b.onclick = () => sessResume(b.dataset.sid));
-  document.querySelectorAll(".deck-tool[data-edit]").forEach(b => b.onclick = e => { e.stopPropagation(); SESS_EDIT = b.dataset.edit;
-    sessRedraw().then(() => { const n = $(".renaming .deck-name"); if(!n) return; n.focus();
-      const r = document.createRange(); r.selectNodeContents(n); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }); });
-  const rn = $(".renaming");
-  if(rn){
-    const id = rn.dataset.sid, name = rn.querySelector(".deck-name"); let bin = false;
-    const commit = () => { if(SESS_EDIT !== id) return; const se = sessList().find(x => x.id === id);
-      if(se){ const v = name.textContent.replace(/\s+/g, " ").trim().slice(0, 40); const nm = !v || v === se.label ? "" : v;
-        if(nm !== (se.name || "")){ se.name = nm; const all = sessList(), i = all.findIndex(x => x.id === se.id); all[i] = se; store.set("jc:sessions", all); } }
-      SESS_EDIT = null; sessRedraw(); };
-    name.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); name.blur(); } if(e.key === "Escape"){ name.textContent = sessName(sessList().find(x => x.id === id) || {}); name.blur(); } };
-    name.onblur = () => { if(!bin) commit(); };
-    const b = rn.querySelector(".deck-bin");
-    b.onpointerdown = () => { bin = true; };
-    b.onclick = () => {
-      const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
-      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); SESS_EDIT = null; sessRedraw();
-      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
-    };
-  }
-  document.querySelectorAll(".deck-edit[data-sid]").forEach(li => {
-    const id = li.dataset.sid, finish = () => { sessSaveNames(); SESS_EDIT = null; sessRedraw(); };
-    li.querySelector("input").onkeydown = e => { if(e.key === "Enter") finish(); if(e.key === "Escape"){ SESS_EDIT = null; sessRedraw(); } };
-    li.querySelector(".deck-done").onclick = finish;
-    li.querySelector(".deck-del").onclick = () => {
-      sessSaveNames();
-      const all = sessOpen().sort((a, b) => (b.at || 0) - (a.at || 0)), se = all.find(x => x.id === id);
-      SESS_UNDO = {se, at: all.indexOf(se)}; sessDrop(id); SESS_EDIT = null; sessRedraw();
-      clearTimeout(sessWire.t); sessWire.t = setTimeout(() => { SESS_UNDO = null; if(CURRENT === "playground" && !PG_RUNNING && !PG_NEW) sessRedraw(); }, 7000);
-    };
-  });
-  if($(".sess-more")) $(".sess-more").onclick = () => { SESS_ALL = !SESS_ALL; sessRedraw(); };
-  const u = $(".sess-undo-btn");
-  if(u) u.onclick = () => { if(SESS_UNDO){ const all = sessList(); all.push(SESS_UNDO.se); store.set("jc:sessions", all); SESS_UNDO = null; clearTimeout(sessWire.t); sessRedraw(); } };
-}
 function sessWhen(t){ const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; }
-async function pgNew(){
+async function pgNew(name = ""){   // level and card counts are saved as they are tapped (jc:pg)
 
   const st =
     pgState();
-
-
-  st.level =
-    $("#pgLevel").value;
-
-
-  for(
-    const t of [
-      "words",
-      "kanji",
-      "grammar"
-    ]
-  ){
-
-    if($(`#pg_${t}`)) st.n[t] =
-      Math.max(
-        0,
-        +$(`#pg_${t}`).value || 0
-      );
-
-  }
 
 
   const pool =
@@ -894,7 +793,7 @@ async function pgNew(){
   if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
   if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
   st.sid = "s" + Date.now(); PG_NEW = false; SESS_EDIT = null;
-  const nm = (($("#pgName") || {}).value || "").trim();
+  const nm = name;
   if(st.ids.length) sessSave({id: st.sid, name: nm, start: Date.now(), at: Date.now(), label: sessAutoName(label === (isJa() ? "全カード" : "All cards") ? null : label), level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
   store.set("jc:pg", st);
   PG_RUNNING = true;
@@ -952,101 +851,35 @@ async function renderPG(){
     }
     const pool2 = inRead ? await pgPool("ALL") : pool;
     const newLeft = t => inRead ? pool2[t].filter(c => rdKeys[t].has(c.level + ":" + c.no) && !pgProfile(c.level, t, c.no).reviews).length : pool[t].filter(c => (!secSet || (t === "words" && secSet.has(c.no) && c.level === st.section.split("-")[0])) && !pgProfile(c.level || st.level, t, c.no).reviews).length;
-    const row = (t, glyph, name) => `
-          <div class="set-row">
-            <div class="set-name"><span class="set-glyph">${glyph}</span><span><b>${name}</b><small>${newLeft(t)} new left</small></span></div>
-            <div class="stepper" data-t="${t}">
-              <button type="button" data-d="-1" aria-label="Fewer ${name}">−</button>
-              <output id="out_${t}">${st.n[t]}</output>
-              <button type="button" data-d="1" aria-label="More ${name}">+</button>
-            </div>
-            <input id="pg_${t}" type="hidden" value="${st.n[t]}">
-          </div>`;
     const inSec = st.from === "section";
-
-    let secOptions = "";
+    let sections = null;
     if(inSec){
       const S = await loadSections();
       const lvls = st.level === "ALL" ? ["N1","N2"] : [st.level];
       if(!st.section || !lvls.includes(st.section.split("-")[0])){ st.section = (S[lvls[0]][0] || {}).id; store.set("jc:pg", st); }
-      secOptions = lvls.map(lv => `<optgroup label="${lv}">${S[lv].map((s, i) =>
-        `<option value="${s.id}"${s.id === st.section ? " selected" : ""}>${i + 1}. ${esc(s.name)}${s.en ? ` (${esc(s.en)})` : ""} · ${secSeen(lv, s)}/${s.words.length}</option>`).join("")}</optgroup>`).join("");
+      sections = lvls.map(lv => ({lv, items: S[lv].map((s, i) => ({id: s.id, label: `${i + 1}. ${s.name}${s.en ? ` (${s.en})` : ""} · ${secSeen(lv, s)}/${s.words.length}`}))}));
     }
-    const total = inSec ? st.n.words : st.n.words + st.n.kanji + st.n.grammar;
-
-    const setup = `
-
-      <section class="play-setup pg-home">${PG_RETURN ? `<button class="nav-btn" id="pgOrigin" data-back="${esc(PG_RETURN.label)}">Back</button>` : ""}
-        ${pgHome()}</section>`;
-    const form = !PG_NEW ? "" : `<div class="pg-new">
-
-
-
-        <div class="set-label">Level</div>
-        <div class="seg" role="radiogroup">
-          ${["ALL","N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===st.level}" class="${l===st.level?"on":""}" data-l="${l}">${l}</button>`).join("")}
-        </div>
-        <select id="pgLevel" hidden>${["ALL","N1","N2"].map(l => `<option value="${l}"${l===st.level?" selected":""}>${l}</option>`).join("")}</select>
-
-        <div class="set-label">From</div>
-        <div class="seg ${st.reading ? "" : "seg-2"}" id="pgFrom" role="radiogroup">
-          ${[["all","All cards"],["section","Section"], ...(st.reading ? [["reading","Reading"]] : [])].map(([v,l]) => `<button type="button" role="radio" aria-checked="${(st.from||"all")===v}" class="${(st.from||"all")===v?"on":""}" data-from="${v}">${l}</button>`).join("")}
-        </div>
-        ${inSec ? `<select id="pgSection" class="sec-select">${secOptions}</select>` : ""}
-        ${inRead ? `<div class="rd-from">📖 <b>${esc(rdInfo.title)}</b> <span>${rdInfo.words.length} words · ${rdInfo.kanji.length} kanji · ${rdInfo.grammar.length} grammar</span></div>` : ""}
-
-        <div class="set-label">Cards per session</div>
-        <div class="set-rows">
-          ${row("words","語","Words")}
-          ${inSec ? "" : row("kanji","字","Kanji")}
-          ${inSec ? "" : row("grammar","文","Grammar")}
-        </div>
-
-        <div class="set-label"><label for="pgName">Name</label></div>
-        <input id="pgName" class="pg-name" maxlength="40" autocomplete="off" placeholder="${esc(sessAutoName(inRead ? rdInfo.title : null))}">
-        <button class="go start" id="pgGo">${isJa() ? `始める・<span id="pgTotal">${total}</span>枚` : `Start · <span id="pgTotal">${total}</span> cards`}</button></div>`;
-
-
-    $("#list").innerHTML =
-      setup;
-    pgSheet(form);
-
-
-    $("#count").textContent =
-      `Practice · ${st.level}`;
-
-
-    document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(btn => btn.onclick = () => {
-      document.querySelectorAll(".seg:not(.pg-mode):not(#pgFrom) button").forEach(x => { x.classList.toggle("on", x === btn); x.setAttribute("aria-checked", x === btn); });
-      $("#pgLevel").value = btn.dataset.l;
-      const cur = pgState(); cur.level = btn.dataset.l; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
-    });
-    document.querySelectorAll(".stepper button").forEach(btn => btn.onclick = () => {
-      const t = btn.parentElement.dataset.t, inp = $(`#pg_${t}`);
-      const v = Math.max(0, Math.min(99, (+inp.value || 0) + (+btn.dataset.d)));
-      inp.value = v; $(`#out_${t}`).textContent = v;
-      const cur = pgState(); cur.n[t] = v; store.set("jc:pg", cur);
-      $("#pgTotal").textContent = ["words","kanji","grammar"].reduce((n,k) => n + (+($(`#pg_${k}`) || {}).value || 0), 0);
-    });
-
-    document.querySelectorAll("#pgFrom button").forEach(btn => btn.onclick = () => {
-      const cur = pgState(); cur.from = btn.dataset.from; store.set("jc:pg", cur); NAV_SAME = true; renderPG();
-    });
-    if($("#pgSection")) $("#pgSection").onchange = e => { const cur = pgState(); cur.section = e.target.value; store.set("jc:pg", cur); NAV_SAME = true; renderPG(); };
-    if($("#pgGo")) $("#pgGo").onclick = pgNew;
+    const redraw = () => { NAV_SAME = true; renderPG(); };
+    const saveSt = f => { const cur = pgState(); f(cur); store.set("jc:pg", cur); redraw(); };
+    $("#count").textContent = `Practice · ${st.level}`;
     $("#pageTitle").textContent = "Practice";
-    pgDockLift();
-
-    document.querySelectorAll(".pg-act, .deck.ghost").forEach(b => b.onclick = async () => {
-      const a = b.dataset.act;
-      if(a === "new"){ PG_NEW = true; NAV_SAME = true; renderPG(); return; }
-      if(a === "edit"){ if(SESS_EDIT === "all") sessSaveNames(); SESS_EDIT = SESS_EDIT === "all" ? null : "all"; sessRedraw(); return; }
-      if(a === "quick") pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`);
-    });
-    sessWire();
-    if($("#pgOrigin")) $("#pgOrigin").onclick = () => PG_RETURN && PG_RETURN.go();
-
-
+    showScreen("pg-home", createElement(PracticeHome, {   // v157: Practice home is a React screen (src/screens/PracticeHome.tsx)
+      ja: isJa(), tr, calm: calmMotion(), sheetOpen: PG_NEW, origin: PG_RETURN ? PG_RETURN.label : null,
+      sheet: {level: st.level, from: st.from || "all", hasReading: !!st.reading, n: {...st.n},
+        newLeft: PG_NEW ? {words: newLeft("words"), kanji: newLeft("kanji"), grammar: newLeft("grammar")} : {words: 0, kanji: 0, grammar: 0},
+        sections, section: st.section,
+        reading: inRead ? {title: rdInfo.title, words: rdInfo.words.length, kanji: rdInfo.kanji.length, grammar: rdInfo.grammar.length} : null,
+        placeholder: sessAutoName(inRead ? rdInfo.title : null)},
+      onOrigin: () => PG_RETURN && PG_RETURN.go(),
+      onResume: id => sessResume(id),
+      onQuick: async () => pgStartWith(await pgQuickIds(10), `${isJa() ? "クイック10" : "Quick 10"} ${sessDay()}`),
+      onSheet: open => { PG_NEW = open; SESS_EDIT = null; if(open || !PG_RETURN) redraw(); },   // closing from Cards/a section leaves Practice instead
+      onLevel: l => saveSt(c => { c.level = l; }),
+      onFrom: f => saveSt(c => { c.from = f; }),
+      onSection: id => saveSt(c => { c.section = id; }),
+      onStart: name => pgNew(name),
+      onChanged: redraw,
+    }));
     return;
 
   }
@@ -1411,7 +1244,7 @@ function renderHome(){
   );
 
 
-  mountScreen($("#list"), createElement(Home, {ja: isJa(), due: dueLine()}));   // v155: Home is a React screen (src/screens/Home.tsx)
+  showScreen("home", createElement(Home, {ja: isJa(), due: dueLine()}));   // v155: Home is a React screen (src/screens/Home.tsx)
 
 
   $("#count").textContent =
