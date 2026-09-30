@@ -53,7 +53,7 @@
      ],
      "answer": 4,
      "why": "Back up first at the table; the clerk prepares the forms.",
-     "audio": "n2_30/q01.mp3?v=c0442ae8"
+     "audio": "n2_30/q01.mp3?v=0b725825"
     },
     {
      "tags": [
@@ -91,7 +91,7 @@
      ],
      "answer": 1,
      "why": "He needs it by 9 a.m. (she'll send it tonight to be safe).",
-     "audio": "n2_30/q02.mp3?v=ddd1f49b"
+     "audio": "n2_30/q02.mp3?v=cc0d7950"
     },
     {
      "tags": [
@@ -133,7 +133,7 @@
      ],
      "answer": 2,
      "why": "Walk the dog before dark; homework later.",
-     "audio": "n2_30/q03.mp3?v=16fff5f7"
+     "audio": "n2_30/q03.mp3?v=843b3680"
     }
    ],
    "spoken": false
@@ -175,7 +175,7 @@
      ],
      "answer": 2,
      "why": "It's 30 minutes away and became a chore.",
-     "audio": "n2_30/q04.mp3?v=1205215d"
+     "audio": "n2_30/q04.mp3?v=f2f3d2c8"
     },
     {
      "tags": [
@@ -209,7 +209,7 @@
      ],
      "answer": 1,
      "why": "Dialogue: readers like or dislike characters through their lines.",
-     "audio": "n2_30/q05.mp3?v=a6f720a4"
+     "audio": "n2_30/q05.mp3?v=06028460"
     },
     {
      "tags": [
@@ -231,7 +231,7 @@
      ],
      "answer": 3,
      "why": "The room is used for entrance-exam prep.",
-     "audio": "n2_30/q06.mp3?v=f7e98863"
+     "audio": "n2_30/q06.mp3?v=516cdc0c"
     }
    ],
    "spoken": false
@@ -261,7 +261,7 @@
      ],
      "answer": 1,
      "why": "Morning light resets the body clock for better sleep.",
-     "audio": "n2_30/q07.mp3?v=b671f907"
+     "audio": "n2_30/q07.mp3?v=b6d11efd"
     },
     {
      "tags": [
@@ -283,7 +283,7 @@
      ],
      "answer": 3,
      "why": "Announcing the new monthly litter-picking.",
-     "audio": "n2_30/q08.mp3?v=bcbc116f"
+     "audio": "n2_30/q08.mp3?v=b5fb6376"
     }
    ],
    "spoken": true
@@ -304,13 +304,13 @@
       ]
      ],
      "options": [
-      "はい、十部お願いします。",
-      "はい、すぐにやります。",
-      "いえ、コピーしてもらえません。"
+      "ありがとうございます。助かります。",
+      "はい、十部ですね。すぐにやります。",
+      "では、コピーをお願いします。"
      ],
      "answer": 2,
-     "why": "Asked to copy: do it.",
-     "audio": "n2_30/q09.mp3?v=321bf94c"
+     "why": "He asks her to copy; the others treat it as his offer.",
+     "audio": "n2_30/q09.mp3?v=6b962533"
     },
     {
      "tags": [
@@ -324,12 +324,12 @@
      ],
      "options": [
       "ううん、困ったときはお互いさまだよ。",
-      "うん、手伝ってもらってよかったね。",
-      "じゃあ、今度手伝ってね、引っ越し。"
+      "え、引っ越しするの？ いつ？",
+      "手伝ってくれて、ありがとう。"
      ],
      "answer": 1,
-     "why": "Thanks for help: お互いさま.",
-     "audio": "n2_30/q10.mp3?v=cb79d4dc"
+     "why": "Thanked for helping: お互いさま.",
+     "audio": "n2_30/q10.mp3?v=57bff7c1"
     },
     {
      "tags": [
@@ -342,13 +342,13 @@
       ]
      ],
      "options": [
-      "七時に四名、予約されました。",
+      "四名様ですね。お待ちしておりました。どうぞ。",
       "申し訳ございません。七時は満席でして、八時からでしたらご用意できます。",
-      "はい、四名様、いらっしゃいませ。"
+      "かしこまりました。では、ご予約を取り消しておきます。"
      ],
      "answer": 2,
-     "why": "Booking: offer an alternative time.",
-     "audio": "n2_30/q11.mp3?v=6b799341"
+     "why": "A booking request: offer another time.",
+     "audio": "n2_30/q11.mp3?v=56b67447"
     },
     {
      "tags": [
@@ -361,13 +361,13 @@
       ]
      ],
      "options": [
-      "うん、飲み会に来させるよ。",
-      "ああ、来てもらったよ。",
+      "うん、来てくれてうれしいよ。",
+      "飲み会なら、先週行ってきたよ。",
       "うん、今のところ大丈夫だと思う。"
      ],
      "answer": 3,
      "why": "Can you come? Probably yes.",
-     "audio": "n2_30/q12.mp3?v=40236bce"
+     "audio": "n2_30/q12.mp3?v=b13120fc"
     },
     {
      "tags": [
@@ -380,13 +380,13 @@
       ]
      ],
      "options": [
-      "うん、雨に干しておこう。",
-      "雨が取り込んでくれるね。",
+      "うん、雨が降ってよかったね。",
+      "じゃあ、今から外に干そうか。",
       "そうだね。出かける前に入れておこう。"
      ],
      "answer": 3,
      "why": "Rain later: bring the washing in.",
-     "audio": "n2_30/q13.mp3?v=0e45f21b"
+     "audio": "n2_30/q13.mp3?v=c4c2a9f6"
     },
     {
      "tags": [
@@ -400,12 +400,12 @@
      ],
      "options": [
       "おかげさまで、とても楽しかったです。これ、お土産です。",
-      "どうでしたか、旅行は。",
-      "来週行ってきますね。"
+      "ええ、来週行ってきます。",
+      "旅行の予定を教えていただけますか。"
      ],
      "answer": 1,
-     "why": "Asked about a trip: it was fun + souvenir.",
-     "audio": "n2_30/q14.mp3?v=fb283c40"
+     "why": "Asked about a trip already taken: it was fun.",
+     "audio": "n2_30/q14.mp3?v=a7be7df8"
     }
    ],
    "spoken": true
@@ -455,7 +455,7 @@
      ],
      "answer": 4,
      "why": "Suits all ages and weather: the hot spring.",
-     "audio": "n2_30/q15.mp3?v=d67d6599"
+     "audio": "n2_30/q15.mp3?v=7857bdfc"
     }
    ],
    "spoken": true
@@ -512,7 +512,7 @@
        "why": "She wants to get out into nature: outdoor magazine."
       }
      ],
-     "audio": "n2_30/q16.mp3?v=87a5fccc"
+     "audio": "n2_30/q16.mp3?v=d5bcb023"
     }
    ],
    "spoken": false
