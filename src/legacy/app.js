@@ -5,6 +5,7 @@ import { createElement } from "react";
 import { renderScreen, renderOverlay, removeOverlay, hasOverlay } from "../react/mount";
 import { SettingsPanel, SettingsSheet } from "../screens/Settings";
 import { CompleteList, SectionsToc, SectionPage } from "../screens/Lists";
+import { ReadingHome, Shelf, Prelearn, Reader, Story } from "../screens/Reading";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -17,7 +18,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v161";
+const APP_VERSION = "v162";
 
 
 /* =========================================================
@@ -1673,31 +1674,17 @@ async function renderPrelearn(id){
   // the reading file carries its own cards, so the page opens without loading the whole database
   const get = (t, lv, no) => ((R.cards || {})[t] || []).find(c => c.level === lv && c.no === no);
   const studied = R.words.filter(([lv, no]) => pgProfile(lv, "words", no).reviews).length;
-  let html = "", at = 0;
-  for(const [s, e, t, lv, no] of R.spans){
-    if(s < at) continue;
-    html += esc(R.text.slice(at, s)) + `<mark class="pw pw-${t}" data-t="${t}" data-lv="${lv}" data-no="${no}">${esc(R.text.slice(s, e))}</mark>`;
-    at = e;
-  }
-  html += esc(R.text.slice(at));
-  html = html.split("\n").map(p => `<p>${p}</p>`).join("");
   const list = (t, rows) => rows.map(([lv, no]) => { const c = get(t, lv, no); return c ? miniFor(t, c, lv) : ""; }).join("");
   $("#pageTitle").textContent = R.title;
-  $("#list").innerHTML = `<section class="reading prelearn">
-    <div class="story-top"><button class="nav-btn" id="preBack" data-back="本文">Back</button><button class="nav-btn pre-read" id="preReadBtn" hidden>Read 本文</button></div>
-    <div class="pre-head"><h2 class="sec-title">${esc(R.title)}<em>${esc(R.titleEn)}</em><small>${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied</small></h2>
-      <button class="nav-btn pre-study" id="preStudy">Study these</button></div>
-    <h3 class="pre-part">言葉 <small>${R.words.length} words</small></h3>
-    <div class="complete-cards">${list("words", R.words)}</div>
-    ${R.grammar.length ? `<h3 class="pre-part">文法 <small>${R.grammar.length} grammar</small></h3><div class="complete-cards">${list("grammar", R.grammar)}</div>` : ""}
-    ${R.kanji.length ? `<h3 class="pre-part">漢字 <small>${R.kanji.length} kanji</small></h3><div class="complete-cards">${list("kanji", R.kanji)}</div>` : ""}
-    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a>${R.imgCredit ? ` · <a href="${esc(R.imgUrl || R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.imgCredit)}</a>` : ""}</p>
-  </section>`;
-  $("#preReadBtn").onclick = () => { renderReader(id); scrollTo(0, 0); };
-  $("#preBack").onclick = () => { renderReader(id); scrollTo(0, 0); };
-  $("#preStudy").onclick = () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
-    cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
-    pick("playground"); PG_NEW = true; PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); };
+  showScreen("pre-" + id, createElement(Prelearn, {   // v162: React (src/screens/Reading.tsx)
+    tr, title: R.title, titleEn: R.titleEn, meta: `${R.level} · about ${Math.max(1, Math.round(R.text.length / 400))} min read · ${studied}/${R.words.length} words studied`,
+    words: list("words", R.words), grammar: list("grammar", R.grammar), kanji: list("kanji", R.kanji),
+    nWords: R.words.length, nGrammar: R.grammar.length, nKanji: R.kanji.length,
+    source: R.source, sourceUrl: R.sourceUrl, imgCredit: R.imgCredit, imgUrl: R.imgUrl,
+    onBack: () => renderReader(id),
+    onStudy: () => { const cur = pgState(); cur.from = "reading"; cur.reading = id; cur.level = "ALL";
+      cur.n.words = R.words.length; cur.n.kanji = R.kanji.length; cur.n.grammar = R.grammar.length; store.set("jc:pg", cur);
+      pick("playground"); PG_NEW = true; PG_RETURN = {label: "Cards", go: () => leavePracticeTo("reading", () => renderPrelearn(id))}; renderPG(); }}));
 
 }
 
@@ -1713,34 +1700,12 @@ async function renderReader(id){
   }
   html += esc(R.text.slice(at));
   $("#pageTitle").textContent = R.title;
-  $("#list").innerHTML = `<section class="reader">
-    <div class="story-top"><span class="pre-btns"><button class="nav-btn" id="rdShelf" data-back="${esc(((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading")}">Back</button><button class="nav-btn" id="rdBack" hidden>Cards</button></span><button class="rd-voice" id="rdVoice" aria-pressed="${store.get("jc:tapvoice", true)}" aria-label="Voice on tap">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
-      <path class="wv" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
-    <h1 class="reader-title">${esc(R.title)}</h1>
-    <div class="reader-text">${html.split("\n").map(p => p.startsWith("§") ? `<h3 class="reader-ch">${p.slice(1)}</h3>` : `<p>${p}</p>`).join("")}</div>
-    <p class="story-meta"><a href="${esc(R.sourceUrl)}" target="_blank" rel="noopener">${esc(R.source)}</a> · tap a word for English</p>
-    <div class="tip-bubble" id="tipB" hidden></div>
-  </section>`;
-  $("#rdBack").onclick = () => { renderPrelearn(id); scrollTo(0, 0); };
+  showScreen("reader-" + id, createElement(Reader, {   // v162: React (src/screens/Reading.tsx)
+    tr, title: R.title, html: html.split("\n").map(p => p.startsWith("§") ? `<h3 class="reader-ch">${p.slice(1)}</h3>` : `<p>${p}</p>`).join(""),
+    back: ((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading",
+    source: R.source, sourceUrl: R.sourceUrl, voice: store.get("jc:tapvoice", true), speak,
+    onVoice: on => store.set("jc:tapvoice", on), onShelf: () => renderShelf(R.shelf || "article"), onCards: () => renderPrelearn(id)}));
   setHeaderAction("Cards", () => { renderPrelearn(id); scrollTo(0, 0); });
-  $("#rdShelf").onclick = () => { renderShelf(R.shelf || "article"); scrollTo(0, 0); };
-  $("#rdVoice").onclick = e => { e.stopPropagation(); const on = !store.get("jc:tapvoice", true); store.set("jc:tapvoice", on); $("#rdVoice").setAttribute("aria-pressed", on); };
-  const tip = $("#tipB"), box = document.querySelector(".reader");
-  box.onclick = e => {
-    const w = e.target.closest(".tk");
-    document.querySelectorAll(".tk.on").forEach(x => x.classList.remove("on"));
-    if(!w){ tip.hidden = true; return; }
-    w.classList.add("on");
-    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (w.dataset.g ? `<span class="tip-en">${esc(w.dataset.g)}</span>` : "");
-    tip.hidden = false;
-    if(store.get("jc:tapvoice", true)) speak(w.textContent);   // hear the word as written in the text
-    clearTimeout(tip._t);   // quick look: disappears by itself after 2 s
-    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); }, 2000);
-    const r = w.getBoundingClientRect(), br = box.getBoundingClientRect();
-    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
-    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
-  };
 }
 
 /* ---------- Use it: write a message that uses the target words; Claude replies (and corrects misuse) ----------
@@ -2050,19 +2015,16 @@ async function renderReading(){
   document.body.classList.remove("playing");
   READ_INDEX = null; const RD = await readIndex();
   $("#pageTitle").textContent = "Reading";
-  // level 1: the sections only; each shows a small fan of its OWN covers (styles never mix)
-  $("#list").innerHTML = `<section class="library">
-    <button class="sec-row rdt-row" id="rdtOpen"><span class="sec-row-t"><b>読解テスト</b><span>JLPT-style reading tests</span></span><span class="sec-row-go" aria-hidden="true">›</span></button>
-    <div class="sec-rows" id="secRows">${shelfOrder().filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => {
-      const items = RD.filter(x => (x.shelf || "article") === k), fan = items.filter(x => x.img).slice(0, 3);
-      return `<button class="sec-row" data-shelf="${k}">
-        <span class="sec-row-t"><b>${jp}</b><span>${en}</span><em>${items.length} books</em></span>
-        <span class="fan">${fan.map((x, i) => `<img src="data/readings/${x.img}" alt="" style="--i:${i}" loading="lazy">`).join("")}</span>
-        <span class="sec-row-go" aria-hidden="true">›</span></button>`; }).join("")}</div>
-  </section>`;
-  document.querySelectorAll("[data-shelf]").forEach(b => b.onclick = () => { if(SEC_DRAG.justDropped) return; renderShelf(b.dataset.shelf); scrollTo(0, 0); });
-  $("#rdtOpen").onclick = () => { renderReadTests(); scrollTo(0, 0); };
-  secReorder($("#secRows"));
+  let order = 0;
+  const draw = () => showScreen("reading", createElement(ReadingHome, {   // v162: React (src/screens/Reading.tsx)
+    tr, order,
+    rows: shelfOrder().filter(([k]) => RD.some(x => (x.shelf || "article") === k)).map(([k, jp, en]) => {
+      const items = RD.filter(x => (x.shelf || "article") === k);
+      return {key: k, jp, en, count: items.length, fan: items.filter(x => x.img).slice(0, 3).map(x => x.img)}; }),
+    reorder: secReorder, justDropped: () => SEC_DRAG.justDropped,
+    onTests: () => renderReadTests(), onShelf: k => renderShelf(k),
+    onReordered: () => { order++; draw(); }}));
+  draw();
 }
 /* his order of the Reading sections (press-and-hold + drag); saved per device */
 function shelfOrder(){
@@ -2071,7 +2033,7 @@ function shelfOrder(){
   return [...SHELVES].sort((a, b) => rank(a[0]) - rank(b[0]));
 }
 const SEC_DRAG = {justDropped: false};
-function secReorder(box){
+function secReorder(box, onDrop){
   if(!box) return;
   let row = null, timer = null, startX = 0, startY = 0, grab = 0, on = false, mouse = false;
   const lift = () => { on = true; grab = startY - row.getBoundingClientRect().top;
@@ -2120,6 +2082,7 @@ function secReorder(box){
       else { r.style.transition = `transform .24s ${EASE}, scale .24s ${EASE}, box-shadow .3s ease`; r.style.transform = ""; r.classList.remove("lifted");
         setTimeout(() => { r.style.transition = ""; }, 320); }   // glide into its slot and settle
       store.set(K.shelfOrder, [...box.querySelectorAll(".sec-row")].map(b => b.dataset.shelf));
+      if(onDrop) setTimeout(onDrop, calm ? 0 : 330);   // redraw from the saved order once the row has settled
       SEC_DRAG.justDropped = true; setTimeout(() => SEC_DRAG.justDropped = false, 350); }
     row = null; on = false;
   };
@@ -2133,21 +2096,13 @@ function secReorder(box){
 async function renderShelf(k){
   const RD = await readIndex(), [, jp, en] = SHELVES.find(s => s[0] === k), items = RD.filter(x => (x.shelf || "article") === k);
   $("#pageTitle").textContent = jp;
-  $("#list").innerHTML = `<section class="library">
-    <div class="story-top"><button class="nav-btn" id="shelfBack" data-back="Reading">Back</button></div>
-    <h2 class="sec-title">${jp}<em>${en}</em><small>${items.length} books</small></h2>
-    <div class="shelf-grid">${items.map(x => bookHTML(x)).join("")}</div></section>`;
-  $("#shelfBack").onclick = () => { renderReading(); scrollTo(0, 0); };
+  showScreen("shelf-" + k, createElement(Shelf, {tr, jp, en, items, onBack: () => renderReading()}));   // v162: React
 }
 async function renderStory(id){
   let st; try{ st = await (await fetch(`data/stories/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
   $("#pageTitle").textContent = st.title;
-  $("#list").innerHTML = `<section class="reading story">
-    <div class="story-top"><button class="nav-btn" id="storyBack" data-back="Reading">Back</button>${sayBtn(st.sentences.map(x=>x.jp).join(""))}</div>
-    <div class="story-meta">${st.level} · ${esc(st.source)}</div>
-    ${st.sentences.map(x => `<div class="ex story-line">${sayBtn(x.jp)}<span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
-  </section>`;
-  $("#storyBack").onclick = () => { $("#pageTitle").textContent = "Reading"; renderReading(); };
+  showScreen("story-" + id, createElement(Story, {title: st.title, level: st.level, source: st.source, sentences: st.sentences,   // v162: React
+    onBack: () => { $("#pageTitle").textContent = "Reading"; renderReading(); }}));
 }
 
 function famBar(lvl, t, no){
