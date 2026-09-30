@@ -2183,3 +2183,16 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 /* v176: bookmark button = just the outline icon (no box) */
 .bm-btn{border-color:transparent;background:none;color:var(--soft)}
 .bm-btn:hover{background:var(--chip);color:var(--ink)}
+
+/* v177: Complete list: gear = show all cards or one day of the plan */
+.bm-btn.on{color:var(--shu)}
+.day-chip{display:inline-block;margin-right:8px;padding:0 8px;border-radius:999px;background:var(--shu);color:#fff;font:700 12px/1.7 var(--body)}
+.day-all{width:100%;min-height:52px;margin-bottom:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:700 16px var(--body);cursor:pointer}
+.day-all.on{border-color:var(--ink)}
+.day-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:8px}
+.day-grid button{min-height:48px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:700 15px var(--body);font-variant-numeric:tabular-nums;cursor:pointer}
+.day-grid button:hover,.day-all:hover{background:var(--chip)}
+.day-grid button.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.complete-head .bm-btn{border-color:transparent;background:none;padding:0;border-radius:10px}   /* beat .complete-head button: icons only, no box */
+.complete-head .bm-btn:hover{background:var(--chip);color:var(--ink)}
+.complete-head .bm-btn.on{color:var(--shu)}

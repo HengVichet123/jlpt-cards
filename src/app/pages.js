@@ -8,7 +8,7 @@ import { MovieList, Novel, Theatre } from "../screens/Movies";
 import { Prelearn, Reader, ReadingHome, Shelf, Story } from "../screens/Reading";
 import { Scene, SceneList } from "../screens/Scenes";
 import { St } from "../app/state";
-import { loadOrder, inOrder } from "../practice/plan";
+import { loadOrder, inOrder, days } from "../practice/plan";
 import { USE, pickUseWords } from "../useit/chat";
 import { UseIt } from "../screens/UseIt";
 import { createElement } from "react";
@@ -51,13 +51,18 @@ export async function renderComplete(jump = null){
   const LVL = store.get("jc:clevel", "N1") === "N2" ? "N2" : "N1";   // one level at a time
   if(!PG.pool[LVL]) $("#list").innerHTML = `<p class="loading-note">Loading ${LVL} cards…</p>`;   // never look frozen
   const order = await loadOrder(), raw = await pgPool(LVL);   // v172: learning order (words by theme, kanji by frequency)
-  const pool = {words: inOrder(raw.words, order[LVL].words), kanji: inOrder(raw.kanji, order[LVL].kanji), grammar: inOrder(raw.grammar, order[LVL].grammar)};
+  let pool = {words: inOrder(raw.words, order[LVL].words), kanji: inOrder(raw.kanji, order[LVL].kanji), grammar: inOrder(raw.grammar, order[LVL].grammar)};
+  const D = days(order, LVL), dayKey = "jc:cday:" + LVL;   // v177: show one day of the plan (a hook to look over)
+  let day = store.get(dayKey, null); if(day && !D[day - 1]) day = null;
+  if(jump && day && !D[day - 1].some(([l, t, n]) => `${t}:${l}:${n}` === jump.k)){ day = null; store.set(dayKey, null); }   // bookmark outside this day
+  if(day){ const want = new Set(D[day - 1].map(([, t, n]) => t + ":" + n)); pool = {words: pool.words.filter(c => want.has("words:" + c.no)), kanji: pool.kanji.filter(c => want.has("kanji:" + c.no)), grammar: pool.grammar.filter(c => want.has("grammar:" + c.no))}; }
   if(St.CURRENT !== "complete") return;   // user left while it was loading
 
 
   showScreen("complete", createElement(CompleteList, {   // v161: React (src/screens/Lists.tsx); tabs are switched by the app-wide .tab handler
     tr, level: LVL, tab: St.TAB, pool, html: (t, c) => miniFor(t, c, c.level), jump,
-    marks: stickers, colors: STICKERS,
+    marks: stickers, colors: STICKERS, day, days: D.length,
+    onDay: d => { store.set(dayKey, d); St.NAV_SAME = true; renderComplete(); scrollTo(0, 0); },
     onJump: b => { store.set("jc:clevel", b.lv); St.TAB = b.t; store.set("jc:tab", b.t); St.NAV_SAME = true; renderComplete({k: b.k, n: Date.now()}); },   // v167: bookmarks
     onLevel: l => { store.set("jc:clevel", l); renderComplete(); }}));
   $("#count").textContent = "Complete list";

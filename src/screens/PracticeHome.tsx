@@ -161,11 +161,10 @@ function PlanItems({ p }: { p: PracticeHomeProps }) {
     return <li key={r.id} className={`plan-li ${cls}`}><button type="button" className="deck" data-plan={r.id} aria-label={`${r.name}: ${c.n} new, ${c.l} learning, ${c.d} due`} onClick={() => p.onPlan(r)}>
       <span className="deck-name">{r.name}</span><Num v={c.n} c="new" /><Num v={c.l} c="learn" /><Num v={c.d} c="due" /></button></li>; };
   return <>
-    {plan.today.map(r => row(r, "plan-today"))}
     {plan.days.map(d => [
       <li key={"days-" + d.lv} className="plan-li"><button type="button" className="deck plan-fold" aria-expanded={openLv === d.lv} onClick={() => setOpenLv(openLv === d.lv ? null : d.lv)}>
-        <span className="deck-name">{`${d.lv} · ${p.tr("All days")}`}<small>{`${d.current + 1} / ${d.rows.length}`}</small></span><span className="plan-chev" aria-hidden="true">›</span></button></li>,
-      ...(openLv === d.lv ? d.rows.map((r, k) => row(r, "plan-day" + (k === d.current ? " now" : ""))) : [])])}
+        <span className="deck-name">{`${d.lv} · ${p.tr("Days")}`}<small>{`${d.rows.length}`}</small></span><span className="plan-chev" aria-hidden="true">›</span></button></li>,
+      ...(openLv === d.lv ? d.rows.map(r => row(r, "plan-day")) : [])])}
     {plan.all.map(r => row(r))}
     {plan.mistakes && row(plan.mistakes, "plan-miss")}
   </>;

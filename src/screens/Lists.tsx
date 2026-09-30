@@ -52,13 +52,41 @@ function FlagSheet({ colors, marks, closing, onPick, onClose, tr }: { colors: st
     </aside>
   </>, host);
 }
+const GEAR = <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" /><path fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4Z" /></svg>;
+/** Which cards the list shows: all of the level, or one day of the plan (a hook to look over, not a schedule). */
+function DaySheet({ level, days, day, closing, onPick, onClose, tr }: { level: string; days: number; day: number | null; closing: boolean; onPick: (d: number | null) => void; onClose: () => void; tr: Tr }) {
+  const host = useBodyHost(), x0 = useRef<number | null>(null);
+  useEffect(() => {
+    if (closing) { document.body.classList.remove("sheet-open"); return; }
+    const a = requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+    return () => cancelAnimationFrame(a);
+  }, [closing]);
+  useEffect(() => () => document.body.classList.remove("sheet-open"), []);
+  return createPortal(<>
+    <div className="pg-scrim" onClick={onClose} />
+    <aside className="pg-sheet" role="dialog" aria-modal="true" aria-label="Show"
+      onTouchStart={e => { x0.current = e.touches[0].clientX; }}
+      onTouchEnd={e => { if (x0.current !== null && e.changedTouches[0].clientX - x0.current > 80) onClose(); x0.current = null; }}>
+      <div className="pg-sheet-head"><button type="button" className="pg-sheet-x" aria-label="Close" onClick={onClose}>‹</button><b>{level}</b></div>
+      <div className="pg-sheet-body flag-body">
+        <button type="button" className={`day-all${day === null ? " on" : ""}`} aria-pressed={day === null} onClick={() => onPick(null)}>{tr("All cards")}</button>
+        <div className="day-grid">{Array.from({ length: days }, (_, k) => k + 1).map(d =>
+          <button key={d} type="button" className={d === day ? "on" : ""} aria-pressed={d === day} aria-label={`Day ${d}`} onClick={() => onPick(d)}>{d}</button>)}</div>
+      </div>
+    </aside>
+  </>, host);
+}
 /** Complete list. Bookmarks are 5 sticky flags: double-tap a card to stick one (handled with the card taps in src/cards/cards.js);
     the flag button shows the 5 colours, tap a placed one to jump to its card. */
 export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" | "grammar"; pool: Pool; html: (t: string, c: Card) => string; onLevel: (l: string) => void;
-  marks: () => Bookmark[]; colors: string[]; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null }) {
+  marks: () => Bookmark[]; colors: string[]; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null;
+  day: number | null; days: number; onDay: (d: number | null) => void }) {
   const more = useRef<HTMLDivElement>(null), box = useRef<HTMLElement>(null);
   const [marks, setMarks] = useState(p.marks);
   const [open, setOpen] = useState(false), [closing, setClosing] = useState(false);
+  const [dayOpen, setDayOpen] = useState(false), [dayClosing, setDayClosing] = useState(false);
+  const closeDay = (then?: () => void) => { document.body.classList.remove("sheet-open"); if (then) { setDayOpen(false); then(); return; }
+    setDayClosing(true); setTimeout(() => { setDayOpen(false); setDayClosing(false); }, 320); };
   const close = (then?: () => void) => {
     if (then || matchMedia("(prefers-reduced-motion: reduce)").matches) { document.body.classList.remove("sheet-open"); setOpen(false); then?.(); return; }
     setClosing(true); setTimeout(() => { setOpen(false); setClosing(false); }, 320);
@@ -77,19 +105,21 @@ export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" 
   return (
     <section className="complete" ref={box}>
       <div className="complete-head">
-        <div><h1>{p.tr("Complete list")}</h1><div className="stat">{p.tr(`${p.pool.words.length} words · ${p.pool.kanji.length} kanji · ${p.pool.grammar.length} grammar`)}</div></div>
+        <div><h1>{p.tr("Complete list")}</h1><div className="stat">{p.day ? <b className="day-chip">{`${p.tr("Day")} ${p.day}`}</b> : null}{p.tr(`${p.pool.words.length} words · ${p.pool.kanji.length} kanji · ${p.pool.grammar.length} grammar`)}</div></div>
         <div className="bm-bar">
           <button type="button" className="bm-btn" aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => { setClosing(false); setOpen(true); }}>{BM_ICON}</button>
+          <button type="button" className={`bm-btn${p.day ? " on" : ""}`} aria-label={p.day ? `Showing day ${p.day}` : "Show: all cards or one day"} onClick={() => { setDayClosing(false); setDayOpen(true); }}>{GEAR}</button>
           <div className="seg seg-2" role="radiogroup" aria-label="Level">{["N1", "N2"].map(l =>
             <button key={l} type="button" role="radio" aria-checked={l === p.level} className={l === p.level ? "on" : ""} data-clevel={l} onClick={() => p.onLevel(l)}>{l}</button>)}</div>
         </div>
       </div>
+      {dayOpen && <DaySheet level={p.level} days={p.days} day={p.day} closing={dayClosing} tr={p.tr} onClose={() => closeDay()} onPick={d => closeDay(() => p.onDay(d))} />}
       {open && <FlagSheet colors={p.colors} marks={marks} closing={closing} tr={p.tr} onClose={() => close()} onPick={b => close(() => p.onJump(b))} />}
       <div className="tabs tabs-in" role="tablist">{([["words", "語", "Words"], ["kanji", "字", "Kanji"], ["grammar", "文", "Grammar"]] as const).map(([t, j, l]) =>
         <div key={t} className={`tab${t === p.tab ? " on" : ""}`} data-t={t} role="tab" tabIndex={0} aria-selected={t === p.tab}><span className="jp">{j}</span>{p.tr(l)}</div>)}</div>
       <section className="complete-section">
         <h2>{p.tr(L) + " "}<span className="stat">{p.pool[p.tab].length}</span></h2>
-        <div className="complete-cards"><CardPages key={p.level + p.tab + (p.jump ? p.jump.n : "")} cards={p.pool[p.tab]} html={c => p.html(p.tab, c)} sentinel={more} atLeast={at} /></div>
+        <div className="complete-cards"><CardPages key={p.level + p.tab + (p.day || "") + (p.jump ? p.jump.n : "")} cards={p.pool[p.tab]} html={c => p.html(p.tab, c)} sentinel={more} atLeast={at} /></div>
         <div className="complete-more" aria-hidden="true" ref={more} />
       </section>
     </section>
