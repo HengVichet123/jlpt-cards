@@ -1962,6 +1962,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .pg-undo{display:inline-grid;place-items:center;width:36px;height:36px;margin-left:6px;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
 .pg-undo:active{transform:scale(.92)}
 .pg-undo[disabled]{opacity:.3;cursor:default}
+.pg-bottom .pg-undo{pointer-events:auto}   /* v148: its row (.play-top) ignores taps, so the button needs them back; before this only Z / Backspace worked */
 .lsn-skip{align-self:center;min-height:44px;padding:0 22px;border:0;background:none;color:var(--soft);font:600 15px var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .lsn-skipped{margin:-10px 0 0;text-align:center;font-size:13px;color:var(--faint)}
 .lsn-hear{margin:0;font-size:13px;color:var(--soft);text-align:center}
@@ -2073,7 +2074,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v147";
+const APP_VERSION = "v148";
 
 
 /* =========================================================
