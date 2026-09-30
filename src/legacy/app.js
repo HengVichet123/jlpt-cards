@@ -6,6 +6,8 @@ import { renderScreen, renderOverlay, removeOverlay, hasOverlay } from "../react
 import { SettingsPanel, SettingsSheet } from "../screens/Settings";
 import { CompleteList, SectionsToc, SectionPage } from "../screens/Lists";
 import { ReadingHome, Shelf, Prelearn, Reader, Story } from "../screens/Reading";
+import { MovieList, Novel, Theatre } from "../screens/Movies";
+import { STORY, stopStory } from "../movies/player";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -18,7 +20,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v162";
+const APP_VERSION = "v163";
 
 
 /* =========================================================
@@ -1275,144 +1277,26 @@ async function renderNovels(){
   document.body.classList.remove("playing");
   try{ NOVELS = NOVELS || await (await fetch("data/novels/index.json", {cache:"no-cache"})).json(); }
   catch(e){ $("#list").innerHTML = `<div class="empty">Could not load novels.</div>`; return; }
-  $("#list").innerHTML = `<section class="reading">
-
-    <div class="novel-grid">${NOVELS.map(x => `<button class="novel-tile" data-novel="${x.id}">
-      <img src="data/novels/${x.id}.svg" alt="" loading="lazy"><b>${esc(x.title)}</b><span>${esc(x.titleEn)}</span></button>`).join("")}</div></section>`;
+  showScreen("movies", createElement(MovieList, {items: NOVELS}));   // v163: React (src/screens/Movies.tsx)
 }
 async function renderNovel(id){
   let st; try{ st = await (await fetch(`data/novels/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
   if(st.scenes && st.scenes.length) return renderTheatre(st);
   $("#pageTitle").textContent = st.title;
-  $("#list").innerHTML = `<section class="reading story">
-    <div class="story-top"><button class="nav-btn" id="novelBack" data-back="Movies">Back</button>
-      <button class="listen-btn" id="novelListen" type="button" aria-pressed="false"><span class="lb-ico">${PLAY_ICO}</span><span class="lb-t">Listen</span></button></div>
-    <img class="novel-art" src="data/novels/${st.id}.svg" alt="">
-    <h2 class="book-title">${esc(st.title)}<small>${esc(st.titleEn)} · ${esc(st.author)}</small></h2>
-    <div class="story-meta">${esc(st.source)}</div>
-    ${st.sentences.map(x => x.h ? `<h3 class="novel-ch">${esc(x.h)}<small>${esc(x.en || "")}</small></h3>`
-      : `<div class="ex story-line"><span class="jpline">${esc(x.jp)}</span><div class="tr">${esc(x.en)}</div></div>`).join("")}
-  </section>`;
-  $("#novelBack").onclick = () => { stopStory(); $("#pageTitle").textContent = "Movies"; renderNovels(); };
-  // listening: tap a sentence to hear it; Listen plays the story sentence by sentence (highlighted, kept in view)
-  const lines = [...document.querySelectorAll(".story .story-line")], btn = $("#novelListen");
-  const setBtn = on => { btn.setAttribute("aria-pressed", on); btn.querySelector(".lb-ico").innerHTML = on ? PAUSE_ICO : PLAY_ICO;
-    btn.querySelector(".lb-t").textContent = on ? (isJa() ? "一時停止" : "Pause") : (isJa() ? "聞く" : "Listen"); };
-  STORY.play = (i, cont) => {
-    const line = lines[i]; if(!line) { stopStory(); return; }
-    const text = line.querySelector(".jpline").textContent, key = AUDIO_MAP && AUDIO_MAP[text];
-    lines.forEach(l => l.classList.toggle("speaking", l === line)); STORY.i = i; STORY.cont = cont; setBtn(cont);
-    if(cont) line.scrollIntoView({block: "center", behavior: calmMotion() ? "auto" : "smooth"});
-    const next = () => { if(STORY.cont && STORY.i === i) STORY.play(i + 1, true); else line.classList.remove("speaking"); };
-    if(key){ PLAYER.onended = next; PLAYER.src = `data/audio/nanami/${key}.mp3`; PLAYER.play().catch(() => { speakDevice(text); }); }
-    else { try{ const u = new SpeechSynthesisUtterance(text); u.lang = "ja-JP"; u.onend = next; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
-  };
-  STORY.stopUI = () => { setBtn(false); lines.forEach(l => l.classList.remove("speaking")); };
-  lines.forEach((l, i) => l.addEventListener("click", () => { if(!soundOn()) return; STORY.play(i, STORY.cont); }));
-  btn.onclick = () => { if(STORY.cont){ stopStory(); return; } STORY.play(Math.max(0, STORY.i || 0), true); };
-  STORY.i = 0; STORY.cont = false;
+  showScreen("novel-" + id, createElement(Novel, {st, ja: isJa(), tr, deps: MOVIE_DEPS,   // v163: React + src/movies/player.ts
+    onBack: () => { stopStory(); $("#pageTitle").textContent = "Movies"; renderNovels(); }}));
 }
-const STORY = {i: 0, cont: false, play: null, stopUI: null};
-/* ---------- Theatre: a novel as a film. One picture per scene, the spoken line as a subtitle ---------- */
-function renderTheatre(st){
-  const L = st.sentences, sceneAt = i => { let k = 0; st.scenes.forEach((sc, j) => { if(sc.from <= i) k = j; }); return k; };
+const MOVIE_DEPS = {audioMap: () => AUDIO_MAP, speak: t => speak(t), speakDevice: t => speakDevice(t), soundOn: () => soundOn(), calm: () => calmMotion(), ja: () => isJa()};
+function renderTheatre(st){   // a novel as a film (src/screens/Movies.tsx + src/movies/player.ts)
   document.body.classList.add("cinema"); NAV_SAME = true;
-  const cc = () => store.get("jc:cc", true), enOn = () => store.get("jc:thEn", true);
-  $("#list").innerHTML = `<div class="th${cc() ? "" : " no-cc"}${enOn() ? "" : " no-en"}" role="region" aria-label="${esc(st.title)}">
-    <div class="th-top">
-      <button class="th-exit" type="button">${isJa() ? "‹ 終了" : "‹ Exit"}</button>
-      <div class="th-tg"><button class="th-cc" type="button" aria-pressed="${cc()}" aria-label="Subtitles">CC</button><button class="th-entg" type="button" aria-pressed="${enOn()}" aria-label="English line">EN</button></div>
-    </div>
-    <div class="th-stage"><div class="th-frame">
-      <img class="th-img" alt=""><img class="th-img" alt="">
-      <div class="th-card" hidden><b></b><small></small></div>
-      <button class="th-big" type="button" aria-label="Play">${PLAY_ICO}</button>
-    </div>
-    <div class="th-sub" aria-live="polite"><div class="th-tip" hidden></div><p class="th-jp"></p><p class="th-en"></p></div></div>
-    <div class="th-hud"><div class="th-seek"><input class="th-range" type="range" min="0" max="${L.length - 1}" step="1" value="0" aria-label="Line"><div class="th-bar" aria-hidden="true"><i></i></div></div>
-    <div class="th-ctl">
-      <div class="th-mid">
-        <button class="th-btn th-play" type="button" aria-label="Play">${PLAY_ICO}</button>
-        <button class="th-btn th-prev" type="button" aria-label="Previous line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
-        <button class="th-btn th-next" type="button" aria-label="Next line"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
-      </div>
-      <span class="th-count"></span>
-    </div></div></div>`;
-  const subHTML = x => { if(!x.tk) return esc(x.jp); let h = "", at = 0;
-    for(const [a, b, g, r, c, base] of x.tk){ if(a < at) continue; h += esc(x.jp.slice(at, a)) + `<span class="th-tk" data-g="${esc(g)}" data-r="${esc(r)}" data-b="${esc(base || "")}">${esc(x.jp.slice(a, b))}</span>`; at = b; }
-    return h + esc(x.jp.slice(at)); };
-  const imgs = [...document.querySelectorAll(".th-img")], card = $(".th-card"), big = $(".th-big"), playB = $(".th-play");
-  let front = 0, shown = -1, timer = 0;
-  const showScene = (k, instant) => {
-    if(k === shown) return; shown = k;
-    const nxt = imgs[1 - front]; nxt.src = `data/novels/${st.scenes[k].img}`;
-    const swap = () => { imgs[front].classList.remove("on"); nxt.classList.remove("on"); void nxt.offsetWidth; nxt.classList.add("on"); front = 1 - front; };
-    if(instant || nxt.complete) swap(); else nxt.onload = swap;
-  };
-  const setLine = i => {
-    const x = L[i]; STORY.i = i; showScene(sceneAt(i), i === 0);
-    card.hidden = !x.h; if(x.h){ card.querySelector("b").textContent = x.h; card.querySelector("small").textContent = x.en || ""; }
-    $(".th-jp").innerHTML = x.h ? "" : subHTML(x); $(".th-en").textContent = x.h ? "" : (x.en || ""); $(".th-tip").hidden = true;
-    $(".th-bar i").style.width = `${(i + 1) / L.length * 100}%`; $(".th-count").textContent = `${i + 1} / ${L.length}`; $(".th-range").value = i;
-  };
-  const setPlaying = on => { STORY.cont = on; big.hidden = on; playB.innerHTML = on ? PAUSE_ICO : PLAY_ICO; playB.setAttribute("aria-label", on ? "Pause" : "Play");
-    document.querySelector(".th").classList.toggle("paused", !on); if(on){ const t = $(".th-tip"); if(t) t.hidden = true; } if(STORY.onPlaying) STORY.onPlaying(on); };
-  STORY.play = (i, cont) => {
-    clearTimeout(timer);
-    if(i >= L.length){ stopStory(); setLine(L.length - 1); return; }
-    setLine(i); setPlaying(cont); if(!cont) return;
-    const text = L[i].h || L[i].jp, key = AUDIO_MAP && AUDIO_MAP[text];
-    const next = () => { if(STORY.cont && STORY.i === i) timer = setTimeout(() => STORY.play(i + 1, true), L[i].h ? 900 : 350); };
-    if(key){ PLAYER.onended = next; PLAYER.src = `data/audio/nanami/${key}.mp3`; PLAYER.play().catch(() => { timer = setTimeout(next, text.length * 160); }); }
-    else timer = setTimeout(next, text.length * 160 + 800);
-  };
-  STORY.stopUI = () => { clearTimeout(timer); setPlaying(false); };
-  const toggle = () => { if(STORY.cont){ stopStory(); return; } if(PLAYER.src && PLAYER.paused && PLAYER.currentTime > 0 && !PLAYER.ended && PLAYER.onended){ setPlaying(true); PLAYER.play().catch(() => {}); return; } STORY.play(STORY.i, true); };
-  const go = d => { const i = Math.max(0, Math.min(L.length - 1, STORY.i + d)); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} STORY.play(i, STORY.cont); };
-  big.onclick = playB.onclick = toggle;
-  $(".th-frame").addEventListener("click", e => { if(!e.target.closest(".th-big")) toggle(); });
-  $(".th-prev").onclick = () => go(-1); $(".th-next").onclick = () => go(1);
-  $(".th-sub").addEventListener("click", e => {
-    const w = e.target.closest(".th-tk"), tip = $(".th-tip");
-    document.querySelectorAll(".th-tk.on").forEach(x => x.classList.remove("on"));
-    if(!w){ tip.hidden = true; return; }
-    const wasOn = STORY.cont, line = STORY.i, thEl = $(".th"); if(wasOn){ thEl.classList.add("peek"); stopStory(); }
-    w.classList.add("on");
-    const short = (w.dataset.g || "").split(/[;；/]/)[0].replace(/\s*\(.*?\)\s*/g, " ").trim();
-    tip.innerHTML = (w.dataset.r ? `<span class="tip-rd">${esc(w.dataset.r)}</span>` : "") + (short ? `<span class="tip-en">${esc(short)}</span>` : "");
-    tip.hidden = false;
-    if(soundOn()) speak(w.textContent);   // hear it as written in the line
-    clearTimeout(tip._t);
-    tip._t = setTimeout(() => { tip.hidden = true; w.classList.remove("on"); thEl.classList.remove("peek"); if(wasOn && STORY.i === line && !STORY.cont) STORY.play(line, true); }, 2000);
-    const r = w.getBoundingClientRect(), br = $(".th-sub").getBoundingClientRect();
-    tip.style.left = Math.max(0, Math.min(br.width - tip.offsetWidth, r.left - br.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
-    tip.style.top = (r.top - br.top - tip.offsetHeight - 8) + "px";
-  });
-  $(".th-cc").onclick = () => { const on = !cc(); store.set("jc:cc", on); $(".th-cc").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-cc", !on); };
-  $(".th-entg").onclick = () => { const on = !enOn(); store.set("jc:thEn", on); $(".th-entg").setAttribute("aria-pressed", on); $(".th").classList.toggle("no-en", !on); };
-  const rg = $(".th-range");   // drag = preview picture + line, release = play from there
-  rg.oninput = () => { clearTimeout(timer); try{ PLAYER.pause(); PLAYER.onended = null; }catch(e){} setLine(+rg.value); };
-  rg.onchange = () => STORY.play(+rg.value, STORY.cont || th.dataset.was === "1");
-  rg.onpointerdown = () => { th.dataset.was = STORY.cont ? "1" : "0"; };
-  // 2. controls fade out while playing; any movement brings them back (first tap on a phone only reveals them)
-  const th = $(".th"); let idleT = 0;
-  const wake = () => { th.classList.remove("idle"); clearTimeout(idleT); idleT = setTimeout(() => { if(STORY.cont && document.body.classList.contains("cinema")) th.classList.add("idle"); }, 2600); };
-  th.addEventListener("pointermove", e => { if(e.pointerType === "mouse") wake(); });
-  th.addEventListener("pointerdown", e => { if(th.classList.contains("idle") && e.pointerType !== "mouse"){ e.preventDefault(); e.stopPropagation(); th.dataset.swallow = "1"; } wake(); }, true);
-  th.addEventListener("click", e => { if(th.dataset.swallow === "1"){ th.dataset.swallow = ""; e.stopPropagation(); e.preventDefault(); } }, true);
-  addEventListener("keydown", wake);
-  let wasOn = false;
-  STORY.onPlaying = on => { if(on === wasOn) return; wasOn = on; if(on) wake(); else { clearTimeout(idleT); th.classList.remove("idle"); } };
-  $(".th-exit").onclick = () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; NAV_DIR = "back"; renderNovels(); };
-  STORY.i = 0; STORY.cont = false; setLine(0); setPlaying(false); card.hidden = true;   // poster: picture + title only
-  $(".th-jp").textContent = st.title; $(".th-en").textContent = `${st.titleEn} · ${st.author}`;
+  showScreen("film-" + st.id, createElement(Theatre, {st, ja: isJa(), cc: store.get("jc:cc", true), en: store.get("jc:thEn", true), deps: MOVIE_DEPS,
+    onExit: () => { stopStory(); document.body.classList.remove("cinema"); $("#pageTitle").textContent = "Movies"; NAV_DIR = "back"; renderNovels(); }}));
 }
 addEventListener("keydown", e => { if(!document.body.classList.contains("cinema") || e.target.closest("input,textarea")) return;
   if(e.key === " "){ e.preventDefault(); $(".th-play") && $(".th-play").click(); }
   else if(e.key === "ArrowRight") $(".th-next") && $(".th-next").click();
   else if(e.key === "ArrowLeft") $(".th-prev") && $(".th-prev").click();
   else if(e.key === "Escape") $(".th-exit") && $(".th-exit").click(); });
-function stopStory(){ STORY.cont = false; try{ PLAYER.pause(); PLAYER.onended = null; speechSynthesis.cancel(); }catch(e){} if(STORY.stopUI) STORY.stopUI(); }
 
 
 
