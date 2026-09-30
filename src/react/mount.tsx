@@ -41,3 +41,16 @@ export function mountScreen(list: HTMLElement, node: ReactNode, key = ""): void 
   current = { root, host, key };
   flushSync(() => root.render(node));
 }
+
+/* Overlays (sheets over the page): their own React root in a <body> wrapper, independent of #list. */
+const overlays = new Map<string, { root: Root; host: HTMLElement }>();
+export function renderOverlay(key: string, node: ReactNode): void {
+  let o = overlays.get(key);
+  if (!o) { const host = document.createElement("div"); host.className = "rx-float"; document.body.appendChild(host); o = { root: createRoot(host), host }; overlays.set(key, o); }
+  const r = o.root; flushSync(() => r.render(node));
+}
+export function removeOverlay(key: string): void {
+  const o = overlays.get(key); if (!o) return;
+  overlays.delete(key); queueMicrotask(() => { o.root.unmount(); o.host.remove(); });
+}
+export const hasOverlay = (key: string) => overlays.has(key);

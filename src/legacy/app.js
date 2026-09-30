@@ -2,7 +2,8 @@ import { store, K, migrate } from "../data/store";
 import * as SRS from "../practice/srs";
 import * as Sess from "../practice/sessions";
 import { createElement } from "react";
-import { renderScreen } from "../react/mount";
+import { renderScreen, renderOverlay, removeOverlay, hasOverlay } from "../react/mount";
+import { SettingsPanel, SettingsSheet } from "../screens/Settings";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -15,7 +16,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v159";
+const APP_VERSION = "v160";
 
 
 /* =========================================================
@@ -1077,56 +1078,37 @@ function bestVoice(){   // the saved choice, else the most natural-sounding Japa
     vs.find(v => /google/i.test(v.name)) || vs.find(v => /kyoko|o-ren|nanami|haruka/i.test(v.name)) || vs[0] || null;
 }
 let KEEP_SETTINGS = false;   // true while the page under the Settings sheet is redrawn (language switch)
+let SETTINGS_CLOSING = false;
+/* v160: Settings is React (src/screens/Settings.tsx): a sheet over the page (gear) or its own page */
+function settingsProps(){
+  return {ja: isJa(), tr, version: APP_VERSION, theme: store.get("jc:theme", "auto"), lang: store.get("jc:lang", "en"),
+    answer: store.get("jc:answer", "full"), sound: soundOn(), fam: store.get("jc:showfam", false),
+    onTheme: v => { store.set("jc:theme", v); applyTheme(); drawSettings(); },
+    onLang: v => { store.set("jc:lang", v);
+      if(hasOverlay("settings")){ NAV_SAME = true; KEEP_SETTINGS = true; pick(CURRENT); KEEP_SETTINGS = false; applyLang(); drawSettings(); return; }
+      if(v === "en"){ pick("settings"); applyLang(); } else { applyLang(); drawSettings(); } },
+    onAnswer: v => { store.set("jc:answer", v); drawSettings(); },
+    onSound: on => store.set("jc:sound", on),
+    onFam: on => { store.set("jc:showfam", on); document.body.classList.toggle("showfam", on); }};
+}
+function drawSettings(){
+  if(hasOverlay("settings")) renderOverlay("settings", createElement(SettingsSheet, {...settingsProps(), calm: calmMotion(), closing: SETTINGS_CLOSING, onClose: () => closeSettingsSheet()}));
+  else if(CURRENT === "settings") showScreen("settings", createElement(SettingsPanel, settingsProps()));
+}
 function openSettingsSheet(){   // Settings = a card sliding in from the right, Home nudged aside behind it
-  if($("#appSheet")) return;
-  document.body.insertAdjacentHTML("beforeend", `<div id="appScrim" class="pg-scrim"></div><aside id="appSheet" class="pg-sheet" role="dialog" aria-modal="true" aria-label="Settings">
-    <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="appSheetX" aria-label="Close">‹</button><b>${isJa() ? "設定" : "Settings"}</b></div>
-    <div class="pg-sheet-body app-sheet-body"></div></aside>`);
-  const sh = $("#appSheet"), close = () => closeSettingsSheet();
-  $("#appScrim").onclick = close; $("#appSheetX").onclick = close;
-  let x0 = null;
-  sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
-  sh.addEventListener("touchend", e => { if(x0 !== null && e.changedTouches[0].clientX - x0 > 80) close(); x0 = null; }, {passive: true});
-  renderSettings(sh.querySelector(".app-sheet-body"));
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+  if(hasOverlay("settings")) return;
+  SETTINGS_CLOSING = false;
+  renderOverlay("settings", createElement(SettingsSheet, {...settingsProps(), calm: calmMotion(), closing: false, onClose: () => closeSettingsSheet()}));
 }
 function closeSettingsSheet(instant){
-  const sh = $("#appSheet"), sc = $("#appScrim"); if(!sh) return;
-  document.body.classList.remove("sheet-open");
-  const gone = () => { sh.remove(); sc && sc.remove(); };
-  if(instant || calmMotion()) gone(); else setTimeout(gone, 320);
+  if(!hasOverlay("settings")) return;
+  if(instant || calmMotion()){ document.body.classList.remove("sheet-open"); removeOverlay("settings"); return; }
+  SETTINGS_CLOSING = true; drawSettings();
+  setTimeout(() => { SETTINGS_CLOSING = false; removeOverlay("settings"); }, 320);
 }
-function renderSettings(target){
+function renderSettings(){
   document.body.classList.remove("playing");
-  const theme = store.get("jc:theme", "auto"), rate = store.get("jc:rate", 0.9), fam = store.get("jc:showfam", false);
-  const draw = () => {
-    const vs = jaVoices(), cur = bestVoice();
-    (target || $("#list")).innerHTML = `<section class="settings">
-      <div class="set-group"><h2 class="set-h">Appearance</h2>
-        <div class="seg" role="radiogroup" id="setTheme">${[["auto","Auto"],["light","Light"],["dark","Dark"]].map(([k, l]) =>
-          `<button type="button" role="radio" data-v="${k}" class="${k === theme ? "on" : ""}" aria-checked="${k === theme}">${l}</button>`).join("")}</div></div>
-      <div class="set-group"><h2 class="set-h">Language</h2>
-        <div class="seg seg-2" role="radiogroup" id="setLang">${[["en","With English"],["ja","Japanese only"]].map(([k, l]) =>
-          `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:lang", "en") ? "on" : ""}">${l}</button>`).join("")}</div></div>
-      <div class="set-group"><h2 class="set-h">Practice answer</h2>
-        <div class="seg seg-2" role="radiogroup" id="setAnswer">${[["short","Short"],["full","Full"]].map(([k, l]) =>
-          `<button type="button" role="radio" data-v="${k}" class="${k === store.get("jc:answer", "full") ? "on" : ""}" aria-checked="${k === store.get("jc:answer", "full")}">${l}</button>`).join("")}</div></div>
-      <div class="set-group"><h2 class="set-h">Cards</h2>
-        <label class="opt-row opt-switch" for="setSay"><span>Sound</span><input type="checkbox" id="setSay" ${soundOn() ? "checked" : ""}></label>
-        <label class="opt-row opt-switch" for="setFam"><span>Familiarity bars</span><input type="checkbox" id="setFam" ${fam ? "checked" : ""}></label></div>
-      <p class="set-ver">${APP_VERSION}</p>
-    </section>`;
-    $("#setTheme").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:theme", b.dataset.v); applyTheme(); draw(); });
-    $("#setLang").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:lang", b.dataset.v);
-      if(target){ NAV_SAME = true; KEEP_SETTINGS = true; pick(CURRENT); KEEP_SETTINGS = false; applyLang(); draw(); const t = $("#appSheet .pg-sheet-head b"); if(t) t.textContent = isJa() ? "設定" : "Settings"; return; }
-      if(b.dataset.v === "en"){ pick("settings"); applyLang(); } else { applyLang(); draw(); } });
-    $("#setSay").onchange = e => store.set("jc:sound", e.target.checked);
-    $("#setAnswer").querySelectorAll("button").forEach(b => b.onclick = () => { store.set("jc:answer", b.dataset.v); draw(); });
-    $("#setFam").onchange = e => { store.set("jc:showfam", e.target.checked); document.body.classList.toggle("showfam", e.target.checked); };
-    if(target && isJa()) jaWalk(target);
-  };
-  draw();
-  try{ if(!jaVoices().length) speechSynthesis.onvoiceschanged = () => { if(CURRENT === "settings" || (target && target.isConnected)) draw(); }; }catch(e){}
+  showScreen("settings", createElement(SettingsPanel, settingsProps()));
 }
 function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
   const {due, later} = SRS.dueCounts();
