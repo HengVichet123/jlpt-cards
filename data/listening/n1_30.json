@@ -49,7 +49,7 @@
      ],
      "answer": 1,
      "why": "She changed jobs, so the new employer's certificate replaces the tax slip; no guarantor.",
-     "audio": "n1_30/q01.mp3?v=8719040b"
+     "audio": "n1_30/q01.mp3?v=58b0bb70"
     },
     {
      "tags": [
@@ -91,7 +91,7 @@
      ],
      "answer": 3,
      "why": "Check with legal first, then send.",
-     "audio": "n1_30/q02.mp3?v=34a8680c"
+     "audio": "n1_30/q02.mp3?v=2afe925b"
     },
     {
      "tags": [
@@ -129,7 +129,7 @@
      ],
      "answer": 2,
      "why": "A week before the end of the month: the 24th.",
-     "audio": "n1_30/q03.mp3?v=7ff42622"
+     "audio": "n1_30/q03.mp3?v=8bfc644d"
     }
    ],
    "spoken": false
@@ -171,7 +171,7 @@
      ],
      "answer": 4,
      "why": "Listening to what the user wants to do.",
-     "audio": "n1_30/q04.mp3?v=7f41953e"
+     "audio": "n1_30/q04.mp3?v=905fa0b9"
     },
     {
      "tags": [
@@ -209,7 +209,7 @@
      ],
      "answer": 1,
      "why": "The partner firm changed course.",
-     "audio": "n1_30/q05.mp3?v=adc7ad25"
+     "audio": "n1_30/q05.mp3?v=28dfae7f"
     },
     {
      "tags": [
@@ -231,7 +231,7 @@
      ],
      "answer": 1,
      "why": "Lack of experience reading long texts through.",
-     "audio": "n1_30/q06.mp3?v=b4a730a3"
+     "audio": "n1_30/q06.mp3?v=f60b698f"
     }
    ],
    "spoken": false
@@ -261,7 +261,7 @@
      ],
      "answer": 2,
      "why": "Forest soil stores water; neglected forests lose it.",
-     "audio": "n1_30/q07.mp3?v=1aece436"
+     "audio": "n1_30/q07.mp3?v=b7d3f4f4"
     },
     {
      "tags": [
@@ -283,7 +283,7 @@
      ],
      "answer": 4,
      "why": "An apology must explain what, why and prevention.",
-     "audio": "n1_30/q08.mp3?v=12a2bc15"
+     "audio": "n1_30/q08.mp3?v=81cef48d"
     }
    ],
    "spoken": true
@@ -310,7 +310,7 @@
      ],
      "answer": 2,
      "why": "Pressed for a status: promise an answer today.",
-     "audio": "n1_30/q09.mp3?v=947508d7"
+     "audio": "n1_30/q09.mp3?v=c09c04c2"
     },
     {
      "tags": [
@@ -329,7 +329,7 @@
      ],
      "answer": 3,
      "why": "Complimented and asked where: thank and answer.",
-     "audio": "n1_30/q10.mp3?v=97dba5dc"
+     "audio": "n1_30/q10.mp3?v=8519de28"
     },
     {
      "tags": [
@@ -348,7 +348,7 @@
      ],
      "answer": 3,
      "why": "Asked to keep it secret: promise.",
-     "audio": "n1_30/q11.mp3?v=3c7e4875"
+     "audio": "n1_30/q11.mp3?v=35d68fea"
     },
     {
      "tags": [
@@ -367,7 +367,7 @@
      ],
      "answer": 2,
      "why": "Encouraged: thank her.",
-     "audio": "n1_30/q12.mp3?v=987ef221"
+     "audio": "n1_30/q12.mp3?v=dbf53488"
     },
     {
      "tags": [
@@ -386,7 +386,7 @@
      ],
      "answer": 1,
      "why": "Asked for a lift: ask what time.",
-     "audio": "n1_30/q13.mp3?v=e6a16759"
+     "audio": "n1_30/q13.mp3?v=bc0098d0"
     },
     {
      "tags": [
@@ -405,7 +405,7 @@
      ],
      "answer": 1,
      "why": "A polite no: accept graciously.",
-     "audio": "n1_30/q14.mp3?v=4ad949ce"
+     "audio": "n1_30/q14.mp3?v=6e44c3fc"
     }
    ],
    "spoken": true
@@ -455,7 +455,7 @@
      ],
      "answer": 3,
      "why": "It fits the goal of cross-department conversation and was most requested.",
-     "audio": "n1_30/q15.mp3?v=767d06f6"
+     "audio": "n1_30/q15.mp3?v=0b3f2429"
     }
    ],
    "spoken": true
@@ -472,7 +472,7 @@
      "intro": "大学のオープンキャンパスで、案内係がプログラムを説明しています。それを聞いて、高校生と母親が話しています。",
      "lines": [
       [
-       "F2",
+       "M2",
        "本日のプログラムは四つございます。一つ目は、各学部の教授による模擬授業です。二つ目は、在学生が案内するキャンパスツアーで、図書館や寮もご覧いただけます。三つ目は、入試の傾向と対策についての説明会。四つ目は、奨学金や学費についての個別相談会です。"
       ],
       [
@@ -512,7 +512,7 @@
        "why": "Worried about fees: scholarship consultation."
       }
      ],
-     "audio": "n1_30/q16.mp3?v=08ded770"
+     "audio": "n1_30/q16.mp3?v=50ea9f0b"
     }
    ],
    "spoken": false
