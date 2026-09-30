@@ -2052,30 +2052,24 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 /* v167: Script is plain in both states: no box when open either, the lines hang under a thin rule */
 .lsn .lsn-script[open] summary{margin-bottom:0;border-color:transparent;background:none;padding-left:2px;border-radius:12px}
 .lsn-body{border:0;border-left:2px solid var(--line);border-radius:0;background:none;padding:2px 0 4px 12px;margin-left:8px}
-/* v167: Complete list bookmarks: a ribbon on each card (grey = off, accent = on) and a jump list */
-.bm{position:absolute;top:0;right:2px;z-index:1;width:40px;height:44px;display:grid;place-items:center;border:0;padding:0;background:none;color:var(--line);cursor:pointer;-webkit-tap-highlight-color:transparent}
-.bm svg{width:14px;height:18px}
-.bm path{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
-.bm:hover{color:var(--faint)}
-.bm.on,.bm.on:hover{color:var(--shu)}
-.bm.on path{fill:currentColor}
+/* v169: bookmarks = 5 sticky flags. On a card: a thin tab poking out of the right edge. Header: the 5 colours (placed = solid). */
+.complete-cards{touch-action:manipulation}   /* double-tap = flag, never page zoom */
+.stk{position:absolute;right:-6px;top:14px;z-index:1;width:12px;height:30px;border-radius:2px 3px 3px 2px;background:var(--stk);
+  box-shadow:1px 1px 0 rgba(0,0,0,.12);pointer-events:none}
+.stk::after{content:"";position:absolute;inset:0 6px 0 0;background:rgba(255,255,255,.18)}   /* the part stuck on the card, a little lighter */
 .bm-bar{display:flex;align-items:center;gap:10px}
-.bm-open{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--shu);font:700 14px var(--body);cursor:pointer}
-.bm-open svg{width:12px;height:15px}
-.bm-open path{fill:currentColor}
-.bm-open span{color:var(--ink)}
-.bm-list{list-style:none;margin:0 0 12px;padding:4px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--lift)}
-.bm-item{width:100%;display:flex;align-items:center;gap:10px;min-height:46px;padding:6px 10px;border:0;border-radius:8px;background:none;color:var(--ink);text-align:left;cursor:pointer}
-.bm-item:hover{background:var(--chip)}
-.bm-ico svg{width:12px;height:15px;display:block}
-.bm-ico path{fill:var(--shu)}
-.bm-item b{font:700 16px var(--display)}
-.bm-where{margin-left:auto;font:600 12.5px var(--body);color:var(--faint);font-variant-numeric:tabular-nums}
+.stk-open{display:inline-flex;align-items:flex-end;gap:3px;height:40px;padding:0 11px 9px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer}
+.stk-open i{display:block;width:5px;height:16px;border-radius:1px;background:var(--stk);opacity:.28}
+.stk-open i.on{opacity:1;height:20px}
+.stk-tray{display:flex;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--lift)}
+.stk-flag{flex:1;height:52px;display:grid;place-items:center;border:0;border-radius:8px;background:none;cursor:pointer}
+.stk-flag span{display:block;width:14px;height:36px;border-radius:2px 3px 3px 2px;background:var(--stk);box-shadow:1px 1px 0 rgba(0,0,0,.12)}
+.stk-flag:hover:not(:disabled){background:var(--chip)}
+.stk-flag:disabled{cursor:default}
+.stk-flag:disabled span{opacity:.22;box-shadow:none}
 @keyframes bmflash{0%,40%{box-shadow:0 0 0 3px var(--shu)}100%{box-shadow:0 0 0 3px transparent}}
 .card.bm-flash{animation:bmflash 1.6s ease-out}
 @media (prefers-reduced-motion: reduce){ .card.bm-flash{animation:none;box-shadow:0 0 0 3px var(--shu)} }
-.bm-open svg path{fill:var(--shu)}
-
 /* v168: never let anything make the page wider than the screen (iPhone zooms out to fit, then back) */
 html{overflow-x:hidden}   /* on html only: it applies to the window, so the sticky header and page scrolling keep working */
 @supports (overflow-x:clip){ html,body{overflow-x:clip} }

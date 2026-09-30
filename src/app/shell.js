@@ -18,7 +18,10 @@ import { sayOff, speak } from "../audio/speech.js";
 
 // v154: all saved data goes through src/data/store.ts (same keys, same behaviour)
 /* v155+: React screens. Same key = updated in place, so the page-slide flags are reset here (innerHTML did that before). */
-export function showScreen(key, node){ if(renderScreen($("#list"), key, node)){ St.NAV_SAME = false; St.NAV_DIR = "fwd"; St.SWIPE_FROM = 0; } }
+export function showScreen(key, node){
+  if(renderScreen($("#list"), key, node)){ St.NAV_SAME = false; St.NAV_DIR = "fwd"; St.SWIPE_FROM = 0; }   // same page redrawn in place: keep the position
+  else scrollTo(0, 0);   // v169: every page opens at the top
+}
 /* one optional action on the right of the header, owned by the page that set it */
 export function setHeaderAction(label, fn){ const b = $("#hdrAct"); b.textContent = label; b.onclick = fn; b.hidden = false; b._owner = $("#list").firstElementChild; jaWalk(b); }
 export function syncHeaderAction(){ const b = $("#hdrAct"); if(b && !b.hidden && !(b._owner && document.body.contains(b._owner))) b.hidden = true; }

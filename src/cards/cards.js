@@ -593,56 +593,89 @@ export function shortAnswer(t, c, html){   // Settings → Answer: Short = revea
   const i = html.indexOf('<div class="back">');
   return html.slice(0, i) + `<div class="back back-short">${peekFor(t, c)}</div></div>`;
 }
-/* v167: bookmark ribbon on Complete list cards (tap = set / remove). Saved in jc:bookmarks. */
-const RIBBON = '<svg viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1.5h12v17l-6-4.2-6 4.2z"/></svg>';
-export const bookmarks = () => store.get("jc:bookmarks", []);
-const withRibbon = (html, t, lv, no) => {
+/* v169: bookmarks are 5 sticky flags (like paper index tabs), one colour each. Double-tap a card in the Complete list
+   to stick the next free flag on it (all 5 in use = the flag placed longest ago moves); double-tap a flagged card to peel it off.
+   Saved in jc:bookmarks as [{c (colour 0-4), k, t, lv, no, at}]. */
+export const STICKERS = ["#D2553A", "#3F5E8C", "#6E8B3D", "#D9A21B", "#8C6BB1"];   // 朱 藍 鶯 山吹 藤
+export function stickers(){
+  const all = store.get("jc:bookmarks", []);
+  if(all.some(b => b.c === undefined)){   // v167 ribbons: keep the first 5 as flags
+    const conv = all.slice(0, 5).map((b, i) => ({...b, c: i})); store.set("jc:bookmarks", conv); return conv; }
+  return all;
+}
+const flagHTML = c => `<span class="stk" style="--stk:${STICKERS[c]}" aria-hidden="true"></span>`;
+const withSticker = (html, t, lv, no) => {
   if(St.CURRENT !== "complete") return html;
-  const k = `${t}:${lv}:${no}`, on = bookmarks().some(b => b.k === k), i = html.indexOf(">") + 1;   // right after the card's opening tag
-  return html.slice(0, i) + `<button type="button" class="bm${on ? " on" : ""}" data-bm="${k}" aria-pressed="${on}" aria-label="Bookmark">${RIBBON}</button>` + html.slice(i);
+  const b = stickers().find(x => x.k === `${t}:${lv}:${no}`); if(!b) return html;
+  const i = html.indexOf(">") + 1; return html.slice(0, i) + flagHTML(b.c) + html.slice(i);   // right after the card's opening tag
 };
-export function toggleBookmark(k){
-  const [t, lv, no] = k.split(":"), all = bookmarks(), i = all.findIndex(b => b.k === k);
-  if(i >= 0) all.splice(i, 1);
-  else { const c = MINI.reg.get(miniKey(t, lv, +no)) || {}; all.push({k, t, lv, no: +no, word: c.word || c.kanji || c.pattern || "", at: Date.now()}); }
-  store.set("jc:bookmarks", all); return i < 0;
+const cardEl = k => { const [t, lv, no] = k.split(":"); return document.querySelector(`.complete-cards .list-card[data-mt="${t}"][data-mlv="${lv}"][data-no="${no}"]`); };
+function toggleSticker(card){
+  const k = `${card.dataset.mt}:${card.dataset.mlv}:${card.dataset.no}`;
+  let all = stickers(); const i = all.findIndex(b => b.k === k);
+  if(i >= 0){ all.splice(i, 1); card.querySelector(".stk")?.remove(); }
+  else {
+    const used = new Set(all.map(b => b.c)); let c = [0, 1, 2, 3, 4].find(x => !used.has(x));
+    if(c === undefined){ const old = all.reduce((a, b) => a.at < b.at ? a : b); c = old.c; all = all.filter(b => b !== old); cardEl(old.k)?.querySelector(".stk")?.remove(); }
+    all.push({c, k, t: card.dataset.mt, lv: card.dataset.mlv, no: +card.dataset.no, at: Date.now()});
+    card.insertAdjacentHTML("afterbegin", flagHTML(c));
+    const f = card.querySelector(".stk"); f && !calmMotion() && f.animate([{transform: "translateX(-10px)", opacity: 0}, {transform: "none", opacity: 1}], {duration: 220, easing: "cubic-bezier(.2,.8,.2,1)"});
+  }
+  store.set("jc:bookmarks", all);
+  dispatchEvent(new Event("jc:bookmarks"));
 }
 export function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
   MINI.reg.set(miniKey(t, lv, c.no), c); St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
-  return withRibbon(html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>", t, lv, c.no);
+  return withSticker(html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>", t, lv, c.no);
 }
 export function fullFor(t, c, lv){
   St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
-  return withRibbon((html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`), t, lv, c.no);
+  return withSticker((html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`), t, lv, c.no);
 }
 // one handler for every mini list on any page (Playground never renders minis)
+const TAP = {key: null, t: 0, timer: 0};
 document.addEventListener("click", e => {
   if(e.target.closest(".say")) return;   // speaker icon: play only
-  if(e.target.closest(".bm")) return;    // bookmark ribbon: handled by the Complete list screen
+  const lc = St.CURRENT === "complete" && e.target.closest(".complete-cards .list-card");
+  if(lc && !e.target.closest("a")){   // Complete list: wait a moment to tell a double-tap (flag) from a tap (sound / open / fold)
+    e.stopPropagation(); e.preventDefault();
+    const key = `${lc.dataset.mt}:${lc.dataset.mlv}:${lc.dataset.no}`, now = Date.now();
+    clearTimeout(TAP.timer);
+    if(TAP.key === key && now - TAP.t < 320){ TAP.key = null; toggleSticker(lc); return; }
+    const target = e.target; TAP.key = key; TAP.t = now;
+    TAP.timer = setTimeout(() => { TAP.key = null; if(target.isConnected) cardTap(target); }, 280);
+    return;
+  }
+  if(cardTap(e.target)){ e.stopPropagation(); e.preventDefault(); }
+}, true);
+/** One tap on a card (sound on the headword, open a closed list card, fold an open one). True = handled. */
+function cardTap(target){
+  const e = {target};
   const word = e.target.closest(".card .big");   // the headword itself = hear it, the card stays as it is
   if(word && word.closest(".play-stage")){   // Practice: a quick second tap on the word = reveal
     const now = Date.now(), card = word.closest(".card");
-    if(now - (word._t || 0) < 350 && !card.classList.contains("open")){ e.stopPropagation(); word._t = 0; flipCard(card, true); return; }
+    if(now - (word._t || 0) < 350 && !card.classList.contains("open")){ word._t = 0; flipCard(card, true); return true; }
     word._t = now; }
   if(word && soundOn()){ const cd = word.closest(".card"), c = cd && MINI.reg.get(miniKey(cd.dataset.mt, cd.dataset.mlv, cd.dataset.no));
     const text = (c && c.word) || (cd && cd.dataset.type === "words" ? word.textContent.trim() : "");
-    if(text && St.AUDIO_MAP && St.AUDIO_MAP[text]){ e.stopPropagation(); e.preventDefault(); word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return; } }
+    if(text && St.AUDIO_MAP && St.AUDIO_MAP[text]){ word.animate([{transform:"scale(.97)"},{transform:"none"}], {duration:180}); speak(text); return true; } }
   const m = e.target.closest(".list-card[data-mt]:not(.open)");
   if(m && !e.target.closest("a")){
     const c = MINI.reg.get(miniKey(m.dataset.mt, m.dataset.mlv, m.dataset.no));
-    if(c){ e.stopPropagation();
+    if(c){
       const tmp = document.createElement("div"); tmp.innerHTML = fullFor(m.dataset.mt, c, m.dataset.mlv).trim();
-      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); }
-    return;
+      const full = tmp.firstElementChild; m.replaceWith(full); unfoldBack(full.querySelector(".back")); return true; }
+    return false;
   }
   const f = e.target.closest(".list-card.open[data-mt] .front");
   if(f){
     const card = f.closest(".card"), c = MINI.reg.get(miniKey(card.dataset.mt, card.dataset.mlv, card.dataset.no));
-    if(c){ e.stopPropagation(); foldBack(card.querySelector(".back"), () => { card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }); }
+    if(c){ foldBack(card.querySelector(".back"), () => { card.outerHTML = miniFor(card.dataset.mt, c, card.dataset.mlv); }); return true; }
   }
-}, true);
+  return false;
+}
 
 export function famBar(lvl, t, no){
   const f = Math.max(0, Math.min(5, (store.get(profileKey(lvl, t, no), {familiarity:0}).familiarity || 0))) / 5;

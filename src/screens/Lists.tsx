@@ -24,41 +24,40 @@ export function CardPages<C extends Card>({ cards, html, page = 60, sentinel, at
 
 /* ---------------- Complete list ---------------- */
 type Pool = Record<"words" | "kanji" | "grammar", Card[]>;
-export type Bookmark = { k: string; t: string; lv: string; no: number; word: string; at: number };
-const RIBBON = <svg viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1.5h12v17l-6-4.2-6 4.2z" /></svg>;
-const TAG = { words: "W", kanji: "K", grammar: "G" } as Record<string, string>;
+export type Bookmark = { c: number; k: string; t: string; lv: string; no: number; at: number };
+/** Complete list. Bookmarks are 5 sticky flags: double-tap a card to stick one (handled with the card taps in src/cards/cards.js);
+    the flag button shows the 5 colours, tap a placed one to jump to its card. */
 export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" | "grammar"; pool: Pool; html: (t: string, c: Card) => string; onLevel: (l: string) => void;
-  marks: () => Bookmark[]; onToggle: (k: string) => boolean; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null }) {
+  marks: () => Bookmark[]; colors: string[]; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null }) {
   const more = useRef<HTMLDivElement>(null), box = useRef<HTMLElement>(null);
   const [marks, setMarks] = useState(p.marks);
   const [open, setOpen] = useState(false);
+  useEffect(() => { const f = () => setMarks(p.marks()); addEventListener("jc:bookmarks", f); return () => removeEventListener("jc:bookmarks", f); }, []);
   const L = { words: "Words", kanji: "Kanji", grammar: "Grammar" }[p.tab];
   const at = p.jump ? p.pool[p.tab].findIndex(c => `${p.tab}:${c.level}:${c.no}` === p.jump!.k) + 1 : 0;
   useEffect(() => {   // after a jump: bring the card to the middle of the screen and flash it
     if (!p.jump) return;
-    const el = box.current?.querySelector(`[data-bm="${p.jump.k}"]`)?.closest(".card") as HTMLElement | null;
+    const [t, lv, no] = p.jump.k.split(":");
+    const el = box.current?.querySelector(`.list-card[data-mt="${t}"][data-mlv="${lv}"][data-no="${no}"]`) as HTMLElement | null;
     if (!el) return;
     el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    el.classList.add("bm-flash"); const t = setTimeout(() => el.classList.remove("bm-flash"), 1600); return () => clearTimeout(t);
+    el.classList.add("bm-flash"); const tm = setTimeout(() => el.classList.remove("bm-flash"), 1600); return () => clearTimeout(tm);
   }, [p.jump?.n]);
-  const tapRibbon = (e: React.MouseEvent) => {   // ribbon on a card: set / remove (colour only)
-    const b = (e.target as HTMLElement).closest<HTMLElement>(".bm"); if (!b) return;
-    const on = p.onToggle(b.dataset.bm!); b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); setMarks(p.marks());
-  };
-  const sorted = [...marks].sort((a, b) => a.lv.localeCompare(b.lv) || "wkg".indexOf(a.t[0]) - "wkg".indexOf(b.t[0]) || a.no - b.no);
+  const placed = (c: number) => marks.find(b => b.c === c);
   return (
-    <section className="complete" ref={box} onClick={tapRibbon}>
+    <section className="complete" ref={box}>
       <div className="complete-head">
         <div><h1>{p.tr("Complete list")}</h1><div className="stat">{p.tr(`${p.pool.words.length} words · ${p.pool.kanji.length} kanji · ${p.pool.grammar.length} grammar`)}</div></div>
         <div className="bm-bar">
-          {marks.length > 0 && <button type="button" className="bm-open" aria-expanded={open} aria-label={`Bookmarks: ${marks.length}`} onClick={() => setOpen(!open)}>{RIBBON}<span>{marks.length}</span></button>}
+          <button type="button" className={`stk-open${marks.length ? "" : " none"}`} aria-expanded={open} aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => setOpen(!open)}>
+            {p.colors.map((col, c) => <i key={c} style={{ ["--stk" as string]: col }} className={placed(c) ? "on" : ""} />)}</button>
           <div className="seg seg-2" role="radiogroup" aria-label="Level">{["N1", "N2"].map(l =>
             <button key={l} type="button" role="radio" aria-checked={l === p.level} className={l === p.level ? "on" : ""} data-clevel={l} onClick={() => p.onLevel(l)}>{l}</button>)}</div>
         </div>
       </div>
-      {open && marks.length > 0 && <ul className="bm-list">{sorted.map(b => (
-        <li key={b.k}><button type="button" className="bm-item" onClick={() => { setOpen(false); p.onJump(b); }}>
-          <span className="bm-ico">{RIBBON}</span><b>{b.word}</b><span className="bm-where">{`#${TAG[b.t]}${b.no} · ${b.lv}`}</span></button></li>))}</ul>}
+      {open && <div className="stk-tray" role="group" aria-label="Bookmarks">{p.colors.map((col, c) => { const b = placed(c);
+        return <button key={c} type="button" className="stk-flag" style={{ ["--stk" as string]: col }} disabled={!b} aria-label={b ? `Go to bookmark ${c + 1}` : `Bookmark ${c + 1} not placed`}
+          onClick={() => { if (b) { setOpen(false); p.onJump(b); } }}><span /></button>; })}</div>}
       <div className="tabs tabs-in" role="tablist">{([["words", "語", "Words"], ["kanji", "字", "Kanji"], ["grammar", "文", "Grammar"]] as const).map(([t, j, l]) =>
         <div key={t} className={`tab${t === p.tab ? " on" : ""}`} data-t={t} role="tab" tabIndex={0} aria-selected={t === p.tab}><span className="jp">{j}</span>{p.tr(l)}</div>)}</div>
       <section className="complete-section">
