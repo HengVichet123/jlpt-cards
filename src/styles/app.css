@@ -2039,3 +2039,8 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .voc-star{color:var(--shu)}
 .voc-full{margin:0;padding:8px 12px;border-left:3px solid var(--matsu);font:500 15px/1.7 var(--body)}
 .voc-text p{text-indent:0}
+
+/* v161: React card lists draw cards in pages; each page is a .rx-chunk box that layout ignores */
+.rx-chunk{display:contents}
+.complete-cards > .rx-chunk > .mini, .complete-cards > .rx-chunk > .card{margin:0 0 6px}
+.complete-cards > .rx-chunk > .card.open{margin-bottom:6px}

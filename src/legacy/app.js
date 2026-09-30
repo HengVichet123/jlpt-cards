@@ -4,6 +4,7 @@ import * as Sess from "../practice/sessions";
 import { createElement } from "react";
 import { renderScreen, renderOverlay, removeOverlay, hasOverlay } from "../react/mount";
 import { SettingsPanel, SettingsSheet } from "../screens/Settings";
+import { CompleteList, SectionsToc, SectionPage } from "../screens/Lists";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -16,7 +17,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v160";
+const APP_VERSION = "v161";
 
 
 /* =========================================================
@@ -1153,110 +1154,10 @@ async function renderComplete(){
   if(CURRENT !== "complete") return;   // user left while it was loading
 
 
-  const make = {
-    words:wordCard,
-    kanji:kanjiCard,
-    grammar:grammarCard
-  };
-
-
-  const PAGE = 60;   // draw cards in pages; the rest load as you scroll (thousands of cards)
-  const section =
-    (t,label) =>
-      `
-
-        <section class="complete-section">
-
-          <h2>
-            ${label}
-          </h2>
-
-          <div class="complete-cards">${
-            pool[t].slice(0, PAGE)
-              .map(c => miniFor(t, c, c.level))
-              .join("")
-          }</div>
-          <div class="complete-more" aria-hidden="true"></div>
-
-        </section>
-
-      `;
-
-
-  $("#list").innerHTML = `
-
-    <section class="complete">
-
-      <div class="complete-head">
-
-        <div>
-
-          <h1>
-            Complete list
-          </h1>
-
-          <div class="stat">
-            ${pool.words.length} words · ${pool.kanji.length} kanji · ${pool.grammar.length} grammar
-          </div>
-
-        </div>
-
-        <div class="seg seg-2" role="radiogroup" aria-label="Level">
-          ${["N1","N2"].map(l => `<button type="button" role="radio" aria-checked="${l===LVL}" class="${l===LVL?"on":""}" data-clevel="${l}">${l}</button>`).join("")}
-        </div>
-
-
-
-
-      </div>
-
-
-      <div class="tabs tabs-in" role="tablist">${[["words","語","Words"],["kanji","字","Kanji"],["grammar","文","Grammar"]].map(([t, j, l]) =>
-        `<div class="tab${t === TAB ? " on" : ""}" data-t="${t}" role="tab" tabindex="0" aria-selected="${t === TAB}"><span class="jp">${j}</span>${l}</div>`).join("")}</div>
-
-      ${section(TAB, {words:"Words",kanji:"Kanji",grammar:"Grammar"}[TAB] + ` <span class="stat">${pool[TAB].length}</span>`)}
-
-    </section>
-
-  `;
-
-
-  $("#count").textContent =
-    "Complete list";
-
-
-  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("on", el.dataset.t === TAB));
-  document.querySelectorAll("[data-clevel]").forEach(el => el.onclick = () => { store.set("jc:clevel", el.dataset.clevel); renderComplete(); });
-  let shown = PAGE;
-  const more = document.querySelector(".complete-more");
-  if(more && pool[TAB].length > PAGE){
-    const grow = () => {
-      if(!more.isConnected || shown >= pool[TAB].length) return;
-      if(more.getBoundingClientRect().top > innerHeight + 800) return;
-      const next = pool[TAB].slice(shown, shown + PAGE); shown += next.length;
-      document.querySelector(".complete-cards").insertAdjacentHTML("beforeend",
-        next.map(c => miniFor(TAB, c, c.level)).join(""));
-    };
-    new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)) grow(); }, {rootMargin:"800px"}).observe(more);
-    addEventListener("scroll", grow, {passive:true});
-  }
-  if(false) $("#completeHome").onclick =
-    () => {
-
-      $("#lesson").value =
-        "home";
-
-
-      store.set(
-        "jc:lesson",
-        "home"
-      );
-
-
-      pick("home");
-
-    };
-
+  showScreen("complete", createElement(CompleteList, {   // v161: React (src/screens/Lists.tsx); tabs are switched by the app-wide .tab handler
+    tr, level: LVL, tab: TAB, pool, html: (t, c) => miniFor(t, c, c.level),
+    onLevel: l => { store.set("jc:clevel", l); renderComplete(); }}));
+  $("#count").textContent = "Complete list";
 }
 
 
@@ -1670,18 +1571,12 @@ async function renderSections(){
   $("#pageTitle").textContent = "Sections";
   const part = s => /^[1-5]/.test(s.code) ? s.code[0] : "x";
   const parts = {}; S[LVL].forEach((s, i) => (parts[part(s)] = parts[part(s)] || []).push([s, i + 1]));
-  const PN = ["一","二","三","四","五","六"];
-  $("#list").innerHTML = `<section class="sections toc-page">
-    <div class="complete-head"><div><h2 class="toc-h">目次 <small>${S[LVL].length} sections · ${S[LVL].reduce((n, s) => n + s.words.length, 0)} words</small></h2></div>
-      <div class="seg seg-2" role="radiogroup">${["N1","N2"].map(l => `<button type="button" class="${l===LVL?"on":""}" data-slevel="${l}">${l}</button>`).join("")}</div></div>
-    ${Object.keys(SEC_PARTS).filter(k => parts[k]).map((k, pi) => `
-      <h3 class="toc-part"><span>第${PN[pi]}部</span>${SEC_PARTS[k][0]}<small>${SEC_PARTS[k][1]}</small></h3>
-      <ol class="toc">${parts[k].map(([s, n]) => { const seen = secSeen(LVL, s);
-        return `<li><button data-sec="${s.id}"><span class="toc-no">${n}</span><span class="toc-name">${esc(s.name)}${s.en ? `<small>${esc(s.en)}</small>` : ""}</span><span class="toc-dots"></span>
-          <span class="toc-n${seen ? " on" : ""}">${seen ? `${seen}/` : ""}${s.words.length}語</span></button></li>`; }).join("")}</ol>`).join("")}
-    <p class="story-meta">${esc(S.source || "")}</p></section>`;
-  document.querySelectorAll("[data-slevel]").forEach(b => b.onclick = () => { store.set("jc:slevel", b.dataset.slevel); renderSections(); });
-  document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => { renderSection(b.dataset.sec); scrollTo(0, 0); });
+  showScreen("sections", createElement(SectionsToc, {   // v161: React (src/screens/Lists.tsx)
+    tr, level: LVL, total: S[LVL].length, words: S[LVL].reduce((n, s) => n + s.words.length, 0), source: S.source || "",
+    parts: Object.keys(SEC_PARTS).filter(k => parts[k]).map(k => ({title: SEC_PARTS[k][0], sub: SEC_PARTS[k][1],
+      rows: parts[k].map(([s, n]) => ({id: s.id, n, name: s.name, en: s.en, words: s.words.length, seen: secSeen(LVL, s)}))})),
+    onLevel: l => { store.set("jc:slevel", l); renderSections(); },
+    onOpen: id => renderSection(id)}));
 }
 /* ===== Cards outside Playground: MINI by default, tap = full card, tap its top = back to mini =====
    MINI.reg holds the card objects so any list (Complete list, sections, readings) can swap mini <-> full. */
@@ -1764,14 +1659,11 @@ async function renderSection(id){
   const pool = await pgPool(lv), set = new Set(s.words);
   const cards = pool.words.filter(c => set.has(c.no));
   $("#pageTitle").textContent = s.name;
-  $("#list").innerHTML = `<section class="complete">
-    <div class="story-top"><button class="nav-btn" id="secBack" data-back="Sections">Back</button><button class="nav-btn sec-study" id="secStudy">Study this section</button></div>
-    <h2 class="sec-title">${esc(s.name)}${s.en ? `<em>${esc(s.en)}</em>` : ""}<small>${lv} · section ${idx + 1} · ${cards.length} words</small></h2>
-    <div class="complete-cards">${cards.map(c => miniCard(c, lv)).join("")}</div></section>`;
-
-  $("#secBack").onclick = () => { renderSections(); };
-  $("#secStudy").onclick = () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
-    const name = s.name; pick("playground"); PG_NEW = true; PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); };
+  showScreen("section-" + id, createElement(SectionPage, {   // v161: React (src/screens/Lists.tsx)
+    tr, name: s.name, en: s.en, meta: `${lv} · section ${idx + 1} · ${cards.length} words`, cardsHtml: cards.map(c => miniCard(c, lv)).join(""),
+    onBack: () => renderSections(),
+    onStudy: () => { const cur = pgState(); cur.from = "section"; cur.section = id; cur.level = lv; store.set("jc:pg", cur);
+      const name = s.name; pick("playground"); PG_NEW = true; PG_RETURN = {label: name, go: () => leavePracticeTo("sections", () => renderSection(id))}; renderPG(); }}));
 }
 
 /* ---------- Pre-learn reading page ---------- */
