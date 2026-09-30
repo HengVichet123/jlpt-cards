@@ -300,13 +300,14 @@ export function PracticeHome(p: PracticeHomeProps) {
   return (<>
     <section className="play-setup pg-home">
       {p.origin && <button className="nav-btn" data-back={p.origin} onClick={p.onOrigin}>Back</button>}
+
+      <Ledger p={p} onOpenSheet={openSheet} />
       <Progress p={p} />
-      <div className="pg-actions">   {/* v176: a fixed row in the page, above the sessions (no floating dock) */}
+      <div className="pg-actions">   {/* v179: last on the page, in the flow (never floating) */}
         <button type="button" className="pg-act" onClick={p.onQuick}>{p.ja ? "クイック10" : "Quick 10"}</button>
         <button type="button" className="pg-act main" onClick={openSheet}>{p.ja ? "新規" : "New session"}</button>
         <button type="button" className="pg-act" onClick={() => { setEditClosing(false); setEditOpen(true); }}>{p.tr("Edit")}</button>
       </div>
-      <Ledger p={p} onOpenSheet={openSheet} />
     </section>
     {open && <Sheet p={p} closing={closing} onClose={closeSheet} host={host} />}
     {editOpen && <EditSheet p={p} closing={editClosing} onClose={closeEdit} host={host} />}

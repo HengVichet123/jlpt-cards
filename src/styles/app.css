@@ -2210,3 +2210,6 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .srs-reset{min-height:46px;margin-top:6px;border:1px solid var(--line);border-radius:12px;background:none;color:var(--soft);font:700 14px var(--body);cursor:pointer}
 .srs-reset:hover{background:var(--chip);color:var(--ink)}
 .deck.more .deck-name{color:var(--soft);font-weight:600}
+/* v179: Practice = sessions table, then progress, then the action row (all in the page) */
+.pg-home .prog{margin:22px 0 0}
+.pg-actions{margin:22px 0 8px}
