@@ -330,6 +330,21 @@
   "count": 16
  },
  {
+  "id": "r_n1_23",
+  "title": "N1 読解 模擬テスト 23",
+  "titleEn": "N1 reading practice test 23",
+  "level": "N1",
+  "scenes": [
+   "商品の注意書き・保証",
+   "随筆・手紙の返事",
+   "論説・天気予報",
+   "小説の一場面・祖父の時計",
+   "論説・地方の公共交通",
+   "論説・子どものお小遣い"
+  ],
+  "count": 16
+ },
+ {
   "id": "r_n2_01",
   "title": "N2 読解 模擬テスト 1",
   "titleEn": "N2 reading practice test 1",
