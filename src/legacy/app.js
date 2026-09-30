@@ -8,6 +8,7 @@ import { CompleteList, SectionsToc, SectionPage } from "../screens/Lists";
 import { ReadingHome, Shelf, Prelearn, Reader, Story } from "../screens/Reading";
 import { MovieList, Novel, Theatre } from "../screens/Movies";
 import { STORY, stopStory } from "../movies/player";
+import { PicturesHome, Illustrations, ExtraTheme, PicViewer, picsOf } from "../screens/Pictures";
 import { PracticeHome } from "../screens/PracticeHome";
 import { PracticeRun } from "../screens/PracticeRun";
 import { PLAYER, PLAY_ICO, PAUSE_ICO } from "../audio/player";
@@ -20,7 +21,7 @@ migrate();
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v163";
+const APP_VERSION = "v164";
 
 
 /* =========================================================
@@ -1725,16 +1726,9 @@ async function renderPictures(){
   let idx = []; try{ idx = await (await fetch("data/pictures/index.json", {cache:"no-cache"})).json(); }catch(e){}
   $("#pageTitle").textContent = "Pictures";
   idx = idx.filter(x => x.group !== "illust");
-  $("#list").innerHTML = `<section class="pics">
-    <div class="pic-cats">${idx.map(picTile).join("")}</div>
-    <details class="ps-credits pic-credits" id="picCredits"><summary>Photo credits</summary><ol id="picCreditList"></ol></details></section>`;
-  document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
-  $("#picCredits").addEventListener("toggle", async () => {   // all categories' credits, fetched on first open
-    const ol = $("#picCreditList"); if(!$("#picCredits").open || ol.childElementCount) return;
-    const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
-    ol.innerHTML = cats.filter(Boolean).flatMap(C => C.words.flatMap(w => { const P = picsOf(w);
-      return P.map((p, k) => `<li>${esc(w.word)}${P.length > 1 ? ` (${k + 1})` : ""} : <a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.credit)}</a></li>`); })).join("");
-  });
+  showScreen("pictures", createElement(PicturesHome, {tr, cats: idx, src: picSrc, onOpen: k => renderPicCat(k),   // v164: React (src/screens/Pictures.tsx)
+    loadCredits: async () => { const cats = await Promise.all(idx.map(x => fetch(`data/pictures/${x.key}.json`).then(r => r.json()).catch(() => null)));
+      return cats.filter(Boolean).flatMap(C => C.words.flatMap(w => { const P = picsOf(w); return P.map((p, k) => ({word: w.word, n: P.length > 1 ? k + 1 : null, credit: p.credit, page: p.page})); })); }}));
 }
 const picTile = x => `<button class="pic-cat${x.group === "illust" ? " illust" : ""}" data-pcat="${x.key}">
       <span class="pic-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span>
@@ -1747,12 +1741,7 @@ async function extraThemes(){ const I = await extraIdx(), m = new Map();
 async function renderExtraTheme(theme){   // one theme's extra sessions (150 pictures each)
   const S = (await extraIdx()).filter(x => x.theme === theme);
   $("#pageTitle").textContent = theme;
-  $("#list").innerHTML = `<section class="pics xtheme">
-    <button class="nav-btn" id="xBack" data-back="Illustrations">Back</button>
-    <ul class="x-sessions">${S.map((x, i) => `<li><button type="button" class="x-sess" data-pcat="${x.key}"><span class="x-no">${i + 1}</span><span class="x-lab">${esc(x.labels.join("・"))}</span><span class="x-n">${x.count}</span></button></li>`).join("")}</ul>
-    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a>. Meanings here are automatic (dictionary), so a few may be off.</p></section>`;
-  $("#xBack").onclick = () => { renderIllust(); scrollTo(0, 0); };
-  document.querySelectorAll(".x-sess").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
+  showScreen("xtheme-" + theme, createElement(ExtraTheme, {sessions: S, onBack: () => renderIllust(), onOpen: k => renderPicCat(k)}));   // v164: React
 }
 /* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
@@ -1796,16 +1785,11 @@ async function renderIllust(){   // いらすとや: one row per topic, sessions
   for(const x of [...idx, ...ext]){ const t = themeOf(x); if(!rows.has(t)) rows.set(t, {en: (x.themeEn || x.en || "").replace(" (いらすとや)", ""), items: []}); rows.get(t).items.push(x); }
   const order = [...rows.keys()].sort((a, b) => (a === "その他") - (b === "その他"));
   $("#pageTitle").textContent = "Illustrations";
-  $("#list").innerHTML = `<section class="pics ill-rows">
-    ${order.map((t, ti) => { const R = rows.get(t), total = R.items.reduce((n, x) => n + x.count, 0);
-      return `<div class="ill-row"><h2 class="ill-h"><span class="ill-no">${ti + 1}</span>${esc(t)}<small>${esc(R.en)} · ${total.toLocaleString()}</small></h2>
-        <div class="ill-scroll">${R.items.map((x, i) => `<button type="button" class="ill-tile" data-pcat="${x.key}"><span class="ill-cover"><img src="${picSrc(x.cover)}" alt="" loading="lazy"></span><span class="ill-words">${esc((x.first || []).slice(0, 2).join("・"))}</span></button>`).join("")}</div></div>`; }).join("")}
-    <p class="pic-by">Illustrations by <a href="https://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a> (みふねたかし). Used for personal study, not for sale.</p></section>`;
-  document.querySelectorAll("[data-pcat]").forEach(b => b.onclick = () => { renderPicCat(b.dataset.pcat); scrollTo(0, 0); });
-  if(isJa()) jaWalk($("#list"));
+  showScreen("illust", createElement(Illustrations, {src: picSrc, onOpen: k => renderPicCat(k),   // v164: React (src/screens/Pictures.tsx)
+    rows: order.map(t => { const R = rows.get(t); return {theme: t, en: R.en, total: R.items.reduce((n, x) => n + x.count, 0), items: R.items}; })}));
 }
 const picSrc = f => /^https?:/.test(f) ? f : `data/pictures/${f}`;   // extras load from いらすとや directly
-const picsOf = w => (w.imgs && w.imgs.length) ? w.imgs : [{img: w.img, credit: w.credit, page: w.page}];   // 1–3 photos per word
+
 async function renderPicCat(key){
   const C = await (await fetch(`data/pictures/${/^x/.test(key) ? "extra/" : ""}${key}.json`, {cache:"no-cache"})).json();
   const clean = s => (s || "").replace(/\s*\([^)]*[A-Z][a-z]+ [a-z]+[^)]*\)/g, "").trim();   // drop Latin species names
@@ -1825,50 +1809,11 @@ async function renderPicCat(key){
   $("#picGo").onclick = () => picView(C, W, clean);
 }
 // 2) the clean session: one photo at a time (swipe / drag / ‹ › / arrow keys; click the photo = voice)
-function picView(C, W, clean){
-  const spk = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-  $("#list").innerHTML = `<section class="pv">
-    <div class="pv-top"><button class="nav-btn" id="pvBack" data-back="${/^x/.test(C.key) || C.key.startsWith("ira_") ? "Illustrations" : "Pictures"}">Back</button><button class="pv-sound" id="pvSound" type="button" aria-pressed="${soundOn()}" aria-label="Sound">${soundOn() ? SPK : SPK_OFF}</button>
-      <span class="pv-ctl"><button id="pvPrev" type="button" aria-label="Previous">‹</button><span class="pv-pos" id="pvPos"></span><button id="pvNext" type="button" aria-label="Next">›</button></span></div>
-    <div class="pv-bar"><i id="pvBar"></i></div>
-    <div class="pv-track" id="pvTrack">${W.map((w, n) => { const P = picsOf(w), ld = n < 3 ? "eager" : "lazy"; return `<div class="pv-slide" data-n="${n}">
-      <button class="pv-photo${/irasutoya/.test(P[0].page || "") ? " illust" : ""}" type="button" data-n="${n}" aria-label="Hear ${esc(w.word)}"><img class="pv-bg" src="${picSrc(P[0].img)}" alt="" aria-hidden="true" loading="${ld}"><img class="pv-fg" src="${picSrc(P[0].img)}" alt="${esc(w.word)}" loading="${ld}"></button>
-      ${P.length > 1 ? `<div class="pv-thumbs">${P.map((p, k) => `<button class="pv-thumb${k ? "" : " on"}" type="button" data-src="${esc(p.img)}" aria-label="Photo ${k + 1} of ${P.length}"><img src="${picSrc(p.img)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
-      <div class="pv-word"><b class="${w.word.length > 5 ? (w.word.length > 9 ? "longer" : "long") : ""}">${esc(w.word)}</b>${w.reading && w.reading !== w.word ? `<span class="pv-rd">${esc(w.reading)}</span>` : ""}<span class="pv-en">${esc(P[0].capEn || clean(w.en))}</span>${P[0].cap && P[0].cap !== w.word ? `<span class="pv-rei" role="button" tabindex="0">例：${esc(P[0].cap).replace(esc(w.word), `<em>${esc(w.word)}</em>`)}${P[0].exEn ? `<span class="pv-rei-en">${esc(P[0].exEn)}</span>` : ""}</span>` : ""}</div></div>`; }).join("")}</div>
-  </section>`;
-  const tr = $("#pvTrack"), slides = [...tr.querySelectorAll(".pv-slide")]; let i = 0, dragX = null, startLeft = 0, dragged = false;
-  const mark = n => { i = n; $("#pvPos").textContent = `${i + 1} / ${W.length}`; $("#pvBar").style.width = `${(i + 1) / W.length * 100}%`;
-    $("#pvPrev").disabled = i === 0; $("#pvNext").disabled = i === W.length - 1; };
-  const go = n => { n = Math.max(0, Math.min(W.length - 1, n));
-    slides[n].scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", inline: "start", block: "nearest"}); mark(n); };
-  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) mark(+e.target.dataset.n); }), {root: tr, threshold: .6});
-  slides.forEach(s => io.observe(s));
-  tr.addEventListener("click", e => { if(dragged){ dragged = false; return; }
-    const t = e.target.closest(".pv-thumb");
-    if(t){ const sl = t.closest(".pv-slide");   // switch this word's big photo
-      sl.querySelectorAll(".pv-photo img").forEach(im => im.src = picSrc(t.dataset.src));
-      sl.querySelectorAll(".pv-thumb").forEach(x => x.classList.toggle("on", x === t)); return; }
-    const b = e.target.closest(".pv-photo"); if(!b) return;
-    const n = +b.dataset.n;
-    if(n !== i){ go(n); return; }
-    b.animate([{transform:"scale(1)"},{transform:"scale(.97)"},{transform:"scale(1)"}], {duration:220, easing:"cubic-bezier(.2,.8,.2,1)"});   // press feedback
-    if(soundOn()) speak(W[n].word); });
-  $("#pvSound").onclick = () => { const on = !soundOn(); store.set("jc:sound", on);
-    $("#pvSound").innerHTML = on ? SPK : SPK_OFF; $("#pvSound").setAttribute("aria-pressed", on); };
-  tr.addEventListener("pointerdown", e => { if(e.pointerType !== "mouse") return; dragX = e.clientX; startLeft = tr.scrollLeft; dragged = false; });
-  tr.addEventListener("pointermove", e => { if(dragX === null) return; const dx = e.clientX - dragX;
-    if(!dragged && Math.abs(dx) > 6){ dragged = true; tr.style.scrollSnapType = "none"; tr.setPointerCapture(e.pointerId); }
-    if(dragged) tr.scrollLeft = startLeft - dx; });
-  tr.addEventListener("pointerup", e => { if(dragX === null) return; const dx = e.clientX - dragX; dragX = null;
-    if(dragged){ tr.style.scrollSnapType = ""; go(Math.abs(dx) > 60 ? i + (dx < 0 ? 1 : -1) : i); } });
-  $("#pvPrev").onclick = () => go(i - 1); $("#pvNext").onclick = () => go(i + 1);
-  const keys = e => { if(!document.body.contains(tr)){ removeEventListener("keydown", keys); return; }
-    if(e.key === "ArrowRight") go(i + 1); if(e.key === "ArrowLeft") go(i - 1); };
-  addEventListener("keydown", keys);
-  $("#pvBack").onclick = () => { (C.key.startsWith("ira_") || /^x/.test(C.key) ? renderIllust : renderPictures)(); scrollTo(0, 0); };
-  const pv = document.querySelector(".pv"); pv.classList.toggle("extra", /^x/.test(C.key));
-  tr.addEventListener("click", e => { const r = e.target.closest(".pv-rei"); if(r){ e.stopPropagation(); r.classList.toggle("show"); } }, true);
-  mark(0);
+function picView(C, W, clean){   // v164: React viewer (src/screens/Pictures.tsx) + behaviour in src/pictures/viewer.ts
+  const illust = /^x/.test(C.key) || C.key.startsWith("ira_");
+  showScreen("pv-" + C.key, createElement(PicViewer, {catKey: C.key, words: W, back: illust ? "Illustrations" : "Pictures", sound: soundOn(), spk: SPK, spkOff: SPK_OFF, clean,
+    deps: {count: W.length, word: n => W[n].word, src: picSrc, soundOn, speak, spk: SPK, spkOff: SPK_OFF},
+    onBack: () => (illust ? renderIllust : renderPictures)()}));
 }
 
 /* ---------- Reading ---------- */
