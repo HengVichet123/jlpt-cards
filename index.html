@@ -2073,7 +2073,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v146";
+const APP_VERSION = "v147";
 
 
 /* =========================================================
@@ -2866,7 +2866,8 @@ function pgSheet(html){   // New session = a card sliding in from the right; the
       <div class="pg-sheet-head"><button type="button" class="pg-sheet-x" id="pgSheetX" aria-label="Close">‹</button><b>${isJa() ? "新しいセッション" : "New session"}</b></div>
       <div class="pg-sheet-body play-setup"></div></aside>`);
     sh = $("#pgSheet");
-    const close = () => { PG_NEW = false; pgSheetClose(); };
+    const close = () => { PG_NEW = false;   // opened from Cards / a section: leaving the sheet = going back there (v147: the scrim covered the header back link, so one tap only closed the sheet)
+      if(PG_RETURN){ pgSheetClose(true); NAV_DIR = "back"; PG_RETURN.go(); } else pgSheetClose(); };
     $("#pgScrim").onclick = close; $("#pgSheetX").onclick = close;
     let x0 = null;   // swipe right closes it
     sh.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive: true});
