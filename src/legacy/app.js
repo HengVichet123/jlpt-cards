@@ -1,10 +1,12 @@
+import { store, K, migrate } from "../data/store";
+migrate();
 
 
 /* =========================================================
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v153";
+const APP_VERSION = "v154";
 
 
 /* =========================================================
@@ -61,42 +63,7 @@ function hl(text,targets){
    LOCAL STORAGE
    ========================================================= */
 
-const store = {
-
-  get(k,d){
-
-    try{
-
-      const v =
-        localStorage.getItem(k);
-
-      return v
-        ? JSON.parse(v)
-        : d;
-
-    }catch(e){
-
-      return d;
-
-    }
-
-  },
-
-
-  set(k,v){
-
-    try{
-
-      localStorage.setItem(
-        k,
-        JSON.stringify(v)
-      );
-
-    }catch(e){}
-
-  }
-
-};
+// v154: all saved data goes through src/data/store.ts (same keys, same behaviour)
 
 
 /* =========================================================
@@ -617,24 +584,17 @@ const PG = {
 const PG_UNDO = [];
 function pgSnap(lvl, t, no){
   const keys = [profileKey(lvl, t, no), pgKey(lvl, t, no), "jc:sessions"], snap = {sid: pgState().sid, v: {}};
-  try{ for(const k of keys) snap.v[k] = localStorage.getItem(k); }catch(e){ return; }
+  for(const k of keys) snap.v[k] = store.raw(k);
   PG_UNDO.push(snap); if(PG_UNDO.length > 30) PG_UNDO.shift();
 }
 const pgCanUndo = () => PG_UNDO.length && PG_UNDO[PG_UNDO.length - 1].sid === pgState().sid;
 function pgUndo(){
   if(!pgCanUndo()) return;
   const snap = PG_UNDO.pop();
-  try{ for(const [k, v] of Object.entries(snap.v)) v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){}
+  for(const [k, v] of Object.entries(snap.v)) store.setRaw(k, v);
   NAV_SAME = true; renderPG();
 }
-const pgKey =
-  (lvl,t,no) =>
-    `jc:due:${lvl}:${t}:${no}`;
-
-
-const profileKey =
-  (lvl,t,no) =>
-    `jc:profile:${lvl}:${t}:${no}`;
+const pgKey = K.due, profileKey = K.profile;
 
 
 function pgProfile(lvl,t,no){
@@ -770,8 +730,7 @@ function sessAutoName(title){ const st = pgState();
   return `${title || (st.from === "section" ? (isJa() ? "分野" : "Section") : (isJa() ? "全カード" : "All cards"))} ${sessDay()}`; }
 function pgDueIds(){   // every card whose review time has come (jc:due:<lvl>:<type>:<no>)
   const ids = [], now = Date.now();
-  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
-    if(k && k.startsWith("jc:due:") && +localStorage.getItem(k) <= now){ const [, , lvl, t, no] = k.split(":"); ids.push([lvl, t, +no]); } } }catch(e){}
+  for(const k of store.keys("jc:due:")) if(+store.raw(k) <= now){ const [, , lvl, t, no] = k.split(":"); ids.push([lvl, t, +no]); }
   return ids.slice(0, 50);
 }
 async function pgQuickIds(n){ const pool = await pgPool("ALL"), ids = [];
@@ -1506,14 +1465,12 @@ function renderSettings(target){
 }
 function dueLine(){   // real numbers from this phone's review marks (jc:due:*)
   let due = 0, later = 0; const now = Date.now();
-  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
-    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t <= now) due++; else later++; } } }catch(e){}
+  for(const k of store.keys("jc:due:")){ const t = +store.raw(k); if(t <= now) due++; else later++; }
   return due ? `${due} card${due === 1 ? "" : "s"} ready to review` : later ? `Next review ${nextDueIn()}` : "Start with new cards";
 }
 function nextDueIn(){
   let min = Infinity; const now = Date.now();
-  try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i);
-    if(k && k.startsWith("jc:due:")){ const t = +localStorage.getItem(k); if(t > now && t < min) min = t; } } }catch(e){}
+  for(const k of store.keys("jc:due:")){ const t = +store.raw(k); if(t > now && t < min) min = t; }
   const m = Math.round((min - now) / 60000);
   return !isFinite(min) ? "soon" : m < 60 ? `in ${m} min` : m < 1440 ? `in ${Math.round(m / 60)} h` : `in ${Math.round(m / 1440)} d`;
 }
@@ -2455,12 +2412,12 @@ async function renderExtraTheme(theme){   // one theme's extra sessions (150 pic
 /* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
 /* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
-const quizKey = (kind, id) => `jc:prog:${kind}:${id}`;
+const quizKey = K.quiz;
 function quizLoad(kind, id, fresh){ const v = store.get(quizKey(kind, id), null);   // saved shape must match (tests can be edited)
   const same = Array.isArray(v) && v.length === fresh.length && v.every((x, k) => Array.isArray(fresh[k]) ? Array.isArray(x) && x.length === fresh[k].length : typeof x === "number");
   return same ? v : fresh; }
 const quizSave = (kind, id, picked) => store.set(quizKey(kind, id), picked);
-function quizClear(kind, id){ try{ localStorage.removeItem(quizKey(kind, id)); }catch(e){} }
+const quizClear = (kind, id) => store.remove(quizKey(kind, id));
 const quizStart = screens => { const k = screens.findIndex(a => a.some(x => !x)); return k < 0 ? Math.max(0, screens.length - 1) : k; };
 const quizOver = picked => picked.flat().some(Boolean) ? `<button type="button" class="q-over" id="qOver">Start over</button>` : "";
 function testList({kind, title, idx, credit, open}){
@@ -2783,7 +2740,7 @@ async function renderReading(){
 }
 /* his order of the Reading sections (press-and-hold + drag); saved per device */
 function shelfOrder(){
-  let o = []; try{ o = JSON.parse(localStorage.getItem("jc:shelforder") || "[]"); }catch(e){}
+  const o = store.get(K.shelfOrder, []);
   const rank = k => { const i = o.indexOf(k); return i < 0 ? 99 + SHELVES.findIndex(s => s[0] === k) : i; };
   return [...SHELVES].sort((a, b) => rank(a[0]) - rank(b[0]));
 }
@@ -2836,7 +2793,7 @@ function secReorder(box){
       if(calm){ r.classList.remove("lifted"); r.style.transform = ""; }
       else { r.style.transition = `transform .24s ${EASE}, scale .24s ${EASE}, box-shadow .3s ease`; r.style.transform = ""; r.classList.remove("lifted");
         setTimeout(() => { r.style.transition = ""; }, 320); }   // glide into its slot and settle
-      try{ localStorage.setItem("jc:shelforder", JSON.stringify([...box.querySelectorAll(".sec-row")].map(b => b.dataset.shelf))); }catch(e){}
+      store.set(K.shelfOrder, [...box.querySelectorAll(".sec-row")].map(b => b.dataset.shelf));
       SEC_DRAG.justDropped = true; setTimeout(() => SEC_DRAG.justDropped = false, 350); }
     row = null; on = false;
   };
