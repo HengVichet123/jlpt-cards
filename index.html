@@ -1947,6 +1947,10 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn-nav{justify-content:space-between}
 /* v150: Previous / Next float above the bottom edge like the Practice dock; always "Next" */
 .lsn.lsn-pad{padding-bottom:110px}
+/* v152: Start over sits quietly in the head row, only once something is answered */
+.lsn-head .q-over{margin-left:auto;min-height:44px;padding:0 4px;border:0;background:none;color:var(--faint);font:600 13px var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.lsn-head .q-over:hover{color:var(--ink)}
+.lsn-head{align-items:center}
 .pg-dock-in.lsn-nav{display:flex;justify-content:space-between;gap:10px}
 .lsn-nav button{min-width:132px;padding:0 24px}
 .lsn-nav #lsnNext{margin-left:auto}
@@ -2107,7 +2111,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v151";
+const APP_VERSION = "v152";
 
 
 /* =========================================================
@@ -4557,6 +4561,15 @@ async function renderExtraTheme(theme){   // one theme's extra sessions (150 pic
 }
 /* ---------- Listening: JLPT-format tests (original scripts, several voices). Listen, pick an answer, check, read the script ---------- */
 /* Test lists (Listening + Reading tests): level switch, one compact row per test with its scenes and best score */
+/* v152: answers in a test are kept until it is finished or started over; reopening lands on the first unanswered question */
+const quizKey = (kind, id) => `jc:prog:${kind}:${id}`;
+function quizLoad(kind, id, fresh){ const v = store.get(quizKey(kind, id), null);   // saved shape must match (tests can be edited)
+  const same = Array.isArray(v) && v.length === fresh.length && v.every((x, k) => Array.isArray(fresh[k]) ? Array.isArray(x) && x.length === fresh[k].length : typeof x === "number");
+  return same ? v : fresh; }
+const quizSave = (kind, id, picked) => store.set(quizKey(kind, id), picked);
+function quizClear(kind, id){ try{ localStorage.removeItem(quizKey(kind, id)); }catch(e){} }
+const quizStart = screens => { const k = screens.findIndex(a => a.some(x => !x)); return k < 0 ? Math.max(0, screens.length - 1) : k; };
+const quizOver = picked => picked.flat().some(Boolean) ? `<button type="button" class="q-over" id="qOver">Start over</button>` : "";
 function testList({kind, title, idx, credit, open}){
   const levels = [...new Set(idx.map(t => t.level))].sort(), key = "jc:tlv:" + kind;
   let lv = store.get(key, levels.includes("N1") ? "N1" : levels[0]);
@@ -4606,28 +4619,29 @@ async function renderReadTest(id){
   const T = await (await fetch(`data/readtests/${id}.json`, {cache:"no-cache"})).json();
   const S = []; T.parts.forEach(pt => pt.items.forEach((it, i) => S.push({...it, part: pt, no: i + 1})));
   const nQ = S.reduce((n, x) => n + x.questions.length, 0);
-  const picked = S.map(x => new Array(x.questions.length).fill(0)); let i = 0;
+  const picked = quizLoad("rdt", id, S.map(x => new Array(x.questions.length).fill(0))); let i = quizStart(picked);
   const draw = () => {
     if(i >= S.length) return done();
     const it = S[i], P = picked[i], all = P.every(Boolean);
     $("#pageTitle").textContent = T.level + " 読解";
     $("#list").innerHTML = `<section class="rdt">
       <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
-      <div class="lsn-head"><b>${esc(it.part.ja)}</b><span>${i + 1} / ${S.length}</span></div>
+      <div class="lsn-head"><b>${esc(it.part.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${S.length}</span></div>
       ${it.texts.map(x => `<article class="rd-text">${x.label ? `<span class="rd-lab">${esc(x.label)}</span>` : ""}${x.title ? `<h3>${esc(x.title)}</h3>` : ""}${rdBody(x.body)}</article>`).join("")}
       ${it.questions.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span>${esc(q.q)}</p>
         <ol class="lsn-opts">${q.options.map((o, m) => `<li><button type="button" class="lsn-opt${P[k] ? (m + 1 === q.answer ? " right" : m + 1 === P[k] ? " wrong" : "") : ""}" data-k="${k}" data-m="${m + 1}" ${P[k] ? "disabled" : ""}><span class="lsn-n">${m + 1}</span><span>${esc(o)}</span></button></li>`).join("")}</ol>
         ${P[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
       <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="rdNext">${i + 1 < S.length ? (all ? "Next" : "Skip") : "See result"}</button>
     </section>`;
-    document.querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; P[+b.dataset.k] = +b.dataset.m; NAV_SAME = true; draw(); scrollTo(0, y); });
+    document.querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; P[+b.dataset.k] = +b.dataset.m; quizSave("rdt", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { quizClear("rdt", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#rdNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#rdBack").onclick = () => renderReadTests();
   };
   const done = () => {
     let right = 0; S.forEach((it, k) => it.questions.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
     const skipped = picked.flat().filter(x => !x).length, key = "jc:rdt:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("rdt", id);
     $("#list").innerHTML = `<section class="lsn lsn-done">
       <button class="nav-btn" id="rdBack" data-back="Reading tests">Back</button>
       <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
@@ -4647,7 +4661,7 @@ async function renderVocabTests(){
 const vocMark = t => esc(t).replace(/［(.+?)］/g, '<u class="voc-u">$1</u>').replace(/＿＿/g, '<span class="voc-bl"></span>').replace(/★/g, '<span class="voc-bl voc-star">★</span>');
 async function renderVocabTest(id){
   const T = await (await fetch(`data/vocabtests/${id}.json`, {cache:"no-cache"})).json();
-  const P = T.parts, picked = P.map(p => new Array(p.items.length).fill(0)); let i = 0;
+  const P = T.parts, picked = quizLoad("voc", id, P.map(p => new Array(p.items.length).fill(0))); let i = quizStart(picked);
   const nQ = P.reduce((n, p) => n + p.items.length, 0);
   const draw = () => {
     if(i >= P.length) return done();
@@ -4655,7 +4669,7 @@ async function renderVocabTest(id){
     $("#pageTitle").textContent = T.level + " 言語知識";
     $("#list").innerHTML = `<section class="rdt voc">
       <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
-      <div class="lsn-head"><b>${esc(pt.ja)}</b><span>${i + 1} / ${P.length}</span></div>
+      <div class="lsn-head"><b>${esc(pt.ja)}</b>${quizOver(picked)}<span>${i + 1} / ${P.length}</span></div>
       ${pt.instr ? `<p class="voc-instr">${esc(pt.instr)}</p>` : ""}
       ${pt.text ? `<article class="rd-text voc-text">${pt.text.split("\n").filter(Boolean).map(l => `<p>${vocMark(l)}</p>`).join("")}</article>` : ""}
       ${pt.items.map((q, k) => `<div class="rd-q"><p class="rd-qt"><span class="rd-qn">${k + 1}</span><span>${vocMark(q.q)}</span></p>
@@ -4663,14 +4677,15 @@ async function renderVocabTest(id){
         ${A[k] && q.full ? `<p class="voc-full">${esc(q.full)}</p>` : ""}${A[k] && q.why ? `<p class="t-why">${esc(q.why)}</p>` : ""}</div>`).join("")}
       <button type="button" class="${all ? "lsn-next" : "lsn-skip"}" id="vcNext">${i + 1 < P.length ? (all ? "Next" : "Skip") : "See result"}</button>
     </section>`;
-    $("#list").querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; A[+b.dataset.k] = +b.dataset.m; NAV_SAME = true; draw(); scrollTo(0, y); });
+    $("#list").querySelectorAll(".rd-q .lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; A[+b.dataset.k] = +b.dataset.m; quizSave("voc", id, picked); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { quizClear("voc", id); picked.forEach(x => x.fill(0)); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#vcNext").onclick = () => { i++; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#vcBack").onclick = () => renderVocabTests();
   };
   const done = () => {
     let right = 0; P.forEach((pt, k) => pt.items.forEach((q, m) => { if(picked[k][m] === q.answer) right++; }));
     const skipped = picked.flat().filter(x => !x).length, key = "jc:voc:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("voc", id);
     $("#list").innerHTML = `<section class="lsn lsn-done">
       <button class="nav-btn" id="vcBack" data-back="Vocab &amp; Grammar">Back</button>
       <p class="lsn-score"><b>${right}</b> / ${nQ}</p>${skipped ? `<p class="lsn-skipped">${skipped} skipped</p>` : ""}
@@ -4684,7 +4699,7 @@ async function renderVocabTest(id){
 async function renderListenTest(id){
   const T = await (await fetch(`data/listening/${id}.json`, {cache:"no-cache"})).json();
   const Q = []; T.parts.forEach(pt => pt.items.forEach((q, i) => q.sub ? q.sub.forEach((x, j) => Q.push({...q, ...x, part: pt, no: i + 1, subNo: j + 1})) : Q.push({...q, part: pt, no: i + 1})));
-  const picked = new Array(Q.length).fill(0); let i = 0, scriptOpen = false;
+  const picked = quizLoad("lsn", id, new Array(Q.length).fill(0)); let i = quizStart(picked.map(x => [x])), scriptOpen = false;
   const SPK = {F: "女", F2: "女", M: "男", M2: "男", N: ""};
   const line = (t, cls, body) => t == null ? `<p class="${cls}">${body}</p>` : `<button type="button" class="lsn-line ${cls}" data-t="${t}">${body}</button>`;
   const draw = () => {
@@ -4693,7 +4708,7 @@ async function renderListenTest(id){
     $("#pageTitle").textContent = T.title;
     $("#list").innerHTML = `<section class="lsn lsn-pad">
       <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
-      <div class="lsn-head"><b>${esc(q.part.ja)}</b><span>${q.no}番${q.subNo ? ` 質問${q.subNo}` : ""} · ${i + 1} / ${Q.length}</span></div>
+      <div class="lsn-head"><b>${esc(q.part.ja)}</b>${quizOver(picked)}<span>${q.no}番${q.subNo ? ` 質問${q.subNo}` : ""} · ${i + 1} / ${Q.length}</span></div>
       <div class="lsn-player">
         <button type="button" class="lsn-play" id="lsnPlay" aria-label="Play">${PLAY_ICO}</button>
         <div class="lsn-bar"><i id="lsnBar"></i></div>
@@ -4724,7 +4739,8 @@ async function renderListenTest(id){
     play.onclick = () => { if(!PLAYER.paused && PLAYER.dataset.q === q.audio){ PLAYER.pause(); setIco(false); mark(); return; } start(); };
     lines.forEach(b => b.onclick = () => start(+b.dataset.t));
     $("#lsnScript").ontoggle = e => { scriptOpen = e.target.open; };
-    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; picked[i] = +b.dataset.k; PLAYER.pause(); NAV_SAME = true; draw(); scrollTo(0, y); });
+    document.querySelectorAll(".lsn-opt:not([disabled])").forEach(b => b.onclick = () => { const y = scrollY; picked[i] = +b.dataset.k; quizSave("lsn", id, picked); PLAYER.pause(); NAV_SAME = true; draw(); scrollTo(0, y); });
+    if($("#qOver")) $("#qOver").onclick = () => { PLAYER.pause(); quizClear("lsn", id); picked.fill(0); i = 0; NAV_SAME = true; draw(); scrollTo(0, 0); };
     const go = d => { PLAYER.pause(); i += d; NAV_SAME = true; draw(); scrollTo(0, 0); };
     $("#lsnNext").onclick = () => go(1);
     if($("#lsnPrev")) $("#lsnPrev").onclick = () => go(-1);
@@ -4733,7 +4749,7 @@ async function renderListenTest(id){
   const done = () => {
     pgDockDrop();
     const right = Q.filter((q, k) => picked[k] === q.answer).length, key = "jc:lsn:" + id, r = store.get(key, {best: 0});
-    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()});
+    store.set(key, {best: Math.max(r.best || 0, right), last: right, at: Date.now()}); quizClear("lsn", id);
     $("#list").innerHTML = `<section class="lsn lsn-done">
       <button class="nav-btn" id="lsnBack" data-back="Listening">Back</button>
       <p class="lsn-score"><b>${right}</b> / ${Q.length}</p>${picked.filter(x => !x).length ? `<p class="lsn-skipped">${picked.filter(x => !x).length} skipped</p>` : ""}
