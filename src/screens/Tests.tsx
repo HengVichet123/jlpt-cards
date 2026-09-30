@@ -258,9 +258,9 @@ export type ListenTestData = { title: string; parts: { ja: string; spoken?: bool
 const SPK: Record<string, string> = { F: "女", F2: "女", M: "男", M2: "男", N: "" };
 
 export function ListenTest(p: Common & { id: string; T: ListenTestData; setTitle: (t: string) => void }) {
-  const Q = p.T.parts.flatMap(pt => pt.items.flatMap((it, i) => it.sub
-    ? it.sub.map((x, j) => ({ ...it, ...x, part: pt, no: i + 1, subNo: j + 1 }))
-    : [{ ...it, part: pt, no: i + 1, subNo: 0 }]));
+  const nos: Record<string, number> = {};   // 番 counts on across parts with the same title (統合理解 1番, 2番, 3番)
+  const Q = p.T.parts.flatMap(pt => pt.items.flatMap(it => { const no = nos[pt.ja] = (nos[pt.ja] || 0) + 1;
+    return it.sub ? it.sub.map((x, j) => ({ ...it, ...x, part: pt, no, subNo: j + 1 })) : [{ ...it, part: pt, no, subNo: 0 }]; }));
   const exam = p.mode === "exam", review = p.mode === "review";
   const q = useQuiz("lsn", p.id, () => new Array(Q.length).fill(0) as number[], pk => pk.map(x => [x]), p.mode, p.init);
   const [played, setPlayed] = useState<Set<number>>(() => new Set());   // exam: each recording plays once
@@ -276,8 +276,8 @@ export function ListenTest(p: Common & { id: string; T: ListenTestData; setTitle
 
   if (q.done) {
     const pk = q.picked, right = Q.filter((x, k) => pk[k] === x.answer).length;
-    const parts = p.T.parts.map(pt => { const idx = Q.map((x, k) => [x, k] as const).filter(([x]) => x.part === pt);
-      return [pt.ja, idx.filter(([x, k]) => pk[k] === x.answer).length, idx.length] as [string, number, number]; });
+    const parts = [...new Set(p.T.parts.map(pt => pt.ja))].map(ja => { const idx = Q.map((x, k) => [x, k] as const).filter(([x]) => x.part.ja === ja);
+      return [ja, idx.filter(([x, k]) => pk[k] === x.answer).length, idx.length] as [string, number, number]; });
     if (exam) { if (!saved.current) { saved.current = true; Quiz.saveExam("lsn", p.id, Math.round(right / Q.length * 100), el); }
       return <ExamResult right={right} total={Q.length} parts={parts} time={el} limit={0} back="Listening" tr={p.tr} onBack={p.onBack} onReview={() => p.onReview?.(pk)} onAgain={() => p.onAgain?.()} />; }
     if (!saved.current) { saved.current = true; Quiz.saveScore("lsn", p.id, right); Quiz.clear("lsn", p.id); }
