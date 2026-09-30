@@ -56,6 +56,14 @@ function Result({ right, total, skipped, parts, back, tr, onBack, onAgain }: { r
     <button type="button" className="lsn-next" onClick={onAgain}>{tr("Try again")}</button>
   </section>;
 }
+/** Previous / Next on a solid bar at the bottom (same in all three tests). */
+function Dock({ host, i, n, onGo, tr }: { host: HTMLElement; i: number; n: number; onGo: (d: number) => void; tr: Common["tr"] }) {
+  return createPortal(
+    <div className="pg-dock lsn-dock"><div className="pg-dock-in lsn-nav">
+      {i > 0 && <button type="button" id="lsnPrev" aria-label="Previous question" onClick={() => onGo(-1)}>{tr("‹ Previous")}</button>}
+      <button type="button" className="main" id="lsnNext" onClick={() => onGo(1)}>{tr(i + 1 < n ? "Next" : "See result")}</button>
+    </div></div>, host);
+}
 /** One quiz screen's state: answers (saved as picked), current screen, result. */
 function useQuiz<T extends Quiz.Picked>(kind: Quiz.Kind, id: string, fresh: () => T, screens: (p: T) => number[][]) {
   const [picked, setPicked] = useState<T>(() => Quiz.load(kind, id, fresh()));
@@ -90,7 +98,7 @@ export function ReadTest(p: Common & { id: string; T: ReadTestData; setTitle: (t
   const S = p.T.parts.flatMap(pt => pt.items.map(it => ({ ...it, part: pt })));
   const nQ = S.reduce((n, x) => n + x.questions.length, 0);
   const q = useQuiz("rdt", p.id, () => S.map(x => new Array(x.questions.length).fill(0)) as number[][], pk => pk);
-  const saved = useRef(false);
+  const saved = useRef(false), host = useBodyHost();
   useEffect(() => { p.setTitle(p.T.level + " 読解"); }, []);
   if (q.done) {
     const pk = q.picked; let right = 0; S.forEach((it, k) => it.questions.forEach((x, m) => { if (pk[k][m] === x.answer) right++; }));
@@ -100,7 +108,7 @@ export function ReadTest(p: Common & { id: string; T: ReadTestData; setTitle: (t
   }
   const it = S[q.i], P = q.picked[q.i], all = P.every(Boolean);
   return (
-    <section className="rdt">
+    <section className="rdt q-pad">
       <button className="nav-btn" data-back="Reading tests" onClick={p.onBack}>Back</button>
       <Head part={it.part.ja} count={`${q.i + 1} / ${S.length}`} show={Quiz.anyAnswered(q.picked)} onOver={q.over} tr={p.tr} />
       {it.texts.map((x, k) => <article key={k} className="rd-text">{x.label && <span className="rd-lab">{x.label}</span>}{x.title && <h3>{x.title}</h3>}{rdBody(x.body)}</article>)}
@@ -108,7 +116,7 @@ export function ReadTest(p: Common & { id: string; T: ReadTestData; setTitle: (t
         <Options opts={x.options} answer={x.answer} chosen={P[k]} render={o => o}
           onPick={m => { const y = scrollY; const next = q.picked.map(a => [...a]); next[q.i][k] = m; q.pick(next); requestAnimationFrame(() => scrollTo(0, y)); }} />
         {P[k] && x.why ? <p className="t-why">{x.why}</p> : null}</div>)}
-      <button type="button" className={all ? "lsn-next" : "lsn-skip"} onClick={() => q.go(1)}>{p.tr(q.i + 1 < S.length ? (all ? "Next" : "Skip") : "See result")}</button>
+      <Dock host={host} i={q.i} n={S.length} onGo={q.go} tr={p.tr} />
     </section>
   );
 }
@@ -126,7 +134,7 @@ function vocMark(t: string): ReactNode {
 export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: (t: string) => void }) {
   const P = p.T.parts, nQ = P.reduce((n, x) => n + x.items.length, 0);
   const q = useQuiz("voc", p.id, () => P.map(x => new Array(x.items.length).fill(0)) as number[][], pk => pk);
-  const saved = useRef(false);
+  const saved = useRef(false), host = useBodyHost();
   useEffect(() => { p.setTitle(p.T.level + " 言語知識"); }, []);
   if (q.done) {
     const pk = q.picked; let right = 0; P.forEach((pt, k) => pt.items.forEach((x, m) => { if (pk[k][m] === x.answer) right++; }));
@@ -136,7 +144,7 @@ export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: 
   }
   const pt = P[q.i], A = q.picked[q.i], all = A.every(Boolean);
   return (
-    <section className="rdt voc">
+    <section className="rdt voc q-pad">
       <button className="nav-btn" data-back="Vocab & Grammar" onClick={p.onBack}>Back</button>
       <Head part={pt.ja} count={`${q.i + 1} / ${P.length}`} show={Quiz.anyAnswered(q.picked)} onOver={q.over} tr={p.tr} />
       {pt.instr && <p className="voc-instr">{pt.instr}</p>}
@@ -145,7 +153,7 @@ export function VocabTest(p: Common & { id: string; T: VocabTestData; setTitle: 
         <Options opts={x.options} answer={x.answer} chosen={A[k]} render={vocMark} grid={pt.key !== "yoho" && x.options.every(o => o.length <= 9)}
           onPick={m => { const y = scrollY; const next = q.picked.map(a => [...a]); next[q.i][k] = m; q.pick(next); requestAnimationFrame(() => scrollTo(0, y)); }} />
         {A[k] && x.full ? <p className="voc-full">{x.full}</p> : null}{A[k] && x.why ? <p className="t-why">{x.why}</p> : null}</div>)}
-      <button type="button" className={all ? "lsn-next" : "lsn-skip"} onClick={() => q.go(1)}>{p.tr(q.i + 1 < P.length ? (all ? "Next" : "Skip") : "See result")}</button>
+      <Dock host={host} i={q.i} n={P.length} onGo={q.go} tr={p.tr} />
     </section>
   );
 }
@@ -217,11 +225,7 @@ export function ListenTest(p: Common & { id: string; T: ListenTestData; setTitle
           {it.lines.map(([spk, t], k) => line(it.at ? it.at[k] : null, "", <>{SPK[spk] ? <b>{`${SPK[spk]}：`}</b> : null}{t}</>, "l" + k))}
           {it.question ? line(it.subNo ? null : it.atQ, "lsn-nar", it.question, "q") : null}
         </div></details>
-      {createPortal(
-        <div className="pg-dock lsn-dock"><div className="pg-dock-in lsn-nav">
-          {q.i > 0 && <button type="button" id="lsnPrev" aria-label="Previous question" onClick={() => go(-1)}>{p.tr("‹ Previous")}</button>}
-          <button type="button" className="main" id="lsnNext" onClick={() => go(1)}>{p.tr(q.i + 1 < Q.length ? "Next" : "See result")}</button>
-        </div></div>, host)}
+      <Dock host={host} i={q.i} n={Q.length} onGo={go} tr={p.tr} />
     </section>
   );
 }

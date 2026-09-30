@@ -15,7 +15,7 @@ import { stopStory } from "../movies/player";
 import { $, APP_VERSION, esc } from "../app/core.js";
 import { PG, dueLine, leavePracticeTo, loadReading, loadSections, pgPool, pgProfile, pgState, prefetchPools, renderPG, secSeen } from "../app/practice.js";
 import { SPK, SPK_OFF, sayBtn, soundOn, speak, speakDevice } from "../audio/speech.js";
-import { calmMotion, miniCard, miniFor } from "../cards/cards.js";
+import { bookmarks, calmMotion, miniCard, miniFor, toggleBookmark } from "../cards/cards.js";
 import { isJa, tr } from "../app/i18n.js";
 import { pick, setHeaderAction, showScreen } from "../app/shell.js";
 
@@ -40,7 +40,7 @@ export function renderHome(){
    COMPLETE LIST
    ========================================================= */
 
-export async function renderComplete(){
+export async function renderComplete(jump = null){
 
   document.body.classList.remove(
     "playing"
@@ -55,7 +55,9 @@ export async function renderComplete(){
 
 
   showScreen("complete", createElement(CompleteList, {   // v161: React (src/screens/Lists.tsx); tabs are switched by the app-wide .tab handler
-    tr, level: LVL, tab: St.TAB, pool, html: (t, c) => miniFor(t, c, c.level),
+    tr, level: LVL, tab: St.TAB, pool, html: (t, c) => miniFor(t, c, c.level), jump,
+    marks: bookmarks, onToggle: toggleBookmark,
+    onJump: b => { store.set("jc:clevel", b.lv); St.TAB = b.t; store.set("jc:tab", b.t); St.NAV_SAME = true; renderComplete({k: b.k, n: Date.now()}); },   // v167: bookmarks
     onLevel: l => { store.set("jc:clevel", l); renderComplete(); }}));
   $("#count").textContent = "Complete list";
 }

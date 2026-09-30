@@ -593,19 +593,34 @@ export function shortAnswer(t, c, html){   // Settings → Answer: Short = revea
   const i = html.indexOf('<div class="back">');
   return html.slice(0, i) + `<div class="back back-short">${peekFor(t, c)}</div></div>`;
 }
+/* v167: bookmark ribbon on Complete list cards (tap = set / remove). Saved in jc:bookmarks. */
+const RIBBON = '<svg viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1.5h12v17l-6-4.2-6 4.2z"/></svg>';
+export const bookmarks = () => store.get("jc:bookmarks", []);
+const withRibbon = (html, t, lv, no) => {
+  if(St.CURRENT !== "complete") return html;
+  const k = `${t}:${lv}:${no}`, on = bookmarks().some(b => b.k === k), i = html.indexOf(">") + 1;   // right after the card's opening tag
+  return html.slice(0, i) + `<button type="button" class="bm${on ? " on" : ""}" data-bm="${k}" aria-pressed="${on}" aria-label="Bookmark">${RIBBON}</button>` + html.slice(i);
+};
+export function toggleBookmark(k){
+  const [t, lv, no] = k.split(":"), all = bookmarks(), i = all.findIndex(b => b.k === k);
+  if(i >= 0) all.splice(i, 1);
+  else { const c = MINI.reg.get(miniKey(t, lv, +no)) || {}; all.push({k, t, lv, no: +no, word: c.word || c.kanji || c.pattern || "", at: Date.now()}); }
+  store.set("jc:bookmarks", all); return i < 0;
+}
 export function cardFront(t, c, lv){   // closed list card: identical front to the opened card, no answer part
   MINI.reg.set(miniKey(t, lv, c.no), c); St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
-  return html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>";
+  return withRibbon(html.slice(0, i).replace(/class="card (\w)"/, `class="card $1 list-card" data-mt="${t}" data-mlv="${lv}" tabindex="0" role="button"`) + peekFor(t, c) + "</div>", t, lv, c.no);
 }
 export function fullFor(t, c, lv){
   St.CARD_LVL = lv;
   const html = {words:wordCard, kanji:kanjiCard, grammar:grammarCard}[t](c), i = html.indexOf('<div class="back">');
-  return (html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`);
+  return withRibbon((html.slice(0, i) + peekFor(t, c) + html.slice(i)).replace(/class="card (\w)"/, `class="card $1 list-card open" data-mt="${t}" data-mlv="${lv}"`), t, lv, c.no);
 }
 // one handler for every mini list on any page (Playground never renders minis)
 document.addEventListener("click", e => {
   if(e.target.closest(".say")) return;   // speaker icon: play only
+  if(e.target.closest(".bm")) return;    // bookmark ribbon: handled by the Complete list screen
   const word = e.target.closest(".card .big");   // the headword itself = hear it, the card stays as it is
   if(word && word.closest(".play-stage")){   // Practice: a quick second tap on the word = reveal
     const now = Date.now(), card = word.closest(".card");

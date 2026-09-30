@@ -7,8 +7,9 @@ type Card = { no: number; level?: string };
 
 /** Cards drawn in pages of `page`; the next page is added when the end comes near. Old pages are never redrawn,
     so a card opened in place (mini → full) stays open. */
-export function CardPages<C extends Card>({ cards, html, page = 60, sentinel }: { cards: C[]; html: (c: C) => string; page?: number; sentinel: React.RefObject<HTMLElement | null> }) {
-  const [shown, setShown] = useState(page);
+export function CardPages<C extends Card>({ cards, html, page = 60, sentinel, atLeast = 0 }: { cards: C[]; html: (c: C) => string; page?: number;
+  sentinel: React.RefObject<HTMLElement | null>; atLeast?: number }) {
+  const [shown, setShown] = useState(Math.max(page, Math.ceil(atLeast / page) * page));
   useEffect(() => {
     const el = sentinel.current; if (!el || cards.length <= page) return;
     const grow = () => { if (!el.isConnected) return; if (el.getBoundingClientRect().top > innerHeight + 800) return; setShown(n => Math.min(cards.length, n + page)); };
@@ -23,21 +24,46 @@ export function CardPages<C extends Card>({ cards, html, page = 60, sentinel }: 
 
 /* ---------------- Complete list ---------------- */
 type Pool = Record<"words" | "kanji" | "grammar", Card[]>;
-export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" | "grammar"; pool: Pool; html: (t: string, c: Card) => string; onLevel: (l: string) => void }) {
-  const more = useRef<HTMLDivElement>(null);
+export type Bookmark = { k: string; t: string; lv: string; no: number; word: string; at: number };
+const RIBBON = <svg viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1.5h12v17l-6-4.2-6 4.2z" /></svg>;
+const TAG = { words: "W", kanji: "K", grammar: "G" } as Record<string, string>;
+export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" | "grammar"; pool: Pool; html: (t: string, c: Card) => string; onLevel: (l: string) => void;
+  marks: () => Bookmark[]; onToggle: (k: string) => boolean; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null }) {
+  const more = useRef<HTMLDivElement>(null), box = useRef<HTMLElement>(null);
+  const [marks, setMarks] = useState(p.marks);
+  const [open, setOpen] = useState(false);
   const L = { words: "Words", kanji: "Kanji", grammar: "Grammar" }[p.tab];
+  const at = p.jump ? p.pool[p.tab].findIndex(c => `${p.tab}:${c.level}:${c.no}` === p.jump!.k) + 1 : 0;
+  useEffect(() => {   // after a jump: bring the card to the middle of the screen and flash it
+    if (!p.jump) return;
+    const el = box.current?.querySelector(`[data-bm="${p.jump.k}"]`)?.closest(".card") as HTMLElement | null;
+    if (!el) return;
+    el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    el.classList.add("bm-flash"); const t = setTimeout(() => el.classList.remove("bm-flash"), 1600); return () => clearTimeout(t);
+  }, [p.jump?.n]);
+  const tapRibbon = (e: React.MouseEvent) => {   // ribbon on a card: set / remove (colour only)
+    const b = (e.target as HTMLElement).closest<HTMLElement>(".bm"); if (!b) return;
+    const on = p.onToggle(b.dataset.bm!); b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); setMarks(p.marks());
+  };
+  const sorted = [...marks].sort((a, b) => a.lv.localeCompare(b.lv) || "wkg".indexOf(a.t[0]) - "wkg".indexOf(b.t[0]) || a.no - b.no);
   return (
-    <section className="complete">
+    <section className="complete" ref={box} onClick={tapRibbon}>
       <div className="complete-head">
         <div><h1>{p.tr("Complete list")}</h1><div className="stat">{p.tr(`${p.pool.words.length} words · ${p.pool.kanji.length} kanji · ${p.pool.grammar.length} grammar`)}</div></div>
-        <div className="seg seg-2" role="radiogroup" aria-label="Level">{["N1", "N2"].map(l =>
-          <button key={l} type="button" role="radio" aria-checked={l === p.level} className={l === p.level ? "on" : ""} data-clevel={l} onClick={() => p.onLevel(l)}>{l}</button>)}</div>
+        <div className="bm-bar">
+          {marks.length > 0 && <button type="button" className="bm-open" aria-expanded={open} aria-label={`Bookmarks: ${marks.length}`} onClick={() => setOpen(!open)}>{RIBBON}<span>{marks.length}</span></button>}
+          <div className="seg seg-2" role="radiogroup" aria-label="Level">{["N1", "N2"].map(l =>
+            <button key={l} type="button" role="radio" aria-checked={l === p.level} className={l === p.level ? "on" : ""} data-clevel={l} onClick={() => p.onLevel(l)}>{l}</button>)}</div>
+        </div>
       </div>
+      {open && marks.length > 0 && <ul className="bm-list">{sorted.map(b => (
+        <li key={b.k}><button type="button" className="bm-item" onClick={() => { setOpen(false); p.onJump(b); }}>
+          <span className="bm-ico">{RIBBON}</span><b>{b.word}</b><span className="bm-where">{`#${TAG[b.t]}${b.no} · ${b.lv}`}</span></button></li>))}</ul>}
       <div className="tabs tabs-in" role="tablist">{([["words", "語", "Words"], ["kanji", "字", "Kanji"], ["grammar", "文", "Grammar"]] as const).map(([t, j, l]) =>
         <div key={t} className={`tab${t === p.tab ? " on" : ""}`} data-t={t} role="tab" tabIndex={0} aria-selected={t === p.tab}><span className="jp">{j}</span>{p.tr(l)}</div>)}</div>
       <section className="complete-section">
         <h2>{p.tr(L) + " "}<span className="stat">{p.pool[p.tab].length}</span></h2>
-        <div className="complete-cards"><CardPages key={p.level + p.tab} cards={p.pool[p.tab]} html={c => p.html(p.tab, c)} sentinel={more} /></div>
+        <div className="complete-cards"><CardPages key={p.level + p.tab + (p.jump ? p.jump.n : "")} cards={p.pool[p.tab]} html={c => p.html(p.tab, c)} sentinel={more} atLeast={at} /></div>
         <div className="complete-more" aria-hidden="true" ref={more} />
       </section>
     </section>

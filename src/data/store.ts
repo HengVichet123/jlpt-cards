@@ -50,6 +50,7 @@ export const K = {
   pg: "jc:pg",                 // current Practice setup + running session id
   sessions: "jc:sessions",     // saved Practice sessions
   shelfOrder: "jc:shelforder", // Reading sections order
+  bookmarks: "jc:bookmarks",   // Complete list bookmarks [{k, t, lv, no, word, at}]
 } as const;
 
 /* What each family of keys holds. Used for export/sync; also the reference list for developers. */
@@ -61,7 +62,7 @@ export const FAMILIES: Record<string, string> = {
   "jc:tapvoice": "Speak on tap", "jc:showfam": "Familiarity bars", "jc:answer": "Practice answer style",
   "jc:clevel": "Complete list level", "jc:slevel": "Sections level", "jc:lesson": "Last page", "jc:shelforder": "Reading order",
   "jc:cc": "Movie subtitles", "jc:thEn": "Movie English", "jc:scenewords": "Scene words", "jc:scenelabels": "Scene labels",
-  "jc:uselog": "Use it log", "jc:apikey": "Use it API key (never exported)",
+  "jc:uselog": "Use it log", "jc:bookmarks": "Complete list bookmarks", "jc:apikey": "Use it API key (never exported)",
 };
 
 const PRIVATE = new Set(["jc:apikey"]);   // secrets stay on this device
