@@ -2083,3 +2083,23 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .core-3 .cover i{font-size:84px;top:-12px}
 .ja .core-3 .cover b{font-size:17px}
 @media (min-width:700px){ .core.core-3{gap:14px} .core.core-1 .cover-play{min-height:150px} }
+
+/* v171: bookmarks button = an outline bookmark; the flags open in a side sheet (like Settings) */
+.bm-btn{display:grid;place-items:center;width:44px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.bm-btn:hover{background:var(--chip)}
+.flag-rows{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.flag-row{width:100%;display:flex;align-items:center;gap:14px;min-height:60px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer;text-align:left}
+.flag-row:hover:not(:disabled){background:var(--chip)}
+.flag-row:disabled{cursor:default;background:none;border-style:dashed}
+.flag{display:block;width:14px;height:36px;border-radius:2px 3px 3px 2px;background:var(--stk);box-shadow:1px 1px 0 rgba(0,0,0,.12)}
+.flag-row:disabled .flag{opacity:.25;box-shadow:none}
+.flag-at{font:600 15px var(--body);color:var(--soft)}
+.flag-go{margin-left:auto;font-size:22px;color:var(--faint)}
+.flag-note{margin:14px 2px 0;font-size:13px;color:var(--faint)}
+/* v171: back to top (header, right). Keeps its place so the title never shifts; fades in after scrolling down */
+.bar-end{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.to-top{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--soft);cursor:pointer;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s}
+.to-top.on{opacity:1;visibility:visible}
+.to-top:hover{background:var(--chip);color:var(--ink)}
+@media (prefers-reduced-motion: reduce){ .to-top{transition:none} }
+.flag-body{padding:6px 16px 20px}

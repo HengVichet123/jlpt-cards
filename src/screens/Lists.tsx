@@ -1,6 +1,8 @@
 /* Card lists: Complete list, Sections (table of contents) and one section.
    Cards are the app's card HTML (mini ↔ full on tap is handled app-wide); lists grow as you scroll. */
 import { Fragment, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useBodyHost } from "../react/float";
 
 type Tr = (s: string) => string;
 type Card = { no: number; level?: string };
@@ -25,13 +27,42 @@ export function CardPages<C extends Card>({ cards, html, page = 60, sentinel, at
 /* ---------------- Complete list ---------------- */
 type Pool = Record<"words" | "kanji" | "grammar", Card[]>;
 export type Bookmark = { c: number; k: string; t: string; lv: string; no: number; at: number };
+const BM_ICON = <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-4-5.5 4z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>;
+const TYPE = { words: "Words", kanji: "Kanji", grammar: "Grammar" } as Record<string, string>;
+/** The flags, in a card sliding in from the right (like Settings from the gear). Placed flag = tap to go there. */
+function FlagSheet({ colors, marks, closing, onPick, onClose, tr }: { colors: string[]; marks: Bookmark[]; closing: boolean; onPick: (b: Bookmark) => void; onClose: () => void; tr: Tr }) {
+  const host = useBodyHost(), x0 = useRef<number | null>(null);
+  useEffect(() => {
+    if (closing) { document.body.classList.remove("sheet-open"); return; }
+    const a = requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add("sheet-open")));
+    return () => cancelAnimationFrame(a);
+  }, [closing]);
+  useEffect(() => () => document.body.classList.remove("sheet-open"), []);
+  return createPortal(<>
+    <div className="pg-scrim" onClick={onClose} />
+    <aside className="pg-sheet" role="dialog" aria-modal="true" aria-label="Bookmarks"
+      onTouchStart={e => { x0.current = e.touches[0].clientX; }}
+      onTouchEnd={e => { if (x0.current !== null && e.changedTouches[0].clientX - x0.current > 80) onClose(); x0.current = null; }}>
+      <div className="pg-sheet-head"><button type="button" className="pg-sheet-x" aria-label="Close" onClick={onClose}>‹</button><b>{tr("Bookmarks")}</b></div>
+      <div className="pg-sheet-body flag-body"><ul className="flag-rows">{colors.map((col, c) => { const b = marks.find(x => x.c === c);
+        return <li key={c}><button type="button" className="flag-row" style={{ ["--stk" as string]: col }} disabled={!b} onClick={() => b && onPick(b)}
+          aria-label={b ? `Go to bookmark ${c + 1}` : `Bookmark ${c + 1} not placed`}>
+          <span className="flag" />{b ? <span className="flag-at">{`${b.lv} · ${tr(TYPE[b.t])}`}</span> : null}{b ? <span className="flag-go" aria-hidden="true">›</span> : null}</button></li>; })}</ul>
+        <p className="flag-note">{tr("Double-tap a card to stick a flag on it.")}</p></div>
+    </aside>
+  </>, host);
+}
 /** Complete list. Bookmarks are 5 sticky flags: double-tap a card to stick one (handled with the card taps in src/cards/cards.js);
     the flag button shows the 5 colours, tap a placed one to jump to its card. */
 export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" | "grammar"; pool: Pool; html: (t: string, c: Card) => string; onLevel: (l: string) => void;
   marks: () => Bookmark[]; colors: string[]; onJump: (b: Bookmark) => void; jump: { k: string; n: number } | null }) {
   const more = useRef<HTMLDivElement>(null), box = useRef<HTMLElement>(null);
   const [marks, setMarks] = useState(p.marks);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false), [closing, setClosing] = useState(false);
+  const close = (then?: () => void) => {
+    if (then || matchMedia("(prefers-reduced-motion: reduce)").matches) { document.body.classList.remove("sheet-open"); setOpen(false); then?.(); return; }
+    setClosing(true); setTimeout(() => { setOpen(false); setClosing(false); }, 320);
+  };
   useEffect(() => { const f = () => setMarks(p.marks()); addEventListener("jc:bookmarks", f); return () => removeEventListener("jc:bookmarks", f); }, []);
   const L = { words: "Words", kanji: "Kanji", grammar: "Grammar" }[p.tab];
   const at = p.jump ? p.pool[p.tab].findIndex(c => `${p.tab}:${c.level}:${c.no}` === p.jump!.k) + 1 : 0;
@@ -43,21 +74,17 @@ export function CompleteList(p: { tr: Tr; level: string; tab: "words" | "kanji" 
     el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     el.classList.add("bm-flash"); const tm = setTimeout(() => el.classList.remove("bm-flash"), 1600); return () => clearTimeout(tm);
   }, [p.jump?.n]);
-  const placed = (c: number) => marks.find(b => b.c === c);
   return (
     <section className="complete" ref={box}>
       <div className="complete-head">
         <div><h1>{p.tr("Complete list")}</h1><div className="stat">{p.tr(`${p.pool.words.length} words · ${p.pool.kanji.length} kanji · ${p.pool.grammar.length} grammar`)}</div></div>
         <div className="bm-bar">
-          <button type="button" className={`stk-open${marks.length ? "" : " none"}`} aria-expanded={open} aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => setOpen(!open)}>
-            {p.colors.map((col, c) => <i key={c} style={{ ["--stk" as string]: col }} className={placed(c) ? "on" : ""} />)}</button>
+          <button type="button" className="bm-btn" aria-label={`Bookmarks (${marks.length} of 5 placed)`} onClick={() => { setClosing(false); setOpen(true); }}>{BM_ICON}</button>
           <div className="seg seg-2" role="radiogroup" aria-label="Level">{["N1", "N2"].map(l =>
             <button key={l} type="button" role="radio" aria-checked={l === p.level} className={l === p.level ? "on" : ""} data-clevel={l} onClick={() => p.onLevel(l)}>{l}</button>)}</div>
         </div>
       </div>
-      {open && <div className="stk-tray" role="group" aria-label="Bookmarks">{p.colors.map((col, c) => { const b = placed(c);
-        return <button key={c} type="button" className="stk-flag" style={{ ["--stk" as string]: col }} disabled={!b} aria-label={b ? `Go to bookmark ${c + 1}` : `Bookmark ${c + 1} not placed`}
-          onClick={() => { if (b) { setOpen(false); p.onJump(b); } }}><span /></button>; })}</div>}
+      {open && <FlagSheet colors={p.colors} marks={marks} closing={closing} tr={p.tr} onClose={() => close()} onPick={b => close(() => p.onJump(b))} />}
       <div className="tabs tabs-in" role="tablist">{([["words", "語", "Words"], ["kanji", "字", "Kanji"], ["grammar", "文", "Grammar"]] as const).map(([t, j, l]) =>
         <div key={t} className={`tab${t === p.tab ? " on" : ""}`} data-t={t} role="tab" tabIndex={0} aria-selected={t === p.tab}><span className="jp">{j}</span>{p.tr(l)}</div>)}</div>
       <section className="complete-section">

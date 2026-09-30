@@ -720,3 +720,10 @@ if(
 }
 
 
+
+/* v171: after scrolling down a page, a "back to top" button fades in at the right of the header */
+(() => { const b = $("#toTop"); let on = false;
+  const sync = () => { const want = scrollY > 700; if(want === on) return; on = want; b.classList.toggle("on", on); b.tabIndex = on ? 0 : -1; };
+  addEventListener("scroll", sync, {passive: true});
+  b.onclick = () => scrollTo({top: 0, behavior: calmMotion() ? "auto" : "smooth"});
+})();

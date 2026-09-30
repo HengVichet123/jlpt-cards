@@ -4,7 +4,7 @@ import { $ } from "../app/core.js";
 
 export const tr = t => (isJa() && jaText(t)) || t;
 /* ---------- Settings: appearance, voice, list options (saved on this device) ---------- */
-export const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解","Books":"本","JLPT":"JLPT","Reading tests":"読解テスト",
+export const JA = {"Home":"ホーム","Back":"戻る","Study":"学習","Side projects":"寄り道","Playground":"練習","Practice":"練習","Sound":"音声","Listen":"聞く","Pause":"一時停止","Complete list":"一覧","Reading":"読解","Books":"本","Bookmarks":"しおり","Double-tap a card to stick a flag on it.":"カードをダブルタップして付箋を貼る","JLPT":"JLPT","Reading tests":"読解テスト",
   "Settings":"設定","Novels":"名作","Movies":"映画","Library":"ライブラリ","Listening":"聴解","Vocab & Grammar":"言語知識","言語知識 tests":"言語知識テスト","Tests with audio":"音声つきテスト","Sessions":"セッション","Pictures":"図鑑","Illustrations":"イラスト","Sections":"分野","Use it":"使う","Scenes":"情景","Photos":"写真","Explorer":"探検","Business":"ビジネス",
   "Appearance":"表示","Auto":"自動","Light":"ライト","Dark":"ダーク","Voice":"音声","Japanese voice":"端末の声","Slow":"ゆっくり","Normal":"ふつう",
   "Familiarity bars":"習熟度バー","Practice answer":"練習の答え","Continue":"続きから","New session":"新しいセッション","Start":"始める","Review due":"復習","Quick 10":"クイック10","Done":"完了","Cancel":"キャンセル","Undo":"元に戻す","Name":"名前","Edit":"編集","Save":"保存","Delete session":"セッションを削除","Delete":"削除","Keep":"残す","Short":"簡潔","Full":"詳細","Language":"言語","With English":"英語あり","Japanese only":"日本語のみ","Recorded voice":"収録音声","Cards":"カード","Device voice":"端末の声","Your phone's own voice":"スマホ本体の声",
