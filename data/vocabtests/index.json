@@ -476,6 +476,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_35",
+  "title": "N1 言語知識 模擬テスト 35",
+  "titleEn": "N1 vocabulary and grammar test 35",
+  "level": "N1",
+  "scenes": [
+   "無念",
+   "財政",
+   "海峡",
+   "浪費",
+   "逃走"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -934,6 +948,20 @@
    "紙幣",
    "苦情",
    "寿命"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_34",
+  "title": "N2 言語知識 模擬テスト 34",
+  "titleEn": "N2 vocabulary and grammar test 34",
+  "level": "N2",
+  "scenes": [
+   "剃刀",
+   "過半数",
+   "引き分け",
+   "占って",
+   "容積"
   ],
   "count": 54
  }
