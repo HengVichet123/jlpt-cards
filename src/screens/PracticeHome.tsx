@@ -66,7 +66,7 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
   useEffect(() => () => clearTimeout(undoTimer.current), []);
 
   const all = Sess.open().sort((a, b) => (b.at || 0) - (a.at || 0));
-  if (!all.length && !undo) {   // nothing saved yet: three empty rows invite a first session
+  if (!all.length && !undo && !p.plan) {   // nothing saved yet: three empty rows invite a first session
     return (
       <div className="deck-table"><div className="deck-head" aria-hidden="true"><span className="dh-name">{p.tr("Sessions")}</span><span>New</span><span>Learn</span><span>Due</span></div>
         <ul className="deck-list">{[1, 2, 3].map(i => (
@@ -118,7 +118,7 @@ function Ledger({ p, onOpenSheet }: { p: PracticeHomeProps; onOpenSheet: () => v
 
   return (<>
     <div className="deck-table"><div className="deck-head" aria-hidden="true"><span className="dh-name">{p.tr("Sessions")}</span><span>New</span><span>Learn</span><span>Due</span></div>
-      <ul className="deck-list">{rows}</ul></div>
+      <ul className="deck-list"><PlanItems p={p} />{rows.length ? <li className="own-sep" aria-hidden="true" /> : null}{rows}</ul></div>
     {all.length > SHOW && <button type="button" className="sess-more" aria-expanded={showAll} onClick={() => setShowAll(!showAll)}>
       {showAll ? (p.ja ? "閉じる" : "Show less") : (p.ja ? `すべて表示（${all.length}）` : `Show all ${all.length}`)}</button>}
   </>);
@@ -153,24 +153,22 @@ function Progress({ p }: { p: PracticeHomeProps }) {
 }
 
 /* ---------------- plan: today, days, all cards, quiz mistakes ---------------- */
-function Plan({ p }: { p: PracticeHomeProps }) {
+/** The plan's rows (today, all days, all cards, exam mistakes), shown at the top of the one Sessions table. */
+function PlanItems({ p }: { p: PracticeHomeProps }) {
   const [openLv, setOpenLv] = useState<string | null>(null);
   const plan = p.plan; if (!plan) return null;
   const row = (r: PlanRow, cls = "") => { const c = Sess.counts({ ids: r.ids, done: [] } as unknown as Session);
-    return <li key={r.id} className={cls}><button type="button" className="deck" data-plan={r.id} aria-label={`${r.name}: ${c.n} new, ${c.l} learning, ${c.d} due`} onClick={() => p.onPlan(r)}>
+    return <li key={r.id} className={`plan-li ${cls}`}><button type="button" className="deck" data-plan={r.id} aria-label={`${r.name}: ${c.n} new, ${c.l} learning, ${c.d} due`} onClick={() => p.onPlan(r)}>
       <span className="deck-name">{r.name}</span><Num v={c.n} c="new" /><Num v={c.l} c="learn" /><Num v={c.d} c="due" /></button></li>; };
-  return (
-    <div className="deck-table plan-table"><div className="deck-head" aria-hidden="true"><span className="dh-name">{p.tr("Plan")}</span><span>New</span><span>Learn</span><span>Due</span></div>
-      <ul className="deck-list">
-        {plan.today.map(r => row(r, "plan-today"))}
-        {plan.days.map(d => [
-          <li key={"days-" + d.lv}><button type="button" className="deck plan-fold" aria-expanded={openLv === d.lv} onClick={() => setOpenLv(openLv === d.lv ? null : d.lv)}>
-            <span className="deck-name">{`${d.lv} · ${p.tr("All days")}`}<small>{`${d.current + 1} / ${d.rows.length}`}</small></span><span className="plan-chev" aria-hidden="true">›</span></button></li>,
-          ...(openLv === d.lv ? d.rows.map((r, k) => row(r, "plan-day" + (k === d.current ? " now" : ""))) : [])])}
-        {plan.all.map(r => row(r))}
-        {plan.mistakes && row(plan.mistakes, "plan-miss")}
-      </ul></div>
-  );
+  return <>
+    {plan.today.map(r => row(r, "plan-today"))}
+    {plan.days.map(d => [
+      <li key={"days-" + d.lv} className="plan-li"><button type="button" className="deck plan-fold" aria-expanded={openLv === d.lv} onClick={() => setOpenLv(openLv === d.lv ? null : d.lv)}>
+        <span className="deck-name">{`${d.lv} · ${p.tr("All days")}`}<small>{`${d.current + 1} / ${d.rows.length}`}</small></span><span className="plan-chev" aria-hidden="true">›</span></button></li>,
+      ...(openLv === d.lv ? d.rows.map((r, k) => row(r, "plan-day" + (k === d.current ? " now" : ""))) : [])])}
+    {plan.all.map(r => row(r))}
+    {plan.mistakes && row(plan.mistakes, "plan-miss")}
+  </>;
 }
 
 /* ---------------- New session sheet ---------------- */
@@ -260,7 +258,6 @@ export function PracticeHome(p: PracticeHomeProps) {
     <section className="play-setup pg-home">
       {p.origin && <button className="nav-btn" data-back={p.origin} onClick={p.onOrigin}>Back</button>}
       <Progress p={p} />
-      <Plan p={p} />
       <Ledger p={p} onOpenSheet={openSheet} />
     </section>
     {createPortal(

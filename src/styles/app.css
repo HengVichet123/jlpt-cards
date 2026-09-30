@@ -2117,6 +2117,8 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .plan-day.now .deck-name{color:var(--ink);font-weight:700}
 .plan-miss .deck-name{color:var(--red)}
 .deck-table .deck.plan-fold{padding-right:16px}
+/* v175: one Sessions table: plan rows, a thin divider, then his own sessions */
+.deck-list > li.own-sep{height:0;margin:6px 12px;border-top:1px solid var(--line)!important}
 
 /* v172: Study = Practice + Complete list side by side */
 .core.core-2{grid-template-columns:1.5fr 1fr;gap:8px}
@@ -2129,7 +2131,7 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .cover-cards{background:var(--card);color:var(--ink);border:1px solid var(--line)}
 .cover-cards span{color:var(--soft)}
 .cover-cards i{color:var(--ink);opacity:.045}
-.plan-table .deck-list > li > .deck:not(.plan-fold){margin-right:48px}   /* same room as the ✎ in session rows, so numbers line up with the header */
+.deck-list > li.plan-li > .deck:not(.plan-fold){margin-right:48px}   /* same room as the ✎ in session rows, so numbers line up with the header */
 
 /* v173: progress at the top of Practice: one bar per level (mastered / learning / struggling / not seen), tap = per type */
 .prog{display:grid;gap:14px;margin:0 0 18px}
@@ -2161,8 +2163,10 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .ex-verdict.pass{color:var(--matsu)}
 .ex-meta{margin:0;text-align:center;font:600 13px var(--body);color:var(--soft);font-variant-numeric:tabular-nums}
 .ex-actions{display:flex;flex-direction:column;align-items:stretch;gap:6px}
-/* v174: Complete list tile in purple (Study row, next to Practice) */
-:root{--cov-cards:#3F3057;--cov-cards2:#271D38}
-.cover-cards{background:linear-gradient(160deg,var(--cov-cards),var(--cov-cards2));color:#fff;border:0}
-.cover-cards span{color:rgba(255,255,255,.72)}
-.cover-cards i{color:#fff;opacity:.07}
+/* v175: Complete list tile = paper with an Edo purple (江戸紫) band and a purple 覧 (option C, his pick) */
+:root{--murasaki:#5A4A72}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --murasaki:#A28DC4 } }
+:root[data-theme="dark"]{ --murasaki:#A28DC4 }
+.cover-cards{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:inset 5px 0 0 var(--murasaki)}
+.cover-cards span{color:var(--soft)}
+.cover-cards i{color:var(--murasaki);opacity:.16}
