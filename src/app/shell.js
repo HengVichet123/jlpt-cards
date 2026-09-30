@@ -9,7 +9,7 @@ import { applyLang, isJa, jaWalk } from "../app/i18n.js";
 import { applyTheme, closeSettingsSheet, openSettingsSheet, renderSettings } from "../app/settings.js";
 import { calmMotion, dotsKey, flipCard, grammarCard, kanjiCard, wordCard } from "../cards/cards.js";
 import { pgDockDrop, pgNew, pgSheetClose, renderPG } from "../app/practice.js";
-import { renderComplete, renderHome, renderIllust, renderListening, renderNovel, renderNovels, renderPictures, renderReader, renderReading, renderScene, renderScenes, renderSections, renderStory, renderUseIt, renderVocabTests } from "../app/pages.js";
+import { renderComplete, renderHome, renderIllust, renderListening, renderNovel, renderNovels, renderPictures, renderReadTests, renderReader, renderReading, renderScene, renderScenes, renderSections, renderStory, renderUseIt, renderVocabTests } from "../app/pages.js";
 import { sayOff, speak } from "../audio/speech.js";
 
 /* =========================================================
@@ -484,7 +484,7 @@ export function pick(id){
   St.CURRENT = id;
 
   const T2 = (j, e) => `${j}<small class="pt-en">${e}</small>`;
-  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Reading", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
+  const titles = {settings:"Settings", home:"", playground:"Practice", complete:"Complete list", reading:"Books", readtests:"Reading tests", novels:"Movies", scenes:"Scenes", photos:"Photos", explore:"Explorer", sections:"Sections", useit:"Use it", pictures:"Pictures", illust:"Illustrations", listening:"Listening", vocab:"Vocab & Grammar"};
   const lessonName = (St.INDEX.find(x => x.id === id) || {});
   $("#pageTitle").innerHTML = id in titles ? titles[id] : `${lessonName.level||""} · Day ${lessonName.day||""}`;
 
@@ -508,6 +508,9 @@ export function pick(id){
 
   else if(id === "complete")
     renderComplete();
+
+  else if(id === "readtests")   // v170: JLPT reading tests have their own Home tile
+    renderReadTests();
 
   else if(id === "reading")
     renderReading();

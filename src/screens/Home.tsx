@@ -8,14 +8,14 @@ const GEAR = (
   </svg>
 );
 
-const STUDY = [
-  { id: "playground", cls: "cover-play", jp: "練", name: "Practice", sub: null },
-  { id: "reading", cls: "cover-read", jp: "読", name: "Reading", sub: "Learn, then read" },
+const JLPT = [   // v170: the JLPT-style tests have their own group
+  { id: "readtests", cls: "cover-read", jp: "読", name: "Reading", sub: "読解 tests" },
   { id: "listening", cls: "cover-list", jp: "聴", name: "Listening", sub: "Tests with audio" },
   { id: "vocab", cls: "cover-all", jp: "語", name: "Vocab & Grammar", sub: "言語知識 tests" },
 ] as const;
 
 const LIBRARY = [
+  { id: "reading", jp: "本", name: "Books" },   // news, articles, novels, stories, literature
   { id: "complete", jp: "覧", name: "Complete list" },
   { id: "novels", jp: "映", name: "Movies" },
   { id: "pictures", jp: "図", name: "Pictures" },
@@ -36,10 +36,15 @@ export function Home({ ja, due }: Props) {
       <button className="home-gear" type="button" data-home="settings" aria-label="Settings">{GEAR}</button>
 
       <h2 className="home-h">Study</h2>
-      <div className="core core-4">
-        {STUDY.map(t => (
+      <div className="core core-1">
+        <button className="cover cover-play" data-home="playground"><i>練</i><b>Practice</b><span>{due}</span></button>
+      </div>
+
+      <h2 className="home-h">JLPT</h2>
+      <div className="core core-3">
+        {JLPT.map(t => (
           <button key={t.id} className={`cover ${t.cls}`} data-home={t.id}>
-            <i>{t.jp}</i><b>{t.name}</b><span>{t.sub ?? due}</span>
+            <i>{t.jp}</i><b>{t.name}</b><span>{t.sub}</span>
           </button>
         ))}
       </div>

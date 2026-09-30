@@ -21,13 +21,11 @@ function BookButton({ x }: { x: Book }) {
 
 /** Reading home. `reorder` is the app's hold-and-drag sorter; after a drop the list is redrawn from the saved order. */
 export function ReadingHome(p: { tr: Tr; rows: ShelfRow[]; order: number; reorder: (box: HTMLElement, onDrop: () => void) => void;
-  justDropped: () => boolean; onTests: () => void; onShelf: (k: string) => void; onReordered: () => void }) {
+  justDropped: () => boolean; onShelf: (k: string) => void; onReordered: () => void }) {
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => { if (box.current) p.reorder(box.current, p.onReordered); }, [p.order]);
   return (
     <section className="library">
-      <button className="sec-row rdt-row" id="rdtOpen" onClick={() => { p.onTests(); scrollTo(0, 0); }}>
-        <span className="sec-row-t"><b>読解テスト</b><span>{p.tr("JLPT-style reading tests")}</span></span><span className="sec-row-go" aria-hidden="true">›</span></button>
       <div className="sec-rows" id="secRows" ref={box} key={p.order}>
         {p.rows.map(r => (
           <button key={r.key} className="sec-row" data-shelf={r.key} onClick={() => { if (p.justDropped()) return; p.onShelf(r.key); scrollTo(0, 0); }}>
@@ -43,7 +41,7 @@ export function ReadingHome(p: { tr: Tr; rows: ShelfRow[]; order: number; reorde
 export function Shelf(p: { tr: Tr; jp: string; en: string; items: Book[]; onBack: () => void }) {
   return (
     <section className="library">
-      <div className="story-top"><button className="nav-btn" id="shelfBack" data-back="Reading" onClick={() => { p.onBack(); scrollTo(0, 0); }}>Back</button></div>
+      <div className="story-top"><button className="nav-btn" id="shelfBack" data-back="Books" onClick={() => { p.onBack(); scrollTo(0, 0); }}>Back</button></div>
       <h2 className="sec-title">{p.jp}<em>{p.en}</em><small>{p.tr(`${p.items.length} books`)}</small></h2>
       <div className="shelf-grid">{p.items.map(x => <BookButton key={x.id} x={x} />)}</div>
     </section>
@@ -117,7 +115,7 @@ const Say = ({ text }: { text: string }) => <button className="say" type="button
 export function Story(p: { title: string; level: string; source: string; sentences: { jp: string; en: string }[]; onBack: () => void }) {
   return (
     <section className="reading story">
-      <div className="story-top"><button className="nav-btn" id="storyBack" data-back="Reading" onClick={p.onBack}>Back</button><Say text={p.sentences.map(x => x.jp).join("")} /></div>
+      <div className="story-top"><button className="nav-btn" id="storyBack" data-back="Books" onClick={p.onBack}>Back</button><Say text={p.sentences.map(x => x.jp).join("")} /></div>
       <div className="story-meta">{`${p.level} · ${p.source}`}</div>
       {p.sentences.map((x, k) => <div key={k} className="ex story-line"><Say text={x.jp} /><span className="jpline">{x.jp}</span><div className="tr">{x.en}</div></div>)}
     </section>

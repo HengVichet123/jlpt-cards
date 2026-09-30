@@ -2073,3 +2073,13 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 /* v168: never let anything make the page wider than the screen (iPhone zooms out to fit, then back) */
 html{overflow-x:hidden}   /* on html only: it applies to the window, so the sticky header and page scrolling keep working */
 @supports (overflow-x:clip){ html,body{overflow-x:clip} }
+
+/* v170: Home = Study (Practice, full width) · JLPT (3 test tiles) · Library (Books first) */
+.core.core-1{grid-template-columns:1fr}
+.core.core-3{grid-template-columns:repeat(3,1fr);gap:8px}
+.core-3 .cover{min-height:118px;padding:12px}
+.core-3 .cover b{font-size:16px;line-height:1.2}
+.core-3 .cover span{font-size:11.5px}
+.core-3 .cover i{font-size:84px;top:-12px}
+.ja .core-3 .cover b{font-size:17px}
+@media (min-width:700px){ .core.core-3{gap:14px} .core.core-1 .cover-play{min-height:150px} }

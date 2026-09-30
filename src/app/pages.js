@@ -190,7 +190,7 @@ export async function renderReader(id){
   $("#pageTitle").textContent = R.title;
   showScreen("reader-" + id, createElement(Reader, {   // v162: React (src/screens/Reading.tsx)
     tr, title: R.title, html: html.split("\n").map(p => p.startsWith("§") ? `<h3 class="reader-ch">${p.slice(1)}</h3>` : `<p>${p}</p>`).join(""),
-    back: ((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Reading",
+    back: ((SHELVES.find(x => x[0] === (R.shelf || "article")) || [])[1]) || "Books",
     source: R.source, sourceUrl: R.sourceUrl, voice: store.get("jc:tapvoice", true), speak,
     onVoice: on => store.set("jc:tapvoice", on), onShelf: () => renderShelf(R.shelf || "article"), onCards: () => renderPrelearn(id)}));
   setHeaderAction("Cards", () => { renderPrelearn(id); scrollTo(0, 0); });
@@ -232,7 +232,7 @@ export async function renderExtraTheme(theme){   // one theme's extra sessions (
 /* v159: tests are React screens (src/screens/Tests.tsx); answers/scores in src/tests/quiz.ts */
 export const TEST_KINDS = {
   lsn: {title: "Listening", index: "data/listening/index.json", back: null},
-  rdt: {title: "Reading tests", index: "data/readtests/index.json", back: "Reading"},
+  rdt: {title: "Reading tests", index: "data/readtests/index.json", back: null},   // v170: own Home tile (JLPT group)
   voc: {title: "Vocab & Grammar", index: "data/vocabtests/index.json", back: null},
 };
 export async function renderTestList(kind){
@@ -324,7 +324,7 @@ export function bookHTML(x){
 export async function renderReading(){
   document.body.classList.remove("playing");
   St.READ_INDEX = null; const RD = await readIndex();
-  $("#pageTitle").textContent = "Reading";
+  $("#pageTitle").textContent = "Books";
   let order = 0;
   const draw = () => showScreen("reading", createElement(ReadingHome, {   // v162: React (src/screens/Reading.tsx)
     tr, order,
@@ -332,7 +332,7 @@ export async function renderReading(){
       const items = RD.filter(x => (x.shelf || "article") === k);
       return {key: k, jp, en, count: items.length, fan: items.filter(x => x.img).slice(0, 3).map(x => x.img)}; }),
     reorder: secReorder, justDropped: () => SEC_DRAG.justDropped,
-    onTests: () => renderReadTests(), onShelf: k => renderShelf(k),
+    onShelf: k => renderShelf(k),
     onReordered: () => { order++; draw(); }}));
   draw();
 }
@@ -412,5 +412,5 @@ export async function renderStory(id){
   let st; try{ st = await (await fetch(`data/stories/${id}.json`, {cache:"no-cache"})).json(); }catch(e){ return; }
   $("#pageTitle").textContent = st.title;
   showScreen("story-" + id, createElement(Story, {title: st.title, level: st.level, source: st.source, sentences: st.sentences,   // v162: React
-    onBack: () => { $("#pageTitle").textContent = "Reading"; renderReading(); }}));
+    onBack: () => { $("#pageTitle").textContent = "Books"; renderReading(); }}));
 }
