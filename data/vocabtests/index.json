@@ -532,6 +532,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_39",
+  "title": "N1 言語知識 模擬テスト 39",
+  "titleEn": "N1 vocabulary and grammar test 39",
+  "level": "N1",
+  "scenes": [
+   "懲りた",
+   "溝",
+   "聳えて",
+   "窮乏",
+   "情緒"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1046,6 +1060,20 @@
    "怠った",
    "濁って",
    "停電"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_38",
+  "title": "N2 言語知識 模擬テスト 38",
+  "titleEn": "N2 vocabulary and grammar test 38",
+  "level": "N2",
+  "scenes": [
+   "隔てられて",
+   "儲けた",
+   "彫刻",
+   "占う",
+   "醜い"
   ],
   "count": 54
  }
