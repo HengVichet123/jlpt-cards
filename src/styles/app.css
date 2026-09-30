@@ -2170,3 +2170,16 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .cover-cards{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:inset 5px 0 0 var(--murasaki)}
 .cover-cards span{color:var(--soft)}
 .cover-cards i{color:var(--murasaki);opacity:.16}
+
+/* v176: no floating buttons. Exams: Previous / Next is a row at the end of the page. Practice: Quick 10 / New session / Random is a row above the sessions */
+.lsn.lsn-pad,.rdt.q-pad{padding-bottom:0}
+.q-nav{display:flex;align-items:center;gap:10px;margin-top:4px}
+.q-nav button,.pg-actions button{min-height:48px;padding:0 20px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:700 15px var(--body);cursor:pointer;transition:background .15s ease,transform .1s ease}
+.q-nav button:hover,.pg-actions button:hover{background:var(--chip)}
+.q-nav button:active,.pg-actions button:active{transform:scale(.97)}
+.q-nav .main{margin-left:auto;min-width:132px;border-color:var(--ink)}
+.pg-actions{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:10px;margin:0 0 18px}
+.pg-actions .main{border-color:var(--ink)}
+/* v176: bookmark button = just the outline icon (no box) */
+.bm-btn{border-color:transparent;background:none;color:var(--soft)}
+.bm-btn:hover{background:var(--chip);color:var(--ink)}

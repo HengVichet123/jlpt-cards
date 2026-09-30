@@ -83,13 +83,14 @@ function ExamResult({ right, total, parts, time, limit, back, tr, onBack, onRevi
       <button type="button" className="lsn-skip" onClick={onAgain}>{tr("Try again")}</button></div>
   </section>;
 }
-/** Previous / Next on a solid bar at the bottom (same in all three tests). */
+/** Previous / Next: a row at the end of the page (same in all three tests). */
 function Dock({ host, i, n, onGo, tr, noPrev, last }: { host: HTMLElement; i: number; n: number; onGo: (d: number) => void; tr: Common["tr"]; noPrev?: boolean; last?: string }) {
-  return createPortal(
-    <div className="pg-dock lsn-dock"><div className="pg-dock-in lsn-nav">
+  void host;   // v176: in the page after the questions (no floating bar)
+  return (
+    <div className="q-nav">
       {i > 0 && !noPrev && <button type="button" id="lsnPrev" aria-label="Previous question" onClick={() => onGo(-1)}>{tr("‹ Previous")}</button>}
       <button type="button" className="main" id="lsnNext" onClick={() => onGo(1)}>{tr(i + 1 < n ? "Next" : last || "See result")}</button>
-    </div></div>, host);
+    </div>);
 }
 /** One quiz screen's state: answers (saved as picked), current screen, result. */
 function useQuiz<T extends Quiz.Picked>(kind: Quiz.Kind, id: string, fresh: () => T, screens: (p: T) => number[][], mode: Mode = "practice", init?: Quiz.Picked) {
