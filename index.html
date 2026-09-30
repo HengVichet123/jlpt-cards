@@ -1940,6 +1940,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .lsn .lsn-script summary{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);list-style:none;font:700 14px var(--body);color:var(--soft);-webkit-tap-highlight-color:transparent}
 .lsn .lsn-script summary::-webkit-details-marker{display:none}
 .lsn .lsn-script summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s ease}
+.lsn .lsn-script:not([open]) summary{border-color:transparent;background:none;padding-left:2px}   /* v151: closed = plain "› Script", no button box */
 .lsn .lsn-script[open] summary{position:relative;z-index:1;margin-bottom:-1px;border-bottom-color:var(--card);border-radius:12px 12px 0 0;color:var(--ink)}
 .lsn .lsn-script[open] summary::before{transform:rotate(45deg) translate(-2px,-2px)}
 .lsn-body{border:1px solid var(--line);border-radius:0 12px 12px 12px;background:var(--card);padding:6px 14px 12px}
@@ -2022,7 +2023,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .tl-prog{flex:1;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
 .tl-prog i{display:block;height:100%;border-radius:2px;background:var(--soft);transition:width .4s ease}
 .tl-prog.full i{background:var(--shu)}
-.tl-count{flex:none;font:600 13px var(--body);color:var(--faint);font-variant-numeric:tabular-nums}
+.tl-count{flex:none;margin-left:auto;font:600 13px var(--body);color:var(--faint);font-variant-numeric:tabular-nums}
 .tl-row .tl-no{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;text-align:center;font-size:14px}
 .tl-row.new .tl-no{color:var(--ink)}
 .tl-row.new .tl-t b{font-weight:700;color:var(--ink)}
@@ -2106,7 +2107,7 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
    APP VERSION
    ========================================================= */
 
-const APP_VERSION = "v150";
+const APP_VERSION = "v151";
 
 
 /* =========================================================
@@ -4566,7 +4567,7 @@ function testList({kind, title, idx, credit, open}){
     const tried = L.filter(t => state(t) !== "new").length;
     $("#list").innerHTML = `<section class="tl">
       <div class="tl-top">${levels.length > 1 ? `<div class="tl-lv" role="tablist">${levels.map(l => `<button type="button" role="tab" aria-selected="${l === lv}" data-lv="${l}">${l}</button>`).join("")}</div>` : ""}
-        <div class="tl-prog${tried === L.length && L.length ? " full" : ""}" role="img" aria-label="${tried} of ${L.length} opened"><i style="width:${L.length ? tried / L.length * 100 : 0}%"></i></div><span class="tl-count">${tried} / ${L.length}</span></div>
+        <span class="tl-count" aria-label="${tried} of ${L.length} opened">${tried} / ${L.length}</span></div>
       <ol class="tl-rows">${L.map((t, i) => { const r = store.get(`jc:${kind}:${t.id}`, null), st = state(t);
         return `<li><button type="button" class="tl-row ${st}" data-test="${t.id}"><span class="tl-no">${i + 1}</span><span class="tl-t"><b>${esc(t.scenes && t.scenes.length ? t.scenes.slice(0, 4).join("・") : t.title)}</b><small>${t.count} questions</small></span>${r ? `<span class="tl-best">${r.best}/${t.count}</span>` : ""}</button></li>`; }).join("")}</ol>
       <p class="lsn-note">Original questions in the JLPT formats, not official test material.</p>${credit ? `<details class="tl-credit"><summary>Voice credits</summary><p class="lsn-note">${esc(credit)}</p></details>` : ""}</section>`;
