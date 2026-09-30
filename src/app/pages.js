@@ -254,19 +254,22 @@ export async function renderTestList(kind){
   let lv = store.get(key, levels.includes("N1") ? "N1" : levels[0]); if(!levels.includes(lv)) lv = levels[0];
   const v = kind === "lsn" ? [...new Set(L.flatMap(t => t.voices || []))].sort() : [];
   $("#pageTitle").textContent = K0.title;
-  const draw = () => showScreen("tl-" + kind, createElement(TestList, {kind, idx: L, level: lv, tr, back: K0.back,
+  const modeKey = "jc:tmode:" + kind; let mode = store.get(modeKey, "practice");   // v174: Practice / Exam
+  const draw = () => showScreen("tl-" + kind, createElement(TestList, {kind, idx: L, level: lv, tr, back: K0.back, listMode: mode,
+    onMode: m => { mode = m; store.set(modeKey, m); St.NAV_SAME = true; draw(); },
     credit: v.length ? "Voices: " + v.map(n => "VOICEVOX:" + n).join("、") + "、Microsoft Edge TTS (narrator)" : "",
     onLevel: l => { lv = l; store.set(key, l); St.NAV_SAME = true; draw(); },
-    onOpen: id => renderTest(kind, id),
+    onOpen: id => renderTest(kind, id, mode),
     onBack: () => { renderReading(); scrollTo(0, 0); }}));
   draw();
 }
 export const renderListening = () => renderTestList("lsn"), renderReadTests = () => renderTestList("rdt"), renderVocabTests = () => renderTestList("voc");
-export async function renderTest(kind, id){
+export async function renderTest(kind, id, mode = "practice", init = null){
   const dir = {lsn: "listening", rdt: "readtests", voc: "vocabtests"}[kind];
   const T = await (await fetch(`data/${dir}/${id}.json`, {cache:"no-cache"})).json();
   const C = {lsn: ListenTest, rdt: ReadTest, voc: VocabTest}[kind];
-  showScreen(`test-${kind}-${id}`, createElement(C, {id, T, tr, setTitle: t => { $("#pageTitle").textContent = t; }, onWrong: addMistake,
+  showScreen(`test-${kind}-${id}-${mode}-${Date.now()}`, createElement(C, {id, T, tr, mode, init,
+    onReview: picked => renderTest(kind, id, "review", picked), onAgain: () => renderTest(kind, id, mode), setTitle: t => { $("#pageTitle").textContent = t; }, onWrong: addMistake,
     onBack: () => renderTestList(kind)}));
 }
 export const renderReadTest = id => renderTest("rdt", id), renderVocabTest = id => renderTest("voc", id), renderListenTest = id => renderTest("lsn", id);

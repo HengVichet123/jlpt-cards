@@ -2146,3 +2146,23 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .prog-table th,.prog-table td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--line)}
 .prog-table th:first-child{text-align:left}
 .prog-table thead th{color:var(--faint);font-weight:600}
+
+/* v174: Practice / Exam switch on exam lists; exam clock; picked answer (no right/wrong until the result); result */
+.tl-top{flex-wrap:wrap}
+.tl-mode{margin-left:auto}
+.tl-mode + .tl-count{margin-left:0}
+.tl-best.pass{color:var(--matsu)}
+.ex-clock{display:inline-block;margin-right:10px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font:700 13px var(--body);font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+.ex-clock.low{border-color:var(--red);color:var(--red)}
+.lsn-opt.picked{border-color:var(--ink);background:var(--chip)}
+.lsn-opt.picked .lsn-n{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.lsn-play:disabled{opacity:.35;cursor:default}
+.ex-verdict{margin:14px 0 0;text-align:center;font:800 15px var(--body);letter-spacing:.02em;color:var(--red)}
+.ex-verdict.pass{color:var(--matsu)}
+.ex-meta{margin:0;text-align:center;font:600 13px var(--body);color:var(--soft);font-variant-numeric:tabular-nums}
+.ex-actions{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+/* v174: Complete list tile in purple (Study row, next to Practice) */
+:root{--cov-cards:#3F3057;--cov-cards2:#271D38}
+.cover-cards{background:linear-gradient(160deg,var(--cov-cards),var(--cov-cards2));color:#fff;border:0}
+.cover-cards span{color:rgba(255,255,255,.72)}
+.cover-cards i{color:#fff;opacity:.07}

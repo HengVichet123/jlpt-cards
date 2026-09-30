@@ -26,3 +26,15 @@ export function saveScore(kind: Kind, id: string, right: number): void {
 }
 export const seen = (kind: Kind, id: string) => !!store.get(K.seen(kind, id), 0);
 export const markSeen = (kind: Kind, id: string) => store.set(K.seen(kind, id), Date.now());
+
+/* Exam mode (JLPT format, timed): results kept apart from practice. jc:exam:<kind>:<id> = {best, last (percent), at, time (s)} */
+export type ExamResult = { best: number; last: number; at: number; time: number };
+const examKey = (kind: Kind, id: string) => `jc:exam:${kind}:${id}`;
+export const examScore = (kind: Kind, id: string) => store.get<ExamResult | null>(examKey(kind, id), null);
+export function saveExam(kind: Kind, id: string, pct: number, time: number): void {
+  const r = examScore(kind, id);
+  store.set(examKey(kind, id), { best: Math.max(r?.best || 0, pct), last: pct, at: Date.now(), time });
+}
+/** Seconds allowed in exam mode (JLPT pace). Listening has no clock: each recording plays once. */
+export const examLimit = (kind: Kind, questions: number) => kind === "voc" ? questions * 60 : kind === "rdt" ? questions * 150 : 0;
+export const PASS = 55;   // JLPT N1 pass line ≈ 100 / 180
