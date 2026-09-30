@@ -2017,6 +2017,23 @@ body.playing .play-stage{top:calc(env(safe-area-inset-top,0px) + 60px)!important
 .tl-t b{font:600 15.5px var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tl-t small{font-size:12.5px;color:var(--faint)}
 .tl-best{flex:none;font:700 14px var(--body);color:var(--soft);font-variant-numeric:tabular-nums}
+/* v150: visited tests recede (unopened stay bold like unread mail); finished = soft green disc; a slim progress line beside N1/N2 */
+.tl-top{display:flex;align-items:center;gap:14px}
+.tl-prog{flex:1;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.tl-prog i{display:block;height:100%;border-radius:2px;background:var(--soft);transition:width .4s ease}
+.tl-prog.full i{background:var(--shu)}
+.tl-count{flex:none;font:600 13px var(--body);color:var(--faint);font-variant-numeric:tabular-nums}
+.tl-row .tl-no{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;text-align:center;font-size:14px}
+.tl-row.new .tl-no{color:var(--ink)}
+.tl-row.new .tl-t b{font-weight:700;color:var(--ink)}
+.tl-row.seen .tl-no{border:1.5px solid var(--line);color:var(--faint)}
+.tl-row.seen .tl-t b,.tl-row.done .tl-t b{font-weight:500;color:var(--soft)}
+.tl-row.done .tl-no{background:color-mix(in srgb, var(--matsu) 16%, var(--card));color:var(--matsu)}
+.tl-row.done .tl-best{color:var(--matsu)}
+.tl-credit summary{display:inline-flex;align-items:center;min-height:44px;cursor:pointer;list-style:none;font:600 12.5px var(--body);color:var(--faint);text-decoration:underline;text-underline-offset:3px}
+.tl-credit summary::-webkit-details-marker{display:none}
+.tl-credit .lsn-note{margin-top:0}
+@media (prefers-reduced-motion: reduce){ .tl-prog i{transition:none} }
 .t-why{margin:0;padding:10px 14px;border-radius:10px;background:var(--chip);font:500 14px/1.6 var(--body);color:var(--ink)}
 .rdt{display:flex;flex-direction:column;gap:16px}
 .rd-text{position:relative;padding:18px 18px 8px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
@@ -4545,13 +4562,16 @@ function testList({kind, title, idx, credit, open}){
   if(!levels.includes(lv)) lv = levels[0];
   const draw = () => {
     const L = idx.filter(t => t.level === lv);
+    const state = t => store.get(`jc:${kind}:${t.id}`, null) ? "done" : store.get(`jc:seen:${kind}:${t.id}`, 0) ? "seen" : "new";   // opened once = seen; finished = done
+    const tried = L.filter(t => state(t) !== "new").length;
     $("#list").innerHTML = `<section class="tl">
-      ${levels.length > 1 ? `<div class="tl-lv" role="tablist">${levels.map(l => `<button type="button" role="tab" aria-selected="${l === lv}" data-lv="${l}">${l}</button>`).join("")}</div>` : ""}
-      <ol class="tl-rows">${L.map((t, i) => { const r = store.get(`jc:${kind}:${t.id}`, null);
-        return `<li><button type="button" class="tl-row" data-test="${t.id}"><span class="tl-no">${i + 1}</span><span class="tl-t"><b>${esc(t.scenes && t.scenes.length ? t.scenes.slice(0, 4).join("・") : t.title)}</b><small>${t.count} questions</small></span>${r ? `<span class="tl-best">${r.best}/${t.count}</span>` : ""}</button></li>`; }).join("")}</ol>
-      <p class="lsn-note">Original questions in the JLPT formats, not official test material.</p>${credit ? `<p class="lsn-note">${esc(credit)}</p>` : ""}</section>`;
+      <div class="tl-top">${levels.length > 1 ? `<div class="tl-lv" role="tablist">${levels.map(l => `<button type="button" role="tab" aria-selected="${l === lv}" data-lv="${l}">${l}</button>`).join("")}</div>` : ""}
+        <div class="tl-prog${tried === L.length && L.length ? " full" : ""}" role="img" aria-label="${tried} of ${L.length} opened"><i style="width:${L.length ? tried / L.length * 100 : 0}%"></i></div><span class="tl-count">${tried} / ${L.length}</span></div>
+      <ol class="tl-rows">${L.map((t, i) => { const r = store.get(`jc:${kind}:${t.id}`, null), st = state(t);
+        return `<li><button type="button" class="tl-row ${st}" data-test="${t.id}"><span class="tl-no">${i + 1}</span><span class="tl-t"><b>${esc(t.scenes && t.scenes.length ? t.scenes.slice(0, 4).join("・") : t.title)}</b><small>${t.count} questions</small></span>${r ? `<span class="tl-best">${r.best}/${t.count}</span>` : ""}</button></li>`; }).join("")}</ol>
+      <p class="lsn-note">Original questions in the JLPT formats, not official test material.</p>${credit ? `<details class="tl-credit"><summary>Voice credits</summary><p class="lsn-note">${esc(credit)}</p></details>` : ""}</section>`;
     $("#list").querySelectorAll(".tl-lv [data-lv]").forEach(b => b.onclick = () => { lv = b.dataset.lv; store.set(key, lv); NAV_SAME = true; draw(); });
-    $("#list").querySelectorAll("[data-test]").forEach(b => b.onclick = () => { open(b.dataset.test); scrollTo(0, 0); });
+    $("#list").querySelectorAll("[data-test]").forEach(b => b.onclick = () => { store.set(`jc:seen:${kind}:${b.dataset.test}`, Date.now()); open(b.dataset.test); scrollTo(0, 0); });
   };
   $("#pageTitle").textContent = title;
   draw();
