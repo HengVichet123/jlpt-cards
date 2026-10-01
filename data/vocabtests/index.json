@@ -644,6 +644,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_47",
+  "title": "N1 言語知識 模擬テスト 47",
+  "titleEn": "N1 vocabulary and grammar test 47",
+  "level": "N1",
+  "scenes": [
+   "統治",
+   "斡旋",
+   "欺いて",
+   "免れた",
+   "和らいだ"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1284,6 +1298,20 @@
    "震えて",
    "混乱",
    "帰省"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_47",
+  "title": "N2 言語知識 模擬テスト 47",
+  "titleEn": "N2 vocabulary and grammar test 47",
+  "level": "N2",
+  "scenes": [
+   "湿って",
+   "炊いて",
+   "沈んで",
+   "被害",
+   "消毒"
   ],
   "count": 54
  }
