@@ -658,6 +658,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_48",
+  "title": "N1 言語知識 模擬テスト 48",
+  "titleEn": "N1 vocabulary and grammar test 48",
+  "level": "N1",
+  "scenes": [
+   "怯えて",
+   "嘲る",
+   "戒めて",
+   "綻びて",
+   "凝って"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1312,6 +1326,20 @@
    "沈んで",
    "被害",
    "消毒"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_48",
+  "title": "N2 言語知識 模擬テスト 48",
+  "titleEn": "N2 vocabulary and grammar test 48",
+  "level": "N2",
+  "scenes": [
+   "縫った",
+   "塗った",
+   "絞って",
+   "掘って",
+   "診断"
   ],
   "count": 54
  }
