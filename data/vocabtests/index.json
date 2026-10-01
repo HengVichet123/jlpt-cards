@@ -672,6 +672,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_49",
+  "title": "N1 言語知識 模擬テスト 49",
+  "titleEn": "N1 vocabulary and grammar test 49",
+  "level": "N1",
+  "scenes": [
+   "拭った",
+   "貶める",
+   "諭した",
+   "惑わされて",
+   "翻した"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1340,6 +1354,20 @@
    "絞って",
    "掘って",
    "診断"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_49",
+  "title": "N2 言語知識 模擬テスト 49",
+  "titleEn": "N2 vocabulary and grammar test 49",
+  "level": "N2",
+  "scenes": [
+   "埋めて",
+   "日焼け",
+   "巻いた",
+   "濡れて",
+   "乾燥"
   ],
   "count": 54
  }
