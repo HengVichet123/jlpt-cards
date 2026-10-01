@@ -616,6 +616,34 @@
   "count": 45
  },
  {
+  "id": "v_n1_45",
+  "title": "N1 言語知識 模擬テスト 45",
+  "titleEn": "N1 vocabulary and grammar test 45",
+  "level": "N1",
+  "scenes": [
+   "覆した",
+   "携わって",
+   "営んで",
+   "司って",
+   "籠もる"
+  ],
+  "count": 45
+ },
+ {
+  "id": "v_n1_46",
+  "title": "N1 言語知識 模擬テスト 46",
+  "titleEn": "N1 vocabulary and grammar test 46",
+  "level": "N1",
+  "scenes": [
+   "脅して",
+   "霞んで",
+   "廃れて",
+   "添えて",
+   "赴任"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1228,6 +1256,34 @@
    "狙って",
    "雑巾",
    "恋しく"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_45",
+  "title": "N2 言語知識 模擬テスト 45",
+  "titleEn": "N2 vocabulary and grammar test 45",
+  "level": "N2",
+  "scenes": [
+   "薄めて",
+   "撫でた",
+   "稼いで",
+   "在庫",
+   "診察"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_46",
+  "title": "N2 言語知識 模擬テスト 46",
+  "titleEn": "N2 vocabulary and grammar test 46",
+  "level": "N2",
+  "scenes": [
+   "匂い",
+   "尋ねた",
+   "震えて",
+   "混乱",
+   "帰省"
   ],
   "count": 54
  }
