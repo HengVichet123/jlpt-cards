@@ -756,6 +756,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_55",
+  "title": "N1 言語知識 模擬テスト 55",
+  "titleEn": "N1 vocabulary and grammar test 55",
+  "level": "N1",
+  "scenes": [
+   "是認",
+   "悼んだ",
+   "拙い",
+   "甘んじる",
+   "講じる"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1508,6 +1522,20 @@
    "預金",
    "署名",
    "欠席"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_55",
+  "title": "N2 言語知識 模擬テスト 55",
+  "titleEn": "N2 vocabulary and grammar test 55",
+  "level": "N2",
+  "scenes": [
+   "運賃",
+   "到着",
+   "観光",
+   "終電",
+   "曇って"
   ],
   "count": 54
  }
