@@ -770,6 +770,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_56",
+  "title": "N1 言語知識 模擬テスト 56",
+  "titleEn": "N1 vocabulary and grammar test 56",
+  "level": "N1",
+  "scenes": [
+   "鍛えて",
+   "嗅いで",
+   "囁いた",
+   "呟いて",
+   "投じた"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1536,6 +1550,20 @@
    "観光",
    "終電",
    "曇って"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_56",
+  "title": "N2 言語知識 模擬テスト 56",
+  "titleEn": "N2 vocabulary and grammar test 56",
+  "level": "N2",
+  "scenes": [
+   "骨折",
+   "咳",
+   "頭痛",
+   "痛む",
+   "予防"
   ],
   "count": 54
  }
