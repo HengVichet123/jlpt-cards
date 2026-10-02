@@ -714,6 +714,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_52",
+  "title": "N1 言語知識 模擬テスト 52",
+  "titleEn": "N1 vocabulary and grammar test 52",
+  "level": "N1",
+  "scenes": [
+   "嫉妬",
+   "安堵",
+   "熟練",
+   "託した",
+   "秘めて"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1424,6 +1438,20 @@
    "沸いたら",
    "喉",
    "患者"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_52",
+  "title": "N2 言語知識 模擬テスト 52",
+  "titleEn": "N2 vocabulary and grammar test 52",
+  "level": "N2",
+  "scenes": [
+   "畳んで",
+   "煮た",
+   "混ぜて",
+   "祈って",
+   "貿易"
   ],
   "count": 54
  }
