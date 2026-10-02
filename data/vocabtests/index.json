@@ -798,6 +798,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_58",
+  "title": "N1 言語知識 模擬テスト 58",
+  "titleEn": "N1 vocabulary and grammar test 58",
+  "level": "N1",
+  "scenes": [
+   "押収",
+   "横領",
+   "隠蔽",
+   "和解",
+   "抜擢"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1592,6 +1606,20 @@
    "屋根",
    "大家",
    "騒音"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_58",
+  "title": "N2 言語知識 模擬テスト 58",
+  "titleEn": "N2 vocabulary and grammar test 58",
+  "level": "N2",
+  "scenes": [
+   "卒業",
+   "単位",
+   "採点",
+   "暗記",
+   "奨学金"
   ],
   "count": 54
  }
