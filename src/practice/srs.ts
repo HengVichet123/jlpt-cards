@@ -65,6 +65,12 @@ export function schedule(p0: Profile, btn: number, now = Date.now(), s = setting
       p.lapses = (p.lapses || 0) + 1; p.ease = Math.max(1.3, ease - 0.2); p.ivl = 1;
       if (s.relearn.length) { p.state = "relearning"; p.step = 0; p.dueAt = at(s.relearn[0]); } else toReview(1);
     }
+    else if ((p0.dueAt || 0) > now) {   // reviewed ahead (Anki's early review): grow from the days actually waited, never below the old interval
+      const waited = Math.max(0, ivl - ((p0.dueAt || 0) - now) / DAY);
+      if (btn === HARD) { p.ease = Math.max(1.3, ease - 0.15); toReview(Math.max(waited * s.hardIvl, ivl * s.hardIvl / 2)); }
+      else if (btn === GOOD) toReview(Math.max(waited * ease, ivl));
+      else { p.ease = ease + 0.15; toReview(Math.max(waited * ease, ivl) * (s.easyBonus - (s.easyBonus - 1) / 2)); }
+    }
     else if (btn === HARD) { p.ease = Math.max(1.3, ease - 0.15); toReview(Math.max(ivl + 1, ivl * s.hardIvl)); }
     else if (btn === GOOD) toReview(Math.max(ivl + 1, ivl * ease));
     else { p.ease = ease + 0.15; toReview(Math.max(ivl + 1, ivl * ease * s.easyBonus)); }
@@ -130,7 +136,7 @@ type Snap = { sid: string | undefined; v: Record<string, string | null> };
 const UNDO: Snap[] = [];
 export function snapshot(lvl: Level, t: string, no: number, sid: string | undefined): void {
   const snap: Snap = { sid, v: {} };
-  for (const k of [K.profile(lvl, t, no), K.due(lvl, t, no), K.sessions, "jc:mistakes"]) snap.v[k] = store.raw(k);
+  for (const k of [K.profile(lvl, t, no), K.due(lvl, t, no), K.sessions, K.pg, "jc:mistakes"]) snap.v[k] = store.raw(k);
   UNDO.push(snap); if (UNDO.length > 30) UNDO.shift();
 }
 export const canUndo = (sid: string | undefined) => UNDO.length > 0 && UNDO[UNDO.length - 1].sid === sid;

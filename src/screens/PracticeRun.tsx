@@ -1,4 +1,4 @@
-/* Practice run: one card at a time, Again / Hard / Easy, undo, count, Exit.
+/* Practice run: one card at a time, Again / Hard / Good / Easy, undo, Anki counts (New / Learn / Due), Exit.
    The card itself is the app's card HTML (shared with Complete list); its taps (flip, sound, double-tap) are the app's. */
 import { useLayoutEffect, useRef } from "react";
 import { BUTTONS } from "../practice/srs";
@@ -8,7 +8,10 @@ export type PracticeRunProps = {
   tr: (s: string) => string;
   calm: boolean;
   card: { key: string; level: string; type: string; no: number; html: string; when: Record<number, string> } | null;   // null = session complete
-  live: number; later: number;
+  counts: { n: number; l: number; d: number };   // Anki: New / Learn / Due, the same numbers as the session row
+  which: "new" | "learn" | "due" | null;          // the queue the card on screen comes from (underlined, like Anki)
+  ahead: number;                                  // review cards scheduled for later days (Review ahead, when the session is done)
+  onAhead: () => void;
   canUndo: boolean;
   onRate: (minutes: number) => void;
   onUndo: () => void;
@@ -32,7 +35,10 @@ export function PracticeRun(p: PracticeRunProps) {
     <div className="play-screen">
       <div className="play-bar pg-bottom">
         <div className="play-top">
-          <div className="play-queue"><span><b>{p.live}</b>{" " + p.tr("to go")}</span>{p.later ? <span className="pq-later">{p.tr(`${p.later} coming back`)}</span> : null}</div>
+          <div className="play-queue run-n" aria-label={`${p.counts.n} new, ${p.counts.l} learning, ${p.counts.d} due`}>
+            {([["new", p.counts.n], ["learn", p.counts.l], ["due", p.counts.d]] as const).map(([c, v]) =>
+              <span key={c} className={`deck-n ${c}${v ? "" : " zero"}${p.which === c ? " cur" : ""}`}>{v}</span>)}
+          </div>
           <button type="button" className="pg-undo" id="pgUndo" aria-label="Undo last answer" disabled={!p.canUndo} onClick={p.onUndo}>{UNDO}</button>
         </div>
         <button className="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice" onClick={p.onExit}>{p.ja ? "‹ 終了" : "‹ Exit"}</button>
@@ -40,7 +46,8 @@ export function PracticeRun(p: PracticeRunProps) {
       <div className="play-stage" ref={stage}>
         {p.card
           ? <div key={p.card.key} style={{ display: "contents" }} dangerouslySetInnerHTML={{ __html: p.card.html }} />
-          : <div className="play-empty"><h2>{p.tr("Session complete")}</h2><p>{p.tr("All cards are resting.")}</p></div>}
+          : <div className="play-empty"><h2>{p.tr("Session complete")}</h2>
+              {p.ahead > 0 && <button type="button" className="pg-ahead" id="pgAhead" onClick={p.onAhead}>{p.tr("Review ahead")}<b>{p.ahead}</b></button>}</div>}
       </div>
       {p.card && <>
         <div className="play-ratings" data-level={p.card.level} data-type={p.card.type} data-no={p.card.no}>

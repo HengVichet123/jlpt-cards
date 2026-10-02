@@ -2233,3 +2233,11 @@ html{overflow-x:hidden}   /* on html only: it applies to the window, so the stic
 .exr-steps i.on{background:var(--matsu);border-color:var(--matsu)}
 .exr-empty{margin:40px 0 0;text-align:center;font:700 17px var(--body);color:var(--ink)}
 .exr-later{margin:0;text-align:center;font-size:14px;color:var(--soft)}
+
+/* v183: run counts like Anki (New / Learn / Due); the card's own queue is underlined */
+.play-bar .play-queue.run-n{font-size:15px!important;opacity:1;gap:0 14px}
+.run-n .deck-n{font:700 15px var(--body);font-variant-numeric:tabular-nums;min-width:2ch;text-align:center;padding-bottom:2px;border-bottom:2px solid transparent}
+.run-n .deck-n.cur{border-bottom-color:currentColor}
+.pg-ahead{display:inline-flex;align-items:center;gap:10px;min-height:48px;margin-top:18px;padding:0 22px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:600 16px var(--body);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pg-ahead b{color:var(--matsu);font-variant-numeric:tabular-nums}
+.pg-ahead:active{transform:scale(.97)}

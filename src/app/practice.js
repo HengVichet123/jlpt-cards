@@ -38,7 +38,7 @@ export async function planRows(){
 }
 export function pgStartPlan(r){
   if(r.id === "plan:mistakes") return renderExamReview();
-  const st = pgState(); Object.assign(st, {level: "ALL", from: "plan", ids: r.ids, sid: r.id, planName: r.name});
+  const st = pgState(); Object.assign(st, {level: "ALL", from: "plan", ids: r.ids, sid: r.id, planName: r.name, ahead: undefined});
   store.set("jc:pg", st); St.PG_NEW = false; St.SESS_EDIT = null; St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
 export const PG = {
@@ -54,6 +54,8 @@ export function pgRate(lvl, type, no, m){   // Again / Hard / Easy on the runnin
   SRS.snapshot(lvl, type, no, pgState().sid);   // for undo
   const p = SRS.rate(lvl, type, no, m);   // v178: Anki scheduling (Again / Hard / Good / Easy)
   if(p.state === "review") Sess.markDone([lvl, type, no]);   // graduated: done for this session
+  const st = pgState(), k = Sess.key([lvl, type, no]);
+  if(st.ahead && st.ahead.includes(k)){ st.ahead = st.ahead.filter(x => x !== k); store.set("jc:pg", st); }   // reviewed ahead once
   renderPG();
 }
 export const pgKey = K.due, profileKey = K.profile;
@@ -127,7 +129,7 @@ export const pgState = Sess.state;
 export const sessList = Sess.list, sessTodo = Sess.todo, sessOpen = Sess.open, sessSave = Sess.save, sessDrop = Sess.drop;
 export function sessResume(id){
   const se = sessList().find(x => x.id === id); if(!se) return;
-  const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id});
+  const st = pgState(); Object.assign(st, {level: se.level, from: se.from, section: se.section, reading: se.reading, ids: sessTodo(se), sid: se.id, ahead: undefined});
   store.set("jc:pg", st); se.at = Date.now(); sessSave(se);
   St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
@@ -141,7 +143,7 @@ export async function pgQuickIds(n){ const pool = await pgPool("ALL"), ids = [];
   return ids; }
 export function pgStartWith(ids, label){
   if(!ids.length) return;
-  const st = pgState(); Object.assign(st, {level: "ALL", from: "all", ids, sid: "s" + Date.now()});
+  const st = pgState(); Object.assign(st, {level: "ALL", from: "all", ids, sid: "s" + Date.now(), ahead: undefined});
   sessSave({id: st.sid, name: "", start: Date.now(), at: Date.now(), label, level: "ALL", from: "all", ids});
   store.set("jc:pg", st); St.PG_NEW = false; St.SESS_EDIT = null; St.PG_RUNNING = true; renderPG(); document.body.classList.remove("clean");
 }
@@ -254,7 +256,7 @@ export async function pgNew(name = ""){   // level and card counts are saved as 
   let label = isJa() ? "全カード" : "All cards";
   if(st.from === "section" && st.section){ const sec = ((await loadSections())[st.section.split("-")[0]] || []).find(x => x.id === st.section); if(sec) label = sec.name; }
   if(st.from === "reading" && st.reading){ label = (await loadReading(st.reading)).title; }
-  st.sid = "s" + Date.now(); St.PG_NEW = false; St.SESS_EDIT = null;
+  st.sid = "s" + Date.now(); delete st.ahead; St.PG_NEW = false; St.SESS_EDIT = null;
   const nm = name;
   if(st.ids.length) sessSave({id: st.sid, name: nm, start: Date.now(), at: Date.now(), label: sessAutoName(label === (isJa() ? "全カード" : "All cards") ? null : label), level: st.level, from: st.from, section: st.section, reading: st.reading, ids: st.ids});
   store.set("jc:pg", st);
@@ -356,89 +358,15 @@ export async function renderPG(){
   };
 
 
-  const live = [];
-  const later = [];
-
-
-  for(
-    const [lvl,t,no] of st.ids
-  ){
-
-    const c = cardIn(pool, lvl, t, no);   // v173: indexed (sessions can hold thousands of cards)
-
-
-    if(!c)
-      continue;
-
-
-    const due =
-      pgProfile(
-        lvl,
-        t,
-        no
-      ).dueAt || 0;
-
-
-    if(due > now && due - now >= 86400000) continue;   // v178: reviewed cards scheduled days ahead are not part of this run
-    (
-      due <= now
-        ? live
-        : later
-    ).push([
-      lvl,
-      t,
-      c,
-      due
-    ]);
-
-  }
-
-
-  St.DATA = {
-    level:st.level
-  };
-
-
-  const current =
-    live[0];
-
-
-  const buckets = [
-
-    [
-      "Now",
-      live.length
-    ],
-
-    [
-      "3m",
-      later.filter(
-        x =>
-          x[3] - now <=
-          3 * 60000
-      ).length
-    ],
-
-    [
-      "10m",
-      later.filter(
-        x =>
-          x[3] - now <=
-          10 * 60000
-      ).length
-    ],
-
-    [
-      "1d",
-      later.filter(
-        x =>
-          x[3] - now <=
-          1440 * 60000
-      ).length
-    ]
-
-  ];
-
+  /* v183: the run uses the same Anki queues as the session row (src/practice/sessions.ts), so the numbers match.
+     Cards missing from the pool (should not happen) are dropped first so they are not counted. */
+  const se = st.sid && Sess.list().find(x => x.id === st.sid);
+  const ids = st.ids.filter(([lvl, t, no]) => cardIn(pool, lvl, t, no));
+  const q = Sess.queue(ids, se ? se.done : [], now, st.ahead || []);
+  const ref = Sess.next(q);
+  const current = ref && [ref[0], ref[1], cardIn(pool, ref[0], ref[1], ref[2])];
+  const which = !ref ? null : q.learn[0] === ref || q.wait[0] === ref && !q.d.length && !q.n.length ? "learn" : q.d[0] === ref ? "due" : "new";
+  St.DATA = {level: st.level};
 
   $("#count").textContent = `Practice · ${st.level}`;
   showScreen("pg-run", createElement(PracticeRun, {   // v158: the run screen is React (src/screens/PracticeRun.tsx); the card is the shared card HTML
@@ -446,10 +374,12 @@ export async function renderPG(){
     card: current ? {key: `${current[0]}:${current[1]}:${current[2].no}:${current[2].__n = (current[2].__n || 0) + 1}`, level: current[0], type: current[1], no: current[2].no,
       html: shortAnswer(current[1], current[2], make[current[1]](current[2])).replace('<div class="card ', '<div class="card play-card '),
       when: SRS.previews(current[0], current[1], current[2].no)} : null,
-    live: live.length, later: later.length, canUndo: !!pgCanUndo(),
+    counts: {n: q.n.length, l: q.learn.length + q.wait.length, d: q.d.length}, which,
+    ahead: current ? 0 : Sess.later(ids, now).length, canUndo: !!pgCanUndo(),
+    onAhead: () => { const cur = pgState(); cur.ahead = Sess.later(cur.ids, PG.now()).map(Sess.key); store.set("jc:pg", cur); St.NAV_SAME = true; renderPG(); },
     onRate: m => pgRate(current[0], current[1], current[2].no, m),
     onUndo: pgUndo,
-    onExit: () => { St.PG_RUNNING = false; renderPG(); },
+    onExit: () => { const cur = pgState(); if(cur.ahead){ delete cur.ahead; store.set("jc:pg", cur); } St.PG_RUNNING = false; renderPG(); },
   }));
 
 

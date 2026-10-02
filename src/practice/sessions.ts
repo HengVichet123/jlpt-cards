@@ -8,10 +8,10 @@ export type Session = {
   ids: CardRef[]; done?: string[];
 };
 export type PracticeState = { level: string; n: { words: number; kanji: number; grammar: number }; ids: CardRef[];
-  from?: string; section?: string; reading?: string; sid?: string };
+  from?: string; section?: string; reading?: string; sid?: string; ahead?: string[] };
 
 const MAX = 30;
-const key = ([lvl, t, no]: CardRef) => `${lvl}:${t}:${no}`;
+export const key = ([lvl, t, no]: CardRef) => `${lvl}:${t}:${no}`;
 
 export const state = (): PracticeState => store.get(K.pg, { level: "ALL", n: { words: 10, kanji: 5, grammar: 2 }, ids: [] });
 export const setState = (st: PracticeState) => store.set(K.pg, st);
@@ -38,14 +38,34 @@ export function markDone(ref: CardRef): void {
   if (se) { se.done = [...new Set([...(se.done || []), key(ref)])]; se.at = Date.now(); save(se); }
 }
 
-/** Anki-style counts: New = never reviewed, Learn = seen but coming back soon, Due = review time has come. */
+/* Anki's queues for one session, used by both the session row and the run, so the numbers always match.
+   New = never studied. Learn = in learning steps today (counted even while it waits). Due = review cards whose day has come.
+   Order (Anki): learning cards whose time has come, then reviews, then new. When none is ready, Anki "learns ahead":
+   the soonest waiting learning card is shown now instead of ending the session.
+   `ahead` = Review ahead (Anki Custom study): review cards scheduled for later days are pulled in as Due. */
+export type Queue = { n: CardRef[]; learn: CardRef[]; wait: CardRef[]; d: CardRef[] };
+export function queue(ids: CardRef[], done: string[] = [], now = Date.now(), ahead: string[] = []): Queue {
+  const skip = new Set(done), early = new Set(ahead), q: Queue = { n: [], learn: [], wait: [], d: [] };
+  const at = new Map<CardRef, number>();
+  for (const r of ids) { const k = key(r), p = profile(r[0], r[1], r[2]), due = p.dueAt || 0;
+    if (skip.has(k) && !early.has(k) && p.state === "review") continue;   // graduated in this session (a lapse brings it back)
+    if (!p.reviews || p.state === "new") q.n.push(r);
+    else if (p.state === "learning" || p.state === "relearning") { if (due - now < 86400000) { at.set(r, due); (due <= now ? q.learn : q.wait).push(r); } }
+    else if (due <= now || early.has(k)) q.d.push(r); }
+  const soon = (a: CardRef, b: CardRef) => at.get(a)! - at.get(b)!;
+  q.learn.sort(soon); q.wait.sort(soon);
+  return q;
+}
+/** The card to show now: due learning → due review → new → (learn ahead) the soonest waiting learning card. */
+export const next = (q: Queue): CardRef | undefined => q.learn[0] || q.d[0] || q.n[0] || q.wait[0];
+/** Review cards of these ids scheduled for later days (soonest first), for Review ahead. */
+export function later(ids: CardRef[], now = Date.now()): CardRef[] {
+  return ids.map(r => [r, profile(r[0], r[1], r[2])] as const).filter(([, p]) => p.reviews && p.state === "review" && (p.dueAt || 0) > now)
+    .sort((a, b) => (a[1].dueAt || 0) - (b[1].dueAt || 0)).map(([r]) => r);
+}
+
+/** Anki-style counts: New / Learn / Due (the same queues the run uses). */
 export function counts(se: Session, now = Date.now()): { n: number; l: number; d: number } {
-  const done = new Set(se.done || []); let n = 0, l = 0, d = 0;
-  for (const r of se.ids) { if (done.has(key(r))) continue;
-    // Anki's columns: New = never studied; Learn = in learning steps (due within the day); Due = review cards whose day has come
-    const p = profile(r[0], r[1], r[2]);
-    if (!p.reviews || p.state === "new") n++;
-    else if (p.state === "learning" || p.state === "relearning") { if ((p.dueAt || 0) - now < 86400000) l++; }
-    else if ((p.dueAt || 0) <= now) d++; }
-  return { n, l, d };
+  const q = queue(se.ids, se.done, now);
+  return { n: q.n.length, l: q.learn.length + q.wait.length, d: q.d.length };
 }
