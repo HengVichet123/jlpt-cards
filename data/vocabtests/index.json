@@ -742,6 +742,20 @@
   "count": 45
  },
  {
+  "id": "v_n1_54",
+  "title": "N1 言語知識 模擬テスト 54",
+  "titleEn": "N1 vocabulary and grammar test 54",
+  "level": "N1",
+  "scenes": [
+   "仕切った",
+   "綴って",
+   "陥った",
+   "憩い",
+   "唱えた"
+  ],
+  "count": 45
+ },
+ {
   "id": "v_n2_01",
   "title": "N2 言語知識 模擬テスト 1",
   "titleEn": "N2 vocabulary and grammar test 1",
@@ -1480,6 +1494,20 @@
    "悩んで",
    "吹いて",
    "霧"
+  ],
+  "count": 54
+ },
+ {
+  "id": "v_n2_54",
+  "title": "N2 言語知識 模擬テスト 54",
+  "titleEn": "N2 vocabulary and grammar test 54",
+  "level": "N2",
+  "scenes": [
+   "残業",
+   "退職",
+   "預金",
+   "署名",
+   "欠席"
   ],
   "count": 54
  }
