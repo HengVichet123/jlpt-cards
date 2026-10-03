@@ -59,7 +59,7 @@ export const FAMILIES: Record<string, string> = {
   "jc:sessions": "Practice sessions", "jc:prog:": "Unfinished test answers", "jc:seen:": "Opened tests",
   "jc:lsn:": "Listening scores", "jc:rdt:": "Reading test scores", "jc:voc:": "言語知識 scores", "jc:tlv:": "Test list level",
   "jc:theme": "Theme", "jc:lang": "Language", "jc:sound": "Sound", "jc:rate": "Voice speed", "jc:voice": "Device voice",
-  "jc:tapvoice": "Speak on tap", "jc:showfam": "Familiarity bars", "jc:answer": "Practice answer style",
+  "jc:tapvoice": "Speak on tap", "jc:revealsay": "Practice: play word on open", "jc:showfam": "Familiarity bars", "jc:answer": "Practice answer style",
   "jc:clevel": "Complete list level", "jc:slevel": "Sections level", "jc:lesson": "Last page", "jc:shelforder": "Reading order",
   "jc:cc": "Movie subtitles", "jc:thEn": "Movie English", "jc:scenewords": "Scene words", "jc:scenelabels": "Scene labels",
   "jc:uselog": "Use it log", "jc:bookmarks": "Complete list bookmarks", "jc:apikey": "Use it API key (never exported)",

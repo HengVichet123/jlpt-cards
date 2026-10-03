@@ -537,6 +537,12 @@ export function foldBack(back, done){   // fold the paper back up under the head
   back.animate([{transform:"perspective(900px) rotateX(0deg)", opacity:1},{transform:"perspective(900px) rotateX(-88deg)", opacity:.2}],
                {duration:240, easing:"cubic-bezier(.5,0,.75,0)"}).onfinish = done;
 }
+/** Practice run: opening a word card plays the word (Sound on + the run's speaker toggle, jc:revealsay). */
+function sayOnReveal(card){
+  if(!soundOn() || !store.get("jc:revealsay", true) || !card.closest(".play-stage") || card.dataset.type !== "words") return;
+  const say = card.querySelector(".big [data-say]");
+  if(say) speak(say.dataset.say);
+}
 export function flipCard(card, open){
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const back = card.querySelector(".back");
@@ -549,6 +555,7 @@ export function flipCard(card, open){
                  {duration:340, easing:"cubic-bezier(.2,.8,.2,1)"});
     if(open) unfoldBack(back);
   };
+  if(open) sayOnReveal(card);
   if(!open && back && !reduce){
     foldBack(back, move);
   } else move();

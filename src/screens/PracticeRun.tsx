@@ -1,7 +1,9 @@
 /* Practice run: one card at a time, Again / Hard / Good / Easy, undo, Anki counts (New / Learn / Due), Exit.
    The card itself is the app's card HTML (shared with Complete list); its taps (flip, sound, double-tap) are the app's. */
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { BUTTONS } from "../practice/srs";
+import { store } from "../data/store";
+import { SPK, SPK_OFF } from "../audio/speech.js";
 
 export type PracticeRunProps = {
   ja: boolean;
@@ -26,6 +28,7 @@ const UNDO = (
 
 export function PracticeRun(p: PracticeRunProps) {
   const stage = useRef<HTMLDivElement>(null);
+  const [say, setSay] = useState(() => store.get("jc:revealsay", true));   // word plays when its card opens
   useLayoutEffect(() => {   // a new card pops in and stays put
     const c = stage.current?.querySelector(".play-card");
     if (c && !p.calm) c.animate([{ opacity: 0, transform: "scale(.96)" }, { opacity: 1, transform: "none" }], { duration: 240, easing: "cubic-bezier(.2,.8,.2,1)" });
@@ -40,6 +43,8 @@ export function PracticeRun(p: PracticeRunProps) {
               <span key={c} className={`deck-n ${c}${v ? "" : " zero"}${p.which === c ? " cur" : ""}`}>{v}</span>)}
           </div>
           <button type="button" className="pg-undo" id="pgUndo" aria-label="Undo last answer" disabled={!p.canUndo} onClick={p.onUndo}>{UNDO}</button>
+          <button type="button" className="pg-undo" id="pgSay" aria-label="Play word when the card opens" aria-pressed={say}
+            onClick={() => { store.set("jc:revealsay", !say); setSay(!say); }} dangerouslySetInnerHTML={{ __html: say ? SPK : SPK_OFF }} />
         </div>
         <button className="back-link pg-exit" id="pgBack" type="button" aria-label="Exit to Practice" onClick={p.onExit}>{p.ja ? "‹ 終了" : "‹ Exit"}</button>
       </div>
